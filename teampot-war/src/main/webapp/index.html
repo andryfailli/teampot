@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+	<html data-ng-app="teampot">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<title>TeamPot (mavenized!)</title>
+		
+		<!-- build:css libs.min.css -->
+		<link type="text/css" rel="stylesheet" href="/libs/angular-material/angular-material.css" />
+		<!-- endbuild -->
+
+		<!-- build:css app.min.css -->
+		<link type="text/css" rel="stylesheet" href="/app.css" />
+		<!-- endbuild -->
+
+	</head>
+	<body>
+
+		<div layout="vertical" layout-fill>
+
+			<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
+				<span>Hello World Quantum Paper!</span>
+			</material-whiteframe>
+
+			<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
+				<material-radio-group ng-model="data.group1">
+
+					<material-radio-button value="1" aria-label="Label 1">
+					Label 1
+					</material-radio-button>
+
+					<material-radio-button value="2" noink>
+					Label 2
+					</material-radio-button>
+
+					<material-radio-button value="3" aria-label="Label 3">
+					Label 3
+					</material-radio-button>
+
+				</material-radio-group>
+
+			</material-whiteframe>
+
+		</div>
+		
+		<!-- build:js libs.min.js -->
+		<script type="text/javascript" src="/libs/angular/angular.js"></script>
+		<script type="text/javascript" src="/libs/angular-animate/angular-animate.js"></script>
+		<script type="text/javascript" src="/libs/angular-route/angular-route.js"></script>
+		<script type="text/javascript" src="/libs/angular-material/angular-material.js"></script>
+		<!-- endbuild -->
+		
+		<!-- build:js app.min.js -->
+		<script type="text/javascript" src="/app.js"></script>
+		<!-- endbuild -->
+
+	</body>
+</html>

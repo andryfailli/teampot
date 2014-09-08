@@ -1,0 +1,9 @@
+{
+  "name": "TeamPot",
+  "version": "1.0.0",
+  "description": "Collaborative Team Task Management App",
+  "repository": {
+    "type": "git",
+  },
+  "author": "Andrea Failli <andry.failli@gmail.com>"
+}
