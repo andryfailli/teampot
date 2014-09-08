@@ -11,3 +11,4 @@ out
 .settings
 .classpath
 .project
+src/main/webapp/libs
