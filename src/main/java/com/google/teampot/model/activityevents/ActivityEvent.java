@@ -1,7 +1,10 @@
-package com.google.teampot.model;
+package com.google.teampot.model.activityevents;
 
 import java.util.Date;
 import java.util.List;
+
+import com.google.teampot.model.Comment;
+import com.google.teampot.model.User;
 
 public class ActivityEvent {
 

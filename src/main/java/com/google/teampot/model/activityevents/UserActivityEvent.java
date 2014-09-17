@@ -1,4 +1,6 @@
-package com.google.teampot.model;
+package com.google.teampot.model.activityevents;
+
+import com.google.teampot.model.User;
 
 public class UserActivityEvent extends ActivityEvent {
 

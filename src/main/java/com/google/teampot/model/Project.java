@@ -5,6 +5,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.google.teampot.model.activityevents.ActivityEvent;
+
 public class Project {
 
 	private List<ActivityEvent> activityEvents;
@@ -21,7 +23,7 @@ public class Project {
 		this.users = new LinkedHashSet<User>();
 		this.files = new LinkedHashSet<DriveFile>();
 	}
-	
+
 	public Project(String name) {
 		this();
 		this.name = name;

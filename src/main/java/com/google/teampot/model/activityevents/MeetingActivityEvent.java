@@ -1,4 +1,6 @@
-package com.google.teampot.model;
+package com.google.teampot.model.activityevents;
+
+import com.google.teampot.model.Meeting;
 
 public class MeetingActivityEvent extends ActivityEvent {
 
