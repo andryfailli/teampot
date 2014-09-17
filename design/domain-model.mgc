@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="com.google.teampot.model.TaskActivityEvent" x="266" y="560">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="com.google.teampot.model.ActivityEvent"/>
+        <Association
+            destinationClassName="com.google.teampot.model.Task"
+            endpointName="task" kind="Simple"/>
+    </Class>
+    <Class name="com.google.teampot.model.DriveFile" x="35" y="245">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="com.google.teampot.model.Task" x="146" y="53">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.google.teampot.model.DriveFile"
+            endpointName="files" kind="Simple"/>
+        <Association
+            destinationClassName="com.google.teampot.model.User"
+            endpointName="assignee" kind="Simple"/>
+    </Class>
+    <Class name="com.google.teampot.model.Project" x="369" y="189">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.google.teampot.model.DriveFile"
+            endpointName="files" kind="Simple"/>
+        <Association
+            destinationClassName="com.google.teampot.model.ActivityEvent"
+            endpointName="activityEvents" kind="Simple"/>
+        <Association
+            destinationClassName="com.google.teampot.model.User"
+            endpointName="users" kind="Aggregation"/>
+        <Association
+            destinationClassName="com.google.teampot.model.Task"
+            endpointName="tasks" kind="Aggregation"/>
+        <Association
+            destinationClassName="com.google.teampot.model.Meeting"
+            endpointName="meetings" kind="Aggregation"/>
+    </Class>
+    <Class name="com.google.teampot.model.Meeting" x="532" y="37">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.google.teampot.model.DriveFile"
+            endpointName="files" kind="Simple"/>
+    </Class>
+    <Class name="com.google.teampot.model.User" x="794" y="161">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="com.google.teampot.model.Comment" x="491" y="286">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.google.teampot.model.User"
+            endpointName="user" kind="Simple"/>
+    </Class>
+    <Class name="com.google.teampot.model.DriveActivityEvent" x="323" y="641">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="com.google.teampot.model.ActivityEvent"/>
+        <Association
+            destinationClassName="com.google.teampot.model.DriveFile"
+            endpointName="file" kind="Simple"/>
+    </Class>
+    <Class name="com.google.teampot.model.UserActivityEvent" x="493" y="552">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="com.google.teampot.model.ActivityEvent"/>
+        <Association
+            destinationClassName="com.google.teampot.model.User"
+            endpointName="user" kind="Simple"/>
+    </Class>
+    <Class name="com.google.teampot.model.ActivityEvent" x="363" y="440">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.google.teampot.model.User"
+            endpointName="actor" kind="Simple"/>
+        <Association
+            destinationClassName="com.google.teampot.model.Comment"
+            endpointName="comments" kind="Aggregation"/>
+    </Class>
+</ClassDiagram>
