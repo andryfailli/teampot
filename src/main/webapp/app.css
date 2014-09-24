@@ -1,7 +1,7 @@
 body, 
 html {
 	color: #444;
-	background: #fff;
+	background: #ececec;
 }
 
 html,
@@ -10,9 +10,19 @@ body,
 	height: 100%;
 }
 
+#view-container {
+	background-color: inherit;
+}
+
+#fab-button {
+	position: fixed;
+	bottom: 25px;
+	right: 30px;
+}
+
 material-whiteframe {
 	background: #fff;
-	margin: 20px;
+	margin: 25px;
 	padding: 20px;
 }
 
@@ -22,10 +32,10 @@ material-whiteframe {
 	cursor: pointer;
 	display: block;
 	color: #333;
-	line-height: 40px;
+	line-height: 45px;
 	margin: 0;
 	outline: 0;
-	padding: 0 25px;
+	padding: 0 20px;
 	position: relative;
 	text-align: left;
 	text-decoration: none;
@@ -37,6 +47,12 @@ material-whiteframe {
 	-moz-transition-property: color,background-color;
 	transition: .2s linear;
 	transition-property: color,background-color;
+}
+.menu-item * {
+	vertical-align: middle;
+}
+.menu-item material-icon {
+	padding:0 5px;
 }
 .menu-item.active {
 	background-color: #eee;

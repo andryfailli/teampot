@@ -24,26 +24,38 @@
 				</material-toolbar>
 				<material-content flex>
 
-
 					<div layout="vertical" layout-fill>
 
 						<button class="menu-item" ink-ripple>
-          					<span>Buttons</span>
+							<material-icon icon="/img/icons/ic_flash_on_24px.svg"></material-icon>
+          					<span>Activity</span>
         					<div class="material-ripple-container"></div>
         				</button>
         				<button class="menu-item" ink-ripple>
-          					<span>Buttons</span>
+        					<material-icon icon="/img/icons/ic_list_24px.svg"></material-icon>
+          					<span>Tasks</span>
         					<div class="material-ripple-container"></div>
         				</button>
         				<button class="menu-item active" ink-ripple>
-          					<span>Buttons</span>
+        					<material-icon icon="/img/icons/ic_folder_shared_24px.svg"></material-icon>
+          					<span>Files</span>
         					<div class="material-ripple-container"></div>
         				</button>
         				<button class="menu-item" ink-ripple>
-          					<span>Buttons</span>
+        					<material-icon icon="/img/icons/ic_event_24px.svg"></material-icon>
+          					<span>Meetings</span>
         					<div class="material-ripple-container"></div>
         				</button>
-
+        				<button class="menu-item" ink-ripple>
+        					<material-icon icon="/img/icons/ic_forum_24px.svg"></material-icon>
+          					<span>Discussions</span>
+        					<div class="material-ripple-container"></div>
+        				</button>
+        				<button class="menu-item" ink-ripple>
+        					<material-icon icon="/img/icons/ic_group_24px.svg"></material-icon>
+          					<span>Members</span>
+        					<div class="material-ripple-container"></div>
+        				</button>
 
 					</div>
 
@@ -56,103 +68,41 @@
 
 				<material-toolbar scroll-shrink class="material-theme-light material-whiteframe-z2">
 					<h1 class="material-toolbar-tools">
+						<a hide-md ng-click="openSidebar()" aria-label="Toggle Menu" href>
+							<material-icon icon="/img/icons/ic_menu_24px.svg"></material-icon>
+						</a>
 						<span>Projects</span>
 					</h1>
 				</material-toolbar>
 
 				
 
-				<material-content flex class="material-content-padding">
+				<material-content flex class="material-content-padding" id="view-container">
+
+					<material-button class="material-button-fab material-theme-red" id="fab-button">
+				           <material-icon icon="/img/icons/ic_add_24px.svg"></material-icon>
+			        </material-button>
 
 					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
 						<span>Hello World Quantum Paper!</span>
 					</material-whiteframe>
 
 					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
-						<material-button ng-click="toggleSidebar()" class="material-button-colored" hide-md>
-							Toggle left
-						</material-button>
+						<div>
+							<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit vehicula velit, et fermentum nunc. Suspendisse sed placerat tortor. Vivamus sapien lorem, viverra nec euismod facilisis, vulputate id orci. Vestibulum porta lacinia lorem, non tristique nisi interdum quis. Vivamus ultricies eros nisi, vel aliquet sem gravida eu. Curabitur sem ipsum, lacinia ac mollis quis, blandit eget nisi. Nullam molestie, massa vitae tristique feugiat, eros risus cursus enim, nec maximus purus elit non urna. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla sed purus vel enim sodales varius. Nulla sed magna quis erat congue blandit ut in quam. Duis dignissim ac eros quis porta. Curabitur id tempor neque. Integer accumsan vestibulum rhoncus.
+							</p>
+							<p>
+							Morbi ut egestas purus. Vivamus dignissim a ligula vitae placerat. Vestibulum gravida nibh nec tortor commodo porttitor. Vivamus ut sem ex. Cras tempor risus dignissim, pellentesque mi in, blandit lectus. Morbi efficitur tincidunt ipsum vitae imperdiet. Donec dictum ullamcorper velit. Fusce et risus sit amet nibh mollis gravida. Vestibulum sed magna dapibus, sagittis urna vitae, bibendum magna. In ullamcorper auctor nisi, lacinia imperdiet lectus tincidunt sit amet. Aenean at pretium tortor. Integer fringilla libero nisl, id euismod metus semper id. Nulla in ex sit amet odio placerat imperdiet vel sed arcu. Quisque elementum vitae dolor at condimentum. Pellentesque mattis ullamcorper felis, ac iaculis augue.
+							</p>
+							<p>
+							Donec nec orci imperdiet, tempus ex et, aliquam velit. Nullam est nibh, porttitor rutrum ante sit amet, rhoncus pellentesque quam. Mauris tincidunt erat eu arcu cursus finibus. Nunc nec aliquet neque. Nullam et posuere ligula, at eleifend turpis. Donec efficitur eu quam ut efficitur. Vivamus egestas magna aliquet, porttitor lorem vitae, feugiat urna. Pellentesque eu urna commodo, tristique massa sed, hendrerit augue. In efficitur urna nec sapien dignissim cursus. Vestibulum elit nisl, feugiat id bibendum quis, blandit sed dui. Aliquam erat volutpat. Vestibulum sem tortor, pharetra eu ultricies at, condimentum et libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed ac leo nec ipsum laoreet tempor. Maecenas sapien diam, sagittis eu pellentesque eu, vestibulum eget tellus.
+							</p>
+							<p>
+							Pellentesque quis ipsum quis tellus finibus finibus. Nulla imperdiet purus sed tortor interdum maximus. Ut rutrum enim nec dolor fermentum pellentesque. Curabitur ut dui in tortor mollis rutrum et quis nulla. Cras condimentum feugiat lobortis. Donec a congue turpis. Duis id augue eget nisi vehicula vehicula vel a ante. Sed nunc elit, maximus vel placerat vel, venenatis sit amet tortor. Praesent volutpat ipsum sit amet volutpat hendrerit. Ut dapibus vulputate mauris quis sodales. Phasellus et congue mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus lacinia elit a ligula convallis condimentum eu et nisi. Donec dapibus nisl id orci sollicitudin vestibulum. Suspendisse porta tempor mauris non iaculis. Suspendisse potenti.
+							</p>
+						</div>
 					</material-whiteframe>
-
-					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
-						<material-radio-group ng-model="data.group1">
-
-							<material-radio-button value="1" aria-label="Label 1">
-							Label 1
-							</material-radio-button>
-
-							<material-radio-button value="2" noink>
-							Label 2
-							</material-radio-button>
-
-							<material-radio-button value="3" aria-label="Label 3">
-							Label 3
-							</material-radio-button>
-
-						</material-radio-group>
-
-					</material-whiteframe>
-
-					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
-						<material-radio-group ng-model="data.group1">
-
-							<material-radio-button value="1" aria-label="Label 1">
-							Label 1
-							</material-radio-button>
-
-							<material-radio-button value="2" noink>
-							Label 2
-							</material-radio-button>
-
-							<material-radio-button value="3" aria-label="Label 3">
-							Label 3
-							</material-radio-button>
-
-						</material-radio-group>
-
-					</material-whiteframe>
-
-					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
-						<material-radio-group ng-model="data.group1">
-
-							<material-radio-button value="1" aria-label="Label 1">
-							Label 1
-							</material-radio-button>
-
-							<material-radio-button value="2" noink>
-							Label 2
-							</material-radio-button>
-
-							<material-radio-button value="3" aria-label="Label 3">
-							Label 3
-							</material-radio-button>
-
-						</material-radio-group>
-
-					</material-whiteframe>
-
-					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
-						<material-radio-group ng-model="data.group1">
-
-							<material-radio-button value="1" aria-label="Label 1">
-							Label 1
-							</material-radio-button>
-
-							<material-radio-button value="2" noink>
-							Label 2
-							</material-radio-button>
-
-							<material-radio-button value="3" aria-label="Label 3">
-							Label 3
-							</material-radio-button>
-
-						</material-radio-group>
-
-					</material-whiteframe>
-
-					<material-button class="material-button-fab">
-			           X
-			        </material-button>
 
 				</material-content>
 
