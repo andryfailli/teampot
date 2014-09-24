@@ -14,33 +14,149 @@
 		<!-- endbuild -->
 
 	</head>
-	<body>
+	<body ng-controller="mainController">
 
-		<div layout="vertical" layout-fill>
+		<div layout="horizontal" id="main-container">
+			<material-sidenav layout="vertical" class="material-sidenav-left material-whiteframe-z3" component-id="left">
 
-			<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
-				<span>Hello World Quantum Paper!</span>
-			</material-whiteframe>
+				<material-toolbar class="material-theme-indigo">
+					<h1 class="material-toolbar-tools">TeamPot</h1>
+				</material-toolbar>
+				<material-content flex>
 
-			<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
-				<material-radio-group ng-model="data.group1">
 
-					<material-radio-button value="1" aria-label="Label 1">
-					Label 1
-					</material-radio-button>
+					<div layout="vertical" layout-fill>
 
-					<material-radio-button value="2" noink>
-					Label 2
-					</material-radio-button>
+						<button class="menu-item" ink-ripple>
+          					<span>Buttons</span>
+        					<div class="material-ripple-container"></div>
+        				</button>
+        				<button class="menu-item" ink-ripple>
+          					<span>Buttons</span>
+        					<div class="material-ripple-container"></div>
+        				</button>
+        				<button class="menu-item active" ink-ripple>
+          					<span>Buttons</span>
+        					<div class="material-ripple-container"></div>
+        				</button>
+        				<button class="menu-item" ink-ripple>
+          					<span>Buttons</span>
+        					<div class="material-ripple-container"></div>
+        				</button>
 
-					<material-radio-button value="3" aria-label="Label 3">
-					Label 3
-					</material-radio-button>
 
-				</material-radio-group>
+					</div>
 
-			</material-whiteframe>
+				</material-content>
 
+			</material-sidenav>
+		
+
+			<div layout="vertical" layout-fill>
+
+				<material-toolbar scroll-shrink class="material-theme-light material-whiteframe-z2">
+					<h1 class="material-toolbar-tools">
+						<span>Projects</span>
+					</h1>
+				</material-toolbar>
+
+				
+
+				<material-content flex class="material-content-padding">
+
+					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
+						<span>Hello World Quantum Paper!</span>
+					</material-whiteframe>
+
+					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
+						<material-button ng-click="toggleSidebar()" class="material-button-colored" hide-md>
+							Toggle left
+						</material-button>
+					</material-whiteframe>
+
+					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
+						<material-radio-group ng-model="data.group1">
+
+							<material-radio-button value="1" aria-label="Label 1">
+							Label 1
+							</material-radio-button>
+
+							<material-radio-button value="2" noink>
+							Label 2
+							</material-radio-button>
+
+							<material-radio-button value="3" aria-label="Label 3">
+							Label 3
+							</material-radio-button>
+
+						</material-radio-group>
+
+					</material-whiteframe>
+
+					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
+						<material-radio-group ng-model="data.group1">
+
+							<material-radio-button value="1" aria-label="Label 1">
+							Label 1
+							</material-radio-button>
+
+							<material-radio-button value="2" noink>
+							Label 2
+							</material-radio-button>
+
+							<material-radio-button value="3" aria-label="Label 3">
+							Label 3
+							</material-radio-button>
+
+						</material-radio-group>
+
+					</material-whiteframe>
+
+					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
+						<material-radio-group ng-model="data.group1">
+
+							<material-radio-button value="1" aria-label="Label 1">
+							Label 1
+							</material-radio-button>
+
+							<material-radio-button value="2" noink>
+							Label 2
+							</material-radio-button>
+
+							<material-radio-button value="3" aria-label="Label 3">
+							Label 3
+							</material-radio-button>
+
+						</material-radio-group>
+
+					</material-whiteframe>
+
+					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
+						<material-radio-group ng-model="data.group1">
+
+							<material-radio-button value="1" aria-label="Label 1">
+							Label 1
+							</material-radio-button>
+
+							<material-radio-button value="2" noink>
+							Label 2
+							</material-radio-button>
+
+							<material-radio-button value="3" aria-label="Label 3">
+							Label 3
+							</material-radio-button>
+
+						</material-radio-group>
+
+					</material-whiteframe>
+
+					<material-button class="material-button-fab">
+			           X
+			        </material-button>
+
+				</material-content>
+
+			</div>
 		</div>
 		
 		<!-- build:js libs.min.js -->

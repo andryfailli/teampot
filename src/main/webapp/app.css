@@ -1,5 +1,49 @@
+body, 
+html {
+	color: #444;
+	background: #fff;
+}
+
+html,
+body,
+#main-container {
+	height: 100%;
+}
+
 material-whiteframe {
 	background: #fff;
 	margin: 20px;
 	padding: 20px;
+}
+
+.menu-item {
+	background-color: #fff;
+	border: 0;
+	cursor: pointer;
+	display: block;
+	color: #333;
+	line-height: 40px;
+	margin: 0;
+	outline: 0;
+	padding: 0 25px;
+	position: relative;
+	text-align: left;
+	text-decoration: none;
+	width: 100%;
+	z-index: 1;
+	-webkit-transition: .2s linear;
+	-webkit-transition-property: color,background-color;
+	-moz-transition: .2s linear;
+	-moz-transition-property: color,background-color;
+	transition: .2s linear;
+	transition-property: color,background-color;
+}
+.menu-item.active {
+	background-color: #eee;
+	font-weight: bold;
+	color: #4285f4;
+}
+.menu-item:focus, 
+.menu-item:hover {
+	color: #4285f4;
 }
