@@ -6,68 +6,146 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Meeting {
+import com.google.api.server.spi.config.AnnotationBoolean;
+import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.teampot.transformer.Ref2StringTransformer;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Parent;
+
+@Entity
+public class Meeting extends BaseEntity {
+	
+	@Id
+	private Long id;
+	
+	@Parent
+	private Ref<Project> project;
 	
 	private String title;
-	private String description;
-	private Date timestamp;
-	private List<String> agenda;
-	private Set<DriveFile> files;
 	
-
+	private String description;
+	
+	private Date timestamp;
+	
+	private List<String> agenda;
+	
+	private Set<String> files;
+	
+	private Ref<User> organizer;
+	
 	public Meeting() {
 		this.agenda = new ArrayList<String>();
-		this.files = new LinkedHashSet<DriveFile>();
+		this.files = new LinkedHashSet<String>();
 	}
-
+	
+	@Override
+	public String getKey() {
+		return Key.create(this.getProject().getKey(),this.getClass(), this.getId()).getString();
+	}
 
 	public String getTitle() {
 		return title;
 	}
 
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 
 	public String getDescription() {
 		return description;
 	}
 
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 
 	public Date getTimestamp() {
 		return timestamp;
 	}
 
-
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
-
 
 	public List<String> getAgenda() {
 		return agenda;
 	}
 
-
 	public void setAgenda(List<String> agenda) {
 		this.agenda = agenda;
 	}
 
-
-	public Set<DriveFile> getFiles() {
+	public Set<String> getFiles() {
 		return files;
 	}
-
-
-	public void setFiles(Set<DriveFile> files) {
+	
+	public void setFiles(Set<String> files) {
 		this.files = files;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public Ref<Project> getProject() {
+		return project;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setProject(Ref<Project> project) {
+		this.project = project;
+	}
+	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setProject(Project project) {
+		this.project = Ref.create(project);
+	}
+	
+	@ApiResourceProperty(name = "project")
+	public String getProjectKey() {
+		Ref2StringTransformer<Project> t = new Ref2StringTransformer<Project>();
+		return t.transformTo(this.project);
+	}	
+
+	@ApiResourceProperty(name = "project")
+	public void setProjectKey(String project) {
+		Ref2StringTransformer<Project> t = new Ref2StringTransformer<Project>();
+		this.project = t.transformFrom(project);
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public Ref<User> getOrganizer() {
+		return organizer;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setOrganizer(Ref<User> organizer) {
+		this.organizer = organizer;
+	}
+	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setOrganizer(User organizer) {
+		this.organizer = Ref.create(organizer);
+	}
+	
+	@ApiResourceProperty(name = "organizer")
+	public String getOrganizerKey() {
+		Ref2StringTransformer<User> t = new Ref2StringTransformer<User>();
+		return t.transformTo(this.organizer);
+	}	
+
+	@ApiResourceProperty(name = "organizer")
+	public void setOrganizerKey(String organizer) {
+		Ref2StringTransformer<User> t = new Ref2StringTransformer<User>();
+		this.organizer = t.transformFrom(organizer);
 	}
 
 }

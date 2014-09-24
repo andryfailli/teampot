@@ -1,61 +1,71 @@
 package com.google.teampot.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.teampot.transformer.Ref2StringTransformer;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Parent;
 
 @Entity
-public abstract class Comment extends BaseEntity {
-	
+public class ActivityEvent extends BaseEntity {
+
 	@Id
 	private Long id;
 	
 	@Parent
 	private Ref<Project> project;
 	
-	private Ref<User> user;
+	private Ref<User> actor;
 	
 	private Date timestamp;
 	
-	private String body;
+	//TODO: valutare se rimuovere bidi-ref
+	private List<Ref<Comment>> comments;
 
-	public Comment() {
+	public ActivityEvent() {
+		this.comments = new ArrayList<Ref<Comment>>();
 		this.timestamp = new Date();
 	}
-
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public Ref<User> getUser() {
-		return user;
+	
+	@Override
+	public String getKey() {
+		return Key.create(this.getProject().getKey(),this.getClass(), this.getId()).getString();
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setUser(Ref<User> user) {
-		this.user = user;
+	public Ref<User> getActor() {
+		return actor;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setActor(Ref<User> actor) {
+		this.actor = actor;
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setUser(User user) {
-		this.user = Ref.create(user);
+	public void setActor(User actor) {
+		this.actor = Ref.create(actor);
 	}
 	
-	@ApiResourceProperty(name = "user")
-	public String getUserKey() {
+	@ApiResourceProperty(name = "actor")
+	public String getActorKey() {
 		Ref2StringTransformer<User> t = new Ref2StringTransformer<User>();
-		return t.transformTo(this.user);
+		return t.transformTo(this.actor);
 	}	
 
-	@ApiResourceProperty(name = "user")
-	public void setUserKey(String user) {
+	@ApiResourceProperty(name = "actor")
+	public void setActorKey(String actor) {
 		Ref2StringTransformer<User> t = new Ref2StringTransformer<User>();
-		this.user = t.transformFrom(user);
+		this.actor = t.transformFrom(actor);
 	}
-
+	
 	public Date getTimestamp() {
 		return timestamp;
 	}
@@ -64,22 +74,23 @@ public abstract class Comment extends BaseEntity {
 		this.timestamp = timestamp;
 	}
 
-	public String getBody() {
-		return body;
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public List<Ref<Comment>> getComments() {
+		return comments;
 	}
 
-	public void setBody(String body) {
-		this.body = body;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setComments(List<Ref<Comment>> comments) {
+		this.comments = comments;
 	}
 	
+	@ApiResourceProperty(name = "comments")
+	public int getCommentsCount() {
+		if (this.comments != null)
+			return this.comments.size();
+		else return 0;
+	}	
+
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Ref<Project> getProject() {
 		return project;
@@ -107,4 +118,12 @@ public abstract class Comment extends BaseEntity {
 		this.project = t.transformFrom(project);
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 }

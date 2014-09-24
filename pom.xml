@@ -66,6 +66,11 @@
       		<artifactId>google-api-services-drive</artifactId>
       		<version>v2-rev143-1.19.0</version>
     	</dependency>
+    	<dependency>
+      		<groupId>com.googlecode.objectify</groupId>
+      		<artifactId>objectify</artifactId>
+      		<version>5.0.3</version>
+    	</dependency>
 	</dependencies>
 
 	<build>

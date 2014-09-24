@@ -5,7 +5,7 @@
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>com.google.teampot.api.ProjectEndpoint</param-value>
+            <param-value>com.google.teampot.api.ProjectEndpoint,com.google.teampot.api.UserEndpoint,com.google.teampot.api.TaskEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

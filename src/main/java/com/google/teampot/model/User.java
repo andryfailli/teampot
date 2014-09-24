@@ -1,14 +1,30 @@
 package com.google.teampot.model;
 
-public class User {
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
+@Entity
+public class User extends BaseEntity {
+
+	@Id
+	private Long id;
+	
 	private String email;
+	
 	private String firstName;
+	
 	private String lastName;
+	
 	private String iconUrl;
 	
 	public User() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public String getKey() {
+		return Key.create(this.getClass(), this.getId()).getString();
 	}
 
 	public String getEmail() {
@@ -41,6 +57,14 @@ public class User {
 
 	public void setIconUrl(String iconUrl) {
 		this.iconUrl = iconUrl;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
