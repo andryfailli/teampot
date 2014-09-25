@@ -14,12 +14,6 @@ body,
 	background-color: inherit;
 }
 
-#fab-button {
-	position: fixed;
-	bottom: 25px;
-	right: 30px;
-}
-
 .menu-item {
 	background-color: #fff;
 	border: 0;
