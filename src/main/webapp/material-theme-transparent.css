@@ -1,0 +1,12 @@
+.material-theme-transparent .tabs-header {
+	background-color: transparent;
+}
+
+.material-theme-transparent material-ink-bar {
+	background-color: #4285f4;
+}
+
+.material-theme-transparent material-tab-label,
+.material-theme-transparent material-tab-label.active {
+	color: #3e50b4;
+}
