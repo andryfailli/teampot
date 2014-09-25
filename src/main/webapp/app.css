@@ -20,12 +20,6 @@ body,
 	right: 30px;
 }
 
-material-whiteframe {
-	background: #fff;
-	margin: 20px;
-	padding: 20px;
-}
-
 .menu-item {
 	background-color: #fff;
 	border: 0;

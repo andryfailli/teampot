@@ -10,7 +10,9 @@
 		<!-- endbuild -->
 
 		<!-- build:css app.min.css -->
+		<link type="text/css" rel="stylesheet" href="/common.css" />
 		<link type="text/css" rel="stylesheet" href="/app.css" />
+		<link type="text/css" rel="stylesheet" href="/material-theme-transparent.css" />
 		<!-- endbuild -->
 
 	</head>
@@ -22,6 +24,7 @@
 				<material-toolbar class="material-theme-indigo">
 					<h1 class="material-toolbar-tools" data-ng-click="closeSidebar()">TeamPot</h1>
 				</material-toolbar>
+
 				<material-content flex>
 
 					<div layout="vertical" layout-fill>
@@ -82,6 +85,31 @@
 					<material-button class="material-button-fab material-theme-red" id="fab-button">
 				           <material-icon icon="/img/icons/ic_add_24px.svg"></material-icon>
 			        </material-button>
+
+			        <material-tabs class="material-theme-transparent">
+        <material-tab label="MyTab">
+          <div layout layout-align="center center">
+          	<material-whiteframe class="material-whiteframe-z1" flex>
+            rgrtgert
+            </material-whiteframe>
+          </div>
+        </material-tab>
+        <material-tab label="MyTa3b">
+          <div layout layout-align="center center">
+          <material-whiteframe class="material-whiteframe-z1" flex>
+            rgrtgert2
+            </material-whiteframe>
+          </div>
+        </material-tab>
+        <material-tab label="MyTab2">
+          <div layout layout-align="center center" flex>
+          <material-whiteframe class="material-whiteframe-z1" flex>
+            rgrtgert3
+            </material-whiteframe>
+          </div>
+        </material-tab>
+
+    </material-tabs>
 
 					<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
 						<span>Hello World Quantum Paper!</span>
