@@ -14,7 +14,7 @@ angular.module('teampot', [
 			controller: 'dashboardController',
 			sidebar: false
 		})
-		.when('/project', {
+		.when('/projects', {
 			id: 'projects',
 			label: 'Projects',
 			templateUrl: '/components/project/list.html',

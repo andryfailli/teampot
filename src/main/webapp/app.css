@@ -45,3 +45,11 @@ html {
 	color: #4285f4;
 }
 
+
+.route-breadcrumbs {
+	list-style: none;
+	padding:0;
+}
+.route-breadcrumb {
+	display:inline-block;
+}

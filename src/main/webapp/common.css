@@ -4,6 +4,11 @@ material-whiteframe {
 	padding: 20px;
 }
 
+material-icon {
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .material-button-inner {
 	outline: none;
 }
