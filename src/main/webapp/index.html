@@ -17,6 +17,102 @@
 
 	</head>
 	<body ng-controller="mainController">
+	
+	
+	
+<section layout="horizontal" class="full-height" flex>
+
+	<material-sidenav layout="vertical" class="material-sidenav-left material-whiteframe-z3" component-id="left">
+	
+		<material-toolbar class="material-theme-indigo">
+			<h1 class="material-toolbar-tools" data-ng-click="closeSidebar()">TeamPot</h1>
+		</material-toolbar>
+	
+		<material-content flex>
+			<div layout="vertical" layout-fill>
+			
+				<button ng-href="/#/project/{{routeParams.projectKey}}/activity" class="menu-item" ink-ripple>
+					<material-icon icon="/img/icons/ic_flash_on_24px.svg"></material-icon>
+					<span>Activity</span>
+				</button>
+				
+				<button ng-href="/#/project/{{routeParams.projectKey}}/tasks" class="menu-item" ink-ripple>
+					<material-icon icon="/img/icons/ic_list_24px.svg"></material-icon>
+					<span>Tasks</span>
+				</button>
+				
+				<button ng-href="/#/project/{{routeParams.projectKey}}/files" class="menu-item" ink-ripple>
+					<material-icon icon="/img/icons/ic_folder_shared_24px.svg"></material-icon>
+					<span>Files</span>
+				</button>
+				
+				<button ng-href="/#/project/{{routeParams.projectKey}}/meetings" class="menu-item" ink-ripple>
+					<material-icon icon="/img/icons/ic_event_24px.svg"></material-icon>
+					<span>Meetings</span>
+				</button>
+				
+				<button ng-href="/#/project/{{routeParams.projectKey}}/discussions" class="menu-item" ink-ripple>
+					<material-icon icon="/img/icons/ic_forum_24px.svg"></material-icon>
+					<span>Discussions</span>
+				</button>
+				
+				<button ng-href="/#/project/{{routeParams.projectKey}}/members" class="menu-item" ink-ripple>
+					<material-icon icon="/img/icons/ic_group_24px.svg"></material-icon>
+					<span>Members</span>
+				</button>
+						
+  				
+  			</div>
+  		</material-content>
+	
+	</material-sidenav>
+	
+	<material-content class="full-height" style="overflow:hidden" flex>
+	
+		<div layout="vertical" layout-fill>
+			
+			
+			<material-toolbar scroll-shrink class="material-theme-light material-whiteframe-z2">
+			    <div class="material-toolbar-tools">
+			      <h1 class="material-toolbar-tools">
+						<a hide-md ng-click="openSidebar()" aria-label="Toggle Menu" href>
+							<material-icon icon="/img/icons/ic_menu_24px.svg"></material-icon>
+						</a>
+						
+						<ol class="route-breadcrumbs">
+							<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs">
+								<span ng-if="!$last">
+									<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a>
+									<span class="icon icon_ic_chevron_right_24px"></span>
+								</span>
+								<span ng-if="$last">{{breadcrumb.label}}</span>
+							</li>
+						</ol>
+
+					</h1>
+			    </div>
+			 </material-toolbar>
+			
+			  <material-content class="material-content-padding">
+			 
+			 	<div layout="vertical" layout-fill layout-align="center center">
+			    <p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p><p>ciao ciao</p>
+				</div>
+			
+			 </material-content>
+			
+		</div>
+	
+	</material-content>
+
+
+</section>	
+
+
+
+<!-- 
+	
+	
 
 		<div layout="horizontal" id="main-container">
 			<material-sidenav layout="vertical" class="material-sidenav-left material-whiteframe-z3" component-id="left">
@@ -136,6 +232,8 @@
 
 			</div>
 		</div>
+		
+		 -->
 		
 		<!-- build:js libs.min.js -->
 		<script type="text/javascript" src="/libs/angular/angular.js"></script>

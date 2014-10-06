@@ -1,17 +1,8 @@
+
 body, 
 html {
 	color: #444;
 	background: #ececec;
-}
-
-html,
-body,
-#main-container {
-	height: 100%;
-}
-
-#view-container {
-	background-color: inherit;
 }
 
 .menu-item {
@@ -38,6 +29,7 @@ body,
 }
 .menu-item * {
 	vertical-align: middle;
+	display:inline-block;
 }
 .menu-item material-icon {
 	padding:0 5px;
@@ -45,9 +37,11 @@ body,
 .menu-item.active {
 	background-color: #eee;
 	font-weight: bold;
-	color: #4285f4;
 }
+
+.menu-item.active,
 .menu-item:focus, 
 .menu-item:hover {
 	color: #4285f4;
 }
+
