@@ -1,9 +1,9 @@
-<div layout="horizontal" layout-align="center center">
+<div style="text-align:center">
 
-	<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-repeat="entity in entities">
-		<a href="#/project/{{entity.key}}">
-			<span>{{entity.name}}</span>
-		</a>
-	</material-whiteframe>
+	<a class="unstyled" ng-repeat="entity in entities" ng-href="#/project/{{entity.key}}">
+		<material-whiteframe class="tile material-whiteframe-z1" >
+			<h3>{{entity.name}}</h3>
+		</material-whiteframe>
+	</a>
 
 </div>

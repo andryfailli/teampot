@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-		<title>TeamPot (mavenized! & push-to-deploy! & custom build? 2)</title>
+		<title>TeamPot</title>
 		
 		<!-- build:css libs.min.css -->
 		<link type="text/css" rel="stylesheet" href="/libs/angular-material/angular-material.css" />
@@ -82,7 +82,7 @@
 									<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs">
 										<span ng-if="!$last"> 
 											<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 
-											<material-icon icon="/img/icons/ic_chevron_right_24px.svg"></material-icon>
+											<material-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></material-icon>
 										</span>
 										<span ng-if="$last">{{breadcrumb.label}}</span>
 									</li>
