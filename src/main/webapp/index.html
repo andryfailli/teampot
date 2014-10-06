@@ -25,46 +25,15 @@
 			<material-sidenav layout="vertical" class="material-sidenav-left material-whiteframe-z3" component-id="left"> 
 				<material-toolbar class="material-theme-indigo">
 					<h1 class="material-toolbar-tools" data-ng-click="closeSidebar()">TeamPot</h1>
-				</material-toolbar> <material-content flex>
-					<div layout="vertical" layout-fill>
-			
-						<button ng-href="/#/project/{{routeParams.projectKey}}/activity" class="menu-item" ink-ripple>
-							<material-icon icon="/img/icons/ic_flash_on_24px.svg"></material-icon>
-							<span>Activity</span>
-						</button>
-			
-						<button ng-href="/#/project/{{routeParams.projectKey}}/tasks" class="menu-item" ink-ripple>
-							<material-icon icon="/img/icons/ic_list_24px.svg"></material-icon>
-							<span>Tasks</span>
-						</button>
-			
-						<button ng-href="/#/project/{{routeParams.projectKey}}/files" class="menu-item" ink-ripple>
-							<material-icon icon="/img/icons/ic_folder_shared_24px.svg"></material-icon>
-							<span>Files</span>
-						</button>
-			
-						<button ng-href="/#/project/{{routeParams.projectKey}}/meetings" class="menu-item" ink-ripple>
-							<material-icon icon="/img/icons/ic_event_24px.svg"></material-icon>
-							<span>Meetings</span>
-						</button>
-			
-						<button ng-href="/#/project/{{routeParams.projectKey}}/discussions" class="menu-item" ink-ripple>
-							<material-icon icon="/img/icons/ic_forum_24px.svg"></material-icon>
-							<span>Discussions</span>
-						</button>
-			
-						<button ng-href="/#/project/{{routeParams.projectKey}}/members" class="menu-item" ink-ripple>
-							<material-icon icon="/img/icons/ic_group_24px.svg"></material-icon>
-							<span>Members</span>
-						</button>
-			
-					</div>
+				</material-toolbar> 
+				<material-content flex>
+					<div layout="vertical" layout-fill ng-include="sidebarTemplateUrl"></div>
 				</material-content> 
 			</material-sidenav>
 	
 			<material-content class="full-height" style="overflow:hidden" flex>
 			
-				<material-button class="material-button-fab material-button-fab-bottom-right material-theme-red">
+				<material-button class="material-button-fab material-button-fab-bottom-right material-theme-red" ng-click="fabAction($event)">
 					<material-icon icon="/img/icons/ic_add_24px.svg"></material-icon>
 				</material-button>
 	

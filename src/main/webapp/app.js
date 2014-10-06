@@ -18,7 +18,7 @@ angular.module('teampot', [
 			id: 'projects',
 			label: 'Projects',
 			templateUrl: '/components/project/list.html',
-			sidebarTemplateUrl: '/components/sidebar/menu.html',
+			sidebarTemplateUrl: '/components/sidebar/hello.html',
 			controller: 'projectListController',
 			sidebar: false
 		})
