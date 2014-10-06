@@ -12,3 +12,5 @@ out
 .classpath
 .project
 src/main/webapp/libs
+node_modules
+
