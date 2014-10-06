@@ -19,6 +19,7 @@ angular.module('teampot', [
 			label: 'Projects',
 			templateUrl: '/components/project/list.html',
 			sidebarTemplateUrl: '/components/sidebar/hello.html',
+			fabTemplateUrl: '/components/project/fab-new.html',
 			controller: 'projectListController',
 			sidebar: false
 		})
@@ -44,6 +45,7 @@ angular.module('teampot', [
 	$rootScope.$on("$routeChangeSuccess", function(event, next, current) {
 		$rootScope.appLoading = false;
 		$rootScope.sidebarTemplateUrl = next.sidebarTemplateUrl;
+		$rootScope.fabTemplateUrl = next.fabTemplateUrl;
 		$rootScope.routeId = next.id;
     });
     $rootScope.$on("$routeChangeError", function(event, next, current) {
