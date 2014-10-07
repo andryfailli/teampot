@@ -11,27 +11,25 @@ angular.module('teampot', [
 		.when('/dashboard', {
 			id: 'dashboard',
 			templateUrl: '/components/dashboard/dashboard.html',
-			sidebarTemplateUrl: '/components/sidebar/hello.html',
 			controller: 'dashboardController',
-			sidebar: false
+			sidebarTemplateUrl: '/components/sidebar/hello.html'
 		})
 		.when('/projects', {
 			id: 'projects',
 			label: 'Projects',
 			templateUrl: '/components/project/list.html',
-			sidebarTemplateUrl: '/components/sidebar/hello.html',
-			fabTemplateUrl: '/components/project/fab-new.html',
 			controller: 'projectListController',
-			sidebar: false
+			sidebarTemplateUrl: '/components/sidebar/hello.html',
+			fabTemplateUrl: '/components/project/list-fab.html',
+			reloadOnSearch: false
 		})
 		.when('/project/:projectKey', {
 			id: 'project',
 			parent: 'projects',
 			label: 'My Test Project',
 			templateUrl: '/components/project/view.html',
-			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			controller: 'projectViewController',
-			sidebar: true
+			sidebarTemplateUrl: '/components/sidebar/menu.html',
 		})
 		.otherwise({
 			redirectTo : '/projects'

@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('projectListController', ['$rootScope','$scope',function($rootScope,$scope) {
+	controller('projectListController', ['$rootScope','$scope','$materialDialog',function($rootScope,$scope,$materialDialog) {
 		
 		//TODO: implement backend call
 		$scope.entities = [
@@ -28,5 +28,5 @@ angular.module('teampot').
 				name: "My test project 6"
 			}
 		];
-
+		
 	}]);

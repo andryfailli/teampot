@@ -1,0 +1,14 @@
+<material-dialog aria-label="Create or edit a Project">	
+	<div class="dialog-content">
+		<h2 class="dialog-title">{{project.key?'Edit Project':'Create new Project'}}</h2>
+		<material-content>
+			<form>
+			  <tf-float label="Project Name" value="project.name"> </tf-float>
+			</form>
+		</material-content>
+	
+	</div>
+	<div class="dialog-actions" layout="horizontal" layout-align="end">
+		<material-button ng-click="save()" autofocus>OK</material-button>
+	</div>
+</material-dialog>
