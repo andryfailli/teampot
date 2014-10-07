@@ -28,55 +28,63 @@ angular.module("ngGapiClient",[]).
 		
 		load: function(name,version){
 			
-			var clients = this.clients;
+			var thisProvider = this;
 						
-			if (!clients[name]) {
-						
-				var $q = angular.injector(['ng']).get('$q');
+			if (!thisProvider.clients[name]) {
+								
+				var clientDeferred = thisProvider._get$q().defer();
 				
-				var clientDeferred = $q.defer();
-				
-				clients[name] = {
-					exec: function(methodName,payload){
-						
-						function traverse(o,path) {
-							var pieces = path.split(".");
-							for (var i=0; i<pieces.length; i++)
-								o = o[pieces[i]];
-							return o;
-						}
-						
-						var execDeferred = $q.defer();
-						clientDeferred.promise.then(function(){
-							var client = clients[name];
-							var method = traverse(client,methodName);
-							var execCallback = function(reponse) {
-								if (reponse.error)
-									execDeferred.reject(reponse.error);
-								else
-									execDeferred.resolve(response);
-							}
-							payload ? method().execute(payload,execCallback) : method().execute(execCallback);
-						});
-						
-						return {
-							$promise: execDeferred.promise
-						}
-					},
-					$promise: clientDeferred.promise
-				};
-				
-				clients[name].$promise.then(function(){
-					angular.extend(clients[name],gapi.client[name]);
-				});
-					
-				this.gapiDeferred.promise.then(function(gapi){
-					$q.when(gapi.client.load(name,version)).then(clientDeferred.resolve,clientDeferred.reject,clientDeferred.notify);
+				thisProvider.clients[name] = thisProvider._buildClientDraft(name,clientDeferred.promise);
+				thisProvider.clients[name].$promise.then(function(){
+					angular.extend(thisProvider.clients[name],thisProvider.gapi.client[name]);
 				});
 				
+				// when gapi is ready, load client
+				this.gapiDeferred.promise.then(function(){
+					thisProvider._get$q().when(thisProvider.gapi.client.load(name,version)).then(clientDeferred.resolve,clientDeferred.reject,clientDeferred.notify);
+				});
 				
 			}
-			return clients[name];
+			return thisProvider.clients[name];
+		},
+		
+		_get$q: function(){
+			return angular.injector(['ng']).get('$q');
+		},
+		
+		_buildClientDraft: function(name,promise){
+			
+			var thisProvider = this;
+			
+			return{
+				exec: function(methodName,payload){
+					
+					function traverse(o,path) {
+						var pieces = path.split(".");
+						for (var i=0; i<pieces.length; i++)
+							o = o[pieces[i]];
+						return o;
+					}
+					
+					var execDeferred = thisProvider._get$q().defer();
+					promise.then(function(){
+						var client = thisProvider.clients[name];
+						var method = traverse(client,methodName);
+						var execCallback = function(reponse) {
+							if (reponse.error)
+								execDeferred.reject(reponse.error);
+							else
+								execDeferred.resolve(response);
+						}
+						payload ? method().execute(payload,execCallback) : method().execute(execCallback);
+					});
+					
+					return {
+						$promise: execDeferred.promise
+					}
+				},
+				$promise: promise
+			};
 		},
 		
 		$get: function() {
