@@ -1,8 +1,8 @@
 angular.module('teampot').
-	controller('projectEditModalController', ['$rootScope','$scope','$materialDialog',function($rootScope,$scope,$materialDialog) {
+	controller('projectEditModalController', function($rootScope,$scope,$materialDialog) {
 		
-		$scope.hide = function(){
-			$materialDialog.hide();
+		$scope.save = function(){
+			$materialDialog.hide($scope.project);
 		}
 
-	}]);
+	});

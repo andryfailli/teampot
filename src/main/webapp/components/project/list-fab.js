@@ -1,16 +1,17 @@
 angular.module('teampot').
-	controller('projectListFabController', ['$rootScope','$scope','$materialDialog',function($rootScope,$scope,$materialDialog) {
+	controller('projectListFabController', function($rootScope,$scope,$materialDialog,$location,ProjectService) {
 				
 		$scope.fabAdd = function(evt){
 			$materialDialog.show({
 				templateUrl: '/components/project/edit-modal.html',
-				targetEvent: evt,
 				controller: 'projectEditModalController',
+				targetEvent: evt,
+				locals: {
+					project: ProjectService.$new()
+				}
 			}).then(function(result) {
-				alert('You said the information was "' + answer + '".');
-			}, function() {
-				alert('You cancelled the dialog.');
+				$location.path("/project/"+result.key);
 			});
 		}
 
-	}]);
+	});
