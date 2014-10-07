@@ -31,40 +31,50 @@ angular.module("ngGapiClient",[]).
 			var clients = this.clients;
 						
 			if (!clients[name]) {
-				this.gapiDeferred.promise.then(function(gapi){
+						
+				var $q = angular.injector(['ng']).get('$q');
 				
-					var $q = angular.injector(['ng']).get('$q');
-					
-					var clientPromise = $q.when(gapi.client.load(name,version));
-					
-					clients[name] = {
-						exec: function(methodName,payload){
-							
-							var execDeferred = $q.defer();
-							clientPromise.then(function(){
-								var client = clients[name];
-								var method = traverse(client,methodName); //TODO: find "deep" methods using object traversing with "dots" notation
-								var execCallback = function(reponse) {
-									if (reponse.error)
-										execDeferred.reject(reponse.error);
-									else
-										execDeferred.resolve(response);
-								}
-								payload ? method().execute(payload,execCallback) : method().execute(execCallback);
-							});
-							
-							return {
-								$promise: execDeferred.promise
+				var clientDeferred = $q.defer();
+				
+				clients[name] = {
+					exec: function(methodName,payload){
+						
+						function traverse(o,path) {
+							var pieces = path.split(".");
+							for (var i=0; i<pieces.length; i++)
+								o = o[pieces[i]];
+							return o;
+						}
+						
+						var execDeferred = $q.defer();
+						clientDeferred.promise.then(function(){
+							var client = clients[name];
+							var method = traverse(client,methodName);
+							var execCallback = function(reponse) {
+								if (reponse.error)
+									execDeferred.reject(reponse.error);
+								else
+									execDeferred.resolve(response);
 							}
-						},
-						$promise: clientPromise
-					};
-					
-					clients[name].$promise.then(function(){
-						angular.extend(clients[name],gapi.client[name]);
-					});
-					
+							payload ? method().execute(payload,execCallback) : method().execute(execCallback);
+						});
+						
+						return {
+							$promise: execDeferred.promise
+						}
+					},
+					$promise: clientDeferred.promise
+				};
+				
+				clients[name].$promise.then(function(){
+					angular.extend(clients[name],gapi.client[name]);
 				});
+					
+				this.gapiDeferred.promise.then(function(gapi){
+					$q.when(gapi.client.load(name,version)).then(clientDeferred.resolve,clientDeferred.reject,clientDeferred.notify);
+				});
+				
+				
 			}
 			return clients[name];
 		},
@@ -92,12 +102,3 @@ angular.module("ngGapiClient",[]).
 		parentElement.appendChild(scriptElement);
 				
 	});
-
-
-
-function traverse(o,path) {
-	var pieces = path.split(".");
-	for (var i=0; i<pieces.length; i++)
-		o = o[pieces[i]];
-	return o;
-}
