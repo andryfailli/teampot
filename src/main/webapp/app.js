@@ -1,6 +1,7 @@
 angular.module('teampot', [                      
 	'ngRoute',
 	'ngAnimate',
+	'ngAria',
 	'ngMaterial',
 	'routeBreadcrumbs'
 ])
