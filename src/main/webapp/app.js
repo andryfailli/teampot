@@ -37,7 +37,7 @@ angular.module('teampot', [
 			redirectTo : '/projects'
 		});
 		
-	GapiClientProvider.setClientId("906530262076-dojpmhig3e47pk4jf6u84t8e1g56dmbj.apps.googleusercontent.com");
+	GapiClientProvider.setClientId("138057900615-7ei54320nap7588tr5g5t3tsf43d7otb.apps.googleusercontent.com");
 	GapiClientProvider.setScope("https://www.googleapis.com/auth/userinfo.email");
 	GapiClientProvider.load("teampot","v1","//"+window.location.host+"/_ah/api");
 
