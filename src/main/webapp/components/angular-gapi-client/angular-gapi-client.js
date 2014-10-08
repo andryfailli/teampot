@@ -98,7 +98,7 @@ angular.module("ngGapiClient",[]).
 					
 					var execResultDeferred = thisProvider._get$q().defer();
 					
-					var execStartPromise = thisProvider._get$q().all( thisProvider.authDeferred ? [thisProvider.authDeferred.promise] : [clientPromise,thisProvider.authDeferred.promise] );
+					var execStartPromise = thisProvider._get$q().all( thisProvider.authDeferred ? [clientPromise,thisProvider.authDeferred.promise] : [clientPromise] );
 					
 					execStartPromise.then(function(){
 						var client = thisProvider.clients[name];
@@ -122,12 +122,11 @@ angular.module("ngGapiClient",[]).
 		
 		$get: function() {
 			
-			var gapi = this.gapi;
-			var clients = this.clients;
+			var thisProvider = this;
 
 			return {
-				gapi: function(){return gapi;},
-				client: function(name){return clients[name];}
+				gapi: function(){return thisProvider.gapi;},
+				client: function(name){return thisProvider.load(name);}
 			};
 		}
 	}).
