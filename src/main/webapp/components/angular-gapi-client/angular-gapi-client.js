@@ -112,15 +112,17 @@ angular.module("ngGapiClient",[]).
 							if (response && response.error) 
 								 execResultDeferred.reject(response.error);
 							 else
-								 execResultDeferred.resolve(response.result);
+								 execResultDeferred.resolve(response);
 						}
-						payload ? method().execute(payload,execCallback) : method().execute(execCallback);
+						// finally, exec method
+						method(payload).execute(execCallback);
 					});
 					
-					var execResult = thisProvider._buildExecResultDraft(execResultDeferred.promise);
+					var execResult = thisProvider._buildExecResultDraft(payload,execResultDeferred.promise);
 					execResult.$promise.then(function(result){
-						angular.extend(execResult,result);
-						thisProvider._$rootScope ? thisProvider._$rootScope.$apply() : false;
+						thisProvider._$rootScope.$apply(function(){
+							angular.extend(execResult,result);
+						});
 					});
 					
 					return execResult;
@@ -129,10 +131,10 @@ angular.module("ngGapiClient",[]).
 			};
 		},
 		
-		_buildExecResultDraft: function(execResultPromise){
-			return{
-				$promise: execResultPromise
-			};
+		_buildExecResultDraft: function(payload,execResultPromise){
+			if (!payload) payload = {};
+			payload.$promise = execResultPromise;
+			return payload
 		},
 		
 		$get: function($rootScope) {
