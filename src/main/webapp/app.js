@@ -3,9 +3,10 @@ angular.module('teampot', [
 	'ngAnimate',
 	'ngAria',
 	'ngMaterial',
-	'routeBreadcrumbs'
+	'routeBreadcrumbs',
+	'ngGapiClient'
 ])
-.config(function($routeProvider) {
+.config(function($routeProvider,GapiClientProvider) {
 
 	$routeProvider
 		.when('/dashboard', {
@@ -34,6 +35,10 @@ angular.module('teampot', [
 		.otherwise({
 			redirectTo : '/projects'
 		});
+		
+	GapiClientProvider.setClientId("906530262076-dojpmhig3e47pk4jf6u84t8e1g56dmbj.apps.googleusercontent.com");
+	GapiClientProvider.setScope("https://www.googleapis.com/auth/userinfo.email");
+	GapiClientProvider.load("teampot","v1","//"+window.location.host+"/_ah/api");
 
 })
 .run(function($rootScope){
