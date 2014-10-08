@@ -1,8 +1,6 @@
 angular.module('teampot').
-	controller('projectListController', function($rootScope,$scope,GapiClient) {
+	controller('projectListController', function($rootScope,$scope,GapiClient,ProjectService) {
 		
-		teampotClient = GapiClient.client("teampot");
-		
-		$scope.entityList = teampotClient.exec("project.list");
+		$scope.entityList = ProjectService.$list();
 		
 	});

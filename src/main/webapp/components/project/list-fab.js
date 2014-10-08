@@ -7,7 +7,7 @@ angular.module('teampot').
 				controller: 'projectEditModalController',
 				targetEvent: evt,
 				locals: {
-					project: ProjectService.$new()
+					targetProject: ProjectService.$new()
 				}
 			}).then(function(result) {
 				$location.path("/project/"+result.key);
