@@ -10,6 +10,9 @@ angular.module("ngGapiClient",[]).
 		gapiDeferred: angular.injector(['ng']).get('$q').defer(),
 		authDeferred: null,
 		
+		// FIXME: Instantiated on service $get. How to get an instance in the provider config function?
+		_$rootScope: null,
+		
 		setGapi: function(gapi) {
 			this.gapi = gapi;
 			this.gapiDeferred.resolve(gapi);
@@ -109,22 +112,35 @@ angular.module("ngGapiClient",[]).
 							if (response && response.error) 
 								 execResultDeferred.reject(response.error);
 							 else
-								 execResultDeferred.resolve(response);
+								 execResultDeferred.resolve(response.result);
 						}
 						payload ? method().execute(payload,execCallback) : method().execute(execCallback);
 					});
 					
-					return {
-						$promise: execResultDeferred.promise
-					}
+					var execResult = thisProvider._buildExecResultDraft(execResultDeferred.promise);
+					execResult.$promise.then(function(result){
+						angular.extend(execResult,result);
+						thisProvider._$rootScope ? thisProvider._$rootScope.$apply() : false;
+					});
+					
+					return execResult;
 				},
 				$promise: clientPromise
 			};
 		},
 		
-		$get: function() {
+		_buildExecResultDraft: function(execResultPromise){
+			return{
+				$promise: execResultPromise
+			};
+		},
+		
+		$get: function($rootScope) {
 			
 			var thisProvider = this;
+			
+			// FIXME: workaround to get and instance of $rootScope in the provider config function
+			thisProvider._$rootScope = $rootScope;
 
 			return {
 				gapi: function(){return thisProvider.gapi;},
