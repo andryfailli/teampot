@@ -27,7 +27,7 @@ angular.module("ngGapiClient",[]).
 			this.apiKey = apiKey;
 		},
 		
-		load: function(name,version){
+		load: function(name,version,root){
 			
 			var thisProvider = this;
 						
@@ -42,7 +42,9 @@ angular.module("ngGapiClient",[]).
 				
 				// when gapi is ready, load client
 				this.gapiDeferred.promise.then(function(){
-					thisProvider._get$q().when(thisProvider.gapi.client.load(name,version)).then(clientDeferred.resolve,clientDeferred.reject,clientDeferred.notify);
+					thisProvider.gapi.client.load(name,version,function(){
+						clientDeferred.resolve(thisProvider.clients[name]);
+					},root);
 				});
 				
 			}
@@ -126,7 +128,7 @@ angular.module("ngGapiClient",[]).
 
 			return {
 				gapi: function(){return thisProvider.gapi;},
-				client: function(name){return thisProvider.load(name);}
+				client: thisProvider.load
 			};
 		}
 	}).
