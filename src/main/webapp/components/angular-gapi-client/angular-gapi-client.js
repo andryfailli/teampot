@@ -128,7 +128,7 @@ angular.module("ngGapiClient",[]).
 
 			return {
 				gapi: function(){return thisProvider.gapi;},
-				client: thisProvider.load
+				client: function(name,version,root){return thisProvider.load(name,version,root);}
 			};
 		}
 	}).
