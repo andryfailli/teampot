@@ -8,6 +8,7 @@ angular.module("ngGapiClient",[]).
 		clients: {},
 		
 		gapiDeferred: angular.injector(['ng']).get('$q').defer(),
+		authDeferred: null,
 		
 		setGapi: function(gapi) {
 			this.gapi = gapi;
@@ -48,11 +49,40 @@ angular.module("ngGapiClient",[]).
 			return thisProvider.clients[name];
 		},
 		
+		authorize: function(silent){
+			var thisProvider = this;
+			
+			if (!thisProvider.authDeferred) {
+				thisProvider.authDeferred = thisProvider._get$q().defer();
+				
+				// when gapi is ready, authorize
+				this.gapiDeferred.promise.then(function(){
+					
+					var params = {
+						client_id: thisProvider.clientId,
+						scope: thisProvider.scope,
+						immediate: silent
+					}
+					
+					thisProvider.gapi.auth.authorize(params,function(response){
+						if (response && response.error) 
+							thisProvider.authDeferred.reject(response.error);
+						 else
+							 thisProvider.authDeferred.resolve(response);
+					});
+					
+				});
+				
+			}
+			return thisProvider.authDeferred.promise;
+			
+		},
+		
 		_get$q: function(){
 			return angular.injector(['ng']).get('$q');
 		},
 		
-		_buildClientDraft: function(name,promise){
+		_buildClientDraft: function(name,clientPromise){
 			
 			var thisProvider = this;
 			
@@ -66,24 +96,27 @@ angular.module("ngGapiClient",[]).
 						return o;
 					}
 					
-					var execDeferred = thisProvider._get$q().defer();
-					promise.then(function(){
+					var execResultDeferred = thisProvider._get$q().defer();
+					
+					var execStartPromise = thisProvider._get$q().all( thisProvider.authDeferred ? [thisProvider.authDeferred.promise] : [clientPromise,thisProvider.authDeferred.promise] );
+					
+					execStartPromise.then(function(){
 						var client = thisProvider.clients[name];
 						var method = traverse(client,methodName);
-						var execCallback = function(reponse) {
-							if (reponse.error)
-								execDeferred.reject(reponse.error);
-							else
-								execDeferred.resolve(response);
+						var execCallback = function(response) {
+							if (response && response.error) 
+								 execResultDeferred.reject(response.error);
+							 else
+								 execResultDeferred.resolve(response);
 						}
 						payload ? method().execute(payload,execCallback) : method().execute(execCallback);
 					});
 					
 					return {
-						$promise: execDeferred.promise
+						$promise: execResultDeferred.promise
 					}
 				},
-				$promise: promise
+				$promise: clientPromise
 			};
 		},
 		
