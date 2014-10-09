@@ -1,0 +1,20 @@
+<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
+	<material-content flex>
+		<section>
+			<material-list layout="vertical"> 
+				<material-item ng-repeat="task in taskList.items"> 
+					<material-item-content>
+						<div class="material-tile-left">
+							{{task.completed}}
+						</div>
+						<div class="material-tile-content" flex>
+							<h3>{{task.title}}</h3>
+							<p>{{task.description}}</p>
+						</div>
+					</material-item-content>
+					<material-divider ng-if="!$last"></material-divider>
+				</material-item>
+			</material-list>
+		</section>
+	</material-content>
+</material-whiteframe>
