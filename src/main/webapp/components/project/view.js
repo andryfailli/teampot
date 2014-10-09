@@ -1,4 +1,6 @@
 angular.module('teampot').
-	controller('projectViewController', ['$rootScope',function($rootScope) {
+	controller('projectViewController', function($scope,$routeParams,ProjectService) {
 		
-	}]);
+		$scope.entity = ProjectService.$get($routeParams.projectKey);
+		
+	});

@@ -28,7 +28,7 @@ angular.module('teampot', [
 		.when('/project/:projectKey', {
 			id: 'project',
 			parent: 'projects',
-			label: 'My Test Project',
+			label: '{{entity.name}}',
 			templateUrl: '/components/project/view.html',
 			controller: 'projectViewController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',

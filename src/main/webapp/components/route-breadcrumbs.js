@@ -1,5 +1,5 @@
 angular.module('routeBreadcrumbs',[]).
-	factory('routeBreadcrumbs', ['$rootScope','$route','$routeParams',function($rootScope,$route,$routeParams){
+	factory('routeBreadcrumbs', ['$rootScope','$route','$routeParams','$interpolate','$interval',function($rootScope,$route,$routeParams,$interpolate,$interval){
 
 		var service = {}
 		
@@ -34,7 +34,7 @@ angular.module('routeBreadcrumbs',[]).
 				breadcrumbs.unshift({
 					id: route.id,
 					path: routePath,
-					label: route.label ? route.label : route.id
+					label: compileLabel(route.label ? route.label : route.id)
 				})
 				
 				if (route.parent)
@@ -43,6 +43,13 @@ angular.module('routeBreadcrumbs',[]).
 					route = null;
 			}
 			
+		}
+		
+		function compileLabel(label) {
+			if ($route.current && $route.current.locals && $route.current.locals.$scope)
+				return $interpolate(label)($route.current.locals.$scope);
+			else
+				return label;
 		}
 		
 
@@ -64,6 +71,16 @@ angular.module('routeBreadcrumbs',[]).
 
 		
 
+		$rootScope.$on("$viewContentLoaded",function(){	
+			// compile breadcrumb labels
+			for (var i=0; i<breadcrumbs.length; i++) {
+				var interpolateFn = $interpolate(breadcrumbs[i].label);
+				$route.current.locals.$scope.$watch(interpolateFn,function(){
+					update();
+				});
+			}
+		});
+		
 		$rootScope.$on("$routeChangeSuccess",function(){			
 			update();
 		});
