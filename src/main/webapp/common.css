@@ -9,6 +9,10 @@ material-icon {
 	vertical-align: middle;
 }
 
+a.material-button-inner > material-icon {
+	margin-top:11px;
+}
+
 .dialog-title {
 	margin-top:0;
 }

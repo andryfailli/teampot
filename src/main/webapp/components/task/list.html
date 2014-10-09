@@ -4,7 +4,7 @@
 	<material-tab label="All"></material-tab>
 </material-tabs>
 
-<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'">
+<material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center" ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'">
 	<material-content flex>
 		<section>
 			<material-list layout="vertical"> 
