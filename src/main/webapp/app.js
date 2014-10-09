@@ -5,7 +5,8 @@ angular.module('teampot', [
 	'ngMaterial',
 	'routeBreadcrumbs',
 	'routeActive',
-	'ngGapiClient'
+	'ngGapiClient',
+	'angular.filter'
 ])
 .config(function($routeProvider,GapiClientProvider) {
 

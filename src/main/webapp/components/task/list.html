@@ -1,8 +1,8 @@
-<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
+<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'">
 	<material-content flex>
 		<section>
 			<material-list layout="vertical"> 
-				<material-item ng-repeat="task in taskList.items"> 
+				<material-item ng-repeat="task in taskGroupedList"> 
 					<material-item-content>
 						<div class="material-tile-left">
 							{{task.completed}}
