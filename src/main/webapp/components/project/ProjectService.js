@@ -11,6 +11,13 @@ angular.module("teampot").
 				}
 				return entity;
 			},
+			$get: function(key){
+				var entity = client.exec("project.get",{key:key});
+				entity.$promise.then(function(){
+					service.$new(entity);
+				});
+				return entity;
+			},
 			$list: function(){
 				var entityList = client.exec("project.list");
 				entityList.$promise.then(function(){
