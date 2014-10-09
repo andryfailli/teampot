@@ -1,0 +1,26 @@
+<material-tabs class="material-theme-transparent" selected="tabSelected" ng-init="tabSelected=0">
+	<material-tab label="Assigned to me"></material-tab>
+	<material-tab label="Upcoming"></material-tab>
+	<material-tab label="All"></material-tab>
+</material-tabs>
+
+<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'">
+	<material-content flex>
+		<section>
+			<material-list layout="vertical"> 
+				<material-item ng-repeat="task in taskGroupedList"> 
+					<material-item-content>
+						<div class="material-tile-left">
+							{{task.completed}}
+						</div>
+						<div class="material-tile-content" flex>
+							<h3>{{task.title}}</h3>
+							<p>{{task.description}}</p>
+						</div>
+					</material-item-content>
+					<material-divider ng-if="!$last"></material-divider>
+				</material-item>
+			</material-list>
+		</section>
+	</material-content>
+</material-whiteframe>

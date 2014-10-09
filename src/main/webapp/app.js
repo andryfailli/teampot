@@ -5,7 +5,8 @@ angular.module('teampot', [
 	'ngMaterial',
 	'routeBreadcrumbs',
 	'routeActive',
-	'ngGapiClient'
+	'ngGapiClient',
+	'angular.filter'
 ])
 .config(function($routeProvider,GapiClientProvider) {
 
@@ -23,15 +24,23 @@ angular.module('teampot', [
 			controller: 'projectListController',
 			sidebarTemplateUrl: '/components/sidebar/hello.html',
 			fabTemplateUrl: '/components/project/list-fab.html',
-			reloadOnSearch: false
 		})
 		.when('/project/:projectKey', {
 			id: 'project',
 			parent: 'projects',
-			label: '{{entity.name}}',
+			label: '{{project.name}}',
 			templateUrl: '/components/project/view.html',
 			controller: 'projectViewController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
+		})
+		.when('/project/:projectKey/tasks', {
+			id: 'tasks',
+			parent: 'project',
+			label: 'Tasks',
+			templateUrl: '/components/task/list.html',
+			controller: 'taskListController',
+			sidebarTemplateUrl: '/components/sidebar/menu.html',
+			fabTemplateUrl: '/components/task/list-fab.html',
 		})
 		.otherwise({
 			redirectTo : '/projects'
@@ -46,6 +55,7 @@ angular.module('teampot', [
 
 	$rootScope.$on("$routeChangeStart", function(event, next, current) {
 		$rootScope.appLoading = true;
+		$rootScope.closeSidebar();
     });
 	$rootScope.$on("$routeChangeSuccess", function(event, next, current) {
 		$rootScope.appLoading = false;
@@ -66,13 +76,13 @@ angular.module('teampot', [
 
 	$scope.breadcrumbs = routeBreadcrumbs.breadcrumbs;
 	
-	$scope.toggleSidebar = function(){
+	$rootScope.toggleSidebar = function(){
 		$materialSidenav('left').toggle();
 	}
-	$scope.closeSidebar = function(){
+	$rootScope.closeSidebar = function(){
 		$materialSidenav('left').close();
 	}
-	$scope.openSidebar = function(){
+	$rootScope.openSidebar = function(){
 		$materialSidenav('left').open();
 	}
 
