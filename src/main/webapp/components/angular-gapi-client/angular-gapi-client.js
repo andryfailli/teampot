@@ -131,8 +131,8 @@ angular.module("ngGapiClient",[]).
 			};
 		},
 		
-		_buildExecResultDraft: function(payload,execResultPromise){
-			if (!payload) payload = {};
+		_buildExecResultDraft: function(requestPayload,execResultPromise){
+			var payload = !requestPayload || typeof requestPayload !== "object" ? {} : requestPayload;
 			payload.$promise = execResultPromise;
 			return payload
 		},
