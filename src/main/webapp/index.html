@@ -41,24 +41,22 @@
 		
 		
 					<material-toolbar scroll-shrink class="material-theme-light material-whiteframe-z2">
-						<div class="material-toolbar-tools">
-							<h1 class="material-toolbar-tools">
-								<a hide-md ng-click="openSidebar()" aria-label="Toggle Menu" href> 
-									<material-icon icon="/img/icons/ic_menu_24px.svg"></material-icon>
-								</a>
-			
-								<ol class="route-breadcrumbs">
-									<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs">
-										<span ng-if="!$last"> 
-											<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 
-											<material-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></material-icon>
-										</span>
-										<span ng-if="$last">{{breadcrumb.label}}</span>
-									</li>
-								</ol>
-			
-							</h1>
-						</div>
+						<h1 class="material-toolbar-tools">
+							<a hide-md ng-click="openSidebar()" aria-label="Toggle Menu" href> 
+								<material-icon icon="/img/icons/ic_menu_24px.svg"></material-icon>
+							</a>
+		
+							<ol class="route-breadcrumbs">
+								<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs">
+									<span ng-if="!$last"> 
+										<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 
+										<material-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></material-icon>
+									</span>
+									<span ng-if="$last">{{breadcrumb.label}}</span>
+								</li>
+							</ol>
+		
+						</h1>
 					</material-toolbar>
 		
 					<material-content class="material-content-padding" flex>
