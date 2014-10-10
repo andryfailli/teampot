@@ -1,7 +1,11 @@
 <material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
 	<material-content flex>
 	
-		<form>
+		<div layout layout-align="center center" class="spinner-container" ng-if="!task.$resolved">
+			<material-circular-progress mode="indeterminate" ></material-circular-progress>
+		</div>
+	
+		<form ng-if="task.$resolved">
 	
 			<div layout="horizontal" layout-align="center center">
 				<div>
