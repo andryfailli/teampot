@@ -12,7 +12,7 @@ angular.module("teampot").
 				return entity;
 			},
 			$get: function(key){
-				var entity = client.exec("task.get",{key:key});
+				var entity = client.exec("task.get",{k:key});
 				entity.$promise.then(function(){
 					service.$new(entity);
 				});
