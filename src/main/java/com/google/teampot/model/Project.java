@@ -47,15 +47,18 @@ public class Project extends BaseEntity {
 		this.name = name;
 	}
 	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Long getId() {
 		return id;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setId(Long id) {
 		this.id = id;
 	}
 	
 	@Override
+	@ApiResourceProperty(name = "id")
 	public String getKey() {
 		return Key.create(this.getClass(), this.getId()).getString();
 	}

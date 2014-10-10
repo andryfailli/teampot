@@ -26,7 +26,7 @@ angular.module('teampot', [
 			sidebarTemplateUrl: '/components/sidebar/hello.html',
 			fabTemplateUrl: '/components/project/list-fab.html',
 		})
-		.when('/project/:projectKey', {
+		.when('/project/:projectId', {
 			id: 'project',
 			parent: 'project-list',
 			label: '{{project.name}}',
@@ -34,7 +34,7 @@ angular.module('teampot', [
 			controller: 'projectViewController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 		})
-		.when('/project/:projectKey/tasks', {
+		.when('/project/:projectId/tasks', {
 			id: 'task-list',
 			parent: 'project',
 			label: 'Tasks',
@@ -43,10 +43,10 @@ angular.module('teampot', [
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/task/list-fab.html',
 		})
-		.when('/project/:projectKey/task/:taskKey?', {
+		.when('/project/:projectId/task/:taskId?', {
 			id: 'task-edit',
 			parent: 'task-list',
-			label: '{{task.key ? "edit task" : "new task"}}',
+			label: '{{task.id ? "edit task" : "new task"}}',
 			templateUrl: '/components/task/edit.html',
 			controller: 'taskEditController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html'

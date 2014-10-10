@@ -24,15 +24,15 @@ public class TaskEndpoint extends BaseEndpoint {
 	
 	@ApiMethod(
 		name = "task.get", 
-		path = "task/{k}",
+		path = "task/{id}",
 		httpMethod = HttpMethod.GET
 	)
-	public Task get(@Named("k") String k) throws EntityNotFoundException {
-		Task entity = dao.get(k);
+	public Task get(@Named("id") String id) throws EntityNotFoundException {
+		Task entity = dao.get(id);
 		if (entity != null)
 			return entity;
 		else
-			throw new EntityNotFoundException(k);
+			throw new EntityNotFoundException(id);
 	}
 	
 	@ApiMethod(
@@ -47,11 +47,11 @@ public class TaskEndpoint extends BaseEndpoint {
 	
 	@ApiMethod(
 		name = "task.remove",
-		path = "task/{k}",
+		path = "task/{id}",
 		httpMethod = HttpMethod.DELETE
 	)
-	public void remove(@Named("k") String k) {
-		dao.remove(k);
+	public void remove(@Named("id") String id) {
+		dao.remove(id);
 	}
 	
 }

@@ -10,7 +10,7 @@ angular.module('teampot').
 					targetProject: ProjectService.$new()
 				}
 			}).then(function(result) {
-				$location.path("/project/"+result.key);
+				$location.path("/project/"+result.id);
 			});
 		}
 

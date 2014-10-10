@@ -12,8 +12,8 @@ angular.module("teampot").
 				}
 				return entity;
 			},
-			$get: function(key){
-				var entity = client.exec("task.get",{k:key});
+			$get: function(id){
+				var entity = client.exec("task.get",{id:id});
 				entity.$resolved = false;
 				entity.$promise.then(function(){
 					service.$new(entity);

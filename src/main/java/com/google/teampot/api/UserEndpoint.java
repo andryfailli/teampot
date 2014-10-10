@@ -24,15 +24,15 @@ public class UserEndpoint extends BaseEndpoint {
 	
 	@ApiMethod(
 		name = "user.get", 
-		path = "user/{key}",
+		path = "user/{id}",
 		httpMethod = HttpMethod.GET
 	)
-	public User get(@Named("key") String key) throws EntityNotFoundException {
-		User entity = dao.get(key);
+	public User get(@Named("id") String id) throws EntityNotFoundException {
+		User entity = dao.get(id);
 		if (entity != null)
 			return entity;
 		else
-			throw new EntityNotFoundException(key);
+			throw new EntityNotFoundException(id);
 	}
 	
 	@ApiMethod(
@@ -47,11 +47,11 @@ public class UserEndpoint extends BaseEndpoint {
 	
 	@ApiMethod(
 		name = "user.remove",
-		path = "user/{key}",
+		path = "user/{id}",
 		httpMethod = HttpMethod.DELETE
 	)
-	public void remove(@Named("key") String key) {
-		dao.remove(key);
+	public void remove(@Named("id") String id) {
+		dao.remove(id);
 	}
 	
 }

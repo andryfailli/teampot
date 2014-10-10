@@ -18,6 +18,7 @@ public class TaskComment extends Comment {
 	}
 
 	@Override
+	@ApiResourceProperty(name = "id")
 	public String getKey() {
 		return Key.create(this.getTask().getKey(),this.getClass(), this.getId()).getString();
 	}

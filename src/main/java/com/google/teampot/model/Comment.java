@@ -72,10 +72,12 @@ public abstract class Comment extends BaseEntity {
 		this.body = body;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Long getId() {
 		return id;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setId(Long id) {
 		this.id = id;
 	}

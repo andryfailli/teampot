@@ -1,5 +1,7 @@
 package com.google.teampot.model;
 
+import com.google.api.server.spi.config.AnnotationBoolean;
+import com.google.api.server.spi.config.ApiResourceProperty;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -23,6 +25,7 @@ public class User extends BaseEntity {
 	}
 	
 	@Override
+	@ApiResourceProperty(name = "id")
 	public String getKey() {
 		return Key.create(this.getClass(), this.getId()).getString();
 	}
@@ -59,10 +62,12 @@ public class User extends BaseEntity {
 		this.iconUrl = iconUrl;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Long getId() {
 		return id;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setId(Long id) {
 		this.id = id;
 	}

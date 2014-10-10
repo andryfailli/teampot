@@ -48,6 +48,7 @@ public class Task extends BaseEntity {
 	}
 	
 	@Override
+	@ApiResourceProperty(name = "id")
 	public String getKey() {
 		return Key.create(this.getProject().getKey(),this.getClass(), this.getId()).getString();
 	}
@@ -135,10 +136,12 @@ public class Task extends BaseEntity {
 		this.files = files;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Long getId() {
 		return id;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setId(Long id) {
 		this.id = id;
 	}
