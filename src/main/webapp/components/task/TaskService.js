@@ -6,6 +6,7 @@ angular.module("teampot").
 		var service = {
 			$new: function(entity){
 				entity = entity || {}
+				entity.$resolved = true;
 				entity.$save = function(){
 					return client.exec("task.save",entity);
 				}
