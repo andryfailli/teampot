@@ -1,11 +1,11 @@
-<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
+<div layout layout-align="center center" class="spinner-container" ng-if="!task.$resolved">
+	<material-circular-progress mode="indeterminate" ></material-circular-progress>
+</div>
+		
+<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-if="task.$resolved">
 	<material-content flex>
 	
-		<div layout layout-align="center center" class="spinner-container" ng-if="!task.$resolved">
-			<material-circular-progress mode="indeterminate" ></material-circular-progress>
-		</div>
-	
-		<form ng-if="task.$resolved">
+		<form>
 	
 			<div layout="horizontal" layout-align="center center">
 				<div>
@@ -39,7 +39,6 @@
 					<tf-float label="Description" value="task.description" type="textarea" class="tf-float-full-with"></tf-float>
 				</div>
 			</div>
-		
       
       </form>
 
