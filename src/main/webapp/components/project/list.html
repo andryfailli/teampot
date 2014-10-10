@@ -1,9 +1,13 @@
 <div style="text-align:center">
 
-	<a class="unstyled" ng-repeat="entity in entityList.items" ng-href="#/project/{{entity.key}}">
+	<div layout layout-align="center center" class="spinner-container" ng-if="!entityList.$resolved">
+		<material-circular-progress mode="indeterminate" ></material-circular-progress>
+	</div>
+
+	<a class="unstyled" ng-repeat="entity in entityList.items" ng-href="#/project/{{entity.key}}" ng-if="entityList.$resolved">
 		<material-whiteframe class="tile material-whiteframe-z1" >
 			<h3>{{entity.name}}</h3>
 		</material-whiteframe>
 	</a>
-
+	
 </div>

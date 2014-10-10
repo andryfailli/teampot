@@ -9,6 +9,10 @@ material-icon {
 	vertical-align: middle;
 }
 
+a.material-button-inner > material-icon {
+	margin-top:11px;
+}
+
 .dialog-title {
 	margin-top:0;
 }
@@ -24,5 +28,30 @@ material-icon {
 
 a.unstyled {
 	text-decoration: none;
-	color: in
+	color: inherit;
+}
+
+.tf-float-full-with > input,
+.tf-float-full-with > textarea{
+	width: 100%;
+	margin:0;
+}
+
+.input-lg > input{
+	font-size:26px;
+}
+
+material-input-group, 
+.material-input-group {
+	margin:10px;
+}
+
+
+/* Date placeholder with tf on Chrome fix */
+material-input-group > input[type=date] {
+	-webkit-text-fill-color: transparent;
+}
+material-input-group.material-input-has-value > input[type=date],
+material-input-group.material-input-focused > input[type=date] {
+	-webkit-text-fill-color:initial;
 }

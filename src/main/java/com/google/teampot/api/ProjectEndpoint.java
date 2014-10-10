@@ -24,15 +24,15 @@ public class ProjectEndpoint extends BaseEndpoint{
 	
 	@ApiMethod(
 		name = "project.get", 
-		path = "project/{key}",
+		path = "project/{k}",
 		httpMethod = HttpMethod.GET
 	)
-	public Project get(@Named("key") String key) throws EntityNotFoundException {
-		Project entity = dao.get(key);
+	public Project get(@Named("k") String k) throws EntityNotFoundException {
+		Project entity = dao.get(k);
 		if (entity != null)
 			return entity;
 		else
-			throw new EntityNotFoundException(key);
+			throw new EntityNotFoundException(k);
 	}
 	
 	@ApiMethod(
@@ -47,11 +47,11 @@ public class ProjectEndpoint extends BaseEndpoint{
 	
 	@ApiMethod(
 		name = "project.remove",
-		path = "project/{key}",
+		path = "project/{k}",
 		httpMethod = HttpMethod.DELETE
 	)
-	public void remove(@Named("key") String key) {
-		dao.remove(key);
+	public void remove(@Named("k") String k) {
+		dao.remove(k);
 	}
 	
 }

@@ -6,7 +6,8 @@ angular.module('teampot', [
 	'routeBreadcrumbs',
 	'routeActive',
 	'ngGapiClient',
-	'angular.filter'
+	'angular.filter',
+	'monospaced.elastic'
 ])
 .config(function($routeProvider,GapiClientProvider) {
 
@@ -18,7 +19,7 @@ angular.module('teampot', [
 			sidebarTemplateUrl: '/components/sidebar/hello.html'
 		})
 		.when('/projects', {
-			id: 'projects',
+			id: 'project-list',
 			label: 'Projects',
 			templateUrl: '/components/project/list.html',
 			controller: 'projectListController',
@@ -27,20 +28,28 @@ angular.module('teampot', [
 		})
 		.when('/project/:projectKey', {
 			id: 'project',
-			parent: 'projects',
+			parent: 'project-list',
 			label: '{{project.name}}',
 			templateUrl: '/components/project/view.html',
 			controller: 'projectViewController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 		})
 		.when('/project/:projectKey/tasks', {
-			id: 'tasks',
+			id: 'task-list',
 			parent: 'project',
 			label: 'Tasks',
 			templateUrl: '/components/task/list.html',
 			controller: 'taskListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/task/list-fab.html',
+		})
+		.when('/project/:projectKey/task/:taskKey?', {
+			id: 'task-edit',
+			parent: 'task-list',
+			label: '{{task.key ? "edit task" : "new task"}}',
+			templateUrl: '/components/task/edit.html',
+			controller: 'taskEditController',
+			sidebarTemplateUrl: '/components/sidebar/menu.html'
 		})
 		.otherwise({
 			redirectTo : '/projects'

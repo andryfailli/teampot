@@ -4,16 +4,20 @@
 	<material-tab label="All"></material-tab>
 </material-tabs>
 
-<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'">
+<div layout layout-align="center center" class="spinner-container" ng-if="!taskList.$resolved">
+	<material-circular-progress mode="indeterminate" ></material-circular-progress>
+</div>
+
+<material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center" ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'" ng-if="taskList.$resolved">
 	<material-content flex>
 		<section>
 			<material-list layout="vertical"> 
 				<material-item ng-repeat="task in taskGroupedList"> 
 					<material-item-content>
 						<div class="material-tile-left">
-							{{task.completed}}
+							<material-checkbox ng-model="task.completed" aria-label="Completed" ng-click="task.$save()"></material-checkbox>
 						</div>
-						<div class="material-tile-content" flex>
+						<div class="material-tile-content" ng-click="goto(task)" style="cursor: pointer;" flex>
 							<h3>{{task.title}}</h3>
 							<p>{{task.description}}</p>
 						</div>

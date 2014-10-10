@@ -58,3 +58,7 @@ html {
 [ng-view] .tabs-header-items-container {
 	margin:0 20px;
 }
+
+.spinner-container {
+	padding:25px;
+}
