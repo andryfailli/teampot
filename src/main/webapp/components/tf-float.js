@@ -26,10 +26,12 @@ angular.module("teampot").
 	          }
 	        }
 	      },
-	      template:
-	        '<material-input-group ng-disabled="isDisabled">' +
+	      template: function(element, attrs){
+	    	  var tagName = attrs.type === "textarea" ? "material-textarea" : "material-input";
+	        return'<material-input-group ng-disabled="isDisabled">' +
 	          '<label for="{{fid}}">{{label}}</label>' +
-	          '<material-input id="{{fid}}" ng-model="value">' +
+	          '<'+tagName+' id="{{fid}}" ng-model="value">' +
 	        '</material-input-group>'
+	      }
 	    };
 	});

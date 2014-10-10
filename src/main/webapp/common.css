@@ -31,7 +31,8 @@ a.unstyled {
 	color: inherit;
 }
 
-.tf-float-full-with > input{
+.tf-float-full-with > input,
+.tf-float-full-with > textarea{
 	width: 100%;
 	margin:0;
 }
