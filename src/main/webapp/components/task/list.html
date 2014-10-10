@@ -11,7 +11,7 @@
 				<material-item ng-repeat="task in taskGroupedList"> 
 					<material-item-content>
 						<div class="material-tile-left">
-							<material-checkbox ng-model="task.completed" aria-label="Completed"></material-checkbox>
+							<material-checkbox ng-model="task.completed" aria-label="Completed" ng-click="task.$save()"></material-checkbox>
 						</div>
 						<div class="material-tile-content" flex>
 							<h3>{{task.title}}</h3>
