@@ -13,7 +13,7 @@
 						<div class="material-tile-left">
 							<material-checkbox ng-model="task.completed" aria-label="Completed" ng-click="task.$save()"></material-checkbox>
 						</div>
-						<div class="material-tile-content" flex>
+						<div class="material-tile-content" ng-click="goto(task)" style="cursor: pointer;" flex>
 							<h3>{{task.title}}</h3>
 							<p>{{task.description}}</p>
 						</div>
