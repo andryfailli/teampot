@@ -1,5 +1,35 @@
 <material-whiteframe class="material-whiteframe-z1" layout layout-align="center center">
 	<material-content flex>
+	
+		<form>
+	
+			<div layout="horizontal" layout-align="center center">
+				<div>
+					<material-checkbox ng-model="task.completed" aria-label="Completed"></material-checkbox>
+				</div>
+				<div flex>
+					<tf-float label="Title" value="task.title" class="tf-float-full-with input-lg"></tf-float>
+				</div>
+			</div>
+			
+			<div layout="horizontal" layout-align="center center">
+				<div flex>
+					<tf-float label="Labels" value="task.labels" class="tf-float-full-with"></tf-float>
+				</div>
+				<div>
+					<tf-float label="Due date" value="task.dueDate" type="date"></tf-float>
+				</div>
+				<div>
+					<tf-float label="Assignee" value="task.assignee"></tf-float>
+				</div>
+			</div>
+			
+			<div layout="horizontal" layout-align="center center">
+				<tf-float label="Description" value="task.description" type="textarea" class="tf-float-full-with"></tf-float>
+			</div>
 		
+      
+      </form>
+
 	</material-content>
 </material-whiteframe>
