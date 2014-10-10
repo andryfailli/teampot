@@ -10,6 +10,12 @@
 				<div flex>
 					<tf-float label="Title" value="task.title" class="tf-float-full-with input-lg"></tf-float>
 				</div>
+				<div style="overflow:hidden;">
+					<material-input-group class="material-input-has-value">
+						<label for="">Priority</label>
+						<material-slider discrete ng-model="task.priority" step="1" min="0" max="4" aria-label="Priority" style="width: 200px;"></material-slider>
+					</material-input-group>
+				</div>
 			</div>
 			
 			<div layout="horizontal" layout-align="center center">
