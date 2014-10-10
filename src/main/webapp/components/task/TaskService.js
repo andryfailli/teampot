@@ -21,8 +21,10 @@ angular.module("teampot").
 			$list: function(){
 				var entityList = client.exec("task.list");
 				entityList.$promise.then(function(){
-					for (var i=0; i<entityList.items.length; i++) {
-						service.$new(entityList.items[i]);
+					if (entityList.items) {
+						for (var i=0; i<entityList.items.length; i++) {
+							service.$new(entityList.items[i]);
+						}
 					}
 				});
 				return entityList;

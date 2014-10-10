@@ -12,7 +12,7 @@ angular.module("teampot").
 				return entity;
 			},
 			$get: function(key){
-				var entity = client.exec("project.get",{key:key});
+				var entity = client.exec("project.get",{k:key});
 				entity.$promise.then(function(){
 					service.$new(entity);
 				});
@@ -21,8 +21,10 @@ angular.module("teampot").
 			$list: function(){
 				var entityList = client.exec("project.list");
 				entityList.$promise.then(function(){
-					for (var i=0; i<entityList.items.length; i++) {
-						service.$new(entityList.items[i]);
+					if (entityList.items) {
+						for (var i=0; i<entityList.items.length; i++) {
+							service.$new(entityList.items[i]);
+						}
 					}
 				});
 				return entityList;
