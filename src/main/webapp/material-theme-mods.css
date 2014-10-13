@@ -9,3 +9,7 @@
 .material-theme-transparent material-tab.active {
 	color: #3e50b4;
 }
+
+material-circular-progress .inset {
+	background: #ececec;
+}
