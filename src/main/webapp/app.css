@@ -62,3 +62,11 @@ html {
 .spinner-container {
 	padding:25px;
 }
+
+material-whiteframe.fillview {
+	position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 46px;
+    top: 16px;
+}

@@ -45,6 +45,9 @@ public class ProjectEndpoint extends BaseEndpoint{
 		if (entity.getId() == null) {
 			//TODO FIXME: create a new Drive folder
 			entity.setFolder("0B4_NX57yMnRsMXAwNDZfTDBOcGM");
+			
+			//TODO FIXME: create a new Google group
+			entity.setMachineName("misc-it");
 		}
 		
 		dao.save(entity);

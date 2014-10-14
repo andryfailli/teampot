@@ -62,6 +62,14 @@ angular.module('teampot', [
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/file/list-fab.html',
 		})
+		.when('/project/:projectId/discussions', {
+			id: 'discussions',
+			parent: 'project',
+			label: 'Discussions',
+			templateUrl: '/components/discussion/discussions.html',
+			controller: 'discussionsController',
+			sidebarTemplateUrl: '/components/sidebar/menu.html'
+		})
 		.otherwise({
 			redirectTo : '/projects'
 		});

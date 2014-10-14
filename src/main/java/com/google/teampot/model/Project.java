@@ -28,11 +28,11 @@ public class Project extends BaseEntity {
 	
 	private Set<Ref<User>> users;
 	
-	private Set<String> files;
-	
 	private String folder;
 	
 	private String name;
+	
+	private String machineName;
 	
 	private Ref<User> owner;
 
@@ -41,7 +41,6 @@ public class Project extends BaseEntity {
 		this.meetings = new ArrayList<Ref<Meeting>>();
 		this.tasks = new ArrayList<Ref<Task>>();
 		this.users = new LinkedHashSet<Ref<User>>();
-		this.files = new LinkedHashSet<String>();
 	}
 
 	public Project(String name) {
@@ -133,16 +132,6 @@ public class Project extends BaseEntity {
 			return 0;
 	}
 
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public Set<String> getFiles() {
-		return files;
-	}
-
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setFiles(Set<String> files) {
-		this.files = files;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -184,6 +173,14 @@ public class Project extends BaseEntity {
 
 	public void setFolder(String folder) {
 		this.folder = folder;
+	}
+
+	public String getMachineName() {
+		return machineName;
+	}
+
+	public void setMachineName(String machineName) {
+		this.machineName = machineName;
 	}
 
 }
