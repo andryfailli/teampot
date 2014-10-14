@@ -7,11 +7,11 @@ angular.module('teampot', [
 	'routeBreadcrumbs',
 	'routeActive',
 	'iframeOnload',
-	'ngGapiClient',
+	'ngGapi',
 	'angular.filter',
 	'monospaced.elastic'
 ])
-.config(function($routeProvider,GapiClientProvider) {
+.config(function($routeProvider,GapiProvider,GapiClientProvider,GapiPickerProvider) {
 
 	$routeProvider
 		.when('/dashboard', {
@@ -66,12 +66,15 @@ angular.module('teampot', [
 			redirectTo : '/projects'
 		});
 		
-	GapiClientProvider.setClientId("138057900615-7ei54320nap7588tr5g5t3tsf43d7otb.apps.googleusercontent.com");
-	GapiClientProvider.setScope("https://www.googleapis.com/auth/userinfo.email");
+	GapiProvider.setClientId("138057900615-7ei54320nap7588tr5g5t3tsf43d7otb.apps.googleusercontent.com");
+	GapiProvider.setScope("https://www.googleapis.com/auth/userinfo.email");
+	GapiProvider.authorize(true);
+	GapiPickerProvider.setDeveloperKey("AIzaSyD0eKvPE6ffmflhzgDL23jpJ_Nqu3tNs64");
+	GapiProvider.load("picker");
 	GapiClientProvider.load("teampot","v1","//"+window.location.host+"/_ah/api");
 
 })
-.run(function($rootScope){
+.run(function($rootScope,GapiClient){
 
 	$rootScope.$on("$routeChangeStart", function(event, next, current) {
 		$rootScope.appLoading = true;
@@ -89,6 +92,7 @@ angular.module('teampot', [
 		alert("Unable to access this page");
 		//TODO migliorare messaggio
     });
+    
 })
 .controller('mainController',function($rootScope,$scope,$routeParams,$materialSidenav,routeBreadcrumbs){
 
