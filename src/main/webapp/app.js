@@ -2,9 +2,11 @@ angular.module('teampot', [
 	'ngRoute',
 	'ngAnimate',
 	'ngAria',
+	'ngSanitize',
 	'ngMaterial',
 	'routeBreadcrumbs',
 	'routeActive',
+	'iframeOnload',
 	'ngGapiClient',
 	'angular.filter',
 	'monospaced.elastic'
@@ -50,6 +52,15 @@ angular.module('teampot', [
 			templateUrl: '/components/task/edit.html',
 			controller: 'taskEditController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html'
+		})
+		.when('/project/:projectId/files', {
+			id: 'file-list',
+			parent: 'project',
+			label: 'Files',
+			templateUrl: '/components/file/list.html',
+			controller: 'fileListController',
+			sidebarTemplateUrl: '/components/sidebar/menu.html',
+			fabTemplateUrl: '/components/file/list-fab.html',
 		})
 		.otherwise({
 			redirectTo : '/projects'

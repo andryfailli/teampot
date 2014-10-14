@@ -1,0 +1,9 @@
+<div layout layout-align="center center" class="spinner-container" ng-if="(!project.$resolved || !iframeready)">
+	<material-circular-progress mode="indeterminate" ></material-circular-progress>
+</div>
+
+<material-whiteframe class="files-container material-whiteframe-z1" layout layout-align="center center" ng-show="project.$resolved && iframeready">
+	<material-content flex style="height:100%; overflow:hidden;">
+		<iframe ng-src="{{iframeSrc}}" style="width: 100%; height: 100%" frameborder="0" iframe-onload="iframeLoaded()"></iframe>
+	</material-content>
+</material-whiteframe>

@@ -41,6 +41,12 @@ public class ProjectEndpoint extends BaseEndpoint{
 		httpMethod = HttpMethod.POST
 	)
 	public Project save(Project entity) {
+		
+		if (entity.getId() == null) {
+			//TODO FIXME: create a new Drive folder
+			entity.setFolder("0B4_NX57yMnRsMXAwNDZfTDBOcGM");
+		}
+		
 		dao.save(entity);
 		return entity;
 	}

@@ -30,6 +30,8 @@ public class Project extends BaseEntity {
 	
 	private Set<String> files;
 	
+	private String folder;
+	
 	private String name;
 	
 	private Ref<User> owner;
@@ -174,6 +176,14 @@ public class Project extends BaseEntity {
 	public void setOwnerKey(String owner) {
 		Ref2StringTransformer<User> t = new Ref2StringTransformer<User>();
 		this.owner = t.transformFrom(owner);
+	}
+
+	public String getFolder() {
+		return folder;
+	}
+
+	public void setFolder(String folder) {
+		this.folder = folder;
 	}
 
 }
