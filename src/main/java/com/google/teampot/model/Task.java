@@ -52,6 +52,14 @@ public class Task extends BaseEntity {
 	public String getKey() {
 		return Key.create(this.getProject().getKey(),this.getClass(), this.getId()).getString();
 	}
+	
+	@ApiResourceProperty(name = "id")
+	public void setKey(String key) {
+		Key entityKey = Key.create(key);
+		Ref parentRef = Ref.create(entityKey.getParent());
+		this.setProject(parentRef);
+		this.setId(entityKey.getId());
+	}
 
 	public String getTitle() {
 		return title;

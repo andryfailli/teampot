@@ -5,9 +5,11 @@ import java.util.List;
 import com.google.teampot.api.exception.EntityNotFoundException;
 import com.google.teampot.dao.UserDAO;
 import com.google.teampot.model.User;
+import com.google.teampot.service.UserService;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
+import com.google.appengine.api.oauth.OAuthRequestException;
 
 public class UserEndpoint extends BaseEndpoint {
 
@@ -18,7 +20,9 @@ public class UserEndpoint extends BaseEndpoint {
 		path = "user",
 		httpMethod = HttpMethod.GET
 	)
-	public List<User> list() {
+	public List<User> list(com.google.appengine.api.users.User gUser) throws OAuthRequestException {
+		UserService.getInstance().ensureProvisioning(gUser);
+		
 		return dao.list();
 	}
 	
@@ -27,7 +31,9 @@ public class UserEndpoint extends BaseEndpoint {
 		path = "user/{id}",
 		httpMethod = HttpMethod.GET
 	)
-	public User get(@Named("id") String id) throws EntityNotFoundException {
+	public User get(@Named("id") String id, com.google.appengine.api.users.User gUser) throws EntityNotFoundException,OAuthRequestException {
+		UserService.getInstance().ensureProvisioning(gUser);
+		
 		User entity = dao.get(id);
 		if (entity != null)
 			return entity;
@@ -40,7 +46,9 @@ public class UserEndpoint extends BaseEndpoint {
 		path = "user",
 		httpMethod = HttpMethod.POST
 	)
-	public User save(User entity) {
+	public User save(User entity, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
+		UserService.getInstance().ensureProvisioning(gUser);
+		
 		dao.save(entity);
 		return entity;
 	}
@@ -50,7 +58,9 @@ public class UserEndpoint extends BaseEndpoint {
 		path = "user/{id}",
 		httpMethod = HttpMethod.DELETE
 	)
-	public void remove(@Named("id") String id) {
+	public void remove(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
+		UserService.getInstance().ensureProvisioning(gUser);
+		
 		dao.remove(id);
 	}
 	

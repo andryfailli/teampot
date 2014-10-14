@@ -12,9 +12,17 @@ public class TaskActivityEvent extends ActivityEvent {
 
 	@Load
 	private Ref<Task> task;
+	
+	private TaskActivityEventVerb verb;
 
 	public TaskActivityEvent() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public TaskActivityEvent(Task task, User actor, TaskActivityEventVerb verb) {
+		this.setTask(task);
+		this.setActor(actor);
+		this.setVerb(verb);
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
@@ -42,6 +50,16 @@ public class TaskActivityEvent extends ActivityEvent {
 	public void setTaskEntity(Task task) {
 		Ref2EntityTransformer<Task> t = new Ref2EntityTransformer<Task>();
 		this.task = t.transformFrom(task);
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public TaskActivityEventVerb getVerb() {
+		return verb;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setVerb(TaskActivityEventVerb verb) {
+		this.verb = verb;
 	}
 
 }

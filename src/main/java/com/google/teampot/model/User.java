@@ -5,6 +5,7 @@ import com.google.api.server.spi.config.ApiResourceProperty;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class User extends BaseEntity {
@@ -12,6 +13,7 @@ public class User extends BaseEntity {
 	@Id
 	private Long id;
 	
+	@Index
 	private String email;
 	
 	private String firstName;
@@ -22,6 +24,10 @@ public class User extends BaseEntity {
 	
 	public User() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public User(String email) {
+		this.setEmail(email);
 	}
 	
 	@Override
