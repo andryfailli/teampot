@@ -5,7 +5,7 @@ angular.module('teampot').
 		$scope.project.$promise.then(function(){
 			$scope.$apply(function(){
 				//TODO: choose right domain!
-				$scope.iframeSrc = $sce.trustAsResourceUrl("https://groups.google.com/forum/embed/?place=forum/"+$scope.project.machineName+"&domain="+CONSTANTS.APPS_DOMAIN+"&parenturl="+encodeURIComponent(window.location.href));
+				$scope.iframeSrc = $sce.trustAsResourceUrl("https://groups.google.com/forum/embed/?place=forum/"+$scope.project.machineName+"&domain="+CONSTANTS.APPS_DOMAIN+"&hideforumtitle=true&parenturl="+encodeURIComponent(window.location.href));
 			})
 		})
 		
