@@ -24,7 +24,7 @@
 	
 		<section layout="horizontal" class="full-height" flex>
 	
-			<material-sidenav layout="vertical" class="material-sidenav-left material-whiteframe-z3" component-id="left" material-swipe-left="closeSidebar()"> 
+			<material-sidenav layout="vertical" class="material-sidenav-left material-whiteframe-z3" component-id="left" material-swipe-left="closeSidebar()" ng-if="sidebarTemplateUrl"> 
 				<material-toolbar class="material-theme-indigo">
 					<h1 class="material-toolbar-tools" data-ng-click="closeSidebar()">TeamPot</h1>
 				</material-toolbar> 
@@ -42,9 +42,10 @@
 		
 					<material-toolbar scroll-shrink class="material-theme-light material-whiteframe-z2">
 						<h1 class="material-toolbar-tools">
-							<a hide-md ng-click="openSidebar()" aria-label="Toggle Menu" href> 
+							<a hide-md ng-click="openSidebar()" aria-label="Toggle Menu" href ng-if="sidebarTemplateUrl"> 
 								<material-icon icon="/img/icons/ic_menu_24px.svg"></material-icon>
 							</a>
+							<span ng-if="!sidebarTemplateUrl || !breadcrumbs">TeamPot</span>
 		
 							<ol class="route-breadcrumbs" flex>
 								<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs">
@@ -67,7 +68,11 @@
 		
 					<material-content class="material-content-padding" flex>
 		
-					<div ng-view></div>
+						<div ng-view ng-if="userInfo.$promise.$resolved"></div>
+						
+						<div id="teampot-intro-logo" ng-if="!userInfo.$promise.$resolved"">
+							<img src="/img/teampot-logo.png" class="image-responsive"/>
+						</div>
 		
 					</material-content>
 		
