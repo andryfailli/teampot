@@ -70,3 +70,10 @@ material-whiteframe.fillview {
     bottom: 46px;
     top: 16px;
 }
+
+#user-info > * {
+	vertical-align: middle;	
+}
+#user-info .face {
+	margin-right: 0;
+}

@@ -46,7 +46,7 @@
 								<material-icon icon="/img/icons/ic_menu_24px.svg"></material-icon>
 							</a>
 		
-							<ol class="route-breadcrumbs">
+							<ol class="route-breadcrumbs" flex>
 								<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs">
 									<span ng-if="!$last"> 
 										<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 
@@ -55,6 +55,12 @@
 									<span ng-if="$last">{{breadcrumb.label}}</span>
 								</li>
 							</ol>
+							
+							<a id="user-info" href ng-href="{{userInfo.url}}" target="_blank" ng-if="userInfo.$promise.$resolved">
+								<span>+{{userInfo.name.givenName ? userInfo.name.givenName : userInfo.displayName}}</span>
+								<img class="face" src="about:blank" ng-src="{{userInfo.image.url}}"/>
+							</a>
+							<material-button class="material-button-raised" ng-click="signIn()" ng-if="!userInfo.$promise.$resolved">Sign in</material-button>
 		
 						</h1>
 					</material-toolbar>
