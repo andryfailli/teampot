@@ -57,6 +57,13 @@ angular.module("ngGapi").
 					}
 					
 					var execResultDeferred = thisProvider._get$q().defer();
+					execResultDeferred.promise.then(function(){
+						execResultDeferred.promise.$resolved = true;
+						execResultDeferred.promise.$sucess = true;
+					},function(){
+						execResultDeferred.promise.$resolved = true;
+						execResultDeferred.promise.$error = true;
+					})
 					
 					var execStartPromise = thisProvider._get$q().all( thisProvider._getGapi().auth$promise() ? [clientPromise,thisProvider._getGapi().auth$promise()] : [clientPromise] );
 					

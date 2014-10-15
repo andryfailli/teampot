@@ -55,3 +55,10 @@ material-input-group.material-input-has-value > input[type=date],
 material-input-group.material-input-focused > input[type=date] {
 	-webkit-text-fill-color:initial;
 }
+
+.face {
+	border-radius: 30px;
+	border: 1px solid #ddd;
+	width: 48px;
+	margin: 16px;
+}

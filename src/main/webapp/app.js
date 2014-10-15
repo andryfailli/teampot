@@ -27,6 +27,9 @@ angular.module('teampot', [
 			controller: 'projectListController',
 			sidebarTemplateUrl: '/components/sidebar/hello.html',
 			fabTemplateUrl: '/components/project/list-fab.html',
+			resolve:{
+				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+			}
 		})
 		.when('/project/:projectId', {
 			id: 'project',
@@ -35,6 +38,9 @@ angular.module('teampot', [
 			templateUrl: '/components/project/view.html',
 			controller: 'projectViewController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
+			resolve:{
+				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+			}
 		})
 		.when('/project/:projectId/tasks', {
 			id: 'task-list',
@@ -44,6 +50,9 @@ angular.module('teampot', [
 			controller: 'taskListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/task/list-fab.html',
+			resolve:{
+				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+			}
 		})
 		.when('/project/:projectId/task/:taskId?', {
 			id: 'task-edit',
@@ -51,7 +60,10 @@ angular.module('teampot', [
 			label: '{{task.id ? "edit task" : "new task"}}',
 			templateUrl: '/components/task/edit.html',
 			controller: 'taskEditController',
-			sidebarTemplateUrl: '/components/sidebar/menu.html'
+			sidebarTemplateUrl: '/components/sidebar/menu.html',
+			resolve:{
+				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+			}
 		})
 		.when('/project/:projectId/files', {
 			id: 'file-list',
@@ -61,6 +73,9 @@ angular.module('teampot', [
 			controller: 'fileListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/file/list-fab.html',
+			resolve:{
+				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+			}
 		})
 		.when('/project/:projectId/discussions', {
 			id: 'discussions',
@@ -68,21 +83,28 @@ angular.module('teampot', [
 			label: 'Discussions',
 			templateUrl: '/components/discussion/discussions.html',
 			controller: 'discussionsController',
-			sidebarTemplateUrl: '/components/sidebar/menu.html'
+			sidebarTemplateUrl: '/components/sidebar/menu.html',
+			resolve:{
+				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+			}
 		})
 		.otherwise({
 			redirectTo : '/projects'
 		});
 		
 	GapiProvider.setClientId("138057900615-7ei54320nap7588tr5g5t3tsf43d7otb.apps.googleusercontent.com");
-	GapiProvider.setScope("https://www.googleapis.com/auth/userinfo.email");
+	GapiProvider.setScope("https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me");
 	GapiProvider.authorize(true);
-	GapiPickerProvider.setDeveloperKey("AIzaSyD0eKvPE6ffmflhzgDL23jpJ_Nqu3tNs64");
+	
+	GapiPickerProvider.setDeveloperKey("AIzaSyC_VQ_C57vVOLMUxtMBr6bIwR2kNy8_H80");
+	
 	GapiProvider.load("picker");
+	
 	GapiClientProvider.load("teampot","v1","//"+window.location.host+"/_ah/api");
+	GapiClientProvider.load("plus","v1");
 
 })
-.run(function($rootScope,GapiClient){
+.run(function($rootScope,Gapi,GapiClient){
 
 	$rootScope.$on("$routeChangeStart", function(event, next, current) {
 		$rootScope.appLoading = true;
@@ -100,6 +122,12 @@ angular.module('teampot', [
 		alert("Unable to access this page");
 		//TODO migliorare messaggio
     });
+    
+    $rootScope.signIn = function(){
+    	Gapi.authorize();
+    }
+    
+    $rootScope.userInfo = GapiClient.client("plus").exec("people.get",{userId:'me'});
     
 })
 .controller('mainController',function($rootScope,$scope,$routeParams,$materialSidenav,routeBreadcrumbs){

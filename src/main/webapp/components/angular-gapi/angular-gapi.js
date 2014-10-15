@@ -9,7 +9,7 @@ angular.module("ngGapi",[]).
 		libPromises: {},
 		
 		gapiDeferred: angular.injector(['ng']).get('$q').defer(),
-		authDeferred: null,
+		authDeferred: angular.injector(['ng']).get('$q').defer(),
 		
 		setGapi: function(gapi) {
 			this.gapi = gapi;
@@ -51,31 +51,31 @@ angular.module("ngGapi",[]).
 		authorize: function(silent){
 			var thisProvider = this;
 			
-			if (!thisProvider.authDeferred) {
-				thisProvider.authDeferred = thisProvider._get$q().defer();
+			var currentAuthTryDeferred = thisProvider._get$q().defer();
+
+			// when gapi is ready, authorize
+			thisProvider.gapiDeferred.promise.then(function(){
 				
-				// when gapi is ready, authorize
-				thisProvider.gapiDeferred.promise.then(function(){
-					
-					var params = {
-						client_id: thisProvider.clientId,
-						scope: thisProvider.scope,
-						immediate: silent
+				var params = {
+					client_id: thisProvider.clientId,
+					scope: thisProvider.scope,
+					immediate: silent
+				}
+				
+				thisProvider.gapi.auth.authorize(params,function(response){
+					if (response && response.error) {
+						currentAuthTryDeferred.reject(response.error);
+					} else {
+						currentAuthTryDeferred.resolve(response);
+						thisProvider.authDeferred.resolve(response);
+						thisProvider.token = response.access_token;
 					}
-					
-					thisProvider.gapi.auth.authorize(params,function(response){
-						if (response && response.error) 
-							thisProvider.authDeferred.reject(response.error);
-						 else {
-							 thisProvider.authDeferred.resolve(response);
-							 thisProvider.token = response.access_token;
-						 }
-					});
 					
 				});
 				
-			}
-			return thisProvider.authDeferred.promise;
+			});
+				
+			return currentAuthTryDeferred.promise;
 			
 		},
 		
@@ -92,7 +92,8 @@ angular.module("ngGapi",[]).
 				gapi$promise: function(){return thisProvider.gapiDeferred.promise},
 				auth$promise: function(){return thisProvider.authDeferred ? thisProvider.authDeferred.promise : null},
 				token: function(){return thisProvider.token;},
-				load: function(name){return thisProvider.load(name);}
+				load: function(name){return thisProvider.load(name);},
+				authorize: function(silent){return thisProvider.authorize(silent);}
 			};
 		}
 	}).
