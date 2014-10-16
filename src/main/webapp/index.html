@@ -5,6 +5,12 @@
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 		<title>TeamPot</title>
 		
+		<style>
+		[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+			display: none !important;
+		}
+		</style>
+		
 		<!-- build:css libs.min.css -->
 		<link type="text/css" rel="stylesheet" href="/libs/angular-material/angular-material.css" />
 		<!-- endbuild -->
@@ -18,7 +24,7 @@
 		<!-- endbuild -->
 	
 	</head>
-	<body ng-controller="mainController">
+	<body ng-controller="mainController" ng-cloak>
 	
 	
 	
