@@ -6,11 +6,13 @@ import java.util.List;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.teampot.transformer.Ref2EntityTransformer;
 import com.google.teampot.transformer.Ref2StringTransformer;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
 @Entity
@@ -24,6 +26,7 @@ public class ActivityEvent extends BaseEntity {
 	
 	private Ref<User> actor;
 	
+	@Index
 	private Date timestamp;
 	
 	//TODO: valutare se rimuovere bidi-ref
@@ -66,14 +69,14 @@ public class ActivityEvent extends BaseEntity {
 	}
 	
 	@ApiResourceProperty(name = "actor")
-	public String getActorKey() {
-		Ref2StringTransformer<User> t = new Ref2StringTransformer<User>();
+	public User getActorEntity() {
+		Ref2EntityTransformer<User> t = new Ref2EntityTransformer<User>();
 		return t.transformTo(this.actor);
 	}	
 
 	@ApiResourceProperty(name = "actor")
-	public void setActorKey(String actor) {
-		Ref2StringTransformer<User> t = new Ref2StringTransformer<User>();
+	public void setActorEntity(User actor) {
+		Ref2EntityTransformer<User> t = new Ref2EntityTransformer<User>();
 		this.actor = t.transformFrom(actor);
 	}
 	

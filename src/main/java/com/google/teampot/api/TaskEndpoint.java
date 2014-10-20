@@ -22,10 +22,10 @@ public class TaskEndpoint extends BaseEndpoint {
 		path = "task",
 		httpMethod = HttpMethod.GET
 	)
-	public List<Task> list(com.google.appengine.api.users.User gUser) throws OAuthRequestException {
+	public List<Task> list(com.google.appengine.api.users.User gUser, @Named("project") String projectId) throws OAuthRequestException {
 		UserService.getInstance().ensureProvisioning(gUser);
 		
-		return dao.list();
+		return dao.list(projectId);
 	}
 	
 	@ApiMethod(
