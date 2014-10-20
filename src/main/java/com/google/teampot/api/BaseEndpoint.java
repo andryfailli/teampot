@@ -9,7 +9,7 @@ import com.google.teampot.Constants;
 	version = "v1",
 	defaultVersion = AnnotationBoolean.TRUE,
 	scopes = {Constants.EMAIL_SCOPE},
-	clientIds = {Constants.WEB_CLIENT_ID}
+	clientIds = {Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID}
 )
 public class BaseEndpoint {
 
