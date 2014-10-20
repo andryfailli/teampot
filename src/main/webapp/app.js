@@ -35,8 +35,8 @@ angular.module('teampot', [
 			id: 'project',
 			parent: 'project-list',
 			label: '{{project.name}}',
-			templateUrl: '/components/project/view.html',
-			controller: 'projectViewController',
+			templateUrl: '/components/activity/list.html',
+			controller: 'activityListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			resolve:{
 				userInfo: function($rootScope){return $rootScope.userInfo.$promise}

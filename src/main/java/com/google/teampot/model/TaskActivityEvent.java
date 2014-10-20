@@ -2,6 +2,7 @@ package com.google.teampot.model;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.teampot.transformer.Enum2StringTransformer;
 import com.google.teampot.transformer.Ref2EntityTransformer;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Load;
@@ -20,6 +21,7 @@ public class TaskActivityEvent extends ActivityEvent {
 	}
 	
 	public TaskActivityEvent(Task task, User actor, TaskActivityEventVerb verb) {
+		super(task.getProject());
 		this.setTask(task);
 		this.setActor(actor);
 		this.setVerb(verb);
@@ -60,6 +62,18 @@ public class TaskActivityEvent extends ActivityEvent {
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setVerb(TaskActivityEventVerb verb) {
 		this.verb = verb;
+	}
+	
+	@ApiResourceProperty(name = "verb")
+	public String getVerbString() {
+		Enum2StringTransformer<TaskActivityEventVerb> t = new Enum2StringTransformer<TaskActivityEventVerb>(TaskActivityEventVerb.class);
+		return t.transformTo(this.verb);
+	}	
+
+	@ApiResourceProperty(name = "verb")
+	public void setVerbString(String verb) {
+		Enum2StringTransformer<TaskActivityEventVerb> t = new Enum2StringTransformer<TaskActivityEventVerb>(TaskActivityEventVerb.class);
+		this.verb = t.transformFrom(verb);
 	}
 
 }

@@ -1,5 +1,5 @@
 angular.module("teampot").
-	factory('TaskService',function($rootScope,GapiClient) {
+	factory('ActivityService',function($rootScope,GapiClient) {
 		
 		client = GapiClient.client("teampot");
 		
@@ -8,12 +8,12 @@ angular.module("teampot").
 				entity = entity || {}
 				entity.$resolved = true;
 				entity.$save = function(){
-					return client.exec("task.save",entity);
+					return client.exec("activity.save",entity);
 				}
 				return entity;
 			},
 			$get: function(id){
-				var entity = client.exec("task.get",{id:id});
+				var entity = client.exec("activity.get",{id:id});
 				entity.$resolved = false;
 				entity.$promise.then(function(){
 					service.$new(entity);
@@ -23,7 +23,7 @@ angular.module("teampot").
 				return entity;
 			},
 			$list: function(projectId){
-				var entityList = client.exec("task.list",{project:projectId});
+				var entityList = client.exec("activity.list",{project:projectId});
 				entityList.$resolved = false;
 				entityList.$promise.then(function(){
 					entityList.$resolved = true;

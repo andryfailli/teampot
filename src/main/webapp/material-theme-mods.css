@@ -17,3 +17,9 @@ material-circular-progress .inset {
 .material-theme-light material-button {
 	color: rgb(68, 68, 68) !important;
 }
+
+.material-tile-left,
+.material-tile-right,
+.material-tile-content {
+	padding:16px;
+}
