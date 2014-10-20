@@ -139,4 +139,9 @@ public class ActivityEvent extends BaseEntity {
 		this.id = id;
 	}
 	
+	@ApiResourceProperty(name = "activityType")
+	public String getActivityType() {
+		return this.getClass().getSimpleName();
+	}
+	
 }
