@@ -34,6 +34,16 @@ public class ActivityEvent extends BaseEntity {
 		this.timestamp = new Date();
 	}
 	
+	public ActivityEvent(Ref<Project> project) {
+		this();
+		this.setProject(project);
+	}
+	
+	public ActivityEvent(Project project) {
+		this();
+		this.setProject(project);
+	}
+	
 	@Override
 	@ApiResourceProperty(name = "id")
 	public String getKey() {

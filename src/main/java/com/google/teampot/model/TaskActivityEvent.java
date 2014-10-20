@@ -20,6 +20,7 @@ public class TaskActivityEvent extends ActivityEvent {
 	}
 	
 	public TaskActivityEvent(Task task, User actor, TaskActivityEventVerb verb) {
+		super(task.getProject());
 		this.setTask(task);
 		this.setActor(actor);
 		this.setVerb(verb);
