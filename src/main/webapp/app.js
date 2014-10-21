@@ -9,7 +9,8 @@ angular.module('teampot', [
 	'iframeOnload',
 	'ngGapi',
 	'angular.filter',
-	'monospaced.elastic'
+	'monospaced.elastic',
+	'fnDebounce'
 ])
 .config(function($routeProvider,GapiProvider,GapiClientProvider,GapiPickerProvider) {
 
