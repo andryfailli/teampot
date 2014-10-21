@@ -21,7 +21,7 @@ public class TaskActivityEvent extends ActivityEvent {
 	}
 	
 	public TaskActivityEvent(Task task, User actor, TaskActivityEventVerb verb) {
-		super(task.getProject());
+		super();
 		this.setTask(task);
 		this.setActor(actor);
 		this.setVerb(verb);
@@ -39,11 +39,13 @@ public class TaskActivityEvent extends ActivityEvent {
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setTask(Ref<Task> task) {
 		this.task = task;
+		this.setProject(task.get().getProject());
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setTask(Task task) {
 		this.task = Ref.create(task);
+		this.setProject(task.getProject());
 	}
 	
 	@ApiResourceProperty(name = "task")
