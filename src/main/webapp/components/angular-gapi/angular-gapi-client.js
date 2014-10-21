@@ -74,7 +74,7 @@ angular.module("ngGapi").
 							if (response && response.error) 
 								 execResultDeferred.reject(response.error);
 							 else
-								 execResultDeferred.resolve(response);
+								 execResultDeferred.resolve(response.result);
 						}
 						// finally, exec method
 						method(payload).execute(execCallback);
