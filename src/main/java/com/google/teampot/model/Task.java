@@ -50,7 +50,10 @@ public class Task extends BaseEntity {
 	@Override
 	@ApiResourceProperty(name = "id")
 	public String getKey() {
-		return Key.create(this.getProject().getKey(),this.getClass(), this.getId()).getString();
+		Ref<Project> parent = this.getProject();
+		if (parent != null)
+			return Key.create(parent.getKey(),this.getClass(), this.getId()).getString();
+		else return null;
 	}
 	
 	@ApiResourceProperty(name = "id")

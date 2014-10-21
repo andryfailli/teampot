@@ -2,7 +2,9 @@ package com.google.teampot.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
@@ -14,6 +16,8 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
+
+import de.danielbechler.diff.node.DiffNode;
 
 @Entity
 public class ActivityEvent extends BaseEntity {
@@ -31,10 +35,13 @@ public class ActivityEvent extends BaseEntity {
 	
 	//TODO: valutare se rimuovere bidi-ref
 	private List<Ref<Comment>> comments;
+	
+	private Map<String,EntityDiff> diffs; 
 
 	public ActivityEvent() {
 		this.comments = new ArrayList<Ref<Comment>>();
 		this.timestamp = new Date();
+		this.diffs = new LinkedHashMap<String, EntityDiff>();
 	}
 	
 	public ActivityEvent(Ref<Project> project) {
@@ -50,7 +57,10 @@ public class ActivityEvent extends BaseEntity {
 	@Override
 	@ApiResourceProperty(name = "id")
 	public String getKey() {
-		return Key.create(this.getProject().getKey(),this.getClass(), this.getId()).getString();
+		Ref<Project> parent = this.getProject();
+		if (parent != null)
+			return Key.create(parent.getKey(),this.getClass(), this.getId()).getString();
+		else return null;
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
@@ -145,6 +155,16 @@ public class ActivityEvent extends BaseEntity {
 	@ApiResourceProperty(name = "activityType")
 	public String getActivityType() {
 		return this.getClass().getSimpleName();
+	}
+
+	@ApiResourceProperty(name = "diffs")
+	public Map<String,EntityDiff> getDiffs() {
+		return diffs;
+	}
+
+	@ApiResourceProperty(name = "diffs")
+	public void setDiffs(Map<String,EntityDiff> diffs) {
+		this.diffs = diffs;
 	}
 	
 }
