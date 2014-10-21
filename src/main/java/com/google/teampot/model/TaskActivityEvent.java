@@ -26,6 +26,10 @@ public class TaskActivityEvent extends ActivityEvent {
 		this.setActor(actor);
 		this.setVerb(verb);
 	}
+	
+	public TaskActivityEvent(Task task, User actor) {
+		this(task,actor,null);
+	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Ref<Task> getTask() {

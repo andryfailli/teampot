@@ -29,9 +29,13 @@ public class ActivityEventService {
 		dao.save(activtyEvent);
 	}
 	
+	public TaskActivityEvent registerTaskActivityEvent(TaskActivityEvent activtyEvent) {
+		this.saveActivityEvent(activtyEvent);
+		return activtyEvent;
+	}
 	public TaskActivityEvent registerTaskActivityEvent(Task task, User actor, TaskActivityEventVerb verb) {
 		TaskActivityEvent activtyEvent = new TaskActivityEvent(task, actor, verb);
-		this.saveActivityEvent(activtyEvent);
+		this.registerTaskActivityEvent(activtyEvent);
 		return activtyEvent;
 	}
 	public TaskActivityEvent registerTaskActivityEvent(Task task, com.google.appengine.api.users.User gUser, TaskActivityEventVerb verb) {

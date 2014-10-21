@@ -3,10 +3,8 @@ package com.google.teampot.api;
 import java.util.List;
 
 import com.google.teampot.api.exception.EntityNotFoundException;
-import com.google.teampot.dao.TaskDAO;
 import com.google.teampot.model.Task;
-import com.google.teampot.model.TaskActivityEventVerb;
-import com.google.teampot.service.ActivityEventService;
+import com.google.teampot.service.TaskService;
 import com.google.teampot.service.UserService;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
@@ -15,7 +13,8 @@ import com.google.appengine.api.oauth.OAuthRequestException;
 
 public class TaskEndpoint extends BaseEndpoint {
 
-	private static TaskDAO dao = new TaskDAO();
+	private static TaskService taskService = TaskService.getInstance();
+	private static UserService userService = UserService.getInstance();
 	
 	@ApiMethod(
 		name = "task.list",
@@ -23,9 +22,9 @@ public class TaskEndpoint extends BaseEndpoint {
 		httpMethod = HttpMethod.GET
 	)
 	public List<Task> list(com.google.appengine.api.users.User gUser, @Named("project") String projectId) throws OAuthRequestException {
-		UserService.getInstance().ensureProvisioning(gUser);
+		userService.ensureProvisioning(gUser);
 		
-		return dao.list(projectId);
+		return taskService.list(projectId);
 	}
 	
 	@ApiMethod(
@@ -34,9 +33,9 @@ public class TaskEndpoint extends BaseEndpoint {
 		httpMethod = HttpMethod.GET
 	)
 	public Task get(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException,EntityNotFoundException {
-		UserService.getInstance().ensureProvisioning(gUser);
+		userService.ensureProvisioning(gUser);
 		
-		Task entity = dao.get(id);
+		Task entity = taskService.get(id);
 		if (entity != null)
 			return entity;
 		else
@@ -49,16 +48,9 @@ public class TaskEndpoint extends BaseEndpoint {
 		httpMethod = HttpMethod.POST
 	)
 	public Task save(Task entity, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		UserService.getInstance().ensureProvisioning(gUser);
+		userService.ensureProvisioning(gUser);
 		
-		TaskActivityEventVerb taskActivityEventVerb;
-		if (entity.getId() == null) {
-			taskActivityEventVerb = TaskActivityEventVerb.CREATE;
-		} else {
-			taskActivityEventVerb = TaskActivityEventVerb.EDIT;
-		}
-		dao.save(entity);
-		ActivityEventService.getInstance().registerTaskActivityEvent(entity, gUser, taskActivityEventVerb);
+		taskService.save(entity, userService.getUser(gUser));
 		return entity;
 	}
 	
@@ -68,11 +60,8 @@ public class TaskEndpoint extends BaseEndpoint {
 		httpMethod = HttpMethod.DELETE
 	)
 	public void remove(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		UserService.getInstance().ensureProvisioning(gUser);
-		
-		Task entity = dao.get(id);
-		ActivityEventService.getInstance().registerTaskActivityEvent(entity, gUser, TaskActivityEventVerb.DELETE);
-		dao.remove(id);
+		userService.ensureProvisioning(gUser);
+		taskService.remove(id, userService.getUser(gUser));
 	}
 	
 }

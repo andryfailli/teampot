@@ -32,8 +32,6 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-
-		<!-- Test Dependencies -->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-testing</artifactId>
@@ -70,6 +68,11 @@
       		<groupId>com.googlecode.objectify</groupId>
       		<artifactId>objectify</artifactId>
       		<version>5.0.3</version>
+    	</dependency>
+    	<dependency>
+    	<groupId>de.danielbechler</groupId>
+      		<artifactId>java-object-diff</artifactId>
+      		<version>0.90</version>
     	</dependency>
 	</dependencies>
 

@@ -15,6 +15,8 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
+import de.danielbechler.diff.node.DiffNode;
+
 @Entity
 public class ActivityEvent extends BaseEntity {
 
@@ -31,6 +33,8 @@ public class ActivityEvent extends BaseEntity {
 	
 	//TODO: valutare se rimuovere bidi-ref
 	private List<Ref<Comment>> comments;
+	
+	private List<EntityDiff> diffs; 
 
 	public ActivityEvent() {
 		this.comments = new ArrayList<Ref<Comment>>();
@@ -50,7 +54,10 @@ public class ActivityEvent extends BaseEntity {
 	@Override
 	@ApiResourceProperty(name = "id")
 	public String getKey() {
-		return Key.create(this.getProject().getKey(),this.getClass(), this.getId()).getString();
+		Ref<Project> parent = this.getProject();
+		if (parent != null)
+			return Key.create(parent.getKey(),this.getClass(), this.getId()).getString();
+		else return null;
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
@@ -145,6 +152,16 @@ public class ActivityEvent extends BaseEntity {
 	@ApiResourceProperty(name = "activityType")
 	public String getActivityType() {
 		return this.getClass().getSimpleName();
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public List<EntityDiff> getDiffs() {
+		return diffs;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setDiffs(List<EntityDiff> diffs) {
+		this.diffs = diffs;
 	}
 	
 }

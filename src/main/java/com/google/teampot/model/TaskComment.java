@@ -20,7 +20,10 @@ public class TaskComment extends Comment {
 	@Override
 	@ApiResourceProperty(name = "id")
 	public String getKey() {
-		return Key.create(this.getTask().getKey(),this.getClass(), this.getId()).getString();
+		Ref<Task> parent = this.getTask();
+		if (parent != null)
+			return Key.create(parent.getKey(),this.getClass(), this.getId()).getString();
+		else return null;
 	}
 
 	@ApiResourceProperty(name = "task")
