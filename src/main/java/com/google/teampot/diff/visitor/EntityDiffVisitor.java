@@ -1,6 +1,7 @@
 package com.google.teampot.diff.visitor;
 
 import java.util.List;
+import java.util.Map;
 
 import com.google.teampot.model.EntityDiff;
 
@@ -11,9 +12,9 @@ public class EntityDiffVisitor implements DiffNode.Visitor {
 	private final Object working;
 	private final Object base;
 	
-	private List<EntityDiff> entityDiffs;
+	private Map<String,EntityDiff> entityDiffs;
 
-	public EntityDiffVisitor(final Object working, final Object base, List<EntityDiff> entityDiffs) {
+	public EntityDiffVisitor(final Object working, final Object base, Map<String,EntityDiff> entityDiffs) {
 		this.base = base;
 		this.working = working;
 		this.entityDiffs = entityDiffs;
@@ -25,7 +26,7 @@ public class EntityDiffVisitor implements DiffNode.Visitor {
 			entityDiff.setPath(node.getPath().toString());
 			entityDiff.setOldValue(node.canonicalGet(base));
 			entityDiff.setNewValue(node.canonicalGet(working));
-			this.entityDiffs.add(entityDiff);
+			this.entityDiffs.put(entityDiff.getPath(),entityDiff);
 		}
 	}
 

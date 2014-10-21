@@ -1,7 +1,9 @@
 package com.google.teampot.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.teampot.dao.TaskDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
@@ -61,7 +63,7 @@ public class TaskService{
 			
 			DiffNode diffs = ObjectDifferBuilder.buildDefault().compare(entity, oldEntity);
 			if (diffs.hasChanges()) {
-				List<EntityDiff> entityDiffs = new ArrayList<EntityDiff>();
+				Map<String,EntityDiff> entityDiffs = new LinkedHashMap<String,EntityDiff>();
 				diffs.visit(new EntityDiffVisitor(entity, oldEntity,entityDiffs));
 				activtyEvent.setDiffs(entityDiffs);
 			}
