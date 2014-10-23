@@ -4,6 +4,7 @@ angular.module("ngGapi",[]).
 		gapi: null,
 		clientId: null,
 		scope: [],
+		accesstype: 'online',
 		token: null,
 		
 		libPromises: {},
@@ -22,6 +23,10 @@ angular.module("ngGapi",[]).
 		
 		setScope: function(scope){
 			this.scope = scope;
+		},
+		
+		setAccessType: function(accesstype){
+			this.accesstype = accesstype;
 		},
 		
 		load: function(name){
@@ -57,21 +62,25 @@ angular.module("ngGapi",[]).
 			thisProvider.gapiDeferred.promise.then(function(){
 				
 				var params = {
-					client_id: thisProvider.clientId,
-					scope: thisProvider.scope,
-					immediate: silent
+					clientid: thisProvider.clientId,
+					scope: typeof thisProvider.scope === "object" ? thisProvider.scope.join(" ") : thisProvider.scope,
+					cookiepolicy: 'single_host_origin',
+					accesstype: thisProvider.accesstype,
+					immediate: silent,
+					callback: function(response){
+						if (response && response.error) {
+							currentAuthTryDeferred.reject(response.error);
+						} else {
+							thisProvider.token = response.access_token;
+							thisProvider.code = response.code;
+							currentAuthTryDeferred.resolve(response);
+							thisProvider.authDeferred.resolve(response);
+						}
+						
+					}
 				}
 				
-				thisProvider.gapi.auth.authorize(params,function(response){
-					if (response && response.error) {
-						currentAuthTryDeferred.reject(response.error);
-					} else {
-						currentAuthTryDeferred.resolve(response);
-						thisProvider.authDeferred.resolve(response);
-						thisProvider.token = response.access_token;
-					}
-					
-				});
+				thisProvider.gapi.auth.signIn(params);
 				
 			});
 				
@@ -100,12 +109,33 @@ angular.module("ngGapi",[]).
 	config(function(GapiProvider){
 		
 		window.ngGapiInit = function(){
-			GapiProvider.setGapi(window.gapi);
+			window.ngGapiInitSemaphore--;
+			if (window.ngGapiInitSemaphore==0)
+				GapiProvider.setGapi(window.gapi);
+		}
+				
+		function loadScript(id,src) {
+			
+			var prefix = "ngGapiScript_";
+			
+			if (!window.ngGapiInitSemaphore) window.ngGapiInitSemaphore = 0;
+			
+			if (!document.getElementById(prefix+id)) {
+				
+				window.ngGapiInitSemaphore++;
+				
+				var scriptElement = document.createElement("script");
+				scriptElement.setAttribute("src", src+"?onload=ngGapiInit");
+				scriptElement.setAttribute("id", prefix+id);
+				var parentElement = document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0];
+				parentElement.appendChild(scriptElement);
+			}
+			
+			
 		}
 		
-		var scriptElement = document.createElement("script");
-		scriptElement.setAttribute("src", "https://apis.google.com/js/client.js?onload=ngGapiInit");
-		var parentElement = document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0];
-		parentElement.appendChild(scriptElement);
+		loadScript("jsapi","https://apis.google.com/js/platform.js");
+		loadScript("client","https://apis.google.com/js/client:platform.js");
+		
 				
 	});

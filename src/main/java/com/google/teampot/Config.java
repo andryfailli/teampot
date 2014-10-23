@@ -10,8 +10,8 @@ public class Config {
 
 	private static Config instance;
 		
-	public static final String SERVICE_ACCOUNT_EMAIL = "SERVICE_ACCOUNT_EMAIL";
-	public static final String SERVICE_ACCOUNT_PKCS12_FILE_PATH = "SERVICE_ACCOUNT_PKCS12_FILE_PATH";
+	public static final String BACKEND_CLIENT_ID = "BACKEND_CLIENT_ID";
+	public static final String BACKEND_CLIENT_SECRET = "BACKEND_CLIENT_SECRET";
 	
 	private Properties props;
 	

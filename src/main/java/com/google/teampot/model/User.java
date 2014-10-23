@@ -1,5 +1,6 @@
 package com.google.teampot.model;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.googlecode.objectify.Key;
@@ -21,6 +22,10 @@ public class User extends BaseEntity {
 	private String lastName;
 	
 	private String iconUrl;
+	
+	private String accessToken;
+	
+	private String refreshToken;
 	
 	public User() {
 		// TODO Auto-generated constructor stub
@@ -76,6 +81,32 @@ public class User extends BaseEntity {
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
+	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setTokens(GoogleCredential credential) {
+		this.accessToken = credential.getAccessToken();
+		this.refreshToken = credential.getRefreshToken();
 	}
 
 }

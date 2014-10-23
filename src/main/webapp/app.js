@@ -99,6 +99,8 @@ angular.module('teampot', [
        "https://www.googleapis.com/auth/plus.me",
        "https://www.googleapis.com/auth/drive"
     ]);
+	GapiProvider.setAccessType('offline');
+	
 	GapiProvider.authorize(true);
 	
 	GapiPickerProvider.setDeveloperKey("AIzaSyC_VQ_C57vVOLMUxtMBr6bIwR2kNy8_H80");
@@ -129,7 +131,9 @@ angular.module('teampot', [
     });
     
     $rootScope.signIn = function(){
-    	Gapi.authorize();
+    	Gapi.authorize().then(function(data){
+    		GapiClient.client("teampot").exec("user.auth",{code:data.code});
+    	});
     }
     
     $rootScope.userInfo = GapiClient.client("plus").exec("people.get",{userId:'me'});

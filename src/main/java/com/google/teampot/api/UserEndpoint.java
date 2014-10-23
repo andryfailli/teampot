@@ -1,11 +1,14 @@
 package com.google.teampot.api;
 
+import java.io.IOException;
 import java.util.List;
 
+import com.google.teampot.GoogleServices;
 import com.google.teampot.api.exception.EntityNotFoundException;
 import com.google.teampot.dao.UserDAO;
 import com.google.teampot.model.User;
 import com.google.teampot.service.UserService;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
@@ -62,6 +65,20 @@ public class UserEndpoint extends BaseEndpoint {
 		UserService.getInstance().ensureProvisioning(gUser);
 		
 		dao.remove(id);
+	}
+	
+	@ApiMethod(
+		name = "user.auth", 
+		path = "user/auth",
+		httpMethod = HttpMethod.POST
+	)
+	public void auth(@Named("code") String code, com.google.appengine.api.users.User gUser) throws OAuthRequestException, IOException {
+		UserService.getInstance().ensureProvisioning(gUser);
+		
+		GoogleCredential credential = GoogleServices.getCredentialFromOneTimeCode(gUser.getEmail(), code);
+		User user = UserService.getInstance().getUser(gUser);
+		user.setTokens(credential);
+		dao.save(user);
 	}
 	
 }
