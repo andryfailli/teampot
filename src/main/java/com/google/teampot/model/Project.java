@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.github.slugify.Slugify;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.teampot.transformer.Ref2StringTransformer;
@@ -34,6 +35,10 @@ public class Project extends BaseEntity {
 	
 	private String machineName;
 	
+	private String description;
+	
+	private String groupEmail;
+	
 	private Ref<User> owner;
 
 	public Project() {
@@ -45,7 +50,7 @@ public class Project extends BaseEntity {
 
 	public Project(String name) {
 		this();
-		this.name = name;
+		this.setName(name);
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
@@ -138,6 +143,8 @@ public class Project extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
+    	Slugify sfy = new Slugify();
+    	this.machineName = sfy.slugify(this.name.toLowerCase());
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
@@ -179,8 +186,20 @@ public class Project extends BaseEntity {
 		return machineName;
 	}
 
-	public void setMachineName(String machineName) {
-		this.machineName = machineName;
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getGroupEmail() {
+		return groupEmail;
+	}
+
+	public void setGroupEmail(String groupEmail) {
+		this.groupEmail = groupEmail;
 	}
 
 }

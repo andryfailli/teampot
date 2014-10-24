@@ -1,9 +1,7 @@
 package com.google.teampot;
 
-import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.List;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -12,6 +10,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.services.admin.directory.Directory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Tokeninfo;
@@ -86,6 +85,14 @@ public class GoogleServices {
 	public static Drive getDriveService(User user)	throws GeneralSecurityException, IOException {
 		return new Drive.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
 			.setHttpRequestInitializer(GoogleServices.getCredential(user))
+			.setApplicationName(Config.get(Config.APPLICATION_NAME))
+			.build();
+	}
+	
+	public static Directory getDirectoryService(User user)	throws GeneralSecurityException, IOException {
+		return new Directory.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
+			.setHttpRequestInitializer(GoogleServices.getCredential(user))
+			.setApplicationName(Config.get(Config.APPLICATION_NAME))
 			.build();
 	}
 

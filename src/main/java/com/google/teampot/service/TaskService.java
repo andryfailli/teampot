@@ -1,6 +1,5 @@
 package com.google.teampot.service;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +71,7 @@ public class TaskService{
 		dao.save(entity);
 		activtyEvent.setTask(entity);
 		activtyEvent.setActor(actor);
-		activityEventService.registerTaskActivityEvent(activtyEvent);
+		activityEventService.registerActivityEvent(activtyEvent);
 	}
 	
 	public void remove(String key){		
@@ -81,7 +80,7 @@ public class TaskService{
 	
 	public void remove(String key, User actor){
 		Task entity = dao.get(key);
-		activityEventService.registerTaskActivityEvent(entity, actor, TaskActivityEventVerb.DELETE);
+		activityEventService.registerActivityEvent(new TaskActivityEvent(entity,actor, TaskActivityEventVerb.DELETE));
 		dao.remove(key);
 	}
 

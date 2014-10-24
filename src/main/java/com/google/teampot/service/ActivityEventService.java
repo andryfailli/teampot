@@ -4,10 +4,6 @@ import java.util.Date;
 
 import com.google.teampot.dao.ActivityEventDAO;
 import com.google.teampot.model.ActivityEvent;
-import com.google.teampot.model.Task;
-import com.google.teampot.model.TaskActivityEvent;
-import com.google.teampot.model.TaskActivityEventVerb;
-import com.google.teampot.model.User;
 
 public class ActivityEventService {
 
@@ -29,17 +25,8 @@ public class ActivityEventService {
 		dao.save(activtyEvent);
 	}
 	
-	public TaskActivityEvent registerTaskActivityEvent(TaskActivityEvent activtyEvent) {
+	public ActivityEvent registerActivityEvent(ActivityEvent activtyEvent) {
 		this.saveActivityEvent(activtyEvent);
 		return activtyEvent;
 	}
-	public TaskActivityEvent registerTaskActivityEvent(Task task, User actor, TaskActivityEventVerb verb) {
-		TaskActivityEvent activtyEvent = new TaskActivityEvent(task, actor, verb);
-		this.registerTaskActivityEvent(activtyEvent);
-		return activtyEvent;
-	}
-	public TaskActivityEvent registerTaskActivityEvent(Task task, com.google.appengine.api.users.User gUser, TaskActivityEventVerb verb) {
-		return this.registerTaskActivityEvent(task, UserService.getInstance().getUser(gUser),verb);
-	}
-
 }

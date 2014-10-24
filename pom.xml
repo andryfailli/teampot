@@ -75,9 +75,19 @@
       		<version>v2-rev143-1.19.0</version>
     	</dependency>
     	<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-admin</artifactId>
+			<version>directory_v1-rev29-1.14.2-beta</version>
+		</dependency>
+    	<dependency>
       		<groupId>com.googlecode.objectify</groupId>
       		<artifactId>objectify</artifactId>
       		<version>5.0.3</version>
+    	</dependency>
+    	<dependency>
+      		<groupId>com.github.slugify</groupId>
+      		<artifactId>slugify</artifactId>
+      		<version>2.1.2</version>
     	</dependency>
     	<dependency>
     	<groupId>de.danielbechler</groupId>
