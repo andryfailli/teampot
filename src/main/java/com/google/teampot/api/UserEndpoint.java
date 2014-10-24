@@ -24,8 +24,6 @@ public class UserEndpoint extends BaseEndpoint {
 		httpMethod = HttpMethod.GET
 	)
 	public List<User> list(com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		UserService.getInstance().ensureProvisioning(gUser);
-		
 		return dao.list();
 	}
 	
@@ -35,8 +33,6 @@ public class UserEndpoint extends BaseEndpoint {
 		httpMethod = HttpMethod.GET
 	)
 	public User get(@Named("id") String id, com.google.appengine.api.users.User gUser) throws EntityNotFoundException,OAuthRequestException {
-		UserService.getInstance().ensureProvisioning(gUser);
-		
 		User entity = dao.get(id);
 		if (entity != null)
 			return entity;
@@ -50,8 +46,6 @@ public class UserEndpoint extends BaseEndpoint {
 		httpMethod = HttpMethod.POST
 	)
 	public User save(User entity, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		UserService.getInstance().ensureProvisioning(gUser);
-		
 		dao.save(entity);
 		return entity;
 	}
@@ -61,9 +55,7 @@ public class UserEndpoint extends BaseEndpoint {
 		path = "user/{id}",
 		httpMethod = HttpMethod.DELETE
 	)
-	public void remove(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		UserService.getInstance().ensureProvisioning(gUser);
-		
+	public void remove(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException {		
 		dao.remove(id);
 	}
 	
@@ -73,8 +65,6 @@ public class UserEndpoint extends BaseEndpoint {
 		httpMethod = HttpMethod.POST
 	)
 	public void auth(@Named("code") String code, com.google.appengine.api.users.User gUser) throws OAuthRequestException, IOException {
-		UserService.getInstance().ensureProvisioning(gUser);
-		
 		GoogleCredential credential = GoogleServices.getCredentialFromOneTimeCode(gUser.getEmail(), code);
 		User user = UserService.getInstance().getUser(gUser);
 		user.setTokens(credential);

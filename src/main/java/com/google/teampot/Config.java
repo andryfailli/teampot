@@ -12,6 +12,9 @@ public class Config {
 		
 	public static final String BACKEND_CLIENT_ID = "BACKEND_CLIENT_ID";
 	public static final String BACKEND_CLIENT_SECRET = "BACKEND_CLIENT_SECRET";
+	public static final String APPLICATION_NAME = "APPLICATION_NAME";
+	public static final String APPS_DOMAIN = "APPS_DOMAIN";
+	public static final String PROJECT_PREFIX = "PROJECT_PREFIX";
 	
 	private Properties props;
 	

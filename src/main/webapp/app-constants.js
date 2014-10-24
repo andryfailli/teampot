@@ -1,4 +1,4 @@
 angular.module('teampot')
 	.value("CONSTANTS",{
-		APPS_DOMAIN: "google.com"
+		APPS_DOMAIN: "appsforwork.it"
 	});
