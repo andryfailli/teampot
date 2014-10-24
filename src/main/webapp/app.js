@@ -93,7 +93,7 @@ angular.module('teampot', [
 			redirectTo : '/projects'
 		});
 		
-	GapiProvider.setClientId("849550602959-32td607gretcpihvhhhr88pjr26emrif.apps.googleusercontent.com");
+	GapiProvider.setClientId("60968053297-0eo4eum22rhp7iskadtj7aa0cfavovns.apps.googleusercontent.com");
 	GapiProvider.setScope([
        "https://www.googleapis.com/auth/userinfo.email",
        "https://www.googleapis.com/auth/plus.me",
@@ -104,7 +104,7 @@ angular.module('teampot', [
 	
 	GapiProvider.authorize(true);
 	
-	GapiPickerProvider.setDeveloperKey("AIzaSyDy_lYrAfKoMPp3lTDNUsUbzceNVwjmvTc");
+	GapiPickerProvider.setDeveloperKey("AIzaSyAMYynuP3VI_Wj_LuUN8_rJq3zFpS9jGHg");
 	
 	GapiProvider.load("picker");
 	
