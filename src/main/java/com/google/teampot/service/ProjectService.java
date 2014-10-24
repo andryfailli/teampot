@@ -8,7 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.api.services.admin.directory.Directory;
 import com.google.api.services.admin.directory.model.Group;
+import com.google.api.services.admin.directory.model.Member;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
@@ -92,22 +94,47 @@ public class ProjectService{
 	
 	private void initProject(Project project, User user) {
 		
+		Directory directoryService = null;
+		Drive driveService = null;
+		try {
+			
+			directoryService = GoogleServices.getDirectoryService(user);
+			driveService = GoogleServices.getDriveService(user);
+			
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// set project owner
 		project.setOwner(user);
 		
 		
 		// create a new Google Group
-		String groupEmail = Config.get(Config.PROJECT_PREFIX)+project.getMachineName()+"@"+Config.get(Config.APPS_DOMAIN);
+		String groupEmail = project.getMachineName()+"@"+Config.get(Config.APPS_DOMAIN);
 		Group group = new Group();
 		group.setName(project.getName());
 		group.setEmail(groupEmail);
 		group.setDescription(project.getDescription());
+		
 		try {
-			GoogleServices.getDirectoryService(user).groups().insert(group).execute();
+			group = directoryService.groups().insert(group).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (GeneralSecurityException e) {
+		}
+		
+		
+		// add project owner in group
+		Member member = new Member();
+		member.setEmail(user.getEmail());
+		member.setRole("OWNER");
+		try {
+			member = directoryService.members().insert(group.getId(), member).execute();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -125,11 +152,8 @@ public class ProjectService{
 		folder.setPermissions(new ArrayList<Permission>(Arrays.asList(permission)));
 		
 		try {
-			folder = GoogleServices.getDriveService(user).files().insert(folder).execute();
+			folder = driveService.files().insert(folder).execute();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GeneralSecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

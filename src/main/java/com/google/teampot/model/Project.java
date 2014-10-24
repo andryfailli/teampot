@@ -8,6 +8,7 @@ import java.util.Set;
 import com.github.slugify.Slugify;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.teampot.Config;
 import com.google.teampot.transformer.Ref2StringTransformer;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
@@ -144,7 +145,7 @@ public class Project extends BaseEntity {
 	public void setName(String name) {
 		this.name = name;
     	Slugify sfy = new Slugify();
-    	this.machineName = sfy.slugify(this.name.toLowerCase());
+    	this.machineName = Config.get(Config.PROJECT_PREFIX)+sfy.slugify(this.name.toLowerCase());
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
