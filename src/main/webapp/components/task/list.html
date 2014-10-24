@@ -8,7 +8,11 @@
 	<material-circular-progress mode="indeterminate" ></material-circular-progress>
 </div>
 
-<material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center" ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'" ng-if="taskList.$resolved">
+<div ng-if="taskList.$resolved && taskList.items.length==0">
+	<p class="empty-list-message">No task yet for this project</p>
+</div>
+
+<material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center" ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'" ng-if="taskList.$resolved && taskList.items.length>0">
 	<material-content flex>
 		<section>
 			<material-list layout="vertical"> 

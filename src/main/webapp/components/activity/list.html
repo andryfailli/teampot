@@ -2,7 +2,11 @@
 	<material-circular-progress mode="indeterminate" ></material-circular-progress>
 </div>
 
-<material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center" ng-repeat="activity in activityList.items" ng-if="activityList.$resolved">
+<div ng-if="activityList.$resolved && activityList.items.length==0">
+	<p class="empty-list-message">No activity yet for this project</p>
+</div>
+
+<material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center" ng-repeat="activity in activityList.items" ng-if="activityList.$resolved && activityList.items.length>0">
 	<material-content flex>
 		<section>
 			<material-list layout="vertical"> 
@@ -11,7 +15,8 @@
 					
 						<div class="material-tile-left" layout="vertical" layout-align="center center">
 							<span ng-switch on="activity.activityType">
-								<material-icon ng-switch-when="TaskActivityEvent" icon="/img/icons/ic_list_48px.svg"></material-icon>
+								<material-icon ng-switch-when="TaskActivityEvent" icon="/img/icons/ic_view_list_48px.svg"></material-icon>
+								<material-icon ng-switch-when="ProjectActivityEvent" icon="/img/icons/ic_info_outline_48px.svg"></material-icon>
 								<material-icon ng-switch-default icon="/img/icons/ic_info_outline_48px.svg"></material-icon>
 							</span>
 							{{activity.verb}}

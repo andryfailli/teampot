@@ -26,7 +26,7 @@ public class ActivityEvent extends BaseEntity {
 	private Long id;
 	
 	@Parent
-	private Ref<Project> project;
+	protected Ref<Project> project;
 	
 	private Ref<User> actor;
 	

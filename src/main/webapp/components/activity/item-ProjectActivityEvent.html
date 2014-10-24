@@ -1,0 +1,19 @@
+<div flex>
+	<h3>
+		<span ng-switch on="activity.diffs['/name'] !== undefined">
+			<span ng-switch-when="true">
+				<ins>{{activity.diffs['/name'].newValue}}</ins>
+				<del>{{activity.diffs['/name'].oldValue}}</del>
+			</span>
+			<span ng-switch-default>{{activity.project.name}}</span>
+		</span>
+	</h3>
+	<div ng-switch on="activity.diffs['/description'] !== undefined">
+		<div ng-switch-when="true">
+			<p><ins>{{activity.diffs['/description'].newValue}}</ins></p>
+			<p><del>{{activity.diffs['/description'].oldValue}}</del></p>
+		</div>
+		<p ng-switch-default>{{activity.project.description}}</p>
+	</div>
+	
+</div>
