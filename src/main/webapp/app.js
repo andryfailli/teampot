@@ -110,6 +110,7 @@ angular.module('teampot', [
 	
 	GapiClientProvider.load("teampot","v1","//"+window.location.host+"/_ah/api");
 	GapiClientProvider.load("plus","v1");
+	GapiClientProvider.load("drive","v2");
 
 })
 .run(function($rootScope,Gapi,GapiClient){

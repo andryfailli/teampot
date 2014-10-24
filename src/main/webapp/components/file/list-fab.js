@@ -1,6 +1,8 @@
 angular.module('teampot').
-	controller('fileListFabController', function($rootScope,$scope,$q,GapiPicker,GapiClient,TaskService) {
+	controller('fileListFabController', function($rootScope,$scope,$q,$route,$routeParams,GapiPicker,GapiClient,ProjectService) {
 				
+		$scope.project = ProjectService.$get($routeParams.projectId);
+		
 		$scope.fabAdd = function(evt){
 			
 			GapiPicker.create().then(function(pickerBuilder){
@@ -10,11 +12,18 @@ angular.module('teampot').
 					setCallback(function(data){
 						
 						if (data.action == google.picker.Action.PICKED) {
+							
+							var promises = [];
+							
 				            var files = data.docs;
 				            for (var i=0; i<files.length; i++) {
-				            	// TODO: to be implemented: add file to project folder
+				            	promises.push(GapiClient.client("drive").exec("files.update",{fileId:files[i].id,addParents:$scope.project.folder}).$promise);
 							}
-				            // TODO: refresh iframe
+
+				            $q.all(promises).then(function(){
+				            	//TODO: enhancement: reload only the iframe, not the whole view.
+				            	$route.reload();
+				            })
 				        }
 						
 						
