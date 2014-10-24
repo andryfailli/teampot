@@ -3,6 +3,7 @@ package com.google.teampot.service;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +103,7 @@ public class ProjectService{
 		group.setEmail(groupEmail);
 		group.setDescription(project.getDescription());
 		try {
-			GoogleServices.getDirectoryService(user).groups().insert(group);
+			GoogleServices.getDirectoryService(user).groups().insert(group).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -121,10 +122,10 @@ public class ProjectService{
 		permission.setType("group");
 		permission.setRole("writer");
 		permission.setValue(group.getEmail());
-		folder.getPermissions().add(permission);
+		folder.setPermissions(new ArrayList<Permission>(Arrays.asList(permission)));
 		
 		try {
-			GoogleServices.getDriveService(user).files().insert(folder).execute();
+			folder = GoogleServices.getDriveService(user).files().insert(folder).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
