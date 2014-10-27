@@ -14,6 +14,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class Project extends BaseEntity {
@@ -28,6 +29,7 @@ public class Project extends BaseEntity {
 	
 	private List<Ref<Task>> tasks;
 	
+	@Index
 	private Set<Ref<User>> users;
 	
 	private String folder;
@@ -40,6 +42,7 @@ public class Project extends BaseEntity {
 	
 	private String groupEmail;
 	
+	@Index
 	private Ref<User> owner;
 
 	public Project() {
@@ -129,6 +132,11 @@ public class Project extends BaseEntity {
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setUsers(Set<Ref<User>> users) {
 		this.users = users;
+	}
+	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void addUser(User user) {
+		this.users.add(Ref.create(user));
 	}
 	
 	public int getUsersCount() {

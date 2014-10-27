@@ -4,14 +4,13 @@ import java.util.List;
 
 import com.google.teampot.api.exception.EntityNotFoundException;
 import com.google.teampot.model.Project;
+import com.google.teampot.model.User;
 import com.google.teampot.service.ProjectService;
 import com.google.teampot.service.UserService;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.appengine.api.oauth.OAuthRequestException;
-import com.google.apphosting.api.ApiProxy;
-import com.google.apphosting.api.ApiProxy.Environment;
 
 public class ProjectEndpoint extends BaseEndpoint{
 
@@ -24,7 +23,8 @@ public class ProjectEndpoint extends BaseEndpoint{
 		httpMethod = HttpMethod.GET
 	)
 	public List<Project> list(com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		return projectService.list();
+		User user = userService.getUser(gUser);
+		return projectService.listForUser(user);
 	}
 	
 	@ApiMethod(

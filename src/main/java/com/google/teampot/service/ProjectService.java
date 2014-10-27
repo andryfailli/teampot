@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,13 +18,9 @@ import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
-import com.google.appengine.api.taskqueue.TaskHandle;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
-import com.google.apphosting.api.ApiProxy;
-import com.google.apphosting.api.ApiProxy.Environment;
 import com.google.teampot.Config;
-import com.google.teampot.Constants;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.api.API;
 import com.google.teampot.dao.ProjectDAO;
@@ -57,6 +52,10 @@ public class ProjectService{
 	
 	public List<Project> list() {
 		return dao.list();
+	}
+	
+	public List<Project> listForUser(User user) {
+		return dao.listForUser(user);
 	}
 	
 	public Project get(String key){
@@ -123,6 +122,7 @@ public class ProjectService{
 		
 		// set project owner
 		project.setOwner(user);
+		project.addUser(user);
 		
 		
 		// create a new Google Group
