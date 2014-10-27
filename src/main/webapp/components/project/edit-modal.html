@@ -1,14 +1,22 @@
 <material-dialog aria-label="Create or edit a Project">	
 	<div class="dialog-content">
-		<h2 class="dialog-title">{{project.id?'Edit Project':'Create new Project'}}</h2>
-		<material-content>
+		<h2 class="dialog-title" ng-if="!loading">{{project.id?'Edit Project':'Create new Project'}}</h2>
+		<material-content ng-if="!loading">
 			<form>
 			  <tf-float label="Project Name" value="project.name"> </tf-float>
 			</form>
 		</material-content>
+		<material-content ng-if="loading" layout="vertical" layout-align="center center" layout-padding>
+			<div flex>
+				<material-circular-progress mode="indeterminate"></material-circular-progress>
+			</div>
+			<div flex>
+				<span>{{project.id?'Saving project...':'Creating project...'}}</span>
+			</div>
+		</material-content>
 	
 	</div>
-	<div class="dialog-actions" layout="horizontal" layout-align="end">
+	<div class="dialog-actions" layout="horizontal" layout-align="end"  ng-if="!loading">
 		<material-button ng-click="save()" autofocus>OK</material-button>
 	</div>
 </material-dialog>

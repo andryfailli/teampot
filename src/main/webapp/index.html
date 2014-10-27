@@ -74,7 +74,7 @@
 		
 					<material-content class="material-content-padding" flex>
 		
-						<div ng-view ng-if="userInfo.$promise.$resolved"></div>
+						<div ng-view ng-if="userInfo.$promise.$resolved" id="appview"></div>
 						
 						<div id="teampot-intro-logo" ng-if="!userInfo.$promise.$resolved"">
 							<img src="/img/teampot-logo.png" class="image-responsive"/>

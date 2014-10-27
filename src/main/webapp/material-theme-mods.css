@@ -10,10 +10,6 @@
 	color: #3e50b4;
 }
 
-material-circular-progress .inset {
-	background: #ececec;
-}
-
 .material-theme-light material-button {
 	color: rgb(68, 68, 68) !important;
 }
