@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +14,20 @@ import com.google.api.services.admin.directory.Directory;
 import com.google.api.services.admin.directory.model.Group;
 import com.google.api.services.admin.directory.model.Member;
 import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.Channel;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskHandle;
+import com.google.appengine.api.taskqueue.TaskOptions;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
+import com.google.apphosting.api.ApiProxy;
+import com.google.apphosting.api.ApiProxy.Environment;
 import com.google.teampot.Config;
+import com.google.teampot.Constants;
 import com.google.teampot.GoogleServices;
+import com.google.teampot.api.API;
 import com.google.teampot.dao.ProjectDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
 import com.google.teampot.model.EntityDiff;
@@ -158,6 +170,42 @@ public class ProjectService{
 			e.printStackTrace();
 		}
 		project.setFolder(folder.getId());
+		
+		dao.save(project);
+		
+		// subscribe to Drive folder changes
+		try {
+	    	this.watchFolderChanges(driveService,project);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		
+	}
+	
+	public Channel watchFolderChanges(Drive driveService, Project project) throws IOException {
+		
+		Channel channel = new Channel();
+	    channel.setId(java.util.UUID.randomUUID().toString());
+	    channel.setToken(project.getKey());
+	    channel.setType("web_hook");
+	    channel.setAddress(API.getBaseUrl()+"/gae/webhook/receiveFolderChanges");
+	    long expirationMillis = 86400000; // 1day
+	    channel.setExpiration( (new Date()).getTime() + expirationMillis);
+	    
+	    // task for renewing watch channel
+	    Queue queue = QueueFactory.getDefaultQueue();
+	    TaskOptions task = TaskOptions.Builder
+	    	.withUrl(API.getBaseUrlWithoutHostAndSchema()+"/gae/task/watchFolderChanges")
+	    	.countdownMillis(expirationMillis)
+	    	.param("project", project.getKey())
+	    	.param("user", project.getOwner().getKey().getString())
+	    	.method(Method.POST)
+	    ; 
+        queue.add(task);
+        
+        return driveService.files().watch(project.getFolder(),channel).execute();
 	}
 
 }
