@@ -8,7 +8,7 @@
 	<material-circular-progress mode="indeterminate" ></material-circular-progress>
 </div>
 
-<div ng-if="taskList.$resolved && taskList.items.length==0">
+<div ng-if="taskList.$resolved && (!taskList.items || taskList.items.length==0)">
 	<p class="empty-list-message">No task yet for this project</p>
 </div>
 

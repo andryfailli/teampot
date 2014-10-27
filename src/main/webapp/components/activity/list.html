@@ -2,7 +2,7 @@
 	<material-circular-progress mode="indeterminate" ></material-circular-progress>
 </div>
 
-<div ng-if="activityList.$resolved && activityList.items.length==0">
+<div ng-if="activityList.$resolved && (!activityList.items || activityList.items.length==0)">
 	<p class="empty-list-message">No activity yet for this project</p>
 </div>
 
