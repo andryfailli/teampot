@@ -29,8 +29,8 @@
 								<small>{{activity.timestamp|date:'shortDate'}}<br/><small>{{activity.timestamp|date:'shortTime'}}</small></small>
 							</div>
 							<div layout="vertical" layout-align="center center">
-								<img class="face" src="about:blank" ng-src="{{userInfo.image.url}}"/>
-								<small>{{userInfo.displayName}}</small>
+								<img class="face" src="about:blank" ng-src="{{activity.actor.iconUrl}}"/>
+								<small>{{activity.actor.firstName}} {{activity.actor.lastName}}</small>
 							</div>
 						</div>
 					

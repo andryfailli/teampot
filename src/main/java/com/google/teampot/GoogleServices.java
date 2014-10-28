@@ -14,6 +14,7 @@ import com.google.api.services.admin.directory.Directory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Tokeninfo;
+import com.google.api.services.plus.Plus;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.utils.SystemProperty;
 import com.google.teampot.model.User;
@@ -91,6 +92,13 @@ public class GoogleServices {
 	
 	public static Directory getDirectoryService(User user)	throws GeneralSecurityException, IOException {
 		return new Directory.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
+			.setHttpRequestInitializer(GoogleServices.getCredential(user))
+			.setApplicationName(Config.get(Config.APPLICATION_NAME))
+			.build();
+	}
+	
+	public static Plus getPlusService(User user) throws GeneralSecurityException, IOException {
+		return new Plus.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
 			.setHttpRequestInitializer(GoogleServices.getCredential(user))
 			.setApplicationName(Config.get(Config.APPLICATION_NAME))
 			.build();

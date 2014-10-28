@@ -79,6 +79,11 @@
 			<artifactId>google-api-services-admin</artifactId>
 			<version>directory_v1-rev32-1.16.0-rc</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-plus</artifactId>
+			<version>v1-rev187-1.19.0</version>
+		</dependency>
     	<dependency>
       		<groupId>com.googlecode.objectify</groupId>
       		<artifactId>objectify</artifactId>

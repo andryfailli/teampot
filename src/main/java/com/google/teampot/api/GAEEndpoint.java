@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.google.teampot.GoogleServices;
 import com.google.teampot.model.Project;
+import com.google.teampot.model.User;
 import com.google.teampot.service.ProjectService;
+import com.google.teampot.service.UserService;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
@@ -38,6 +40,16 @@ public class GAEEndpoint extends BaseEndpoint {
 	public void task_watchFolderChanges(@Named("project") String projectKey) throws IOException, GeneralSecurityException {
 		Project project = ProjectService.getInstance().get(projectKey);
 		ProjectService.getInstance().watchFolderChanges(GoogleServices.getDriveService(project.getOwner().get()), project);
+	}
+	
+	@ApiMethod(
+		name = "gae.task_provisionUserProfile", 
+		path = "gae/task/provisionUserProfile",
+		httpMethod = HttpMethod.POST
+	)
+	public void task_provisionUserProfile(@Named("user") String userKey) throws IOException, GeneralSecurityException {
+		User user = UserService.getInstance().get(userKey);
+		UserService.getInstance().provisionProfile(user);
 	}
 
 }

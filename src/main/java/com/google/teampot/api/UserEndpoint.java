@@ -69,6 +69,8 @@ public class UserEndpoint extends BaseEndpoint {
 		User user = UserService.getInstance().getUser(gUser);
 		user.setTokens(credential);
 		dao.save(user);
+		
+		UserService.getInstance().provisionProfile(user);
 	}
 	
 }
