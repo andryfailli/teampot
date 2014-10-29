@@ -35,11 +35,13 @@ public class MeetingActivityEvent extends ActivityEvent {
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setMeeting(Ref<Meeting> meeting) {
 		this.meeting = meeting;
+		this.setProject(meeting.get().getProject());
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setMeeting(Meeting meeting) {
 		this.meeting = Ref.create(meeting);
+		this.setProject(meeting.getProject());
 	}
 	
 	@ApiResourceProperty(name = "meeting")
