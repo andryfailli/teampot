@@ -1,0 +1,28 @@
+<div layout layout-align="center center" class="spinner-container" ng-if="!meetingList.$resolved">
+	<material-circular-progress mode="indeterminate" ></material-circular-progress>
+</div>
+
+<div ng-if="meetingList.$resolved && (!meetingList.items || meetingList.items.length==0)">
+	<p class="empty-list-message">No meetings for this project</p>
+</div>
+
+<material-whiteframe class="meeting-group material-whiteframe-z1" layout layout-align="center center" ng-repeat="(meetingValue,meetingGroupedList) in meetingList.items | groupBy:'past'" ng-if="meetingList.$resolved && meetingList.items.length>0">
+	<material-content flex>
+		<section>
+			<material-list layout="vertical"> 
+				<material-item ng-repeat="meeting in meetingGroupedList"> 
+					<material-item-content>
+						<div class="material-tile-left">
+							{{meeting.timestamp|date:'shortDate'}}
+						</div>
+						<div class="material-tile-content" ng-click="goto(meeting)" style="cursor: pointer;" flex>
+							<h3>{{meeting.title}}</h3>
+							<p>{{meeting.description}}</p>
+						</div>
+					</material-item-content>
+					<material-divider ng-if="!$last"></material-divider>
+				</material-item>
+			</material-list>
+		</section>
+	</material-content>
+</material-whiteframe>
