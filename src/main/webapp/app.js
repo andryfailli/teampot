@@ -89,6 +89,29 @@ angular.module('teampot', [
 				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
 			}
 		})
+		.when('/project/:projectId/meetings', {
+			id: 'meeting-list',
+			parent: 'project',
+			label: 'Meetings',
+			templateUrl: '/components/meeting/list.html',
+			controller: 'meetingListController',
+			sidebarTemplateUrl: '/components/sidebar/menu.html',
+			fabTemplateUrl: '/components/meeting/list-fab.html',
+			resolve:{
+				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+			}
+		})
+		.when('/project/:projectId/meeting/:meetingId?', {
+			id: 'meeting-edit',
+			parent: 'meeting-list',
+			label: '{{meeting.id ? "edit meeting" : "new meeting"}}',
+			templateUrl: '/components/meeting/edit.html',
+			controller: 'meetingEditController',
+			sidebarTemplateUrl: '/components/sidebar/menu.html',
+			resolve:{
+				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+			}
+		})
 		.otherwise({
 			redirectTo : '/projects'
 		});

@@ -1,0 +1,28 @@
+<div layout layout-align="center center" class="spinner-container" ng-if="!meeting.$resolved">
+	<material-circular-progress mode="indeterminate" ></material-circular-progress>
+</div>
+
+<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-if="meeting.$resolved">
+	<material-content flex>
+	
+		<form>
+	
+			<div layout="horizontal" layout-align="center center">
+				<div>
+					<tf-float label="Meeting date" value="meeting.timestamp" type="date"></tf-float>
+				</div>
+				<div flex>
+					<tf-float label="Title" value="meeting.title" class="tf-float-full-with input-lg"></tf-float>
+				</div>
+			</div>
+
+			<div layout="horizontal" layout-align="center center">
+				<div flex>
+					<tf-float label="Description" value="meeting.description" type="textarea" class="tf-float-full-with"></tf-float>
+				</div>
+			</div>
+      
+      </form>
+
+	</material-content>
+</material-whiteframe>

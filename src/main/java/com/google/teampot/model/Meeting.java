@@ -13,6 +13,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
 @Entity
@@ -28,6 +29,7 @@ public class Meeting extends BaseEntity {
 	
 	private String description;
 	
+	@Index
 	private Date timestamp;
 	
 	private List<String> agenda;
@@ -49,6 +51,16 @@ public class Meeting extends BaseEntity {
 			return Key.create(parent.getKey(),this.getClass(), this.getId()).getString();
 		else return null;
 	}
+	
+	@ApiResourceProperty(name = "id")
+	public void setKey(String key) {
+		Key entityKey = Key.create(key);
+		Ref parentRef = Ref.create(entityKey.getParent());
+		this.setProject(parentRef);
+		this.setId(entityKey.getId());
+	}
+	
+	
 
 	public String getTitle() {
 		return title;
@@ -72,6 +84,13 @@ public class Meeting extends BaseEntity {
 
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
+	}
+	
+	public boolean isPast() {
+		if (timestamp != null)
+			return (new Date()).after(timestamp);
+		else
+			return false;
 	}
 
 	public List<String> getAgenda() {
