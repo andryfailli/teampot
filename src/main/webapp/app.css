@@ -94,3 +94,11 @@ material-whiteframe.fillview {
 #appview material-circular-progress .inset {
 	background: #ececec;
 }
+
+.material-subheader {
+	background: #ececec;
+}
+.material-subheader.material-sticky-clone {
+	margin-left:0 !important;
+	padding-left:32px !important;
+}

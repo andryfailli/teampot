@@ -43,8 +43,10 @@ public class UserService {
 	}
 	
 	public boolean isUserProvisioned(com.google.appengine.api.users.User gUser) {
-		User user = dao.getByEmail(gUser.getEmail());
-		return user != null;
+		if (gUser != null) {
+			User user = dao.getByEmail(gUser.getEmail());
+			return user != null;
+		} else return false;		
 	}
 	
 	public void ensureProvisioning(com.google.appengine.api.users.User gUser) {
