@@ -5,6 +5,7 @@ import com.google.teampot.model.Comment;
 import com.google.teampot.model.DriveActivityEvent;
 import com.google.teampot.model.Meeting;
 import com.google.teampot.model.MeetingActivityEvent;
+import com.google.teampot.model.MemberActivityEvent;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.ProjectActivityEvent;
 import com.google.teampot.model.Task;
@@ -31,6 +32,7 @@ public class OfyService {
     	factory().register(User.class);
     	factory().register(UserActivityEvent.class);
     	factory().register(ProjectActivityEvent.class);
+    	factory().register(MemberActivityEvent.class);
     }
 
     public static Objectify ofy() {

@@ -112,6 +112,17 @@ angular.module('teampot', [
 				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
 			}
 		})
+		.when('/project/:projectId/members', {
+			id: 'member-list',
+			parent: 'project',
+			label: 'Members',
+			templateUrl: '/components/user/list.html',
+			controller: 'userListController',
+			sidebarTemplateUrl: '/components/sidebar/menu.html',
+			resolve:{
+				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+			}
+		})
 		.otherwise({
 			redirectTo : '/projects'
 		});
@@ -121,7 +132,8 @@ angular.module('teampot', [
        "https://www.googleapis.com/auth/userinfo.email",
        "https://www.googleapis.com/auth/plus.me",
        "https://www.googleapis.com/auth/drive",
-       "https://www.googleapis.com/auth/admin.directory.group"
+       "https://www.googleapis.com/auth/admin.directory.group",
+       "https://www.googleapis.com/auth/admin.directory.user.readonly"
     ]);
 	GapiProvider.setAccessType('offline');
 	

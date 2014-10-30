@@ -26,6 +26,7 @@ import com.google.teampot.api.API;
 import com.google.teampot.dao.ProjectDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
 import com.google.teampot.model.EntityDiff;
+import com.google.teampot.model.MemberActivityEvent;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.ProjectActivityEvent;
 import com.google.teampot.model.EntityActivityEventVerb;
@@ -206,6 +207,16 @@ public class ProjectService{
         queue.add(task);
         
         return driveService.files().watch(project.getFolder(),channel).execute();
+	}
+	
+	public void addUser(Project project, User user, User actor) {
+		project.addUser(user);
+		dao.save(project);
+		
+		MemberActivityEvent activityEvent = new MemberActivityEvent(project, actor);
+		activityEvent.setUser(user);
+		
+		ActivityEventService.getInstance().registerActivityEvent(activityEvent);
 	}
 
 }

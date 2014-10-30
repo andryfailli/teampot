@@ -1,0 +1,24 @@
+<div layout layout-align="center center" class="spinner-container" ng-if="!entityList.$resolved">
+	<material-circular-progress mode="indeterminate"></material-circular-progress>
+</div>
+
+
+<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-if="entityList.$resolved">
+	
+	<material-content flex>
+		<material-list>
+			<material-item ng-repeat="entity in entityList.items"> 
+				<material-item-content>
+					<div class="material-tile-left">
+						<img ng-src="{{entity.iconUrl ? entity.iconUrl : '/img/face.png'}}" class="face" alt="{{entity.firstName}} {{entity.lastName}}">
+					</div>
+					<div class="material-tile-content">
+						<h3>{{entity.firstName}} {{entity.lastName}}</h3>
+					</div>
+				</material-item-content>
+				<material-divider ng-if="!$last"></material-divider>
+			</material-item>
+		</material-list>
+	</material-content>
+	
+</material-whiteframe>

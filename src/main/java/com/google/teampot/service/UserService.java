@@ -2,11 +2,13 @@ package com.google.teampot.service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import com.google.api.services.plus.model.Person;
+
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
+import com.google.appengine.api.utils.SystemProperty;
+import com.google.teampot.Config;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.api.API;
 import com.google.teampot.dao.UserDAO;
@@ -32,19 +34,30 @@ public class UserService {
 	}
 	
 	public User getUser(com.google.appengine.api.users.User gUser) {
+		return this.getUser(gUser.getEmail());
+	}
+	public User getUser(String userEmail) {
 		User user;
-		if (this.isUserProvisioned(gUser)) {
-			user = dao.getByEmail(gUser.getEmail());
+		
+		if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Development && userEmail.equals("example@example.com")) {
+			userEmail = Config.get(Config.DEV_LOCALHOST_USER);
+		}
+		
+		if (this.isUserProvisioned(userEmail)) {
+			user = dao.getByEmail(userEmail);
 		} else {
-			user = new User(gUser.getEmail());
+			user = new User(userEmail);
 			dao.save(user);
 		}
 		return user;
 	}
 	
 	public boolean isUserProvisioned(com.google.appengine.api.users.User gUser) {
-		if (gUser != null) {
-			User user = dao.getByEmail(gUser.getEmail());
+		return this.isUserProvisioned(gUser.getEmail());	
+	}
+	public boolean isUserProvisioned(String userEmail) {
+		if (userEmail != null) {
+			User user = dao.getByEmail(userEmail);
 			return user != null;
 		} else return false;		
 	}
@@ -52,12 +65,15 @@ public class UserService {
 	public void ensureProvisioning(com.google.appengine.api.users.User gUser) {
 		this.getUser(gUser);
 	}
+	public void ensureProvisioning(String userEmail) {
+		this.getUser(userEmail);
+	}
 	
 	public void provisionProfile(User user) {
 
-		Person person = null;
+		com.google.api.services.admin.directory.model.User directoryUser = null;
 		try {
-			person = GoogleServices.getPlusService(user).people().get("me").execute();
+			directoryUser = GoogleServices.getDirectoryService(user).users().get(user.getEmail()).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,9 +81,9 @@ public class UserService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		user.setFirstName(person.getName().getGivenName());
-		user.setLastName(person.getName().getFamilyName());
-		user.setIconUrl(person.getImage().getUrl());
+		user.setFirstName(directoryUser.getName().getGivenName());
+		user.setLastName(directoryUser.getName().getFamilyName());
+		user.setIconUrl(directoryUser.getThumbnailPhotoUrl());
 		dao.save(user);
 		
 		// spoon task to provision user profile

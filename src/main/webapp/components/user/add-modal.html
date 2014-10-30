@@ -1,0 +1,13 @@
+<material-dialog aria-label="Add a user">	
+	<div class="dialog-content">
+		<h2 class="dialog-title" ng-if="!loading">Add a user</h2>
+		<material-content ng-if="!loading">
+			<form>
+			  <tf-float label="User Email" value="userEmail" type="email"> </tf-float>
+			</form>
+		</material-content>	
+	</div>
+	<div class="dialog-actions" layout="horizontal" layout-align="end"  ng-if="!loading">
+		<material-button ng-click="add()" autofocus>OK</material-button>
+	</div>
+</material-dialog>

@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import com.google.teampot.GoogleServices;
-import com.google.teampot.api.exception.EntityNotFoundException;
 import com.google.teampot.dao.UserDAO;
+import com.google.teampot.api.BaseEndpoint;
+import com.google.teampot.api.exception.EntityNotFoundException;
 import com.google.teampot.model.User;
 import com.google.teampot.service.UserService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
