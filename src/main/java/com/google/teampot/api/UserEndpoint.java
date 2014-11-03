@@ -1,19 +1,24 @@
 package com.google.teampot.api;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.teampot.GoogleServices;
 import com.google.teampot.dao.UserDAO;
 import com.google.teampot.api.BaseEndpoint;
 import com.google.teampot.api.exception.EntityNotFoundException;
+import com.google.teampot.model.Project;
 import com.google.teampot.model.User;
+import com.google.teampot.service.ProjectService;
 import com.google.teampot.service.UserService;
+import com.google.teampot.transformer.Ref2EntityTransformer;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.appengine.api.oauth.OAuthRequestException;
+import com.googlecode.objectify.Ref;
 
 public class UserEndpoint extends BaseEndpoint {
 
@@ -24,8 +29,10 @@ public class UserEndpoint extends BaseEndpoint {
 		path = "user",
 		httpMethod = HttpMethod.GET
 	)
-	public List<User> list(com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		return dao.list();
+	public List<User> list(@Named("project") String projectId, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
+		Project project = ProjectService.getInstance().get(projectId);
+		Ref2EntityTransformer<User> t = new Ref2EntityTransformer<User>();
+		return t.transformTo(project.getUsers());
 	}
 	
 	@ApiMethod(

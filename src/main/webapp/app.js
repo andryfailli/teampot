@@ -119,6 +119,7 @@ angular.module('teampot', [
 			templateUrl: '/components/user/list.html',
 			controller: 'userListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
+			fabTemplateUrl: '/components/user/list-fab.html',
 			resolve:{
 				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
 			}
@@ -130,6 +131,7 @@ angular.module('teampot', [
 	GapiProvider.setClientId("60968053297-0eo4eum22rhp7iskadtj7aa0cfavovns.apps.googleusercontent.com");
 	GapiProvider.setScope([
        "https://www.googleapis.com/auth/userinfo.email",
+       "https://www.googleapis.com/auth/userinfo.profile",
        "https://www.googleapis.com/auth/plus.me",
        "https://www.googleapis.com/auth/drive",
        "https://www.googleapis.com/auth/admin.directory.group",

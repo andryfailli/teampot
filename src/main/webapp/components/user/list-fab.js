@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('projectListFabController', function($rootScope,$scope,$materialDialog,$location,ProjectService) {
+	controller('userListFabController', function($rootScope,$scope,$materialDialog,$route,ProjectService) {
 				
 		$scope.fabAdd = function(evt){
 			$materialDialog.show({
@@ -7,7 +7,8 @@ angular.module('teampot').
 				controller: 'userAddModalController',
 				targetEvent: evt,
 			}).then(function(result) {
-				$location.path("/project/"+result.id);
+				//TODO: enhancement: append the item to the list.
+            	$route.reload();
 			});
 		}
 

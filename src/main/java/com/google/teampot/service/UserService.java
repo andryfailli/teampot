@@ -69,11 +69,11 @@ public class UserService {
 		this.getUser(userEmail);
 	}
 	
-	public void provisionProfile(User user) {
+	public void provisionProfile(User actor, User userToBeProvisioned) {
 
 		com.google.api.services.admin.directory.model.User directoryUser = null;
 		try {
-			directoryUser = GoogleServices.getDirectoryService(user).users().get(user.getEmail()).execute();
+			directoryUser = GoogleServices.getDirectoryService(actor).users().get(userToBeProvisioned.getEmail()).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,20 +81,24 @@ public class UserService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		user.setFirstName(directoryUser.getName().getGivenName());
-		user.setLastName(directoryUser.getName().getFamilyName());
-		user.setIconUrl(directoryUser.getThumbnailPhotoUrl());
-		dao.save(user);
+		userToBeProvisioned.setFirstName(directoryUser.getName().getGivenName());
+		userToBeProvisioned.setLastName(directoryUser.getName().getFamilyName());
+		userToBeProvisioned.setIconUrl(directoryUser.getThumbnailPhotoUrl());
+		dao.save(userToBeProvisioned);
 		
 		// spoon task to provision user profile
 		Queue queue = QueueFactory.getDefaultQueue();
 	    TaskOptions task = TaskOptions.Builder
 	    	.withUrl(API.getBaseUrlWithoutHostAndSchema()+"/gae/task/provisionUserProfile")
 	    	.countdownMillis(86400000) // 1day
-	    	.param("user", user.getKey())
+	    	.param("user", userToBeProvisioned.getKey())
 	    	.method(Method.POST)
 	    ; 
         queue.add(task);
+	}
+	
+	public void provisionProfile(User userToBeProvisioned) {
+		this.provisionProfile(userToBeProvisioned,userToBeProvisioned);
 	}
 
 }

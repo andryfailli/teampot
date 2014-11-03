@@ -5,11 +5,16 @@ angular.module('teampot').
 
 		$scope.add = function(){
 			
-			GapiClient.client("teampot").exec("project.addUser",{userEmail:$scope.userEmail});
+			var newUser = GapiClient.client("teampot").exec("project.addUser",{
+				id: $routeParams.projectId,
+				userEmail: $scope.userEmail
+			});
 			
-			$rootScope.$apply(function(){
-				$materialDialog.hide($scope.project);
-			})
+			newUser.$promise.then(function(){
+				$rootScope.$apply(function(){
+					$materialDialog.hide(newUser);
+				})
+			});
 				
 		}
 

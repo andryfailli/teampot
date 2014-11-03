@@ -3,6 +3,6 @@ angular.module('teampot').
 		
 		$scope.project = ProjectService.$get($routeParams.projectId);
 		
-		$scope.entityList = UserService.$list();
+		$scope.entityList = UserService.$list($routeParams.projectId);
 		
 	});
