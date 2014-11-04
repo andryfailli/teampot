@@ -18,7 +18,7 @@ angular.module('teampot').
 			}).$promise
 				.then(function(){
 					$rootScope.$apply(function(){
-						NotifyService.info("User "+user.email+" removed.");
+						NotifyService.info("User "+user.email+" removed");
 					})
 				})
 				.catch(function(){
