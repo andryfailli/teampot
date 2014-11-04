@@ -3,8 +3,12 @@
 	<div layout layout-align="center center" class="spinner-container" ng-if="!entityList.$resolved">
 		<material-circular-progress mode="indeterminate" ></material-circular-progress>
 	</div>
+	
+	<div ng-if="entityList.$resolved && (!entityList.items || entityList.items.length==0)">
+		<p class="empty-list-message">You don't have any project</p>
+	</div>
 
-	<a class="unstyled" ng-repeat="entity in entityList.items" ng-href="#/project/{{entity.id}}" ng-if="entityList.$resolved">
+	<a class="unstyled" ng-repeat="entity in entityList.items" ng-href="#/project/{{entity.id}}" ng-if="entityList.$resolved  && (entityList.items.length>0)">
 		<material-whiteframe class="tile material-whiteframe-z1" >
 			<h3>{{entity.name}}</h3>
 		</material-whiteframe>
