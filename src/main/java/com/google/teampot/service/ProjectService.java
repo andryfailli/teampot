@@ -226,7 +226,7 @@ public class ProjectService{
 			e.printStackTrace();
 		}
 		
-		// add project in group
+		// add user in group
 		Member groupMember = new Member();
 		groupMember.setEmail(member.getEmail());
 		groupMember.setRole("OWNER");
@@ -241,6 +241,38 @@ public class ProjectService{
 		MemberActivityEvent activityEvent = new MemberActivityEvent(project, actor);
 		activityEvent.setUser(member);
 		activityEvent.setVerb(MemberActivityEventVerb.ADD);
+		
+		ActivityEventService.getInstance().registerActivityEvent(activityEvent);
+	}
+	
+	public void removeMember(Project project, User member, User actor) {
+		project.removeUser(member);
+		dao.save(project);
+		
+		Directory directoryService = null;
+		try {
+			directoryService = GoogleServices.getDirectoryService(actor);
+			
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// remove user from group
+		try {
+			directoryService.members().delete(project.getMachineName()+"@"+Config.get(Config.APPS_DOMAIN), member.getEmail()).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		MemberActivityEvent activityEvent = new MemberActivityEvent(project, actor);
+		activityEvent.setUser(member);
+		activityEvent.setVerb(MemberActivityEventVerb.REMOVE);
 		
 		ActivityEventService.getInstance().registerActivityEvent(activityEvent);
 	}
