@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('userAddModalController', function($rootScope,$scope,$materialDialog,$routeParams,GapiClient) {
+	controller('userAddModalController', function($rootScope,$scope,$materialDialog,$routeParams,GapiClient,NotifyService) {
 		
 		$scope.projectId = $routeParams.projectId;
 
@@ -10,11 +10,20 @@ angular.module('teampot').
 				memberEmail: $scope.userEmail
 			});
 			
-			newUser.$promise.then(function(){
-				$rootScope.$apply(function(){
-					$materialDialog.hide(newUser);
+			NotifyService.info("Adding user "+$scope.userEmail+" ...");
+			$materialDialog.hide(newUser);
+			
+			newUser.$promise
+				.then(function(){
+					$rootScope.$apply(function(){
+						NotifyService.info("User "+$scope.userEmail+" added");
+					})
 				})
-			});
+				.catch(function(){
+					$rootScope.$apply(function(){
+						NotifyService.error("An error occurred while adding "+$scope.userEmail,$scope.add);
+					})
+				});
 				
 		}
 

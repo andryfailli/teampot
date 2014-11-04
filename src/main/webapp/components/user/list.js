@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('userListController', function($rootScope,$scope,GapiClient,$routeParams,ProjectService,UserService) {
+	controller('userListController', function($rootScope,$scope,GapiClient,$routeParams,ProjectService,UserService,NotifyService) {
 		
 		$scope.project = ProjectService.$get($routeParams.projectId);
 		
@@ -10,18 +10,22 @@ angular.module('teampot').
 			var itemIndex = $scope.entityList.items.indexOf(user);
 			$scope.entityList.items.splice(itemIndex,1);
 			
+			NotifyService.info("Removing user "+user.email+" ...");
+			
 			GapiClient.client("teampot").exec("project.removeMember",{
 				id: $routeParams.projectId,
 				memberEmail: user.email
 			}).$promise
 				.then(function(){
 					$rootScope.$apply(function(){
-						//TODO: show toast
+						NotifyService.info("User "+user.email+" removed");
 					})
 				})
 				.catch(function(){
 					$rootScope.$apply(function(){
-						//TODO: show toast
+						NotifyService.error("An error occurred when removing user "+user.email,function(){
+							$scope.removeMember(user);
+						});
 						$scope.entityList.items.splice(itemIndex,0,user);
 					});
 				});

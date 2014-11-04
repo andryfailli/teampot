@@ -68,3 +68,13 @@ material-input-group.material-input-focused > input[type=date] {
 	margin:0 auto;
 	display: inline-block;
 }
+
+.text-warning {
+	color:#ffbb00;
+}
+.text-error {
+	color:#db4437;
+}
+.test-info {
+	color:#4285f4;
+}
