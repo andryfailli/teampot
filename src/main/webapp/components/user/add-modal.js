@@ -5,9 +5,9 @@ angular.module('teampot').
 
 		$scope.add = function(){
 			
-			var newUser = GapiClient.client("teampot").exec("project.addUser",{
+			var newUser = GapiClient.client("teampot").exec("project.addMember",{
 				id: $routeParams.projectId,
-				userEmail: $scope.userEmail
+				memberEmail: $scope.userEmail
 			});
 			
 			newUser.$promise.then(function(){

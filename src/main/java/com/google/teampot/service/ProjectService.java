@@ -210,12 +210,36 @@ public class ProjectService{
         return driveService.files().watch(project.getFolder(),channel).execute();
 	}
 	
-	public void addUser(Project project, User user, User actor) {
-		project.addUser(user);
+	public void addMember(Project project, User member, User actor) {
+		project.addUser(member);
 		dao.save(project);
 		
+		Directory directoryService = null;
+		try {
+			directoryService = GoogleServices.getDirectoryService(actor);
+			
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// add project in group
+		Member groupMember = new Member();
+		groupMember.setEmail(member.getEmail());
+		groupMember.setRole("OWNER");
+		try {
+			groupMember = directoryService.members().insert(project.getMachineName()+"@"+Config.get(Config.APPS_DOMAIN), groupMember).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		MemberActivityEvent activityEvent = new MemberActivityEvent(project, actor);
-		activityEvent.setUser(user);
+		activityEvent.setUser(member);
 		activityEvent.setVerb(MemberActivityEventVerb.ADD);
 		
 		ActivityEventService.getInstance().registerActivityEvent(activityEvent);

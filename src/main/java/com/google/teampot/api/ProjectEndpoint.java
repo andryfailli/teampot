@@ -60,20 +60,20 @@ public class ProjectEndpoint extends BaseEndpoint{
 	}
 	
 	@ApiMethod(
-		name = "project.addUser",
-		path = "project/{id}/adduser/{userEmail}",
+		name = "project.addMember",
+		path = "project/{id}/addmember/{memberEmail}",
 		httpMethod = HttpMethod.POST
 	)
-	public User addUser(@Named("id") String id, @Named("userEmail") String userEmail, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		User projectUser = userService.getUser(userEmail);
+	public User addMember(@Named("id") String id, @Named("memberEmail") String memberEmail, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
+		User member = userService.getUser(memberEmail);
 		User user = userService.getUser(gUser);
 		Project entity = projectService.get(id);
 
-		projectService.addUser(entity, projectUser, user);
+		projectService.addMember(entity, member, user);
 		
-		UserService.getInstance().provisionProfile(user, projectUser);
+		UserService.getInstance().provisionProfile(user, member);
 		
-		return projectUser;
+		return member;
 	}
 	
 }
