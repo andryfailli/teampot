@@ -27,6 +27,7 @@ import com.google.teampot.dao.ProjectDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
 import com.google.teampot.model.EntityDiff;
 import com.google.teampot.model.MemberActivityEvent;
+import com.google.teampot.model.MemberActivityEventVerb;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.ProjectActivityEvent;
 import com.google.teampot.model.EntityActivityEventVerb;
@@ -215,6 +216,7 @@ public class ProjectService{
 		
 		MemberActivityEvent activityEvent = new MemberActivityEvent(project, actor);
 		activityEvent.setUser(user);
+		activityEvent.setVerb(MemberActivityEventVerb.ADD);
 		
 		ActivityEventService.getInstance().registerActivityEvent(activityEvent);
 	}

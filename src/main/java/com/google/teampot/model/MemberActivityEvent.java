@@ -46,13 +46,13 @@ public class MemberActivityEvent extends ActivityEvent {
 		this.user = Ref.create(user);
 	}
 	
-	@ApiResourceProperty(name = "task")
+	@ApiResourceProperty(name = "user")
 	public User getUserEntity() {
 		Ref2EntityTransformer<User> t = new Ref2EntityTransformer<User>();
 		return t.transformTo(this.user);
 	}	
 
-	@ApiResourceProperty(name = "task")
+	@ApiResourceProperty(name = "user")
 	public void setUserEntity(User user) {
 		Ref2EntityTransformer<User> t = new Ref2EntityTransformer<User>();
 		this.user = t.transformFrom(user);

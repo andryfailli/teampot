@@ -1,0 +1,10 @@
+<div flex layout="horizontal" layout-align="center center">
+	<h3>
+		<img class="face" src="about:blank" ng-src="{{activity.user.iconUrl ? activity.user.iconUrl : '/img/face.png'}}"/>
+								
+	</h3>
+	<div layout="vertical" flex>
+		<span>{{activity.user.firstName}} {{activity.user.lastName}}</span>
+		<span>{{activity.user.email}}</span>
+	</div>
+</div>
