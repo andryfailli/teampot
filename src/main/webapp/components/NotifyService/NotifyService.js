@@ -35,7 +35,7 @@ angular.module("teampot").
 						}
 					},
 				    templateUrl: '/components/NotifyService/error-toast.html',
-					duration: duration,
+					duration: duration*5,
 					position: position
 			    });
 			}
