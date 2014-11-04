@@ -33,15 +33,11 @@ angular.module('teampot', [
 			}
 		})
 		.when('/project/:projectId', {
-			id: 'project',
-			parent: 'project-list',
-			label: '{{project.name}}',
-			templateUrl: '/components/activity/list.html',
-			controller: 'activityListController',
+			id:'project',
+			parent:'project-list',
+			label:'{{project.name}}',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
-			resolve:{
-				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
-			}
+			redirectTo : '/project/:projectId/tasks'
 		})
 		.when('/project/:projectId/tasks', {
 			id: 'task-list',
@@ -120,6 +116,17 @@ angular.module('teampot', [
 			controller: 'userListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/user/list-fab.html',
+			resolve:{
+				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+			}
+		})
+		.when('/project/:projectId/activity', {
+			id: 'activity',
+			parent: 'project',
+			label: '{{project.name}}',
+			templateUrl: '/components/activity/list.html',
+			controller: 'activityListController',
+			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			resolve:{
 				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
 			}
