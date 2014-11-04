@@ -26,6 +26,8 @@ import com.google.teampot.api.API;
 import com.google.teampot.dao.ProjectDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
 import com.google.teampot.model.EntityDiff;
+import com.google.teampot.model.MemberActivityEvent;
+import com.google.teampot.model.MemberActivityEventVerb;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.ProjectActivityEvent;
 import com.google.teampot.model.EntityActivityEventVerb;
@@ -206,6 +208,73 @@ public class ProjectService{
         queue.add(task);
         
         return driveService.files().watch(project.getFolder(),channel).execute();
+	}
+	
+	public void addMember(Project project, User member, User actor) {
+		project.addUser(member);
+		dao.save(project);
+		
+		Directory directoryService = null;
+		try {
+			directoryService = GoogleServices.getDirectoryService(actor);
+			
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// add user in group
+		Member groupMember = new Member();
+		groupMember.setEmail(member.getEmail());
+		groupMember.setRole("OWNER");
+		try {
+			groupMember = directoryService.members().insert(project.getMachineName()+"@"+Config.get(Config.APPS_DOMAIN), groupMember).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		MemberActivityEvent activityEvent = new MemberActivityEvent(project, actor);
+		activityEvent.setUser(member);
+		activityEvent.setVerb(MemberActivityEventVerb.ADD);
+		
+		ActivityEventService.getInstance().registerActivityEvent(activityEvent);
+	}
+	
+	public void removeMember(Project project, User member, User actor) {
+		project.removeUser(member);
+		dao.save(project);
+		
+		Directory directoryService = null;
+		try {
+			directoryService = GoogleServices.getDirectoryService(actor);
+			
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// remove user from group
+		try {
+			directoryService.members().delete(project.getMachineName()+"@"+Config.get(Config.APPS_DOMAIN), member.getEmail()).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		MemberActivityEvent activityEvent = new MemberActivityEvent(project, actor);
+		activityEvent.setUser(member);
+		activityEvent.setVerb(MemberActivityEventVerb.REMOVE);
+		
+		ActivityEventService.getInstance().registerActivityEvent(activityEvent);
 	}
 
 }

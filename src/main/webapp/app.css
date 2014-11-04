@@ -97,6 +97,7 @@ material-whiteframe.fillview {
 
 .material-subheader {
 	background: #ececec;
+	padding-bottom:0;
 }
 .material-subheader.material-sticky-clone {
 	margin-left:0 !important;

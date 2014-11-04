@@ -15,6 +15,7 @@ public class Config {
 	public static final String APPLICATION_NAME = "APPLICATION_NAME";
 	public static final String APPS_DOMAIN = "APPS_DOMAIN";
 	public static final String PROJECT_PREFIX = "PROJECT_PREFIX";
+	public static final String DEV_LOCALHOST_USER = "DEV_LOCALHOST_USER";
 	
 	private Properties props;
 	

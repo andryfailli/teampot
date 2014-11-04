@@ -24,7 +24,7 @@ public class Ref2EntityTransformer<T> implements Transformer<Ref<T>, T> {
 		}
 	}
 	
-	public List<T> transformTo(List<Ref<T>> ins) {
+	public List<T> transformTo(Iterable<Ref<T>> ins) {
 		List<T> outs = new ArrayList<T>();
 		for (Ref<T> in : ins) {
 			outs.add(this.transformTo(in));
@@ -32,7 +32,7 @@ public class Ref2EntityTransformer<T> implements Transformer<Ref<T>, T> {
 		return outs;
 	}
 
-	public List<Ref<T>> transformFrom(List<T> ins) {
+	public List<Ref<T>> transformFrom(Iterable<T> ins) {
 		List<Ref<T>> outs = new ArrayList<Ref<T>>();
 		for (T in : ins) {
 			outs.add(this.transformFrom(in));

@@ -18,6 +18,7 @@
 								<material-icon ng-switch-when="TaskActivityEvent" icon="/img/icons/ic_view_list_48px.svg"></material-icon>
 								<material-icon ng-switch-when="ProjectActivityEvent" icon="/img/icons/ic_info_outline_48px.svg"></material-icon>
 								<material-icon ng-switch-when="MeetingActivityEvent" icon="/img/icons/ic_event_48px.svg"></material-icon>
+								<material-icon ng-switch-when="MemberActivityEvent" icon="/img/icons/ic_group_48px.svg"></material-icon>
 								<material-icon ng-switch-default icon="/img/icons/ic_info_outline_48px.svg"></material-icon>
 							</span>
 							{{activity.verb}}
@@ -30,7 +31,7 @@
 								<small>{{activity.timestamp|date:'shortDate'}}<br/><small>{{activity.timestamp|date:'shortTime'}}</small></small>
 							</div>
 							<div layout="vertical" layout-align="center center">
-								<img class="face" src="about:blank" ng-src="{{activity.actor.iconUrl}}"/>
+								<img class="face" src="about:blank" ng-src="{{activity.actor.iconUrl ? activity.actor.iconUrl : '/img/face.png'}}"/>
 								<small>{{activity.actor.firstName}} {{activity.actor.lastName}}</small>
 							</div>
 						</div>

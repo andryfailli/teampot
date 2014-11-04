@@ -4,11 +4,7 @@ import java.util.List;
 
 import com.google.teampot.api.exception.EntityNotFoundException;
 import com.google.teampot.dao.ActivityEventDAO;
-import com.google.teampot.dao.TaskDAO;
 import com.google.teampot.model.ActivityEvent;
-import com.google.teampot.model.Task;
-import com.google.teampot.model.TaskActivityEventVerb;
-import com.google.teampot.service.ActivityEventService;
 import com.google.teampot.service.UserService;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
