@@ -32,7 +32,13 @@
 	
 			<material-sidenav layout="vertical" class="material-sidenav-left material-whiteframe-z3" component-id="left" material-swipe-left="closeSidebar()" ng-if="sidebarTemplateUrl"> 
 				<material-toolbar class="material-theme-indigo">
-					<h1 class="material-toolbar-tools" data-ng-click="closeSidebar()">TeamPot</h1>
+					<h1 class="material-toolbar-tools">
+						<material-button>
+							<material-icon icon="/img/icons/ic_arrow_back_24px.svg"></material-icon>
+							<material-tooltip>Back to projects</material-tooltip>
+						</material-button>
+						My Project
+					</h1>
 				</material-toolbar> 
 				<material-content flex>
 					<div layout="vertical" layout-fill ng-include="sidebarTemplateUrl"></div>
