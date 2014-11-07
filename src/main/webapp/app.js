@@ -157,7 +157,7 @@ angular.module('teampot', [
 	GapiClientProvider.load("drive","v2");
 
 })
-.run(function($rootScope,Gapi,GapiClient){
+.run(function($rootScope,$routeParams,Gapi,GapiClient,ProjectService){
 
 	$rootScope.$on("$routeChangeStart", function(event, next, current) {
 		$rootScope.appLoading = true;
@@ -168,6 +168,19 @@ angular.module('teampot', [
 		$rootScope.sidebarTemplateUrl = next.sidebarTemplateUrl;
 		$rootScope.fabTemplateUrl = next.fabTemplateUrl;
 		$rootScope.routeId = next.id;
+		
+		if ($routeParams.projectId) {
+			if (!$rootScope.currentProject || $rootScope.currentProject.id != $routeParams.projectId) {
+				ProjectService.$get($routeParams.projectId).$promise.then(function(project){
+					$rootScope.$apply(function(){
+						$rootScope.currentProject = project;
+					});
+				});
+			}
+		} else {
+			$rootScope.currentProject = null;
+		}
+		
     });
     $rootScope.$on("$routeChangeError", function(event, next, current) {
     	$rootScope.appLoading = false;

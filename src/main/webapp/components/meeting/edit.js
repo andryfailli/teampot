@@ -3,7 +3,6 @@ angular.module('teampot').
 		
 		var isNew = $routeParams.meetingId ? false : true;
 		
-		$scope.project = ProjectService.$get($routeParams.projectId);
 		$scope.meeting = !isNew ? MeetingService.$get($routeParams.meetingId) : MeetingService.$new({project:$routeParams.projectId});
 		
 		function registerSaveWatch() {

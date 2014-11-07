@@ -3,7 +3,6 @@ angular.module('teampot').
 		
 		var isNew = $routeParams.taskId ? false : true;
 		
-		$scope.project = ProjectService.$get($routeParams.projectId);
 		$scope.task = !isNew ? TaskService.$get($routeParams.taskId) : TaskService.$new({project:$routeParams.projectId});
 		
 		function registerSaveWatch() {
