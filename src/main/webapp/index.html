@@ -33,11 +33,11 @@
 			<material-sidenav layout="vertical" class="material-sidenav-left material-whiteframe-z3" component-id="left" material-swipe-left="closeSidebar()" ng-if="sidebarTemplateUrl"> 
 				<material-toolbar class="material-theme-indigo">
 					<h1 class="material-toolbar-tools">
-						<material-button>
+						<material-button ng-href="#/projects">
 							<material-icon icon="/img/icons/ic_arrow_back_24px.svg"></material-icon>
 							<material-tooltip>Back to projects</material-tooltip>
 						</material-button>
-						My Project
+						{{currentProject.name}}
 					</h1>
 				</material-toolbar> 
 				<material-content flex>
@@ -57,15 +57,14 @@
 							<a hide-md ng-click="openSidebar()" aria-label="Toggle Menu" href ng-if="sidebarTemplateUrl"> 
 								<material-icon icon="/img/icons/ic_menu_24px.svg"></material-icon>
 							</a>
-							<span ng-if="!sidebarTemplateUrl || !breadcrumbs">TeamPot</span>
 		
 							<ol class="route-breadcrumbs" flex>
 								<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs">
-									<span ng-if="!$last"> 
+									<span ng-if="!$last && $index>=2"> 
 										<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 
 										<material-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></material-icon>
 									</span>
-									<span ng-if="$last">{{breadcrumb.label}}</span>
+									<span ng-if="$last && $index>=2">{{breadcrumb.label}}</span>
 								</li>
 							</ol>
 							
