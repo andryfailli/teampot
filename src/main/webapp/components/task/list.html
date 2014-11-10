@@ -31,19 +31,19 @@
 							</div>
 							<div class="material-tile-right" ng-click="goto(task)" style="cursor: pointer;" layout="horizontal" layout-align="center center">
 								<div layout="horizontal" style="text-align: center;">
-									<div layout="vertical" layout-align="center center" class="task-detail-box" style="width:50px; ">
+									<div layout="vertical" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:50px; ">
 										<div ng-show="task.priority">
 											<span>P{{task.priority}}</span>
 										</div>
 										<div ng-show="!task.priority" class="text-muted empty-field-message">P?</div>
 									</div>
-									<div layout="vertical" layout-align="center center" class="task-detail-box" style="width:100px; ">
+									<div layout="vertical" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:100px; ">
 										<div ng-show="task.dueDate">
 											<span>{{task.dueDate|date:'shortDate'}}</span>
 										</div>
 										<div ng-show="!task.dueDate" class="text-muted empty-field-message">no due date</div>
 									</div>
-									<div layout="vertical" layout-align="center center" class="task-detail-box" style="width:80px; padding-right:0;">
+									<div layout="vertical" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:80px; padding-right:0;">
 										<div ng-show="task.assignee">
 											<img class="face" src="about:blank" ng-src="{{task.assignee.iconUrl ? task.assignee.iconUrl : '/img/face.png'}}" style="margin:0"/>
 											<br/>

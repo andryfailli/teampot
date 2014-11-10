@@ -105,3 +105,17 @@ material-whiteframe.fillview {
 	margin-left:0 !important;
 	padding-left:32px !important;
 }
+
+
+
+.list-item-box {
+	min-height: 40px;
+}
+.list-item-box-left {
+	border-right:1px solid rgba(0, 0, 0, 0.12);
+	padding-right: 16px;
+}
+.list-item-box-right {
+	border-left:1px solid rgba(0, 0, 0, 0.12);
+	padding-left:16px;
+}
