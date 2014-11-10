@@ -1,5 +1,6 @@
 package com.google.teampot;
 
+import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 import com.google.teampot.model.ActivityEvent;
 import com.google.teampot.model.Comment;
 import com.google.teampot.model.DriveActivityEvent;
@@ -36,7 +37,8 @@ public class OfyService {
     }
 
     public static Objectify ofy() {
-        return ObjectifyService.ofy();
+        return ObjectifyService.ofy()
+			.consistency(Consistency.STRONG);
     }
 
     public static ObjectifyFactory factory() {
