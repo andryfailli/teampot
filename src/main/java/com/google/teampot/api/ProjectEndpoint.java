@@ -65,14 +65,19 @@ public class ProjectEndpoint extends BaseEndpoint{
 		httpMethod = HttpMethod.POST
 	)
 	public User addMember(@Named("id") String id, @Named("memberEmail") String memberEmail, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		User member = userService.getUser(memberEmail);
+		User member;
 		User user = userService.getUser(gUser);
 		Project entity = projectService.get(id);
 
+		if (!userService.isUserProvisioned(memberEmail)) {
+			member = new User(memberEmail);
+			UserService.getInstance().provisionProfile(user, member);
+		} else {
+			member = userService.getUser(memberEmail);
+		}
+		
 		projectService.addMember(entity, member, user);
-		
-		UserService.getInstance().provisionProfile(user, member);
-		
+			
 		return member;
 	}
 	
