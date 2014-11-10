@@ -58,8 +58,8 @@ material-input-group.material-input-focused > input[type=date] {
 
 .face {
 	border-radius: 30px;
-	width: 48px;
-	margin: 16px;
+	width: 38px;
+	margin: 2px 5px;
 }
 
 
@@ -77,4 +77,29 @@ material-input-group.material-input-focused > input[type=date] {
 }
 .test-info {
 	color:#4285f4;
+}
+.text-muted {
+	color:#A8A8A8;
+}
+
+
+material-checkbox.checkbox-bigger .material-container {
+	top:0;
+	width:36px;
+	height:36px
+}
+material-checkbox.checkbox-bigger .material-container .material-icon {
+	width:36px;
+	height:36px
+}
+material-checkbox.checkbox-bigger .material-container .material-ripple-container {
+	width: 108px;
+	height: 108px;
+	left: -36px;
+	top: -36px;
+}
+material-checkbox.checkbox-bigger.material-checked .material-icon:after {
+	left: 10px;
+	width: 12px;
+	height: 24px;
 }

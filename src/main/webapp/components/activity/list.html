@@ -3,7 +3,7 @@
 </div>
 
 <div ng-if="activityList.$resolved && (!activityList.items || activityList.items.length==0)">
-	<p class="empty-list-message">No activity yet for this project</p>
+	<p class="empty-list-message text-muted">No activity yet for this project</p>
 </div>
 
 <material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center" ng-repeat="activity in activityList.items" ng-if="activityList.$resolved && activityList.items.length>0">

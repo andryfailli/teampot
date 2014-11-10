@@ -2,3 +2,9 @@
 	padding-top:0;
 	padding-bottom:0;
 }
+
+.task-detail-box {
+	padding:0 10px;
+	border-left:1px solid rgba(0, 0, 0, 0.12);
+	min-height: 60px;
+}

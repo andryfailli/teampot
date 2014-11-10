@@ -98,21 +98,14 @@ public class Task extends BaseEntity {
 		this.assignee = assignee;
 	}
 	
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setAssignee(User assignee) {
-		this.assignee = Ref.create(assignee);
+	@ApiResourceProperty(name = "assignee")
+	public User getAssigneeEntity() {
+		return this.assignee != null ? this.assignee.get() : null;
 	}
 	
 	@ApiResourceProperty(name = "assignee")
-	public String getAssigneeKey() {
-		Ref2StringTransformer<User> t = new Ref2StringTransformer<User>();
-		return t.transformTo(this.assignee);
-	}	
-
-	@ApiResourceProperty(name = "assignee")
-	public void setAssigneeKey(String assignee) {
-		Ref2StringTransformer<User> t = new Ref2StringTransformer<User>();
-		this.assignee = t.transformFrom(assignee);
+	public void setAssigneeEntity(User assignee) {
+		this.assignee = Ref.create(assignee);
 	}
 
 	public boolean isCompleted() {
