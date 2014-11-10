@@ -9,7 +9,7 @@ material-icon {
 	vertical-align: middle;
 }
 
-a.material-button-inner > material-icon {
+.material-button-fab a.material-button-inner > material-icon {
 	margin-top:11px;
 }
 
