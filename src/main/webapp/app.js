@@ -26,7 +26,6 @@ angular.module('teampot', [
 			label: 'Projects',
 			templateUrl: '/components/project/list.html',
 			controller: 'projectListController',
-			sidebarTemplateUrl: '/components/sidebar/hello.html',
 			fabTemplateUrl: '/components/project/list-fab.html',
 			resolve:{
 				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
