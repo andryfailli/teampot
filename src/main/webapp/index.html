@@ -58,7 +58,7 @@
 								<material-icon icon="/img/icons/ic_menu_24px.svg"></material-icon>
 							</a>
 							
-							<span ng-if="!sidebarTemplateUrl"><b>TeamPot</b></span>
+							<span ng-if="breadcrumbs.length<3"><b>TeamPot</b></span>
 		
 							<ol class="route-breadcrumbs" flex>
 								<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs">

@@ -12,23 +12,27 @@
 	<p class="empty-list-message">No task yet for this project</p>
 </div>
 
-<material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center" ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'" ng-if="taskList.$resolved && taskList.items.length>0">
-	<material-content flex>
-		<section>
-			<material-list layout="vertical"> 
-				<material-item ng-repeat="task in taskGroupedList"> 
-					<material-item-content>
-						<div class="material-tile-left">
-							<material-checkbox ng-model="task.completed" aria-label="Completed" ng-click="task.$save()"></material-checkbox>
-						</div>
-						<div class="material-tile-content" ng-click="goto(task)" style="cursor: pointer;" flex>
-							<h3>{{task.title}}</h3>
-							<p>{{task.description}}</p>
-						</div>
-					</material-item-content>
-					<material-divider ng-if="!$last"></material-divider>
-				</material-item>
-			</material-list>
-		</section>
-	</material-content>
-</material-whiteframe>
+<section ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'" ng-if="taskList.$resolved && taskList.items.length>0">
+	<material-subheader ng-switch on="groupValue">
+		<span ng-switch-when="false">To Do</span>
+		<span ng-switch-when="true">Completed</span>
+	</material-subheader>
+	<material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center">
+		<material-content flex>
+				<material-list layout="vertical"> 
+					<material-item ng-repeat="task in taskGroupedList"> 
+						<material-item-content>
+							<div class="material-tile-left">
+								<material-checkbox ng-model="task.completed" aria-label="Completed" ng-click="task.$save()"></material-checkbox>
+							</div>
+							<div class="material-tile-content" ng-click="goto(task)" style="cursor: pointer;" flex>
+								<h3>{{task.title}}</h3>
+								<p>{{task.description}}</p>
+							</div>
+						</material-item-content>
+						<material-divider ng-if="!$last"></material-divider>
+					</material-item>
+				</material-list>
+		</material-content>
+	</material-whiteframe>
+</section>

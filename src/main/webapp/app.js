@@ -122,7 +122,7 @@ angular.module('teampot', [
 		.when('/project/:projectId/activity', {
 			id: 'activity',
 			parent: 'project',
-			label: '{{project.name}}',
+			label: 'Activity',
 			templateUrl: '/components/activity/list.html',
 			controller: 'activityListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
@@ -160,7 +160,7 @@ angular.module('teampot', [
 
 	$rootScope.$on("$routeChangeStart", function(event, next, current) {
 		$rootScope.appLoading = true;
-		$rootScope.closeSidebar();
+		//$rootScope.closeSidebar();
     });
 	$rootScope.$on("$routeChangeSuccess", function(event, next, current) {
 		$rootScope.appLoading = false;
