@@ -62,7 +62,7 @@
 
 <section ng-if="meetingList.$resolved && (meetingList.items | filter:filter_isNotPast).length>0">
 	<material-subheader>Upcoming meetings</material-subheader>
-	<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-repeat="meeting in meetingList.items | filter:filter_isNotPast" ng-if="meetingList.$resolved && meetingList.items.length>0">
+	<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-repeat="meeting in meetingList.items | filter:filter_isNotPast | orderBy:'timestamp'" ng-if="meetingList.$resolved && meetingList.items.length>0">
 		<material-content flex>
 			<section>
 				<material-list layout="vertical"> 
@@ -89,7 +89,7 @@
 
 <section  ng-if="meetingList.$resolved && (meetingList.items | filter:filter_isPast).length>0">
 	<material-subheader>Past meetings</material-subheader>
-	<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-repeat="meeting in meetingList.items | filter:filter_isPast" ng-if="meetingList.$resolved && meetingList.items.length>0">
+	<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-repeat="meeting in meetingList.items | filter:filter_isPast | orderBy:'timestamp'" ng-if="meetingList.$resolved && meetingList.items.length>0">
 		<material-content flex>
 			<section>
 				<material-list layout="vertical"> 
