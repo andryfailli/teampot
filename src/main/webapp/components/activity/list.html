@@ -6,33 +6,34 @@
 	<p class="empty-list-message text-muted">No activity yet for this project</p>
 </div>
 
-<material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center" ng-repeat="activity in activityList.items" ng-if="activityList.$resolved && activityList.items.length>0">
+<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-repeat="activity in activityList.items" ng-if="activityList.$resolved && activityList.items.length>0">
 	<material-content flex>
 		<section>
 			<material-list layout="vertical"> 
 				<material-item> 
 					<material-item-content>
-					
-						<div class="material-tile-left" layout="vertical" layout-align="center center">
-							<span ng-switch on="activity.activityType">
-								<material-icon ng-switch-when="TaskActivityEvent" icon="/img/icons/ic_view_list_48px.svg"></material-icon>
-								<material-icon ng-switch-when="ProjectActivityEvent" icon="/img/icons/ic_info_outline_48px.svg"></material-icon>
-								<material-icon ng-switch-when="MeetingActivityEvent" icon="/img/icons/ic_event_48px.svg"></material-icon>
-								<material-icon ng-switch-when="MemberActivityEvent" icon="/img/icons/ic_group_48px.svg"></material-icon>
-								<material-icon ng-switch-default icon="/img/icons/ic_info_outline_48px.svg"></material-icon>
-							</span>
-							{{activity.verb}}
+						<div class="material-tile-left">
+							<div class="list-item-box list-item-box-left" layout="vertical" layout-align="center center" style="min-width:120px;">
+								<span ng-switch on="activity.activityType">
+									<material-icon ng-switch-when="TaskActivityEvent" icon="/img/icons/ic_view_list_48px.svg"></material-icon>
+									<material-icon ng-switch-when="ProjectActivityEvent" icon="/img/icons/ic_info_outline_48px.svg"></material-icon>
+									<material-icon ng-switch-when="MeetingActivityEvent" icon="/img/icons/ic_event_48px.svg"></material-icon>
+									<material-icon ng-switch-when="MemberActivityEvent" icon="/img/icons/ic_group_48px.svg"></material-icon>
+									<material-icon ng-switch-default icon="/img/icons/ic_info_outline_48px.svg"></material-icon>
+								</span>
+								{{activity.verb}}
+							</div>
 						</div>
 						<div class="material-tile-content" ng-include="'/components/activity/item-'+activity.activityType+'.html'" flex>
 							
 						</div>
 						<div class="material-tile-right" layout="horizontal" layout-align="center center">
-							<div style="text-align: center;">
+							<div class="list-item-box list-item-box-right" layout="horizontal" layout-align="center center" style="text-align: center;">
 								<small>{{activity.timestamp|date:'shortDate'}}<br/><small>{{activity.timestamp|date:'shortTime'}}</small></small>
 							</div>
-							<div layout="vertical" layout-align="center center">
+							<div class="list-item-box list-item-box-right" layout="vertical" layout-align="center center">
 								<img class="face" src="about:blank" ng-src="{{activity.actor.iconUrl ? activity.actor.iconUrl : '/img/face.png'}}"/>
-								<small>{{activity.actor.firstName}} {{activity.actor.lastName}}</small>
+								<small>{{activity.actor.firstName}}</small>
 							</div>
 						</div>
 					

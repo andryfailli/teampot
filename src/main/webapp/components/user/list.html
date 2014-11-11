@@ -10,13 +10,15 @@
 			<material-item ng-repeat="entity in entityList.items"> 
 				<material-item-content>
 					<div class="material-tile-left">
-						<img ng-src="{{entity.iconUrl ? entity.iconUrl : '/img/face.png'}}" class="face" alt="{{entity.firstName}} {{entity.lastName}}">
+						<div class="list-item-box list-item-box-left">
+							<img ng-src="{{entity.iconUrl ? entity.iconUrl : '/img/face.png'}}" class="face" alt="{{entity.firstName}} {{entity.lastName}}">
+						</div>
 					</div>
 					<div class="material-tile-content" flex>
 						<h3>{{entity.firstName}} {{entity.lastName}}</h3>
 					</div>
 					<div class="material-tile-right">
-						 <material-button ng-if="entity.email != userInfo.emails[0].value" ng-click="removeMember(entity)">
+						<material-button ng-if="entity.email != userInfo.emails[0].value" ng-click="removeMember(entity)">
 						 	<material-icon icon="/img/icons/ic_cancel_24px.svg"></material-icon>
 						 	<material-tooltip>Remove this user</material-tooltip>
 						 </material-button>

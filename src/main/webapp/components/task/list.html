@@ -44,9 +44,8 @@
 										<div ng-show="!task.dueDate" class="text-muted empty-field-message">no due date</div>
 									</div>
 									<div layout="vertical" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:80px; padding-right:0;">
-										<div ng-show="task.assignee">
-											<img class="face" src="about:blank" ng-src="{{task.assignee.iconUrl ? task.assignee.iconUrl : '/img/face.png'}}" style="margin:0"/>
-											<br/>
+										<div ng-show="task.assignee" layout="vertical" layout-align="center center">
+											<img class="face" src="about:blank" ng-src="{{task.assignee.iconUrl ? task.assignee.iconUrl : '/img/face.png'}}"/>
 											<small>{{task.assignee.firstName}}</small>
 										</div>
 										<div ng-show="!task.assignee" class="text-muted empty-field-message">no one assigned</div>
