@@ -3,6 +3,15 @@ material-whiteframe {
 	margin: 20px;
 }
 
+.material-content-padded {
+	padding:20px;
+}
+
+.material-content-actions {
+	padding-top:10px;
+	text-align:right;
+}
+
 material-icon {
 	display: inline-block;
 	vertical-align: middle;

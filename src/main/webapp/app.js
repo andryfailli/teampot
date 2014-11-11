@@ -34,7 +34,7 @@ angular.module('teampot', [
 		.when('/project/:projectId', {
 			id:'project',
 			parent:'project-list',
-			label:'{{project.name}}',
+			label:'{{currentProject.name}}',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			redirectTo : '/project/:projectId/tasks'
 		})
