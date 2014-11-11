@@ -156,7 +156,7 @@ angular.module('teampot', [
 	GapiClientProvider.load("drive","v2");
 
 })
-.run(function($rootScope,$routeParams,Gapi,GapiClient,ProjectService){
+.run(function($rootScope,$routeParams,Gapi,GapiClient,ProjectService,CONSTANTS,AlertService){
 
 	$rootScope.$on("$routeChangeStart", function(event, next, current) {
 		$rootScope.appLoading = true;
@@ -191,6 +191,12 @@ angular.module('teampot', [
     }
     
     $rootScope.userInfo = GapiClient.client("plus").exec("people.get",{userId:'me'});
+    $rootScope.userInfo.$promise.then(function(){
+    	if ($rootScope.userInfo.domain != CONSTANTS.APPS_DOMAIN) {
+    		delete $rootScope.userInfo;
+    		AlertService.alert("Sorry, TeamPot is not available in your domain.","TeamPot");
+    	}
+    })
     
 })
 .controller('mainController',function($rootScope,$scope,$routeParams,$materialSidenav,routeBreadcrumbs){

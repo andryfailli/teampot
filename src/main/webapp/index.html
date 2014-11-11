@@ -48,7 +48,7 @@
 	
 			<material-content class="full-height" style="overflow:hidden" flex>
 			
-				<span ng-include="fabTemplateUrl" ng-if="fabTemplateUrl"></span>
+				<span ng-include="fabTemplateUrl" ng-if="userInfo.$promise.$resolved && fabTemplateUrl"></span>
 	
 				<div layout="vertical" layout-fill>
 		
@@ -122,6 +122,7 @@
 		<script type="text/javascript" src="/components/tf-float.js"></script>
 		<script type="text/javascript" src="/components/fn-debounce.js"></script>
 		<script type="text/javascript" src="/components/NotifyService/NotifyService.js"></script>
+		<script type="text/javascript" src="/components/AlertService/AlertService.js"></script>
 		
 		<script type="text/javascript" src="/components/dashboard/dashboard.js"></script>
 		
