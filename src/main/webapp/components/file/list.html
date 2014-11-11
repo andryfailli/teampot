@@ -1,8 +1,12 @@
-<div layout layout-align="center center" class="spinner-container" ng-if="(!project.$resolved || !iframeready)">
+<div layout layout-align="center center" class="spinner-container" ng-if="filesLoading">
 	<material-circular-progress mode="indeterminate" ></material-circular-progress>
 </div>
 
-<material-whiteframe class="fillview material-whiteframe-z1" layout layout-align="center center" ng-show="project.$resolved && iframeready">
+<div ng-if="!filesLoading && folderIsEmpty">
+	<p class="empty-list-message text-muted">No files yet for this project</p>
+</div>
+
+<material-whiteframe class="fillview material-whiteframe-z1" layout layout-align="center center" ng-show="!filesLoading && iframeready && folderIsNotEmpty">
 	<material-content flex style="height:100%; overflow:hidden;">
 		<iframe id="fileListIframe" ng-src="{{iframeSrc}}" style="width: 100%; height: 100%" frameborder="0" iframe-onload="iframeLoaded()"></iframe>
 	</material-content>

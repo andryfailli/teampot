@@ -170,11 +170,7 @@ angular.module('teampot', [
 		
 		if ($routeParams.projectId) {
 			if (!$rootScope.currentProject || $rootScope.currentProject.id != $routeParams.projectId) {
-				ProjectService.$get($routeParams.projectId).$promise.then(function(project){
-					$rootScope.$apply(function(){
-						$rootScope.currentProject = project;
-					});
-				});
+				$rootScope.currentProject = ProjectService.$get($routeParams.projectId)
 			}
 		} else {
 			$rootScope.currentProject = null;
