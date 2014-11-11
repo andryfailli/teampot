@@ -4,6 +4,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -39,6 +40,12 @@ public class User extends BaseEntity {
 	@ApiResourceProperty(name = "id")
 	public String getKey() {
 		return Key.create(this.getClass(), this.getId()).getString();
+	}
+	
+	@ApiResourceProperty(name = "id")
+	public void setKey(String key) {
+		Key entityKey = Key.create(key);
+		this.setId(entityKey.getId());
 	}
 
 	public String getEmail() {

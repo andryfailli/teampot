@@ -105,7 +105,11 @@ public class Task extends BaseEntity {
 	
 	@ApiResourceProperty(name = "assignee")
 	public void setAssigneeEntity(User assignee) {
-		this.assignee = Ref.create(assignee);
+		if (assignee != null) {
+			this.assignee = Ref.create(assignee);
+		} else {
+			this.assignee = null;
+		}
 	}
 
 	public boolean isCompleted() {
