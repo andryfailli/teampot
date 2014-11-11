@@ -20,7 +20,7 @@
 	<material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center">
 		<material-content flex>
 				<material-list layout="vertical"> 
-					<material-item ng-repeat="task in taskGroupedList"> 
+					<material-item ng-repeat="task in taskGroupedList | orderBy:'priority':true"> 
 						<material-item-content>
 							<div class="material-tile-left">
 								<material-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed" ng-click="task.$save()"></material-checkbox>
