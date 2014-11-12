@@ -105,6 +105,7 @@ material-whiteframe.fillview {
 .material-subheader.material-sticky-clone {
 	margin-left:0 !important;
 	padding-left:32px !important;
+	padding-bottom:10px;
 }
 
 

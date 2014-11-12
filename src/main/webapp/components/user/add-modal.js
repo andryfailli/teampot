@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('userAddModalController', function($rootScope,$scope,$materialDialog,$routeParams,GapiClient,NotifyService) {
+	controller('userAddModalController', function($rootScope,$scope,$materialDialog,$routeParams,GapiClient,NotifyService,$route) {
 		
 		$scope.projectId = $routeParams.projectId;
 
@@ -17,6 +17,8 @@ angular.module('teampot').
 				.then(function(){
 					$rootScope.$apply(function(){
 						NotifyService.info("User "+$scope.userEmail+" added");
+						//TODO: enhancement: append the item to the list.
+		            	$route.reload();
 					})
 				})
 				.catch(function(){
