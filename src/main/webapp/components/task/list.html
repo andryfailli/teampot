@@ -1,7 +1,8 @@
 <material-tabs class="material-theme-transparent" selected="tabSelected" ng-init="tabSelected=0">
-	<material-tab label="All"></material-tab>
-	<material-tab label="Upcoming"></material-tab>
-	<material-tab label="Assigned to me"></material-tab>
+	<material-tab label="All" ng-click="showTab_all()"></material-tab>
+	<material-tab label="Upcoming" ng-click="showTab_upcoming()"></material-tab>
+	<material-tab label="Assigned to me" ng-click="showTab_mine()"></material-tab>
+	<material-tab label="Unassigned" ng-click="showTab_unassigned()"></material-tab>
 </material-tabs>
 
 <div layout layout-align="center center" class="spinner-container" ng-if="!taskList.$resolved">
@@ -12,15 +13,19 @@
 	<p class="empty-list-message text-muted">No task yet for this project</p>
 </div>
 
+<div ng-if="(taskList.items | filter:currentFilter).length == 0">
+	<p class="empty-list-message text-muted">No task in this view</p>
+</div>
+
 <section ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'" ng-if="taskList.$resolved && taskList.items.length>0">
-	<material-subheader ng-switch on="groupValue">
+	<material-subheader ng-switch on="groupValue" ng-show="(taskGroupedList | filter:currentFilter).length>0">
 		<span ng-switch-when="false">To Do</span>
 		<span ng-switch-when="true">Completed</span>
 	</material-subheader>
-	<material-whiteframe class="task-group material-whiteframe-z1" layout layout-align="center center">
+	<material-whiteframe class="task-group material-whiteframe-z1" ng-show="(taskGroupedList | filter:currentFilter).length>0" layout layout-align="center center">
 		<material-content flex>
 				<material-list layout="vertical"> 
-					<material-item ng-repeat="task in taskGroupedList | orderBy:'priority':true"> 
+					<material-item ng-repeat="task in taskGroupedList | filter:currentFilter | orderBy:currentOrderBy:currentOrderByReverse"> 
 						<material-item-content>
 							<div class="material-tile-left">
 								<material-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed" ng-click="task.$save()"></material-checkbox>
