@@ -195,6 +195,8 @@ angular.module('teampot', [
     	if ($rootScope.userInfo.domain != CONSTANTS.APPS_DOMAIN) {
     		delete $rootScope.userInfo;
     		AlertService.alert("Sorry, TeamPot is not available in your domain.","TeamPot");
+    	} else {
+    		$rootScope.currentUser = GapiClient.client("teampot").exec("user.get",{id:"me"});
     	}
     })
     

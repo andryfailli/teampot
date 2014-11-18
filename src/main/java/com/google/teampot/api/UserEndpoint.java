@@ -41,7 +41,12 @@ public class UserEndpoint extends BaseEndpoint {
 		httpMethod = HttpMethod.GET
 	)
 	public User get(@Named("id") String id, com.google.appengine.api.users.User gUser) throws EntityNotFoundException,OAuthRequestException {
-		User entity = dao.get(id);
+		User entity;
+		if (id.equals("me")) {
+			entity = UserService.getInstance().getUser(gUser);
+		} else {
+			entity = dao.get(id);
+		}
 		if (entity != null)
 			return entity;
 		else

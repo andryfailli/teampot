@@ -1,5 +1,5 @@
 package com.google.teampot.model;
 
 public enum MeetingActivityEventVerb {
-	CREATE,EDIT,DELETE
+	CREATE,EDIT,DELETE,VOTE
 }

@@ -16,38 +16,34 @@
 						<material-item-content>
 							<div class="material-tile-left" style="text-align:center; min-width:120px">
 								<material-icon icon="/img/icons/ic_help_48px.svg"></material-icon>
+								<p class="text-muted" ng-show="meeting.poll.preferredDate">
+									{{meeting.poll.preferredDate|date:'dd'}}<br>
+									{{meeting.poll.preferredDate|date:'MMMM'}}<br>
+									<i style="display:inline-block; padding-top:8px;">(maybe)</i>
+								</p>
 							</div>
 							<div class="material-tile-content" ng-click="goto(meeting)" style="cursor: pointer;" flex>
 								<div class="list-item-box list-item-box-right">
 									<h3>{{meeting.title}}</h3>
 									<p>{{meeting.description}}</p>
-									<ul style="margin-top:0">
-										<li>
-											<span style="vertical-align:middle">18 November, 08:00 &ndash; 10:00</span>
-											<material-button style="vertical-align:middle">
+									<material-divider style="margin:10px 0"></material-divider>
+									<h3>Poll starts on <b>{{meeting.poll.startDate|date:'dd'}} {{meeting.poll.startDate|date:'MMMM'}}</b> and ends on <b>{{meeting.poll.endDate|date:'dd'}} {{meeting.poll.endDate|date:'MMMM'}}</b></h3>
+									<ul style="margin:0; padding:0;" ng-show="meeting.poll">
+										<li ng-repeat="proposedDate in meeting.poll.proposedDates track by $index" layout="horizontal" layout-align="center center">
+											<material-icon style="margin:0;" icon="/img/icons/ic_chevron_right_18px.svg"></material-icon>
+											&nbsp;
+											<span style="vertical-align:middle">{{proposedDate|date:'dd'}} {{proposedDate|date:'MMMM'}}</span>
+											&nbsp;&nbsp;
+											<material-button ng-show="meeting.poll.open" style="vertical-align:middle" ng-class="{'material-button-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
 												<material-icon icon="/img/icons/ic_check_18px.svg"></material-icon>
 											</material-button>
-											<material-button style="vertical-align:middle">
+											<material-button ng-show="meeting.poll.open" style="vertical-align:middle;" ng-class="{'material-button-raised':poll_hasVoted(meeting,proposedDate,false)}" ng-click="poll_vote(meeting,proposedDate,false,$event)">
 												<material-icon icon="/img/icons/ic_close_18px.svg"></material-icon>
 											</material-button>
-										</li>
-										<li>
-											<span style="vertical-align:middle">18 November, 10:00 &ndash; 12:00</span>
-											<material-button style="vertical-align:middle">
-												<material-icon icon="/img/icons/ic_check_18px.svg"></material-icon>
-											</material-button>
-											<material-button style="vertical-align:middle">
-												<material-icon icon="/img/icons/ic_close_18px.svg"></material-icon>
-											</material-button>
-										</li>
-										<li>
-											<span style="vertical-align:middle">19 November, 10:00 &ndash; 12:00</span>
-											<material-button style="vertical-align:middle">
-												<material-icon icon="/img/icons/ic_check_18px.svg"></material-icon>
-											</material-button>
-											<material-button style="vertical-align:middle">
-												<material-icon icon="/img/icons/ic_close_18px.svg"></material-icon>
-											</material-button>
+											&nbsp;&nbsp;
+											<div flex>
+												<img ng-repeat="vote in meeting.poll.votes | filter:{proposedDate:proposedDate,result:true}" ng-src="{{vote.user.iconUrl ? vote.user.iconUrl : '/img/face.png'}}" class="face" style="width:24px; height:24px" alt="{{vote.user.firstName}} {{vote.user.lastName}}">
+											</div>
 										</li>
 									</ul>
 								</div>
