@@ -1,9 +1,12 @@
 package com.google.teampot.api;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.teampot.api.exception.EntityNotFoundException;
+import com.google.teampot.api.exception.MeetingPollPastException;
 import com.google.teampot.model.Meeting;
+import com.google.teampot.model.MeetingPollVote;
 import com.google.teampot.service.MeetingService;
 import com.google.teampot.service.UserService;
 import com.google.api.server.spi.config.ApiMethod;
@@ -62,6 +65,28 @@ public class MeetingEndpoint extends BaseEndpoint {
 	public void remove(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
 		userService.ensureProvisioning(gUser);
 		meetingService.remove(id, userService.getUser(gUser));
+	}
+	
+	@ApiMethod(
+		name = "meeting.pollVote",
+		path = "meeting/{id}/poll/vote",
+		httpMethod = HttpMethod.POST
+	)
+	public Meeting pollVote(@Named("id") String id, @Named("proposedDate") Date proposedDate, @Named("result") boolean result, com.google.appengine.api.users.User gUser) throws OAuthRequestException, MeetingPollPastException, EntityNotFoundException {
+		userService.ensureProvisioning(gUser);
+		
+		Meeting meeting = meetingService.get(id);
+		
+		if (meeting == null) throw new EntityNotFoundException(id);
+		if (meeting.isPast()) throw new MeetingPollPastException(id);
+		
+		MeetingPollVote vote = new MeetingPollVote();
+		vote.setUser(userService.getUser(gUser));
+		vote.setProposedDate(proposedDate);
+		vote.setResult(result);
+		
+		meetingService.pollVote(meeting, vote);
+		return meeting;
 	}
 	
 }

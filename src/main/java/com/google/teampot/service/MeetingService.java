@@ -11,6 +11,7 @@ import com.google.teampot.model.EntityDiff;
 import com.google.teampot.model.Meeting;
 import com.google.teampot.model.MeetingActivityEvent;
 import com.google.teampot.model.MeetingActivityEventVerb;
+import com.google.teampot.model.MeetingPollVote;
 import com.google.teampot.model.Task;
 import com.google.teampot.model.TaskActivityEvent;
 import com.google.teampot.model.TaskActivityEventVerb;
@@ -83,6 +84,29 @@ public class MeetingService{
 		Meeting entity = dao.get(key);
 		activityEventService.registerActivityEvent(new MeetingActivityEvent(entity,actor, MeetingActivityEventVerb.DELETE));
 		dao.remove(key);
+	}
+	
+	public void pollVote(Meeting meeting, MeetingPollVote vote) {
+		
+		int voteIndex = -1;
+		
+		for (int i=0; i<meeting.getPoll().getVotes().size(); i++) {
+			MeetingPollVote curVote = meeting.getPoll().getVotes().get(i);
+			if (curVote.getUser().equivalent(vote.getUser()) && curVote.getProposedDate().equals(vote.getProposedDate()))
+				voteIndex = i;
+		}
+		
+		if (voteIndex>=0) meeting.getPoll().getVotes().remove(voteIndex);
+			
+		meeting.getPoll().getVotes().add(vote);
+		
+		MeetingActivityEvent activtyEvent = new MeetingActivityEvent();
+		activtyEvent.setMeeting(meeting);
+		activtyEvent.setActor(vote.getUser());
+		activtyEvent.setVerb(MeetingActivityEventVerb.VOTE);
+		activityEventService.registerActivityEvent(activtyEvent);
+		
+		dao.save(meeting);
 	}
 
 }

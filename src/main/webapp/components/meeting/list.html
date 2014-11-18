@@ -24,10 +24,10 @@
 									<ul style="margin-top:0" ng-show="meeting.poll">
 										<li ng-repeat="proposedDate in meeting.poll.proposedDates track by $index">
 											<span style="vertical-align:middle">{{proposedDate|date:'dd'}} {{proposedDate|date:'MMMM'}}</span>
-											<material-button style="vertical-align:middle">
+											<material-button style="vertical-align:middle" ng-class="{'material-button-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
 												<material-icon icon="/img/icons/ic_check_18px.svg"></material-icon>
 											</material-button>
-											<material-button style="vertical-align:middle">
+											<material-button style="vertical-align:middle; position:relative; left:-15px;" ng-class="{'material-button-raised':poll_hasVoted(meeting,proposedDate,false)}" ng-click="poll_vote(meeting,proposedDate,false,$event)">
 												<material-icon icon="/img/icons/ic_close_18px.svg"></material-icon>
 											</material-button>
 										</li>

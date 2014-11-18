@@ -10,7 +10,7 @@ public class MeetingPollVote {
 	
 	private Ref<User> user;
 	
-	private Date date;
+	private Date proposedDate;
 	
 	private boolean result;
 	
@@ -28,6 +28,11 @@ public class MeetingPollVote {
 		this.user = user;
 	}
 	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setUser(User user) {
+		this.user = Ref.create(user);
+	}
+	
 	@ApiResourceProperty(name = "user")
 	public User getUserEntity() {
 		return user.get();
@@ -38,12 +43,12 @@ public class MeetingPollVote {
 		this.user = Ref.create(user);
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getProposedDate() {
+		return proposedDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setProposedDate(Date proposedDate) {
+		this.proposedDate = proposedDate;
 	}
 
 	public boolean isResult() {
