@@ -28,7 +28,7 @@ angular.module("teampot").
 	      },
 	      template: function(element, attrs){
 	    	  var tagName = attrs.type === "textarea" ? "material-textarea" : "material-input";
-	        return'<material-input-group ng-disabled="isDisabled">' +
+	        return'<material-input-group ng-disabled="{{isDisabled}}">' +
 	          '<label for="{{fid}}">{{label}}</label>' +
 	          '<'+tagName+' id="{{fid}}" ng-model="value">' +
 	        '</material-input-group>'

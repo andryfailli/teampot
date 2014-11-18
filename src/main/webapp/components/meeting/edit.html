@@ -17,16 +17,16 @@
 				<div ng-show="meeting.poll">
 					<div layout="horizontal" layout-align="center center" ng-repeat="proposedDate in meeting.poll.proposedDates track by $index">
 						<div flex>
-							<tf-float label="Proposed date {{$index+1}}" value="meeting.poll.proposedDates[$index]" type="date"></tf-float>
+							<tf-float label="Proposed date {{$index+1}}" value="meeting.poll.proposedDates[$index]" type="date" ng-disabled="meeting.poll.started"></tf-float>
 						</div>
-						<material-button ng-click="removeProposedDate($index)" style="position:relative; left:-15px;">&times;</material-button>
+						<material-button ng-click="removeProposedDate($index)" style="position:relative; left:-15px;" ng-show="!meeting.poll.started">&times;</material-button>
 					</div>
-					<div style="text-align:center">
+					<div style="text-align:center" ng-show="!meeting.poll.started">
 						<material-button class="material-button-raised" ng-click="meeting.poll.proposedDates.push(null)">Add Date</material-button>
 					</div>
 					<div>
-						<tf-float label="Poll start date" value="meeting.poll.startDate" type="date"></tf-float>
-						<tf-float label="Poll end date" value="meeting.poll.endDate" type="date"></tf-float>
+						<tf-float label="Poll start date" value="meeting.poll.startDate" type="date" ng-disabled="meeting.poll.started"></tf-float>
+						<tf-float label="Poll end date" value="meeting.poll.endDate" type="date" ng-disabled="meeting.poll.ended"></tf-float>
 					</div>
 				</div>
 				<div layout="vertical" flex>
