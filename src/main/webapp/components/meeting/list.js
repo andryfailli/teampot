@@ -50,7 +50,7 @@ angular.module('teampot').
 				proposedDate: proposedDate,
 				result: result
 			}).$promise.then(function(){
-				NotifyService.info("Your vote has been recored");
+				NotifyService.info("Your vote has been recorded");
 			},function(){
 				NotifyService.error("An error occurred while recording your vote",function(){$scope.poll_vote(meeting,proposedDate,result,$event);});
 			});

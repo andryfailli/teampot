@@ -60,6 +60,24 @@ public class MeetingPoll {
 		this.votes = votes;
 	}
 	
+	public boolean isStarted(){
+		if (this.startDate != null)
+			return (new Date()).after(this.startDate);
+		else
+			return false;
+	}
+	
+	public boolean isEnded(){
+		if (this.endDate != null)
+			return (new Date()).after(this.endDate);
+		else
+			return false;
+	}
+	
+	public boolean isOpen(){
+		return this.isStarted() && !this.isEnded();
+	}
+	
 	public Date getPreferredDate() {
 		Map<Date,Integer> unsortedDates = new LinkedHashMap<Date, Integer>();
 		
