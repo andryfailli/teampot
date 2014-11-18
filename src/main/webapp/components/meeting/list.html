@@ -16,6 +16,11 @@
 						<material-item-content>
 							<div class="material-tile-left" style="text-align:center; min-width:120px">
 								<material-icon icon="/img/icons/ic_help_48px.svg"></material-icon>
+								<p class="text-muted" ng-show="meeting.poll.preferredDate">
+									preferred date<br>
+									{{meeting.poll.preferredDate|date:'dd'}}<br>
+									{{meeting.poll.preferredDate|date:'MMMM'}}
+								</p>
 							</div>
 							<div class="material-tile-content" ng-click="goto(meeting)" style="cursor: pointer;" flex>
 								<div class="list-item-box list-item-box-right">
@@ -27,7 +32,7 @@
 											<material-button style="vertical-align:middle" ng-class="{'material-button-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
 												<material-icon icon="/img/icons/ic_check_18px.svg"></material-icon>
 											</material-button>
-											<material-button style="vertical-align:middle; position:relative; left:-15px;" ng-class="{'material-button-raised':poll_hasVoted(meeting,proposedDate,false)}" ng-click="poll_vote(meeting,proposedDate,false,$event)">
+											<material-button style="vertical-align:middle;" ng-class="{'material-button-raised':poll_hasVoted(meeting,proposedDate,false)}" ng-click="poll_vote(meeting,proposedDate,false,$event)">
 												<material-icon icon="/img/icons/ic_close_18px.svg"></material-icon>
 											</material-button>
 										</li>

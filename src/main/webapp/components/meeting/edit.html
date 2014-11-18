@@ -19,7 +19,7 @@
 						<div flex>
 							<tf-float label="Proposed date {{$index+1}}" value="meeting.poll.proposedDates[$index]" type="date"></tf-float>
 						</div>
-						<material-button ng-click="removeProposedDate($index)">&times;</material-button>
+						<material-button ng-click="removeProposedDate($index)" style="position:relative; left:-15px;">&times;</material-button>
 					</div>
 					<div style="text-align:center">
 						<material-button class="material-button-raised" ng-click="meeting.poll.proposedDates.push(null)">Add Date</material-button>
