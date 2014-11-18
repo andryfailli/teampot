@@ -5,6 +5,21 @@ angular.module('teampot').
 		
 		$scope.meeting = !isNew ? MeetingService.$get($routeParams.meetingId) : MeetingService.$new({project:$routeParams.projectId});
 		
+		$scope.createPoll = function(){
+			$scope.meeting.poll = {
+				proposedDates: [$scope.meeting.timestamp,null]
+			};
+		}
+		
+		$scope.removeProposedDate = function(index) {
+			$scope.meeting.poll.proposedDates.splice(index,1);
+			if ($scope.meeting.poll.proposedDates.length==1) {
+				$scope.meeting.timestamp = $scope.meeting.poll.proposedDates[0];
+				$scope.meeting.poll = null;
+			}
+		}
+		
+		
 		function registerSaveWatch() {
 			$scope.$watch("meeting",function(newEntity,oldEntity){
 				if (!angular.equals(newEntity,oldEntity)) {

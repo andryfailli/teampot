@@ -7,18 +7,31 @@
 	
 		<form>
 	
-			<div layout="horizontal" layout-align="center center">
-				<div>
+			<div layout="horizontal" layout-align="top center">
+				<div ng-show="!meeting.poll">
 					<tf-float label="Meeting date" value="meeting.timestamp" type="date"></tf-float>
+					<div style="text-align:center">
+						<material-button class="material-button-raised" ng-click="createPoll()">create Poll</material-button>
+					</div>
 				</div>
-				<div flex>
-					<tf-float label="Title" value="meeting.title" class="tf-float-full-with input-lg"></tf-float>
+				<div ng-show="meeting.poll">
+					<div layout="horizontal" layout-align="center center" ng-repeat="proposedDate in meeting.poll.proposedDates track by $index">
+						<div flex>
+							<tf-float label="Proposed date {{$index+1}}" value="proposedDate" type="date"></tf-float>
+						</div>
+						<material-button ng-click="removeProposedDate($index)">&times;</material-button>
+					</div>
+					<div style="text-align:center">
+						<material-button class="material-button-raised" ng-click="meeting.poll.proposedDates.push(null)">Add Date</material-button>
+					</div>
 				</div>
-			</div>
-
-			<div layout="horizontal" layout-align="center center">
-				<div flex>
-					<tf-float label="Description" value="meeting.description" type="textarea" class="tf-float-full-with"></tf-float>
+				<div layout="vertical" flex>
+					<div>
+						<tf-float label="Title" value="meeting.title" class="tf-float-full-with input-lg"></tf-float>
+					</div>
+					<div>
+						<tf-float label="Description" value="meeting.description" type="textarea" class="tf-float-full-with"></tf-float>
+					</div>
 				</div>
 			</div>
       
