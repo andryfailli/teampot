@@ -38,6 +38,8 @@ public class Meeting extends BaseEntity {
 	
 	private Ref<User> organizer;
 	
+	private MeetingPoll poll;
+	
 	public Meeting() {
 		this.agenda = new ArrayList<String>();
 		this.files = new LinkedHashSet<String>();
@@ -171,6 +173,14 @@ public class Meeting extends BaseEntity {
 	public void setOrganizerKey(String organizer) {
 		Ref2StringTransformer<User> t = new Ref2StringTransformer<User>();
 		this.organizer = t.transformFrom(organizer);
+	}
+
+	public MeetingPoll getPoll() {
+		return poll;
+	}
+
+	public void setPoll(MeetingPoll poll) {
+		this.poll = poll;
 	}
 
 }
