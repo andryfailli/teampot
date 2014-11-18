@@ -6,6 +6,7 @@ angular.module('teampot').
 		$scope.meeting = !isNew ? MeetingService.$get($routeParams.meetingId) : MeetingService.$new({project:$routeParams.projectId});
 		
 		$scope.createPoll = function(){
+			$scope.meeting.timestamp == null;
 			$scope.meeting.poll = {
 				proposedDates: [$scope.meeting.timestamp,null]
 			};

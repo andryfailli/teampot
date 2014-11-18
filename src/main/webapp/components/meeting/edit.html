@@ -17,7 +17,7 @@
 				<div ng-show="meeting.poll">
 					<div layout="horizontal" layout-align="center center" ng-repeat="proposedDate in meeting.poll.proposedDates track by $index">
 						<div flex>
-							<tf-float label="Proposed date {{$index+1}}" value="proposedDate" type="date"></tf-float>
+							<tf-float label="Proposed date {{$index+1}}" value="meeting.poll.proposedDates[$index]" type="date"></tf-float>
 						</div>
 						<material-button ng-click="removeProposedDate($index)">&times;</material-button>
 					</div>

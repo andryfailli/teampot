@@ -21,27 +21,9 @@
 								<div class="list-item-box list-item-box-right">
 									<h3>{{meeting.title}}</h3>
 									<p>{{meeting.description}}</p>
-									<ul style="margin-top:0">
-										<li>
-											<span style="vertical-align:middle">18 November, 08:00 &ndash; 10:00</span>
-											<material-button style="vertical-align:middle">
-												<material-icon icon="/img/icons/ic_check_18px.svg"></material-icon>
-											</material-button>
-											<material-button style="vertical-align:middle">
-												<material-icon icon="/img/icons/ic_close_18px.svg"></material-icon>
-											</material-button>
-										</li>
-										<li>
-											<span style="vertical-align:middle">18 November, 10:00 &ndash; 12:00</span>
-											<material-button style="vertical-align:middle">
-												<material-icon icon="/img/icons/ic_check_18px.svg"></material-icon>
-											</material-button>
-											<material-button style="vertical-align:middle">
-												<material-icon icon="/img/icons/ic_close_18px.svg"></material-icon>
-											</material-button>
-										</li>
-										<li>
-											<span style="vertical-align:middle">19 November, 10:00 &ndash; 12:00</span>
+									<ul style="margin-top:0" ng-show="meeting.poll">
+										<li ng-repeat="proposedDate in meeting.poll.proposedDates track by $index">
+											<span style="vertical-align:middle">{{proposedDate|date:'dd'}} {{proposedDate|date:'MMMM'}}</span>
 											<material-button style="vertical-align:middle">
 												<material-icon icon="/img/icons/ic_check_18px.svg"></material-icon>
 											</material-button>
