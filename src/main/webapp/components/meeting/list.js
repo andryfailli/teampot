@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('meetingListController', function($rootScope,$scope,$routeParams,$location,ProjectService,MeetingService,GapiClient) {
+	controller('meetingListController', function($rootScope,$scope,$routeParams,$location,ProjectService,MeetingService,GapiClient,NotifyService) {
 		
 		$scope.meetingList = MeetingService.$list($routeParams.projectId);
 		
@@ -49,6 +49,10 @@ angular.module('teampot').
 				id: meeting.id,
 				proposedDate: proposedDate,
 				result: result
+			}).$promise.then(function(){
+				NotifyService.info("Your vote has been recored");
+			},function(){
+				NotifyService.error("An error occurred while recording your vote",function(){$scope.poll_vote(meeting,proposedDate,result,$event);});
 			});
 			
 			$event.stopPropagation();

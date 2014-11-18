@@ -17,7 +17,6 @@
 							<div class="material-tile-left" style="text-align:center; min-width:120px">
 								<material-icon icon="/img/icons/ic_help_48px.svg"></material-icon>
 								<p class="text-muted" ng-show="meeting.poll.preferredDate">
-									preferred date<br>
 									{{meeting.poll.preferredDate|date:'dd'}}<br>
 									{{meeting.poll.preferredDate|date:'MMMM'}}
 								</p>
@@ -27,14 +26,19 @@
 									<h3>{{meeting.title}}</h3>
 									<p>{{meeting.description}}</p>
 									<ul style="margin-top:0" ng-show="meeting.poll">
-										<li ng-repeat="proposedDate in meeting.poll.proposedDates track by $index">
+										<li ng-repeat="proposedDate in meeting.poll.proposedDates track by $index" layout="horizontal" layout-align="center center">
 											<span style="vertical-align:middle">{{proposedDate|date:'dd'}} {{proposedDate|date:'MMMM'}}</span>
+											&nbsp;&nbsp;
 											<material-button style="vertical-align:middle" ng-class="{'material-button-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
 												<material-icon icon="/img/icons/ic_check_18px.svg"></material-icon>
 											</material-button>
 											<material-button style="vertical-align:middle;" ng-class="{'material-button-raised':poll_hasVoted(meeting,proposedDate,false)}" ng-click="poll_vote(meeting,proposedDate,false,$event)">
 												<material-icon icon="/img/icons/ic_close_18px.svg"></material-icon>
 											</material-button>
+											&nbsp;&nbsp;
+											<div flex>
+												<img ng-repeat="vote in meeting.poll.votes | filter:{proposedDate:proposedDate,result:true}" ng-src="{{vote.user.iconUrl ? vote.user.iconUrl : '/img/face.png'}}" class="face" style="width:24px; height:24px" alt="{{vote.user.firstName}} {{vote.user.lastName}}">
+											</div>
 										</li>
 									</ul>
 								</div>
