@@ -2,6 +2,8 @@ package com.google.teampot.service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,7 +12,9 @@ import java.util.Map;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
+import com.google.teampot.Config;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.dao.MeetingDAO;
 import com.google.teampot.dao.TaskDAO;
@@ -134,16 +138,21 @@ public class MeetingService{
 			Event event;
 			if (meeting.getCalendarEventId() == null) {
 				event = new Event();
+				
+				EventAttendee teamAttendee = new EventAttendee().setEmail(meeting.getProject().get().getMachineName()+"@"+Config.get(Config.APPS_DOMAIN));
+				event.setAttendees(Arrays.asList(teamAttendee));
+				
 			} else {
 				event = calendarService.events().get(calendarId, meeting.getCalendarEventId()).execute();
 			}
 			
-			// TODO: fill event
 			event.setSummary("Meeting: "+meeting.getTitle());
 			event.setDescription(meeting.getDescription());
+			
+			// TODO: meeting start time & duration?
 			event.setStart(new EventDateTime().setDateTime(new DateTime(meeting.getTimestamp())));
 			event.setEnd(new EventDateTime().setDateTime(new DateTime(new Date(meeting.getTimestamp().getTime()+3600000))));
-			
+						
 			
 			if (meeting.getCalendarEventId() == null) {
 				event = calendarService.events().insert(calendarId, event).execute();
