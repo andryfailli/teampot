@@ -42,7 +42,7 @@
 											</material-button>
 											&nbsp;&nbsp;
 											<div flex>
-												<img ng-repeat="vote in meeting.poll.votes | filter:{proposedDate:proposedDate,result:true}" ng-src="{{vote.user.iconUrl ? vote.user.iconUrl : '/img/face.png'}}" class="face" style="width:24px; height:24px" alt="{{vote.user.firstName}} {{vote.user.lastName}}">
+												<img ng-repeat="vote in meeting.poll.votes | filter:{proposedDate:proposedDate,result:true}" ng-src="{{vote.user.iconUrl ? vote.user.iconUrl : '/img/face.png'}}" class="face" style="width:24px; height:24px" alt="{{vote.user.firstName}} {{vote.user.lastName}}" title="{{vote.user.firstName}} {{vote.user.lastName}}">
 											</div>
 										</li>
 									</ul>
