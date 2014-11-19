@@ -26,8 +26,8 @@
 								<div class="list-item-box list-item-box-right">
 									<h3>{{meeting.title}}</h3>
 									<p>{{meeting.description}}</p>
-									<material-divider style="margin:10px 0"></material-divider>
-									<h3>Poll starts on <b>{{meeting.poll.startDate|date:'dd'}} {{meeting.poll.startDate|date:'MMMM'}}</b> and ends on <b>{{meeting.poll.endDate|date:'dd'}} {{meeting.poll.endDate|date:'MMMM'}}</b></h3>
+									<material-divider ng-show="meeting.poll" style="margin:10px 0"></material-divider>
+									<h3 ng-show="meeting.poll">Poll starts on <b>{{meeting.poll.startDate|date:'dd'}} {{meeting.poll.startDate|date:'MMMM'}}</b> and ends on <b>{{meeting.poll.endDate|date:'dd'}} {{meeting.poll.endDate|date:'MMMM'}}</b></h3>
 									<ul style="margin:0; padding:0;" ng-show="meeting.poll">
 										<li ng-repeat="proposedDate in meeting.poll.proposedDates track by $index" layout="horizontal" layout-align="center center">
 											<material-icon style="margin:0;" icon="/img/icons/ic_chevron_right_18px.svg"></material-icon>
