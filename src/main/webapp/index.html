@@ -48,7 +48,7 @@
 	
 			<material-content class="full-height" style="overflow:hidden" flex>
 			
-				<span ng-include="fabTemplateUrl" ng-if="userInfo.$promise.$resolved && fabTemplateUrl"></span>
+				<span ng-include="fabTemplateUrl" ng-if="currentUser.$promise.$resolved && fabTemplateUrl"></span>
 	
 				<div layout="vertical" layout-fill>
 		
@@ -71,20 +71,20 @@
 								</li>
 							</ol>
 							
-							<a id="user-info" href ng-href="{{userInfo.url}}" target="_blank" ng-if="userInfo.$promise.$resolved">
-								<span>+{{userInfo.name.givenName ? userInfo.name.givenName : userInfo.displayName}}</span>
-								<img class="face" src="about:blank" ng-src="{{userInfo.image.url}}"/>
+							<a id="user-info" ng-if="currentUser.$promise.$resolved">
+								<span>{{currentUser.firstName}}</span>
+								<img class="face" src="about:blank" ng-src="{{currentUser.iconUrl}}"/>
 							</a>
-							<material-button class="material-button-raised" ng-click="signIn()" ng-if="!userInfo.$promise.$resolved">Sign in</material-button>
+							<material-button class="material-button-raised" ng-click="signIn()" ng-if="!currentUser.$promise.$resolved">Sign in</material-button>
 		
 						</h1>
 					</material-toolbar>
 		
 					<material-content class="material-content-padding" flex>
 		
-						<div ng-view ng-if="userInfo.$promise.$resolved" id="appview"></div>
+						<div ng-view ng-if="currentUser.$promise.$resolved" id="appview"></div>
 						
-						<div id="teampot-intro-logo" ng-if="!userInfo.$promise.$resolved"">
+						<div id="teampot-intro-logo" ng-if="!currentUser.$promise.$resolved"">
 							<img src="/img/teampot-logo.png" class="image-responsive"/>
 						</div>
 		

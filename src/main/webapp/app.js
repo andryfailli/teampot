@@ -19,7 +19,6 @@ angular.module('teampot', [
 			id: 'dashboard',
 			templateUrl: '/components/dashboard/dashboard.html',
 			controller: 'dashboardController',
-			sidebarTemplateUrl: '/components/sidebar/hello.html'
 		})
 		.when('/projects', {
 			id: 'project-list',
@@ -28,7 +27,7 @@ angular.module('teampot', [
 			controller: 'projectListController',
 			fabTemplateUrl: '/components/project/list-fab.html',
 			resolve:{
-				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
 			}
 		})
 		.when('/project/:projectId', {
@@ -47,7 +46,7 @@ angular.module('teampot', [
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/task/list-fab.html',
 			resolve:{
-				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
 			}
 		})
 		.when('/project/:projectId/task/:taskId?', {
@@ -58,7 +57,7 @@ angular.module('teampot', [
 			controller: 'taskEditController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			resolve:{
-				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
 			}
 		})
 		.when('/project/:projectId/files', {
@@ -70,7 +69,7 @@ angular.module('teampot', [
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/file/list-fab.html',
 			resolve:{
-				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
 			}
 		})
 		.when('/project/:projectId/discussions', {
@@ -81,7 +80,7 @@ angular.module('teampot', [
 			controller: 'discussionsController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			resolve:{
-				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
 			}
 		})
 		.when('/project/:projectId/meetings', {
@@ -93,7 +92,7 @@ angular.module('teampot', [
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/meeting/list-fab.html',
 			resolve:{
-				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
 			}
 		})
 		.when('/project/:projectId/meeting/:meetingId?', {
@@ -104,7 +103,7 @@ angular.module('teampot', [
 			controller: 'meetingEditController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			resolve:{
-				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
 			}
 		})
 		.when('/project/:projectId/members', {
@@ -116,7 +115,7 @@ angular.module('teampot', [
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/user/list-fab.html',
 			resolve:{
-				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
 			}
 		})
 		.when('/project/:projectId/activity', {
@@ -127,7 +126,7 @@ angular.module('teampot', [
 			controller: 'activityListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			resolve:{
-				userInfo: function($rootScope){return $rootScope.userInfo.$promise}
+				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
 			}
 		})
 		.otherwise({
@@ -136,9 +135,7 @@ angular.module('teampot', [
 		
 	GapiProvider.setClientId("60968053297-0eo4eum22rhp7iskadtj7aa0cfavovns.apps.googleusercontent.com");
 	GapiProvider.setScope([
-       "https://www.googleapis.com/auth/userinfo.email",
        "https://www.googleapis.com/auth/userinfo.profile",
-       "https://www.googleapis.com/auth/plus.me",
        "https://www.googleapis.com/auth/drive"
     ]);
 	GapiProvider.setAccessType('offline');
@@ -154,7 +151,7 @@ angular.module('teampot', [
 	GapiClientProvider.load("drive","v2");
 
 })
-.run(function($rootScope,$routeParams,Gapi,GapiClient,ProjectService,CONSTANTS,AlertService){
+.run(function($rootScope,$routeParams,$location,Gapi,GapiClient,ProjectService,CONSTANTS,AlertService){
 
 	$rootScope.$on("$routeChangeStart", function(event, next, current) {
 		$rootScope.appLoading = true;
@@ -188,14 +185,12 @@ angular.module('teampot', [
     	});
     }
     
-    $rootScope.userInfo = GapiClient.client("plus").exec("people.get",{userId:'me'});
-    $rootScope.userInfo.$promise.then(function(){
-    	if ($rootScope.userInfo.domain != CONSTANTS.APPS_DOMAIN) {
-    		delete $rootScope.userInfo;
-    		AlertService.alert("Sorry, TeamPot is not available in your domain.","TeamPot");
-    	} else {
-    		$rootScope.currentUser = GapiClient.client("teampot").exec("user.get",{id:"me"});
-    	}
+    $rootScope.currentUser = GapiClient.client("teampot").exec("user.get",{id:"me"});
+    
+    $rootScope.currentUser.$promise.catch(function(){
+    	$location.path("/dashboard");
+    	delete $rootScope.currentUser;
+    	AlertService.alert("Sorry, TeamPot is not available in your domain/organization.","TeamPot");
     })
     
 })

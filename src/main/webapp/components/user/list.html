@@ -18,7 +18,7 @@
 						<h3>{{entity.firstName}} {{entity.lastName}}</h3>
 					</div>
 					<div class="material-tile-right">
-						<material-button ng-if="entity.email != userInfo.emails[0].value" ng-click="removeMember(entity)">
+						<material-button ng-if="entity.id != currentUser.id" ng-click="removeMember(entity)">
 						 	<material-icon icon="/img/icons/ic_cancel_24px.svg"></material-icon>
 						 	<material-tooltip>Remove this user</material-tooltip>
 						 </material-button>

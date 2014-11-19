@@ -25,7 +25,7 @@ angular.module('teampot').
 		
 		$scope.showTab_mine = function(){
 			$scope.currentFilter = function(item){
-				return item.assignee && item.assignee.email == $rootScope.userInfo.emails[0].value;
+				return item.assignee && item.assignee.id == $rootScope.currentUser.id;
 			};
 			$scope.currentOrderBy = "priority";
 			$scope.currentOrderByReverse = false;
