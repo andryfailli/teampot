@@ -139,9 +139,7 @@ angular.module('teampot', [
        "https://www.googleapis.com/auth/userinfo.email",
        "https://www.googleapis.com/auth/userinfo.profile",
        "https://www.googleapis.com/auth/plus.me",
-       "https://www.googleapis.com/auth/drive",
-       "https://www.googleapis.com/auth/admin.directory.group",
-       "https://www.googleapis.com/auth/admin.directory.user.readonly"
+       "https://www.googleapis.com/auth/drive"
     ]);
 	GapiProvider.setAccessType('offline');
 	

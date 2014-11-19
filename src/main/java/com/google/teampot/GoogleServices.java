@@ -13,6 +13,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson.JacksonFactory;
 import com.google.api.services.admin.directory.Directory;
+import com.google.api.services.admin.directory.DirectoryScopes;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.drive.Drive;
@@ -93,7 +94,7 @@ public class GoogleServices {
 	      .setTransport(GoogleServices.getInstance().httpTransport)
 	      .setJsonFactory(GoogleServices.getInstance().jsonFactory)
 	      .setServiceAccountId(Config.get(Config.SERVICE_ACCOUNT_EMAIL))
-	      .setServiceAccountScopes(Arrays.asList(CalendarScopes.CALENDAR))
+	      .setServiceAccountScopes(scopes)
 	      .setServiceAccountUser(user.getEmail())
 	      .setServiceAccountPrivateKeyFromP12File(new java.io.File(Config.get(Config.SERVICE_ACCOUNT_PKCS12_FILE_PATH)))
 	      .build();
@@ -118,10 +119,9 @@ public class GoogleServices {
 			.build();
 	}
 	
-	
-	public static Plus getPlusService(User user) throws GeneralSecurityException, IOException {
-		return new Plus.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
-			.setHttpRequestInitializer(GoogleServices.getCredential(user))
+	public static Directory getDirectoryServiceDomainWide(User user)	throws GeneralSecurityException, IOException {
+		return new Directory.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
+			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(user, Arrays.asList(DirectoryScopes.ADMIN_DIRECTORY_GROUP,DirectoryScopes.ADMIN_DIRECTORY_USER_READONLY)))
 			.setApplicationName(Config.get(Config.APPLICATION_NAME))
 			.build();
 	}

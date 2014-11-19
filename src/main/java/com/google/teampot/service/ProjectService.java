@@ -111,7 +111,7 @@ public class ProjectService{
 		Drive driveService = null;
 		try {
 			
-			directoryService = GoogleServices.getDirectoryService(user);
+			directoryService = GoogleServices.getDirectoryServiceDomainWide(user);
 			driveService = GoogleServices.getDriveService(user);
 			
 		} catch (GeneralSecurityException e) {

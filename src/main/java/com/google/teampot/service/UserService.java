@@ -73,7 +73,7 @@ public class UserService {
 
 		com.google.api.services.admin.directory.model.User directoryUser = null;
 		try {
-			directoryUser = GoogleServices.getDirectoryService(actor).users().get(userToBeProvisioned.getEmail()).execute();
+			directoryUser = GoogleServices.getDirectoryServiceDomainWide(actor).users().get(userToBeProvisioned.getEmail()).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
