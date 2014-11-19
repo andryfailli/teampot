@@ -1,9 +1,17 @@
 package com.google.teampot.service;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
+import com.google.teampot.GoogleServices;
 import com.google.teampot.dao.MeetingDAO;
 import com.google.teampot.dao.TaskDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
@@ -56,11 +64,18 @@ public class MeetingService{
 		MeetingActivityEvent activtyEvent = new MeetingActivityEvent();
 		if (entity.getId() == null) {
 			activtyEvent.setVerb(MeetingActivityEventVerb.CREATE);
+			entity.setOrganizer(actor);
 		} else {
 			
 			Meeting oldEntity = dao.get(entity.getKey());
 			
-			activtyEvent.setVerb(MeetingActivityEventVerb.EDIT);			
+			activtyEvent.setVerb(MeetingActivityEventVerb.EDIT);
+			
+			
+			if (entity.getTimestamp() != null) {
+				this.saveCalendarEvent(entity);
+			}
+			
 			
 			DiffNode diffs = ObjectDifferBuilder.buildDefault().compare(entity, oldEntity);
 			if (diffs.hasChanges()) {
@@ -107,6 +122,43 @@ public class MeetingService{
 		activityEventService.registerActivityEvent(activtyEvent);
 		
 		dao.save(meeting);
+	}
+	
+	private void saveCalendarEvent(Meeting meeting) {
+		try {
+			
+			Calendar calendarService = GoogleServices.getCalendarServiceDomainWide(meeting.getOrganizer().get());
+			
+			String calendarId = meeting.getOrganizer().get().getEmail();
+			
+			Event event;
+			if (meeting.getCalendarEventId() == null) {
+				event = new Event();
+			} else {
+				event = calendarService.events().get(calendarId, meeting.getCalendarEventId()).execute();
+			}
+			
+			// TODO: fill event
+			event.setSummary("Meeting: "+meeting.getTitle());
+			event.setDescription(meeting.getDescription());
+			event.setStart(new EventDateTime().setDateTime(new DateTime(meeting.getTimestamp())));
+			event.setEnd(new EventDateTime().setDateTime(new DateTime(new Date(meeting.getTimestamp().getTime()+3600000))));
+			
+			
+			if (meeting.getCalendarEventId() == null) {
+				event = calendarService.events().insert(calendarId, event).execute();
+				meeting.setCalendarEventId(event.getId());
+			} else {
+				calendarService.events().update(calendarId, event.getId(), event).execute();
+			}
+			
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

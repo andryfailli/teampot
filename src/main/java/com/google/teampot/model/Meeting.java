@@ -32,6 +32,8 @@ public class Meeting extends BaseEntity {
 	@Index
 	private Date timestamp;
 	
+	private String calendarEventId;
+	
 	private List<String> agenda;
 	
 	private Set<String> files;
@@ -181,6 +183,14 @@ public class Meeting extends BaseEntity {
 
 	public void setPoll(MeetingPoll poll) {
 		this.poll = poll;
+	}
+
+	public String getCalendarEventId() {
+		return calendarEventId;
+	}
+
+	public void setCalendarEventId(String calendarEventId) {
+		this.calendarEventId = calendarEventId;
 	}
 
 }
