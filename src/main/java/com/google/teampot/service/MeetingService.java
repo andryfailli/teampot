@@ -14,8 +14,13 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.teampot.Config;
 import com.google.teampot.GoogleServices;
+import com.google.teampot.api.API;
 import com.google.teampot.dao.MeetingDAO;
 import com.google.teampot.dao.TaskDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
@@ -78,6 +83,14 @@ public class MeetingService{
 			
 			if (entity.getTimestamp() != null) {
 				this.saveCalendarEvent(entity);
+			} else if (oldEntity.getTimestamp() != null) {
+				this.removeCalendarEvent(oldEntity);
+			}
+			
+			if (entity.getPoll() != null) {
+				this.spoonPollEndTask(entity);
+			} else if (oldEntity.getPoll() != null) {
+				this.removePollEndTask(oldEntity);
 			}
 			
 			
@@ -128,6 +141,18 @@ public class MeetingService{
 		dao.save(meeting);
 	}
 	
+	public void pollEnd(Meeting meeting) {
+		Date preferredDate = meeting.getPoll().getPreferredDate();
+		if (preferredDate != null) {
+			meeting.setTimestamp(preferredDate);
+			meeting.getPoll().setEndDate(new Date());
+			this.saveCalendarEvent(meeting);
+			dao.save(meeting);
+		} else {
+			// TODO: notify the organizer, no votes!
+		}
+	}
+	
 	private void saveCalendarEvent(Meeting meeting) {
 		try {
 			
@@ -168,6 +193,54 @@ public class MeetingService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void removeCalendarEvent(Meeting meeting) {
+		try {
+			
+			Calendar calendarService = GoogleServices.getCalendarServiceDomainWide(meeting.getOrganizer().get());
+			
+			String calendarId = meeting.getOrganizer().get().getEmail();
+			
+			calendarService.events().delete(calendarId, meeting.getCalendarEventId()).execute();
+			
+			
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void spoonPollEndTask(Meeting meeting) {
+		
+		String taskName = "pollEnd_"+meeting.getKey();
+		
+		this.removePollEndTask(meeting);
+		
+		if (meeting.getPoll().getEndDate() != null && !meeting.getPoll().isEnded()) {
+					
+			Queue queue = QueueFactory.getDefaultQueue();
+		    TaskOptions task = TaskOptions.Builder
+		    	.withUrl(API.getBaseUrlWithoutHostAndSchema()+"/gae/task/pollEnd")
+		    	.etaMillis(meeting.getPoll().getEndDate().getTime())
+		    	.param("meeting", meeting.getKey())
+		    	.method(Method.POST)
+		    	.taskName(taskName)
+		    ; 
+		    
+	        queue.add(task);
+        
+		}
+	}
+	
+	private void removePollEndTask(Meeting meeting) {
+		String taskName = "pollEnd_"+meeting.getKey();
+		
+		Queue queue = QueueFactory.getDefaultQueue();
+		queue.deleteTask(taskName);
 	}
 
 }

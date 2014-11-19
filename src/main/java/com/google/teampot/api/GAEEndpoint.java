@@ -7,8 +7,10 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import com.google.teampot.GoogleServices;
+import com.google.teampot.model.Meeting;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.User;
+import com.google.teampot.service.MeetingService;
 import com.google.teampot.service.ProjectService;
 import com.google.teampot.service.UserService;
 import com.google.api.server.spi.config.ApiMethod;
@@ -50,6 +52,16 @@ public class GAEEndpoint extends BaseEndpoint {
 	public void task_provisionUserProfile(@Named("user") String userKey) throws IOException, GeneralSecurityException {
 		User user = UserService.getInstance().get(userKey);
 		UserService.getInstance().provisionProfile(user);
+	}
+	
+	@ApiMethod(
+		name = "gae.task_pollEnd", 
+		path = "gae/task/pollEnd",
+		httpMethod = HttpMethod.POST
+	)
+	public void task_pollEnd(@Named("meeting") String meetingKey) throws IOException, GeneralSecurityException {
+		Meeting meeting = MeetingService.getInstance().get(meetingKey);
+		MeetingService.getInstance().pollEnd(meeting);
 	}
 
 }
