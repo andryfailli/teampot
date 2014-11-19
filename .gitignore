@@ -14,4 +14,5 @@ out
 src/main/webapp/libs
 node_modules
 app.properties
+*.p12
 

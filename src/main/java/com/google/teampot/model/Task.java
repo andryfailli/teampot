@@ -36,6 +36,8 @@ public class Task extends BaseEntity {
 	
 	private Date dueDate;
 	
+	private String dueDateCalendarEventId;
+	
 	private Date creationDate;
 	
 	private Set<String> files;
@@ -196,6 +198,16 @@ public class Task extends BaseEntity {
 			return this.comments.size();
 		else
 			return 0;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public String getDueDateCalendarEventId() {
+		return dueDateCalendarEventId;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setDueDateCalendarEventId(String dueDateCalendarEventId) {
+		this.dueDateCalendarEventId = dueDateCalendarEventId;
 	}
 
 }
