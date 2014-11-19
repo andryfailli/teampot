@@ -117,6 +117,9 @@
 							<directory>${basedir}/src/main/webapp/WEB-INF</directory>
 							<filtering>true</filtering>
 							<targetPath>WEB-INF</targetPath>
+							<excludes>
+								<exclude>**/*.p12</exclude>
+							</excludes>
 						</resource>
 					</webResources>
 				</configuration>
