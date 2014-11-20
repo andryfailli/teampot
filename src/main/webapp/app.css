@@ -94,7 +94,8 @@ material-whiteframe.fillview {
 	font-size:12px;
 }
 
-#appview material-circular-progress .inset {
+#appview material-circular-progress .inset,
+material-circular-progress.spinner-gray .inset {
 	background: #ececec;
 }
 

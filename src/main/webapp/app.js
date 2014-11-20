@@ -140,12 +140,10 @@ angular.module('teampot', [
     ]);
 	GapiProvider.setAccessType('offline');
 	
-	GapiProvider.authorize(true);
-	
 	GapiPickerProvider.setDeveloperKey("AIzaSyAMYynuP3VI_Wj_LuUN8_rJq3zFpS9jGHg");
 	
 	GapiProvider.load("picker");
-	
+
 	GapiClientProvider.load("teampot","v1","//"+window.location.host+"/_ah/api");
 	GapiClientProvider.load("plus","v1");
 	GapiClientProvider.load("drive","v2");
@@ -179,11 +177,23 @@ angular.module('teampot', [
 		//TODO migliorare messaggio
     });
     
-    $rootScope.signIn = function(){
-    	Gapi.authorize().then(function(data){
-    		GapiClient.client("teampot").exec("user.auth",{code:data.code});
+    $rootScope.signIn = function(silent){
+    	$rootScope.signingIn = true;
+    	Gapi.authorize(silent).then(function(data){
+    		$rootScope.$apply(function(){
+	    		$rootScope.signingIn = false;
+	    		$rootScope.signedIn = true;
+	    	})
+    		if (!silent) GapiClient.client("teampot").exec("user.auth",{code:data.code});
+    	},function(){
+    		$rootScope.$apply(function(){
+	    		$rootScope.signingIn = false;
+	    		$rootScope.signedIn = false;
+    		})
     	});
     }
+    
+    $rootScope.signIn(true);
     
     $rootScope.currentUser = GapiClient.client("teampot").exec("user.get",{id:"me"});
     

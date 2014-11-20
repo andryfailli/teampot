@@ -48,7 +48,7 @@
 	
 			<material-content class="full-height" style="overflow:hidden" flex>
 			
-				<span ng-include="fabTemplateUrl" ng-if="currentUser.$promise.$resolved && fabTemplateUrl"></span>
+				<span ng-include="fabTemplateUrl" ng-if="signedIn && fabTemplateUrl"></span>
 	
 				<div layout="vertical" layout-fill>
 		
@@ -75,18 +75,24 @@
 								<span>{{currentUser.firstName}}</span>
 								<img class="face" src="about:blank" ng-src="{{currentUser.iconUrl}}"/>
 							</a>
-							<material-button class="material-button-raised" ng-click="signIn()" ng-if="!currentUser.$promise.$resolved">Sign in</material-button>
+							<material-button class="material-button-raised" ng-click="signIn()" ng-if="!signedIn && !signingIn">Sign in</material-button>
 		
 						</h1>
 					</material-toolbar>
 		
 					<material-content class="material-content-padding" flex>
 		
-						<div ng-view ng-if="currentUser.$promise.$resolved" id="appview"></div>
+						<div ng-view ng-if="signedIn" id="appview"></div>
 						
-						<div id="teampot-intro-logo" ng-if="!currentUser.$promise.$resolved"">
-							<img src="/img/teampot-logo.png" class="image-responsive"/>
+						<div ng-if="!signedIn">
+							<div id="teampot-intro-logo">
+								<img src="/img/teampot-logo.png" class="image-responsive"/>
+							</div>
+							<div layout layout-align="center center" class="spinner-container">
+								<material-circular-progress mode="indeterminate" class="spinner-gray"></material-circular-progress>
+							</div>
 						</div>
+						
 		
 					</material-content>
 		
