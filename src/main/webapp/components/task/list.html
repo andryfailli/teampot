@@ -13,7 +13,7 @@
 	<p class="empty-list-message text-muted">No task yet for this project</p>
 </div>
 
-<div ng-if="(taskList.items | filter:currentFilter).length == 0">
+<div ng-if="taskList.items.length>0 && (taskList.items | filter:currentFilter).length == 0">
 	<p class="empty-list-message text-muted">No task in this view</p>
 </div>
 
