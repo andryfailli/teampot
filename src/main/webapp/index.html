@@ -84,13 +84,11 @@
 		
 						<div ng-view ng-if="signedIn" id="appview"></div>
 						
-						<div ng-if="!signedIn">
-							<div id="teampot-intro-logo">
-								<img src="/img/teampot-logo.png" class="image-responsive"/>
-							</div>
-							<div layout layout-align="center center" class="spinner-container">
-								<material-circular-progress mode="indeterminate" class="spinner-gray"></material-circular-progress>
-							</div>
+						<div id="teampot-intro-logo" ng-if="!signedIn">
+							<img src="/img/teampot-logo.png" class="image-responsive"/>
+						</div>
+						<div layout layout-align="center center" class="spinner-container" ng-if="signingIn">
+							<material-circular-progress mode="indeterminate" class="spinner-gray"></material-circular-progress>
 						</div>
 						
 		
