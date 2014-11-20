@@ -42,6 +42,8 @@ public class Meeting extends BaseEntity {
 	
 	private MeetingPoll poll;
 	
+	private String hangoutLink;
+	
 	public Meeting() {
 		this.agenda = new ArrayList<String>();
 		this.files = new LinkedHashSet<String>();
@@ -191,6 +193,14 @@ public class Meeting extends BaseEntity {
 
 	public void setCalendarEventId(String calendarEventId) {
 		this.calendarEventId = calendarEventId;
+	}
+
+	public String getHangoutLink() {
+		return hangoutLink;
+	}
+
+	public void setHangoutLink(String hangoutLink) {
+		this.hangoutLink = hangoutLink;
 	}
 
 }

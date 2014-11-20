@@ -177,14 +177,15 @@ public class MeetingService{
 			// TODO: meeting start time & duration?
 			event.setStart(new EventDateTime().setDateTime(new DateTime(meeting.getTimestamp())));
 			event.setEnd(new EventDateTime().setDateTime(new DateTime(new Date(meeting.getTimestamp().getTime()+3600000))));
-						
 			
 			if (meeting.getCalendarEventId() == null) {
 				event = calendarService.events().insert(calendarId, event).execute();
 				meeting.setCalendarEventId(event.getId());
 			} else {
-				calendarService.events().update(calendarId, event.getId(), event).execute();
+				event = calendarService.events().update(calendarId, event.getId(), event).execute();
 			}
+			
+			meeting.setHangoutLink(event.getHangoutLink());
 			
 		} catch (GeneralSecurityException e) {
 			// TODO Auto-generated catch block

@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('meetingListController', function($rootScope,$scope,$routeParams,$location,ProjectService,MeetingService,GapiClient,NotifyService) {
+	controller('meetingListController', function($rootScope,$scope,$routeParams,$location,ProjectService,MeetingService,GapiClient,NotifyService,CONSTANTS) {
 		
 		$scope.meetingList = MeetingService.$list($routeParams.projectId);
 		
@@ -58,6 +58,15 @@ angular.module('teampot').
 			$event.stopPropagation();
 		}
 
+		$scope.getHangoutLink = function(meeting){
+			if (meeting.hangoutLink) {
+				var hasQueryParams = meeting.hangoutLink.indexOf("?")>-1;
+				return meeting.hangoutLink+(hasQueryParams?"&":"?")+"gid="+CONSTANTS.HANGOUT_APPID;
+			} else {
+				return "https://plus.google.com/hangouts/_/"+CONSTANTS.APPS_DOMAIN+"/teampot_"+meeting.id+"?gid="+CONSTANTS.HANGOUT_APPID;
+			}
+		}
+		
 		$scope.goto = function(meeting){
 			$location.path("/project/"+$routeParams.projectId+"/meeting/"+meeting.id);
 		}
