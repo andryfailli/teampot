@@ -61,9 +61,9 @@ angular.module('teampot').
 		$scope.getHangoutLink = function(meeting){
 			if (meeting.hangoutLink) {
 				var hasQueryParams = meeting.hangoutLink.indexOf("?")>-1;
-				return meeting.hangoutLink+(hasQueryParams?"&":"?")+"gid="+CONSTANTS.HANGOUT_APPID;
+				return meeting.hangoutLink+(hasQueryParams?"&":"?")+"gid="+CONSTANTS.HANGOUT_APPID+"&gd="+meeting.id;
 			} else {
-				return "https://plus.google.com/hangouts/_/"+CONSTANTS.APPS_DOMAIN+"/teampot_"+meeting.id+"?gid="+CONSTANTS.HANGOUT_APPID;
+				return "https://plus.google.com/hangouts/_/"+CONSTANTS.APPS_DOMAIN+"/teampot_"+meeting.id+"?gid="+CONSTANTS.HANGOUT_APPID+"&gd="+meeting.id;
 			}
 		}
 		
