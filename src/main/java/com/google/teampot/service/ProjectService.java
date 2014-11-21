@@ -172,13 +172,6 @@ public class ProjectService{
 		File folder = new File();
 		folder.setTitle(project.getName());
 		folder.setMimeType("application/vnd.google-apps.folder");
-		
-		Permission permission = new Permission();
-		permission.setType("group");
-		permission.setRole("writer");
-		permission.setValue(group.getEmail());
-		folder.setPermissions(new ArrayList<Permission>(Arrays.asList(permission)));
-		
 		try {
 			folder = driveService.files().insert(folder).execute();
 		} catch (IOException e) {
@@ -188,6 +181,20 @@ public class ProjectService{
 		project.setFolder(folder.getId());
 		
 		dao.save(project);
+		
+		// share Drive folder
+		Permission permission = new Permission();
+		permission.setType("group");
+		permission.setRole("writer");
+		permission.setValue(group.getEmail());
+		
+		try {
+			permission = driveService.permissions().insert(folder.getId(), permission).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		// subscribe to Drive folder changes
 		try {
