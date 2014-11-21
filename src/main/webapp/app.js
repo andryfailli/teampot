@@ -14,6 +14,8 @@ angular.module('teampot', [
 ])
 .config(function($routeProvider,GapiProvider,GapiClientProvider,GapiPickerProvider) {
 
+	var checkCurrentUserAuth = function($rootScope){return $rootScope.currentUser$promise};
+	
 	$routeProvider
 		.when('/dashboard', {
 			id: 'dashboard',
@@ -26,8 +28,8 @@ angular.module('teampot', [
 			templateUrl: '/components/project/list.html',
 			controller: 'projectListController',
 			fabTemplateUrl: '/components/project/list-fab.html',
-			resolve:{
-				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
+			resolve: {
+				currentUser: checkCurrentUserAuth
 			}
 		})
 		.when('/project/:projectId', {
@@ -45,8 +47,8 @@ angular.module('teampot', [
 			controller: 'taskListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/task/list-fab.html',
-			resolve:{
-				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
+			resolve: {
+				currentUser: checkCurrentUserAuth
 			}
 		})
 		.when('/project/:projectId/task/:taskId?', {
@@ -56,8 +58,8 @@ angular.module('teampot', [
 			templateUrl: '/components/task/edit.html',
 			controller: 'taskEditController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
-			resolve:{
-				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
+			resolve: {
+				currentUser: checkCurrentUserAuth
 			}
 		})
 		.when('/project/:projectId/files', {
@@ -68,8 +70,8 @@ angular.module('teampot', [
 			controller: 'fileListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/file/list-fab.html',
-			resolve:{
-				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
+			resolve: {
+				currentUser: checkCurrentUserAuth
 			}
 		})
 		.when('/project/:projectId/discussions', {
@@ -79,8 +81,8 @@ angular.module('teampot', [
 			templateUrl: '/components/discussion/discussions.html',
 			controller: 'discussionsController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
-			resolve:{
-				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
+			resolve: {
+				currentUser: checkCurrentUserAuth
 			}
 		})
 		.when('/project/:projectId/meetings', {
@@ -91,8 +93,8 @@ angular.module('teampot', [
 			controller: 'meetingListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/meeting/list-fab.html',
-			resolve:{
-				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
+			resolve: {
+				currentUser: checkCurrentUserAuth
 			}
 		})
 		.when('/project/:projectId/meeting/:meetingId?', {
@@ -102,8 +104,8 @@ angular.module('teampot', [
 			templateUrl: '/components/meeting/edit.html',
 			controller: 'meetingEditController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
-			resolve:{
-				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
+			resolve: {
+				currentUser: checkCurrentUserAuth
 			}
 		})
 		.when('/project/:projectId/members', {
@@ -114,8 +116,8 @@ angular.module('teampot', [
 			controller: 'userListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
 			fabTemplateUrl: '/components/user/list-fab.html',
-			resolve:{
-				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
+			resolve: {
+				currentUser: checkCurrentUserAuth
 			}
 		})
 		.when('/project/:projectId/activity', {
@@ -125,8 +127,8 @@ angular.module('teampot', [
 			templateUrl: '/components/activity/list.html',
 			controller: 'activityListController',
 			sidebarTemplateUrl: '/components/sidebar/menu.html',
-			resolve:{
-				currentUser: function($rootScope){return $rootScope.currentUser.$promise}
+			resolve: {
+				currentUser: checkCurrentUserAuth
 			}
 		})
 		.otherwise({
@@ -149,7 +151,10 @@ angular.module('teampot', [
 	GapiClientProvider.load("drive","v2");
 
 })
-.run(function($rootScope,$routeParams,$location,Gapi,GapiClient,ProjectService,CONSTANTS,AlertService){
+.run(function($rootScope,$routeParams,$location,Gapi,GapiClient,ProjectService,CONSTANTS,AlertService,$q){
+	
+	var currentUserDeferred = $q.defer();
+	$rootScope.currentUser$promise = currentUserDeferred.promise;
 
 	$rootScope.$on("$routeChangeStart", function(event, next, current) {
 		$rootScope.appLoading = true;
@@ -180,11 +185,31 @@ angular.module('teampot', [
     $rootScope.signIn = function(silent){
     	$rootScope.signingIn = true;
     	Gapi.authorize(silent).then(function(data){
-    		$rootScope.$apply(function(){
-	    		$rootScope.signingIn = false;
-	    		$rootScope.signedIn = true;
-	    	})
-    		if (!silent) GapiClient.client("teampot").exec("user.auth",{code:data.code});
+    		
+    		if (!silent) {
+    			$rootScope.currentUser = GapiClient.client("teampot").exec("user.auth",{code:data.code});
+    		} else {
+    			$rootScope.currentUser = GapiClient.client("teampot").exec("user.get",{id:"me"});
+    		}
+    		
+    		$rootScope.currentUser.$promise
+    			.then(function(data){
+    				currentUserDeferred.resolve(data);
+    				$rootScope.currentUser$promise.$resolved = true;
+    				
+    				$rootScope.signingIn = false;
+    	    		$rootScope.signedIn = true;
+    				
+    			})
+    			.catch(function(data){
+    				currentUserDeferred.reject(data);
+    				$rootScope.currentUser$promise.$resolved = false;
+    				
+    				$rootScope.signingIn = false;
+    	    		$rootScope.signedIn = false;
+    				
+    			});
+    		
     	},function(){
     		$rootScope.$apply(function(){
 	    		$rootScope.signingIn = false;
@@ -193,11 +218,9 @@ angular.module('teampot', [
     	});
     }
     
-    $rootScope.signIn(true);
+    $rootScope.signIn(true);    
     
-    $rootScope.currentUser = GapiClient.client("teampot").exec("user.get",{id:"me"});
-    
-    $rootScope.currentUser.$promise.catch(function(){
+    $rootScope.currentUser$promise.catch(function(){
     	$location.path("/dashboard");
     	delete $rootScope.currentUser;
     	AlertService.alert("Sorry, TeamPot is not available in your domain/organization.","TeamPot");

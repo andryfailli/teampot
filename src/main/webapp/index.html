@@ -71,7 +71,7 @@
 								</li>
 							</ol>
 							
-							<a id="user-info" ng-if="currentUser.$promise.$resolved">
+							<a id="user-info" ng-if="signedIn">
 								<span>{{currentUser.firstName}}</span>
 								<img class="face" src="about:blank" ng-src="{{currentUser.iconUrl}}"/>
 							</a>

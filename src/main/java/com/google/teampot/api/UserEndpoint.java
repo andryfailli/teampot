@@ -54,6 +54,21 @@ public class UserEndpoint extends BaseEndpoint {
 	}
 	
 	@ApiMethod(
+		name = "user.auth", 
+		path = "user/auth",
+		httpMethod = HttpMethod.POST
+	)
+	public User auth(@Named("code") String code, com.google.appengine.api.users.User gUser) throws OAuthRequestException, IOException {
+		GoogleCredential credential = GoogleServices.getCredentialFromOneTimeCode(gUser.getEmail(), code);
+		User user = UserService.getInstance().getUser(gUser);
+		user.setTokens(credential);
+		dao.save(user);
+		
+		UserService.getInstance().provisionProfile(user);
+		return user;
+	}
+	
+	@ApiMethod(
 		name = "user.save",
 		path = "user",
 		httpMethod = HttpMethod.POST
@@ -72,18 +87,6 @@ public class UserEndpoint extends BaseEndpoint {
 		dao.remove(id);
 	}
 	
-	@ApiMethod(
-		name = "user.auth", 
-		path = "user/auth",
-		httpMethod = HttpMethod.POST
-	)
-	public void auth(@Named("code") String code, com.google.appengine.api.users.User gUser) throws OAuthRequestException, IOException {
-		GoogleCredential credential = GoogleServices.getCredentialFromOneTimeCode(gUser.getEmail(), code);
-		User user = UserService.getInstance().getUser(gUser);
-		user.setTokens(credential);
-		dao.save(user);
-		
-		UserService.getInstance().provisionProfile(user);
-	}
+	
 	
 }

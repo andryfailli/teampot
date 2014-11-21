@@ -88,6 +88,19 @@ angular.module("ngGapi",[]).
 			
 		},
 		
+		logout: function(){
+			var thisProvider = this;
+			
+			if (thisProvider.authDeferred) {
+				// https://developers.google.com/+/web/signin/sign-out
+				thisProvider.gapi.auth.signOut();
+				thisProvider.authDeferred.reject('logout');
+			}
+			
+			// re-init
+			thisProvider.authDeferred = thisProvider._get$q().defer();
+		},
+		
 		_get$q: function(){
 			return angular.injector(['ng']).get('$q');
 		},
@@ -102,7 +115,8 @@ angular.module("ngGapi",[]).
 				auth$promise: function(){return thisProvider.authDeferred ? thisProvider.authDeferred.promise : null},
 				token: function(){return thisProvider.token;},
 				load: function(name){return thisProvider.load(name);},
-				authorize: function(silent){return thisProvider.authorize(silent);}
+				authorize: function(silent){return thisProvider.authorize(silent);},
+				logout: function(){return thisProvider.logout();}
 			};
 		}
 	}).
