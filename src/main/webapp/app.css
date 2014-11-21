@@ -121,3 +121,21 @@ material-circular-progress.spinner-gray .inset {
 .list-item-box-right {
 	border-left:1px solid rgba(0, 0, 0, 0.12);
 }
+
+
+.fab-container {
+	position:absolute; 
+	top:auto; 
+	right:28px; 
+	bottom:28px; 
+	z-index:50;
+	text-align: center;
+}
+
+material-button.material-button-fab-small {
+	width: 40px;
+	height: 40px;
+}
+material-button.material-button-fab-small material-icon {
+	margin-top:3px;
+}

@@ -1,6 +1,14 @@
-<span ng-controller='fileListFabController'>
-	<material-button class="material-button-fab material-button-fab-bottom-right material-theme-red" ng-click="fabAdd()">
-		<material-icon icon="/img/icons/ic_add_24px.svg"></material-icon>
-		<material-tooltip>Add new File</material-tooltip>
-	</material-button>
-</span>
+<div ng-controller='fileListFabController' class="fab-container" layout="vertical">
+	<div>
+		<material-button class="material-button-fab material-button-fab-small">
+			<material-icon icon="/img/icons/presentation-logo-white.svg"></material-icon>
+			<material-tooltip>new Slides</material-tooltip>
+		</material-button>
+	</div>
+	<div>
+		<material-button class="material-button-fab material-theme-red " ng-click="fabAdd()">
+			<material-icon icon="/img/icons/ic_add_24px.svg"></material-icon>
+			<material-tooltip>Add new File</material-tooltip>
+		</material-button>
+	</div>
+</div>
