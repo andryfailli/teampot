@@ -16,6 +16,8 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.Channel;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.Permission;
+import com.google.api.services.groupssettings.Groupssettings;
+import com.google.api.services.groupssettings.model.Groups;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
@@ -109,10 +111,12 @@ public class ProjectService{
 		
 		Directory directoryService = null;
 		Drive driveService = null;
+		Groupssettings groupssettingsService = null;
 		try {
 			
 			directoryService = GoogleServices.getDirectoryServiceDomainWide(user);
 			driveService = GoogleServices.getDriveService(user);
+			groupssettingsService = GoogleServices.getGroupssettingsDomainWide(user);
 			
 		} catch (GeneralSecurityException e) {
 			// TODO Auto-generated catch block
@@ -136,6 +140,16 @@ public class ProjectService{
 		
 		try {
 			group = directoryService.groups().insert(group).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// set Google Group settings
+		Groups groupssettings = new Groups();
+		groupssettings.setIsArchived("true");
+		try {
+			groupssettingsService.groups().update(groupEmail, groupssettings).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -17,6 +17,8 @@ import com.google.api.services.admin.directory.DirectoryScopes;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.drive.Drive;
+import com.google.api.services.groupssettings.Groupssettings;
+import com.google.api.services.groupssettings.GroupssettingsScopes;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Tokeninfo;
 import com.google.api.services.plus.Plus;
@@ -118,10 +120,25 @@ public class GoogleServices {
 			.setApplicationName(Config.get(Config.APPLICATION_NAME))
 			.build();
 	}
-	
+		
 	public static Directory getDirectoryServiceDomainWide(User user)	throws GeneralSecurityException, IOException {
 		return new Directory.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
 			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(user, Arrays.asList(DirectoryScopes.ADMIN_DIRECTORY_GROUP,DirectoryScopes.ADMIN_DIRECTORY_USER_READONLY)))
+			.setApplicationName(Config.get(Config.APPLICATION_NAME))
+			.build();
+	}
+	
+	
+	public static Groupssettings getGroupssettingsService(User user)	throws GeneralSecurityException, IOException {
+		return new Groupssettings.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
+			.setHttpRequestInitializer(GoogleServices.getCredential(user))
+			.setApplicationName(Config.get(Config.APPLICATION_NAME))
+			.build();
+	}
+	
+	public static Groupssettings getGroupssettingsDomainWide(User user)	throws GeneralSecurityException, IOException {
+		return new Groupssettings.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
+			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(user, Arrays.asList(GroupssettingsScopes.APPS_GROUPS_SETTINGS)))
 			.setApplicationName(Config.get(Config.APPLICATION_NAME))
 			.build();
 	}
