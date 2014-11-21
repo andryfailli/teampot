@@ -178,8 +178,7 @@ angular.module('teampot', [
     $rootScope.$on("$routeChangeError", function(event, next, current) {
     	$rootScope.appLoading = false;
     	current ? history.back() : $location.path("/");		
-		alert("Unable to access this page");
-		//TODO migliorare messaggio
+    	AlertService.alert("Sorry, unable to access this page.","TeamPot");
     });
     
     $rootScope.signIn = function(silent){
