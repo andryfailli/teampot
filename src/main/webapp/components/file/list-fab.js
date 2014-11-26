@@ -38,7 +38,32 @@ angular.module('teampot').
 					}).build();
 				
 				picker.setVisible(true);
-			})
+			});
+			
+		}
+		
+		$scope.fabCreate = function(mimeType){
+			
+			// check if folder is empty
+			var newFile = GapiClient.client("drive").exec("files.insert",{
+				mimeType: mimeType,
+				parents: [{
+		        	id: $rootScope.currentProject.folder
+	            }],
+			});
+			
+			var newFileWin = window.open("about:blank");
+			
+			var imgUrl = window.location.protocol+"//"+window.location.host+"/img/spinner64.gif";
+			newFileWin.document.write("<html style='margin:0'><body><h1 style='text-align:center'><img style='margin:25px' src='"+imgUrl+"'/></h1></body></html>")
+						
+			newFile.$promise.then(function(){
+				newFileWin.location.href=newFile.alternateLink;
+				//TODO: enhancement: reload only the iframe, not the whole view.
+            	$route.reload();
+			});
+			
+			// TODO: if error?
 			
 		}
 
