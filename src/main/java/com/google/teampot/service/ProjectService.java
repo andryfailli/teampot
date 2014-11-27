@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.admin.directory.Directory;
 import com.google.api.services.admin.directory.model.Group;
 import com.google.api.services.admin.directory.model.Member;
@@ -136,15 +137,34 @@ public class ProjectService{
 		project.addUser(user);
 		
 		
-		// create a new Google Group
+		// create a new Google Group or use the existing one
 		String groupEmail = project.getMachineName()+"@"+Config.get(Config.APPS_DOMAIN);
-		Group group = new Group();
+		Group group = null;
+		boolean isNew = true;
+		try {
+			group = directoryService.groups().get(groupEmail).execute();
+			isNew = false;
+		} catch (GoogleJsonResponseException e) {
+			e.printStackTrace();
+			if (e.getStatusCode() == 404) {
+				// group does not exists
+				group = new Group();
+				group.setEmail(groupEmail);
+				isNew = true;
+			} else {
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		group.setName(project.getName());
-		group.setEmail(groupEmail);
 		group.setDescription(project.getDescription());
 		
 		try {
-			group = directoryService.groups().insert(group).execute();
+			if (isNew)
+				group = directoryService.groups().insert(group).execute();
+			else
+				group = directoryService.groups().update(groupEmail,group).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
