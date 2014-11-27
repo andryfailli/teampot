@@ -37,6 +37,7 @@ public class Project extends BaseEntity {
 	
 	private String name;
 	
+	@Index
 	private String machineName;
 	
 	private Text description;

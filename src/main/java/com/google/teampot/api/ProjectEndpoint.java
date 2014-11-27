@@ -3,6 +3,7 @@ package com.google.teampot.api;
 import java.util.List;
 
 import com.google.teampot.api.exception.EntityNotFoundException;
+import com.google.teampot.api.exception.ProjectExistsException;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.User;
 import com.google.teampot.service.ProjectService;
@@ -45,7 +46,7 @@ public class ProjectEndpoint extends BaseEndpoint{
 		path = "project",
 		httpMethod = HttpMethod.POST
 	)
-	public Project save(Project entity, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
+	public Project save(Project entity, com.google.appengine.api.users.User gUser) throws OAuthRequestException, ProjectExistsException {
 		projectService.save(entity,userService.getUser(gUser));
 		return entity;
 	}

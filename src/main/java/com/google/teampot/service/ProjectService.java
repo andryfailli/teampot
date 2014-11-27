@@ -25,6 +25,7 @@ import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.teampot.Config;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.api.API;
+import com.google.teampot.api.exception.ProjectExistsException;
 import com.google.teampot.dao.ProjectDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
 import com.google.teampot.model.EntityDiff;
@@ -66,16 +67,20 @@ public class ProjectService{
 		return dao.get(key);
 	}
 	
-	public void save(Project entity){
+	public void save(Project entity) throws ProjectExistsException{
 		this.save(entity,null);
 	}
 	
-	public void save(Project entity, User actor){
+	public void save(Project entity, User actor) throws ProjectExistsException{
 		ProjectActivityEvent activtyEvent = new ProjectActivityEvent();
 		if (entity.getId() == null) {
-			activtyEvent.setVerb(EntityActivityEventVerb.CREATE);
 			
-			this.initProject(entity, actor);
+			if (dao.existsWithName(entity.getMachineName())) {
+				throw new ProjectExistsException(entity.getMachineName());
+			} else {
+				activtyEvent.setVerb(EntityActivityEventVerb.CREATE);	
+				this.initProject(entity, actor);
+			}
 			
 		} else {
 			

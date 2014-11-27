@@ -5,6 +5,7 @@
 			<form>
 			  <tf-float label="Project Name" value="project.name"> </tf-float>
 			</form>
+			<p class="text-error" ng-show="error.code==400">A project named {{project.name}} already exists.</p>
 		</material-content>
 		<material-content ng-if="loading" layout="vertical" layout-align="center center" layout-padding>
 			<div flex>
@@ -17,6 +18,6 @@
 	
 	</div>
 	<div class="dialog-actions" layout="horizontal" layout-align="end"  ng-if="!loading">
-		<material-button ng-click="save()" autofocus>OK</material-button>
+		<material-button ng-click="save()" ng-disabled="!project.name || error" autofocus>OK</material-button>
 	</div>
 </material-dialog>
