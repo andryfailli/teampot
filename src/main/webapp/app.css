@@ -137,5 +137,18 @@ material-button.material-button-fab-small {
 	height: 40px;
 }
 material-button.material-button-fab-small material-icon {
-	margin-top:3px;
+	margin-top:0px;
+}
+
+.fab-container .fab-container-small-fabs {
+	position:relative;
+	left:85px;
+	
+	 -webkit-transition: left .5s; /* For Safari 3.1 to 6.0 */
+    transition: left .5s;
+}
+
+.fab-container:hover .fab-container-small-fabs {
+	position:relative;
+	left:0;
 }
