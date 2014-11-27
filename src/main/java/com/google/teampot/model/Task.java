@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.appengine.api.datastore.Text;
 import com.google.teampot.transformer.Ref2StringTransformer;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
@@ -26,7 +27,7 @@ public class Task extends BaseEntity {
 	
 	private String title;
 	
-	private String description;
+	private Text description;
 	
 	private int priority;
 	
@@ -75,11 +76,11 @@ public class Task extends BaseEntity {
 	}
 
 	public String getDescription() {
-		return description;
+		return description != null ? description.getValue() : null;
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.description = description != null ? new Text(description) : null;
 	}
 
 	public int getPriority() {

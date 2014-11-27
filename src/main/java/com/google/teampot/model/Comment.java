@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.appengine.api.datastore.Text;
 import com.google.teampot.transformer.Ref2StringTransformer;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
@@ -23,7 +24,7 @@ public abstract class Comment extends BaseEntity {
 	
 	private Date timestamp;
 	
-	private String body;
+	private Text body;
 
 	public Comment() {
 		this.timestamp = new Date();
@@ -65,11 +66,11 @@ public abstract class Comment extends BaseEntity {
 	}
 
 	public String getBody() {
-		return body;
+		return body != null ? body.getValue() : null;
 	}
 
 	public void setBody(String body) {
-		this.body = body;
+		this.body = body != null ? new Text(body) : null;
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
