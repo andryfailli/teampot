@@ -3,8 +3,6 @@ package com.google.teampot.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -300,6 +298,17 @@ public class ProjectService{
 			e.printStackTrace();
 		}
 		
+		// Notify member
+		try {
+			this.sendAddMemberNotification(project, member, actor);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		MemberActivityEvent activityEvent = new MemberActivityEvent(project, actor);
 		activityEvent.setUser(member);
@@ -333,6 +342,18 @@ public class ProjectService{
 		}
 		
 		
+		// Notify member
+		try {
+			this.sendRemoveMemberNotification(project, member, actor);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		MemberActivityEvent activityEvent = new MemberActivityEvent(project, actor);
 		activityEvent.setUser(member);
 		activityEvent.setVerb(MemberActivityEventVerb.REMOVE);
@@ -348,7 +369,7 @@ public class ProjectService{
 		data.put("header","Project "+project.getName());
 		data.put("body",actor.getFirstName()+" created a project");
 		data.put("actorPhoto", actor.getIconUrl());
-		data.put("actionLabel","Open");
+		data.put("actionLabel","Open Project");
 		data.put("actionUrl",actionUrl);
 		
 		String mailHtml = TemplatingService.getInstance().compile(data, "base.html.vm");
@@ -357,5 +378,41 @@ public class ProjectService{
 		NotificationService.getInstance().sendMessage("Project "+project.getName(), mailPlaintext, mailHtml, project, actor);
 		
 	}
-
+	
+	private void sendAddMemberNotification(Project project, User member, User actor) throws UnsupportedEncodingException, MessagingException {
+		
+		String actionUrl = AppHelper.getBaseUrl()+"/#/project/"+project.getKey();
+		
+		Map<String, Object> data = new LinkedHashMap<String, Object>();
+		data.put("header","Project "+project.getName());
+		data.put("body","Welcome onboard! "+actor.getFirstName()+" added you in the team.");
+		data.put("actorPhoto", actor.getIconUrl());
+		data.put("actionLabel","Open Project");
+		data.put("actionUrl",actionUrl);
+		
+		String mailHtml = TemplatingService.getInstance().compile(data, "base.html.vm");
+		String mailPlaintext = TemplatingService.getInstance().compile(data, "base.txt.vm");
+		
+		NotificationService.getInstance().sendMessage("Project "+project.getName(), mailPlaintext, mailHtml, member, actor);
+		
+	}
+	
+	private void sendRemoveMemberNotification(Project project, User member, User actor) throws UnsupportedEncodingException, MessagingException {
+		
+		String actionUrl = AppHelper.getBaseUrl();
+		
+		Map<String, Object> data = new LinkedHashMap<String, Object>();
+		data.put("header","Project "+project.getName());
+		data.put("body","Sorry to see you leave... "+actor.getFirstName()+" removed you from the team.");
+		data.put("actorPhoto", actor.getIconUrl());
+		data.put("actionLabel","Open TeamPot");
+		data.put("actionUrl",actionUrl);
+		
+		String mailHtml = TemplatingService.getInstance().compile(data, "base.html.vm");
+		String mailPlaintext = TemplatingService.getInstance().compile(data, "base.txt.vm");
+		
+		NotificationService.getInstance().sendMessage("Project "+project.getName(), mailPlaintext, mailHtml, member, actor);
+		
+	}
+	
 }

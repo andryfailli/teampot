@@ -17,7 +17,13 @@ public class AppHelper {
 	public static String getBaseUrlWithoutSchema() {
 		if (SystemProperty.environment.value()!=SystemProperty.Environment.Value.Development) {
 			Environment environment = ApiProxy.getCurrentEnvironment();
-			return environment.getAppId()+".appspot.com";
+			
+			String appFullId = environment.getAppId();
+			int tildeIndex = appFullId.indexOf("~");
+			
+			String appId = tildeIndex>-1 ? appFullId.substring(tildeIndex+1) : appFullId;
+			
+			return appId+".appspot.com";
 		} else {
 			return "127.0.0.1:8888";
 		}
