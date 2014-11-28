@@ -66,7 +66,7 @@ public class GoogleServices {
 	    GoogleCredential credential = GoogleServices.getCredentialBuilder().build().setFromTokenResponse(tokenResponse);
 
 	    // Check that the token is valid.
-	    Oauth2 oauth2 = new Oauth2.Builder(httpTransport, jsonFactory, credential).build();
+	    Oauth2 oauth2 = new Oauth2.Builder(httpTransport, jsonFactory, credential).setApplicationName(Config.get(Config.APPLICATION_NAME)).build();
 	    Tokeninfo tokenInfo = oauth2.tokeninfo().setAccessToken(credential.getAccessToken()).execute();
 	    
 	    // If there was an error in the token info, abort.

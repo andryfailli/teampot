@@ -1,13 +1,12 @@
 package com.google.teampot.api;
 
-import com.google.apphosting.api.ApiProxy;
-import com.google.apphosting.api.ApiProxy.Environment;
 import com.google.teampot.Constants;
+import com.google.teampot.util.AppHelper;
 
 public class API {
 
 	private API() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public static String getBaseUrl() {
@@ -15,8 +14,7 @@ public class API {
 	}
 	
 	public static String getBaseUrlWithoutSchema() {
-		Environment environment = ApiProxy.getCurrentEnvironment();
-		return environment.getAppId()+".appspot.com"+API.getBaseUrlWithoutHostAndSchema();
+		return AppHelper.getBaseUrlWithoutSchema()+API.getBaseUrlWithoutHostAndSchema();
 	}
 	
 	public static String getBaseUrlWithoutHostAndSchema() {

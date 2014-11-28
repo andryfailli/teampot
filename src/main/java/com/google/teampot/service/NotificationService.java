@@ -1,9 +1,6 @@
 package com.google.teampot.service;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Address;
@@ -48,7 +45,24 @@ public class NotificationService {
         return msg;
 	}
 	
+	private Message prepareMessage(String subject, Project recipient, User sender) throws UnsupportedEncodingException, MessagingException {
+		Message msg = new MimeMessage(session);
+		msg.setFrom(new InternetAddress(Config.get(Config.SERVICE_ACCOUNT_EMAIL), "TeamPot"));
+        if (sender != null) {
+        	msg.setReplyTo(new Address[]{new InternetAddress(sender.getEmail(), sender.getFirstName()+" "+sender.getLastName())});
+        }
+        msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient.getGroupEmail(), recipient.getName()+" (TeamPot)"));
+        msg.setSubject(subject);
+        return msg;
+	}
+	
 	public void sendMessage(String subject, String plainBody, User recipient, User sender) throws UnsupportedEncodingException, MessagingException {
+		Message msg = this.prepareMessage(subject, recipient, sender);
+		msg.setText(plainBody);
+        Transport.send(msg);
+	}
+	
+	public void sendMessage(String subject, String plainBody, Project recipient, User sender) throws UnsupportedEncodingException, MessagingException {
 		Message msg = this.prepareMessage(subject, recipient, sender);
 		msg.setText(plainBody);
         Transport.send(msg);
@@ -70,23 +84,20 @@ public class NotificationService {
         Transport.send(msg);
 	}
 	
-	public void sendProjectInitMessage(Project project, User actor) throws UnsupportedEncodingException, MessagingException {
+	public void sendMessage(String subject, String plainBody, String htmlBody, Project recipient, User sender) throws UnsupportedEncodingException, MessagingException {
+		Message msg = this.prepareMessage(subject, recipient, sender);
 		
-		//TODO: set correct url
-		String actionUrl = "#/project/"+project.getKey();
+		msg.setText(plainBody);
 		
-		Map<String, Object> data = new LinkedHashMap<String, Object>();
-		data.put("header","Project "+project.getName());
-		data.put("body",actor.getFirstName()+" created a project");
-		data.put("actorPhoto", actor.getIconUrl());
-		data.put("actionLabel","Open");
-		data.put("actionUrl",actionUrl);
+		Multipart mp = new MimeMultipart();
 		
-		String mailHtml = TemplatingService.getInstance().compile(data, "base.html.vm");
-		String mailPlaintext = TemplatingService.getInstance().compile(data, "base.txt.vm");
+		MimeBodyPart htmlPart = new MimeBodyPart();
+		htmlPart.setContent(htmlBody, "text/html");
+		mp.addBodyPart(htmlPart);
 		
-		this.sendMessage("Project "+project.getName(), mailPlaintext, mailHtml, actor, actor);
+		msg.setContent(mp);
 		
+        Transport.send(msg);
 	}
 	
 }

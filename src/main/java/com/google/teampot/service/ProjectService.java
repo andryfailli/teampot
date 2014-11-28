@@ -1,6 +1,7 @@
 package com.google.teampot.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +9,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.mail.MessagingException;
 
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.admin.directory.Directory;
@@ -36,6 +39,7 @@ import com.google.teampot.model.Project;
 import com.google.teampot.model.ProjectActivityEvent;
 import com.google.teampot.model.EntityActivityEventVerb;
 import com.google.teampot.model.User;
+import com.google.teampot.util.AppHelper;
 
 import de.danielbechler.diff.ObjectDifferBuilder;
 import de.danielbechler.diff.node.DiffNode;
@@ -136,9 +140,11 @@ public class ProjectService{
 		project.setOwner(user);
 		project.addUser(user);
 		
-		
-		// create a new Google Group or use the existing one
+		// group email
 		String groupEmail = project.getMachineName()+"@"+Config.get(Config.APPS_DOMAIN);
+		project.setGroupEmail(groupEmail);
+		
+		// create a new Google Group or use the existing one		
 		Group group = null;
 		boolean isNew = true;
 		try {
@@ -225,6 +231,17 @@ public class ProjectService{
 		try {
 	    	this.watchFolderChanges(driveService,project);
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// finally, notify
+		try {
+			this.sendProjectInitNotification(project,user);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -321,6 +338,24 @@ public class ProjectService{
 		activityEvent.setVerb(MemberActivityEventVerb.REMOVE);
 		
 		ActivityEventService.getInstance().registerActivityEvent(activityEvent);
+	}
+	
+	private void sendProjectInitNotification(Project project, User actor) throws UnsupportedEncodingException, MessagingException {
+		
+		String actionUrl = AppHelper.getBaseUrl()+"/#/project/"+project.getKey();
+		
+		Map<String, Object> data = new LinkedHashMap<String, Object>();
+		data.put("header","Project "+project.getName());
+		data.put("body",actor.getFirstName()+" created a project");
+		data.put("actorPhoto", actor.getIconUrl());
+		data.put("actionLabel","Open");
+		data.put("actionUrl",actionUrl);
+		
+		String mailHtml = TemplatingService.getInstance().compile(data, "base.html.vm");
+		String mailPlaintext = TemplatingService.getInstance().compile(data, "base.txt.vm");
+		
+		NotificationService.getInstance().sendMessage("Project "+project.getName(), mailPlaintext, mailHtml, project, actor);
+		
 	}
 
 }
