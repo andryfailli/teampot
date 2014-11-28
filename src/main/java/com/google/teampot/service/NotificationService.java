@@ -36,9 +36,11 @@ public class NotificationService {
 	
 	private Message prepareMessage(String subject, User recipient, User sender) throws UnsupportedEncodingException, MessagingException {
 		Message msg = new MimeMessage(session);
-		msg.setFrom(new InternetAddress(Config.get(Config.SERVICE_ACCOUNT_EMAIL), "TeamPot"));
-        if (sender != null) {
+		if (sender != null) {
         	msg.setReplyTo(new Address[]{new InternetAddress(sender.getEmail(), sender.getFirstName()+" "+sender.getLastName())});
+        	msg.setFrom(new InternetAddress(Config.get(Config.SERVICE_ACCOUNT_EMAIL), sender.getFirstName()+" "+sender.getLastName()+" (TeamPot)"));
+        } else {
+        	msg.setFrom(new InternetAddress(Config.get(Config.SERVICE_ACCOUNT_EMAIL), "TeamPot"));
         }
         msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient.getEmail(), recipient.getFirstName()+" "+recipient.getLastName()));
         msg.setSubject(subject);
