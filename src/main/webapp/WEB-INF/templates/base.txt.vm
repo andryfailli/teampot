@@ -1,0 +1,9 @@
+$header
+
+$body.
+
+---------------
+Open project here $actionUrl
+---------------
+
+$footer

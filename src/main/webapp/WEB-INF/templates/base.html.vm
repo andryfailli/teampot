@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title></title>
+	</head>
+	<body>
+	    <div>
+	        <div style="width:100%;padding:24px 0 16px 0;background-color:#f5f5f5;text-align:center">
+	            <div style="display:inline-block;width:90%;max-width:680px;min-width:280px;text-align:left;font-family:Roboto,Arial,Helvetica,sans-serif">
+	                <div class="adM" style="display:block;padding:0 2px">
+	                    <div style="display:block;background:#fff;min-height:2px"></div>
+	                </div>
+	
+	                <div style="border-left:1px solid #f0f0f0;border-right:1px solid #f0f0f0">
+	                    <div dir="ltr" style="padding:24px 32px 32px 32px;background:#fff;border-right:1px solid #eaeaea;border-left:1px solid #eaeaea">
+	                        <div style="font-size:14px;line-height:18px;color:#444">
+	                            $header
+	                        </div>
+	
+	                        <div style="min-height:16px"></div>
+	
+	                        <div style="min-height:1px;background-color:#eee"></div>
+	
+	                        <div style="min-height:24px"></div>
+	
+	                        <div style="display:table-row">
+	                            <img alt="" class="CToWUd" src="$actorPhoto" width="50">
+	                            <span style="display:table-cell;vertical-align:top;padding-left:16px;font-size:13px;line-height:18px;max-width:496px;color:#262626">$body</span>
+	                        </div>
+	
+	                        <div style="min-height:32px"></div>
+	
+	                        <div>
+	                            <a href="$actionUrl" style="background-color:#4d90fe;border:1px solid #3079ed;border-radius:2px;color:white;display:inline-block;font-family:Arial;font-size:11px;font-weight:bold;min-height:29px;line-height:29px;min-width:54px;outline:0px;padding:0 8px;text-align:center;text-decoration:none" target="_blank">$actionLabel</a>
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <table style="width:100%;border-collapse:collapse">
+	                    <tbody>
+	                        <tr>
+	                            <td style="padding:0px">
+	                                <table style="border-collapse:collapse;width:3px">
+	                                    <tbody>
+	                                        <tr>
+	                                            <td style="background-color: #F0F0F0; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #EAEAEA; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #E5E5E5; padding: 0px" width="1"></td>
+	                                        </tr>
+	
+	                                        <tr>
+	                                            <td style="background-color: #F0F0F0; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #EAEAEA; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #EAEAEA; padding: 0px" width="1"></td>
+	                                        </tr>
+	
+	                                        <tr>
+	                                            <td style="background-color: #F5F5F5; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #F0F0F0; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #F0F0F0; padding: 0px" width="1"></td>
+	                                        </tr>
+	                                    </tbody>
+	                                </table>
+	                            </td>
+	
+	                            <td style="width:100%;padding:0px">
+	                                <div style="min-height:1px;width:auto;border-top:1px solid #ddd;background:#eaeaea;border-bottom:1px solid #f0f0f0"></div>
+	                            </td>
+	
+	                            <td style="padding:0px">
+	                                <table style="border-collapse:collapse;width:3px">
+	                                    <tbody>
+	                                        <tr>
+	                                            <td style="background-color: #E5E5E5; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #EAEAEA; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #F0F0F0; padding: 0px" width="1"></td>
+	                                        </tr>
+	
+	                                        <tr>
+	                                            <td style="background-color: #EAEAEA; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #EAEAEA; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #F0F0F0; padding: 0px" width="1"></td>
+	                                        </tr>
+	
+	                                        <tr>
+	                                            <td style="background-color: #F0F0F0; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #F0F0F0; padding: 0px" width="1"></td>
+	
+	                                            <td style="background-color: #F5F5F5; padding: 0px" width="1"></td>
+	                                        </tr>
+	                                    </tbody>
+	                                </table>
+	                            </td>
+	                        </tr>
+	                    </tbody>
+	                </table>
+	
+	                <table dir="ltr" style="padding:14px 10px 0 10px">
+	                    <tbody>
+	                        <tr>
+	                            <td style="width:100%;font-size:11px;font-family:Open Sans,Arial;color:#646464;line-height:20px;min-height:40px;vertical-align:middle">$footer</td>
+	
+	                            <td style="padding-left:20px;vertical-align:middle">
+	                                <a href="$appUrl" target="_blank"><h4>TeamPot</h4></a>
+	                            </td>
+	                        </tr>
+	                    </tbody>
+	                </table>
+	            </div>
+	        </div>
+	    </div>
+	</body>
+</html>
