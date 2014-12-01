@@ -99,6 +99,10 @@ public class Meeting extends BaseEntity {
 		else
 			return false;
 	}
+	
+	public boolean isScheduled() {
+		return timestamp != null;
+	}
 
 	public List<String> getAgenda() {
 		return agenda;
@@ -182,6 +186,10 @@ public class Meeting extends BaseEntity {
 
 	public MeetingPoll getPoll() {
 		return poll;
+	}
+	
+	public boolean hasPoll() {
+		return poll != null;
 	}
 
 	public void setPoll(MeetingPoll poll) {

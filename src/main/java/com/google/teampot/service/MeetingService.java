@@ -1,6 +1,7 @@
 package com.google.teampot.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +9,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.mail.MessagingException;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
@@ -29,10 +32,13 @@ import com.google.teampot.model.Meeting;
 import com.google.teampot.model.MeetingActivityEvent;
 import com.google.teampot.model.MeetingActivityEventVerb;
 import com.google.teampot.model.MeetingPollVote;
+import com.google.teampot.model.Project;
 import com.google.teampot.model.Task;
 import com.google.teampot.model.TaskActivityEvent;
 import com.google.teampot.model.TaskActivityEventVerb;
 import com.google.teampot.model.User;
+import com.google.teampot.util.AppHelper;
+import com.googlecode.objectify.Ref;
 
 import de.danielbechler.diff.ObjectDifferBuilder;
 import de.danielbechler.diff.node.DiffNode;
@@ -71,27 +77,44 @@ public class MeetingService{
 	
 	public void save(Meeting entity, User actor){
 		MeetingActivityEvent activtyEvent = new MeetingActivityEvent();
-		if (entity.getId() == null) {
-			activtyEvent.setVerb(MeetingActivityEventVerb.CREATE);
+		
+		MeetingActivityEventVerb verb = this.getSaveActivityVerb(entity,actor);
+		activtyEvent.setVerb(verb);
+		
+		Meeting oldEntity = null;
+		if (verb != MeetingActivityEventVerb.CREATE) oldEntity = dao.get(entity.getKey());	
+		
+		// send notifications
+		try {
+			switch (verb) {
+			case SCHEDULE:
+				this.sendMeetingScheduledNotification(entity, actor);
+				break;
+			case POLL:
+				this.sendMeetingPollNotification(entity,actor);
+				break;
+			default:
+				break;
+			}
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		if (verb == MeetingActivityEventVerb.CREATE) {
 			entity.setOrganizer(actor);
 		} else {
 			
-			Meeting oldEntity = dao.get(entity.getKey());
+			if (entity.isScheduled()) this.saveCalendarEvent(entity);
+			if (oldEntity.isScheduled()) this.removeCalendarEvent(oldEntity);
 			
-			activtyEvent.setVerb(MeetingActivityEventVerb.EDIT);
-			
-			
-			if (entity.getTimestamp() != null) {
-				this.saveCalendarEvent(entity);
-			} else if (oldEntity.getTimestamp() != null) {
-				this.removeCalendarEvent(oldEntity);
-			}
-			
-			if (entity.getPoll() != null) {
-				this.spoonPollEndTask(entity);
-			} else if (oldEntity.getPoll() != null) {
-				this.removePollEndTask(oldEntity);
-			}
+			if (entity.hasPoll()) this.spoonPollEndTask(entity);
+			if (oldEntity.hasPoll())this.removePollEndTask(oldEntity);
 			
 			
 			DiffNode diffs = ObjectDifferBuilder.buildDefault().compare(entity, oldEntity);
@@ -102,6 +125,7 @@ public class MeetingService{
 			}
 
 		}
+		
 		dao.save(entity);
 		activtyEvent.setMeeting(entity);
 		activtyEvent.setActor(actor);
@@ -148,8 +172,42 @@ public class MeetingService{
 			meeting.getPoll().setEndDate(new Date());
 			this.saveCalendarEvent(meeting);
 			dao.save(meeting);
+			
+			MeetingActivityEvent activtyEvent = new MeetingActivityEvent();
+			activtyEvent.setMeeting(meeting);
+			activtyEvent.setActor(meeting.getOrganizer());
+			activtyEvent.setVerb(MeetingActivityEventVerb.SCHEDULE);
+			activityEventService.registerActivityEvent(activtyEvent);
+			
+			// send notifications
+			try {
+				this.sendMeetingScheduledNotification(meeting, meeting.getOrganizer().get());
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		} else {
 			// TODO: notify the organizer, no votes!
+		}
+	}
+	
+	private MeetingActivityEventVerb getSaveActivityVerb(Meeting entity, User actor) {
+		if (entity.getId() == null)
+			return MeetingActivityEventVerb.CREATE;
+		else {
+			
+			Meeting oldEntity = dao.get(entity.getKey());
+			
+			if (!oldEntity.isScheduled() && entity.isScheduled())
+				return MeetingActivityEventVerb.SCHEDULE;
+			else if (!entity.isScheduled() && entity.hasPoll() && !oldEntity.hasPoll())
+				return MeetingActivityEventVerb.POLL;
+			else
+				return MeetingActivityEventVerb.EDIT;
 		}
 	}
 	
@@ -164,7 +222,7 @@ public class MeetingService{
 			if (meeting.getCalendarEventId() == null) {
 				event = new Event();
 				
-				EventAttendee teamAttendee = new EventAttendee().setEmail(meeting.getProject().get().getMachineName()+"@"+Config.get(Config.APPS_DOMAIN));
+				EventAttendee teamAttendee = new EventAttendee().setEmail(meeting.getProject().get().getGroupEmail());
 				event.setAttendees(Arrays.asList(teamAttendee));
 				
 			} else {
@@ -242,6 +300,46 @@ public class MeetingService{
 		
 		Queue queue = QueueFactory.getDefaultQueue();
 		queue.deleteTask(taskName);
+	}
+	
+	private void sendMeetingScheduledNotification(Meeting meeting, User actor) throws UnsupportedEncodingException, MessagingException {
+		
+		String actionUrl = AppHelper.getBaseUrl()+"/#/project/"+meeting.getProject().get().getKey()+"/meeting/"+meeting.getKey();
+		
+		String subject = meeting.getProject().get().getName()+": meeting "+meeting.getTitle();
+		
+		Map<String, Object> data = new LinkedHashMap<String, Object>();
+		data.put("header",subject);
+		data.put("body",actor.getFirstName()+" scheduled a meeting");
+		data.put("actorPhoto", actor.getIconUrl());
+		data.put("actionLabel","Open Meeting");
+		data.put("actionUrl",actionUrl);
+		
+		String mailHtml = TemplatingService.getInstance().compile(data, "base.html.vm");
+		String mailPlaintext = TemplatingService.getInstance().compile(data, "base.txt.vm");
+		
+		NotificationService.getInstance().sendMessage(subject, mailPlaintext, mailHtml, meeting.getProject().get(), actor);
+		
+	}
+	
+	private void sendMeetingPollNotification(Meeting meeting, User actor) throws UnsupportedEncodingException, MessagingException {
+		
+		String actionUrl = AppHelper.getBaseUrl()+"/#/project/"+meeting.getProject().get().getKey()+"/meetings";
+		
+		String subject = meeting.getProject().get().getName()+": meeting "+meeting.getTitle();
+		
+		Map<String, Object> data = new LinkedHashMap<String, Object>();
+		data.put("header",subject);
+		data.put("body",actor.getFirstName()+" opened a poll. Please vote for your preferred dates.");
+		data.put("actorPhoto", actor.getIconUrl());
+		data.put("actionLabel","Vote dates");
+		data.put("actionUrl",actionUrl);
+		
+		String mailHtml = TemplatingService.getInstance().compile(data, "base.html.vm");
+		String mailPlaintext = TemplatingService.getInstance().compile(data, "base.txt.vm");
+		
+		NotificationService.getInstance().sendMessage(subject, mailPlaintext, mailHtml, meeting.getProject().get(), actor);
+		
 	}
 
 }
