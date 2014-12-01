@@ -9,6 +9,7 @@ import com.google.teampot.service.UserService;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
+import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.api.oauth.OAuthRequestException;
 
 public class ActivityEndpoint extends BaseEndpoint {
@@ -20,8 +21,8 @@ public class ActivityEndpoint extends BaseEndpoint {
 		path = "activity",
 		httpMethod = HttpMethod.GET
 	)
-	public List<ActivityEvent> list(com.google.appengine.api.users.User gUser, @Named("project") String projectId) throws OAuthRequestException {
-		UserService.getInstance().ensureProvisioning(gUser);
+	public List<ActivityEvent> list(com.google.appengine.api.users.User gUser, @Named("project") String projectId) throws OAuthRequestException, UnauthorizedException {
+		UserService.getInstance().ensureEnabled(gUser);
 		
 		return dao.list(projectId);
 	}
@@ -31,8 +32,8 @@ public class ActivityEndpoint extends BaseEndpoint {
 		path = "activity/{id}",
 		httpMethod = HttpMethod.GET
 	)
-	public ActivityEvent get(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException,EntityNotFoundException {
-		UserService.getInstance().ensureProvisioning(gUser);
+	public ActivityEvent get(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException,EntityNotFoundException, UnauthorizedException {
+		UserService.getInstance().ensureEnabled(gUser);
 		
 		ActivityEvent entity = dao.get(id);
 		if (entity != null)
@@ -46,8 +47,8 @@ public class ActivityEndpoint extends BaseEndpoint {
 		path = "activity",
 		httpMethod = HttpMethod.POST
 	)
-	public ActivityEvent save(ActivityEvent entity, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		UserService.getInstance().ensureProvisioning(gUser);
+	public ActivityEvent save(ActivityEvent entity, com.google.appengine.api.users.User gUser) throws OAuthRequestException, UnauthorizedException {
+		UserService.getInstance().ensureEnabled(gUser);
 		
 		dao.save(entity);
 		return entity;
@@ -58,8 +59,8 @@ public class ActivityEndpoint extends BaseEndpoint {
 		path = "activity/{id}",
 		httpMethod = HttpMethod.DELETE
 	)
-	public void remove(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		UserService.getInstance().ensureProvisioning(gUser);
+	public void remove(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException, UnauthorizedException {
+		UserService.getInstance().ensureEnabled(gUser);
 
 		dao.remove(id);
 	}

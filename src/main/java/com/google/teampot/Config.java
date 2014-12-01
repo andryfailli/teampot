@@ -14,6 +14,7 @@ public class Config {
 	public static final String BACKEND_CLIENT_SECRET = "BACKEND_CLIENT_SECRET";
 	public static final String APPLICATION_NAME = "APPLICATION_NAME";
 	public static final String APPS_DOMAIN = "APPS_DOMAIN";
+	public static final String APPS_GROUP = "APPS_GROUP";
 	public static final String PROJECT_PREFIX = "PROJECT_PREFIX";
 	public static final String DEV_LOCALHOST_USER = "DEV_LOCALHOST_USER";
 	public static final String SERVICE_ACCOUNT_EMAIL = "SERVICE_ACCOUNT_EMAIL";

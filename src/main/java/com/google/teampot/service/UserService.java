@@ -3,6 +3,9 @@ package com.google.teampot.service;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import com.google.api.server.spi.response.UnauthorizedException;
+import com.google.api.services.admin.directory.Directory;
+import com.google.api.services.admin.directory.model.Member;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
@@ -47,7 +50,6 @@ public class UserService {
 			user = dao.getByEmail(userEmail);
 		} else {
 			user = new User(userEmail);
-			dao.save(user);
 		}
 		return user;
 	}
@@ -69,11 +71,52 @@ public class UserService {
 		this.getUser(userEmail);
 	}
 	
+	public void ensureEnabled(com.google.appengine.api.users.User gUser) throws UnauthorizedException {
+		this.ensureEnabled(this.getUser(gUser));
+	}
+	public void ensureEnabled(String userEmail) throws UnauthorizedException {
+		if (userEmail == null || userEmail.equals("")) throw new UnauthorizedException("User not logged in");
+		User user = this.getUser(userEmail);
+		this.ensureEnabled(user);
+	}
+	public void ensureEnabled(User user) throws UnauthorizedException {
+		if (user == null) throw new UnauthorizedException("User not logged in");
+		if (!user.isEnabled())  throw new UnauthorizedException("User not authorized");
+	}
+	
+	public boolean isUserEnabled(User user) {
+		String APPS_GROUP = Config.get(Config.APPS_GROUP);
+		if (APPS_GROUP != null && !APPS_GROUP.equals("")) {
+			
+			try {
+				Directory directoryService = GoogleServices.getDirectoryServiceDomainWide(user);
+				Member member = directoryService.members().get(APPS_GROUP, user.getEmail()).execute();
+				if (member != null) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			} catch (GeneralSecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+			
+		} else {
+			return true;
+		}
+	}
+	
 	public void provisionProfile(User actor, User userToBeProvisioned) {
 
-		com.google.api.services.admin.directory.model.User directoryUser = null;
+	com.google.api.services.admin.directory.model.User directoryUser = null;
 		try {
-			directoryUser = GoogleServices.getDirectoryServiceDomainWide(actor).users().get(userToBeProvisioned.getEmail()).execute();
+			Directory directoryService = GoogleServices.getDirectoryServiceDomainWide(actor);
+			directoryUser = directoryService.users().get(userToBeProvisioned.getEmail()).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,6 +127,10 @@ public class UserService {
 		userToBeProvisioned.setFirstName(directoryUser.getName().getGivenName());
 		userToBeProvisioned.setLastName(directoryUser.getName().getFamilyName());
 		userToBeProvisioned.setIconUrl(directoryUser.getThumbnailPhotoUrl());
+		
+		// enabled?
+		userToBeProvisioned.setEnabled(this.isUserEnabled(userToBeProvisioned));
+		
 		dao.save(userToBeProvisioned);
 		
 		// spoon task to provision user profile

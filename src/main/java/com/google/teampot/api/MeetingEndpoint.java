@@ -12,6 +12,7 @@ import com.google.teampot.service.UserService;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
+import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.api.oauth.OAuthRequestException;
 
 public class MeetingEndpoint extends BaseEndpoint {
@@ -24,8 +25,8 @@ public class MeetingEndpoint extends BaseEndpoint {
 		path = "meeting",
 		httpMethod = HttpMethod.GET
 	)
-	public List<Meeting> list(com.google.appengine.api.users.User gUser, @Named("project") String projectId) throws OAuthRequestException {
-		userService.ensureProvisioning(gUser);
+	public List<Meeting> list(com.google.appengine.api.users.User gUser, @Named("project") String projectId) throws OAuthRequestException, UnauthorizedException {
+		userService.ensureEnabled(gUser);
 		
 		return meetingService.list(projectId);
 	}
@@ -35,8 +36,8 @@ public class MeetingEndpoint extends BaseEndpoint {
 		path = "meeting/{id}",
 		httpMethod = HttpMethod.GET
 	)
-	public Meeting get(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException,EntityNotFoundException {
-		userService.ensureProvisioning(gUser);
+	public Meeting get(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException,EntityNotFoundException, UnauthorizedException {
+		userService.ensureEnabled(gUser);
 		
 		Meeting entity = meetingService.get(id);
 		if (entity != null)
@@ -50,8 +51,8 @@ public class MeetingEndpoint extends BaseEndpoint {
 		path = "meeting",
 		httpMethod = HttpMethod.POST
 	)
-	public Meeting save(Meeting entity, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		userService.ensureProvisioning(gUser);
+	public Meeting save(Meeting entity, com.google.appengine.api.users.User gUser) throws OAuthRequestException, UnauthorizedException {
+		userService.ensureEnabled(gUser);
 		
 		meetingService.save(entity, userService.getUser(gUser));
 		return entity;
@@ -62,8 +63,8 @@ public class MeetingEndpoint extends BaseEndpoint {
 		path = "meeting/{id}",
 		httpMethod = HttpMethod.DELETE
 	)
-	public void remove(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException {
-		userService.ensureProvisioning(gUser);
+	public void remove(@Named("id") String id, com.google.appengine.api.users.User gUser) throws OAuthRequestException, UnauthorizedException {
+		userService.ensureEnabled(gUser);
 		meetingService.remove(id, userService.getUser(gUser));
 	}
 	
@@ -72,8 +73,8 @@ public class MeetingEndpoint extends BaseEndpoint {
 		path = "meeting/{id}/poll/vote",
 		httpMethod = HttpMethod.POST
 	)
-	public Meeting pollVote(@Named("id") String id, @Named("proposedDate") Date proposedDate, @Named("result") boolean result, com.google.appengine.api.users.User gUser) throws OAuthRequestException, MeetingPollPastException, EntityNotFoundException {
-		userService.ensureProvisioning(gUser);
+	public Meeting pollVote(@Named("id") String id, @Named("proposedDate") Date proposedDate, @Named("result") boolean result, com.google.appengine.api.users.User gUser) throws OAuthRequestException, MeetingPollPastException, EntityNotFoundException, UnauthorizedException {
+		userService.ensureEnabled(gUser);
 		
 		Meeting meeting = meetingService.get(id);
 		

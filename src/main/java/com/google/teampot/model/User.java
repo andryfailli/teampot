@@ -4,7 +4,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -24,15 +23,18 @@ public class User extends BaseEntity {
 	
 	private String iconUrl;
 	
+	private boolean enabled;
+
 	private String accessToken;
 	
 	private String refreshToken;
 	
 	public User() {
-		// TODO Auto-generated constructor stub
+		this.enabled = false;
 	}
 	
 	public User(String email) {
+		this.enabled = false;
 		this.setEmail(email);
 	}
 	
@@ -88,6 +90,14 @@ public class User extends BaseEntity {
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
