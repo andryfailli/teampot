@@ -114,6 +114,10 @@ public class Task extends BaseEntity {
 			this.assignee = null;
 		}
 	}
+	
+	public boolean isAssigned() {
+		return assignee != null;
+	}
 
 	public boolean isCompleted() {
 		return completed;
