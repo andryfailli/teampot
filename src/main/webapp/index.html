@@ -84,13 +84,14 @@
 		
 						<div ng-view ng-if="signedIn" id="appview"></div>
 						
+						<p class="text-error" style="text-align:center; padding:15px;" ng-show="viewError">Sorry, an error occurred. Please try again.</p>
+												
 						<div id="teampot-intro-logo" ng-if="!signedIn">
 							<img src="/img/teampot-logo.png" class="image-responsive"/>
 						</div>
 						<div layout layout-align="center center" class="spinner-container" ng-if="signingIn">
 							<material-circular-progress mode="indeterminate" class="spinner-gray"></material-circular-progress>
-						</div>
-						
+						</div>					
 		
 					</material-content>
 		

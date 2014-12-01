@@ -163,6 +163,7 @@ angular.module('teampot', [
     });
 	$rootScope.$on("$routeChangeSuccess", function(event, next, current) {
 		$rootScope.appLoading = false;
+		$rootScope.viewError = false;
 		$rootScope.sidebarTemplateUrl = next.sidebarTemplateUrl;
 		$rootScope.fabTemplateUrl = next.fabTemplateUrl;
 		$rootScope.routeId = next.id;
@@ -178,8 +179,7 @@ angular.module('teampot', [
     });
     $rootScope.$on("$routeChangeError", function(event, next, current) {
     	$rootScope.appLoading = false;
-    	current ? history.back() : $location.path("/");		
-    	AlertService.alert("Sorry, unable to access this page.","TeamPot");
+    	$rootScope.viewError = true;
     });
     
     $rootScope.signIn = function(silent){
@@ -223,7 +223,7 @@ angular.module('teampot', [
     $rootScope.currentUser$promise.catch(function(){
     	$location.path("/dashboard");
     	delete $rootScope.currentUser;
-    	AlertService.alert("Sorry, TeamPot is not available in your domain/organization.","TeamPot");
+    	AlertService.alert("Sorry, TeamPot is not available for you (or your domain/organization).","TeamPot");
     })
     
 })
