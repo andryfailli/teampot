@@ -1,51 +1,51 @@
 <div layout layout-align="center center" class="spinner-container" ng-if="!meeting.$resolved">
-	<material-circular-progress mode="indeterminate" ></material-circular-progress>
+	<md-progress-circular md-mode="indeterminate" ></md-progress-circular>
 </div>
 
-<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-if="meeting.$resolved">
-	<material-content class="material-content-padded" flex>
+<md-whiteframe class="md-whiteframe-z1" layout layout-align="center center" ng-if="meeting.$resolved">
+	<md-content class="material-content-padded" flex>
 	
 		<form>
 	
-			<div layout="horizontal" layout-align="top center">
+			<div layout="row" layout-align="top center">
 				<div ng-show="!meeting.poll">
-					<tf-float label="Meeting date" value="meeting.timestamp" type="date"></tf-float>
+					<md-text-float label="Meeting date" value="meeting.timestamp" type="date"></md-text-float>
 					<div style="text-align:center">
-						<material-button class="material-button-raised" ng-click="createPoll()">create Poll</material-button>
+						<md-button class="md-raised" ng-click="createPoll()">create Poll</md-button>
 					</div>
 				</div>
 				<div ng-show="meeting.poll">
-					<div layout="horizontal" layout-align="center center" ng-repeat="proposedDate in meeting.poll.proposedDates track by $index">
+					<div layout="row" layout-align="center center" ng-repeat="proposedDate in meeting.poll.proposedDates track by $index">
 						<div flex>
-							<tf-float label="Proposed date {{$index+1}}" value="meeting.poll.proposedDates[$index]" type="date" ng-disabled="meeting.poll.started"></tf-float>
+							<md-text-float label="Proposed date {{$index+1}}" value="meeting.poll.proposedDates[$index]" type="date" ng-disabled="meeting.poll.started"></md-text-float>
 						</div>
-						<material-button ng-click="removeProposedDate($index)" style="position:relative; left:-15px;" ng-show="!meeting.poll.started">&times;</material-button>
+						<md-button ng-click="removeProposedDate($index)" style="position:relative; left:-15px;" ng-show="!meeting.poll.started">&times;</md-button>
 					</div>
 					<div style="text-align:center" ng-show="!meeting.poll.started">
-						<material-button class="material-button-raised" ng-click="meeting.poll.proposedDates.push(null)">Add Date</material-button>
+						<md-button class="md-raised" ng-click="meeting.poll.proposedDates.push(null)">Add Date</md-button>
 					</div>
 					<div>
-						<tf-float label="Poll start date" value="meeting.poll.startDate" type="date" ng-disabled="meeting.poll.started"></tf-float>
-						<tf-float label="Poll end date" value="meeting.poll.endDate" type="date" ng-disabled="meeting.poll.ended"></tf-float>
+						<md-text-float label="Poll start date" value="meeting.poll.startDate" type="date" ng-disabled="meeting.poll.started"></md-text-float>
+						<md-text-float label="Poll end date" value="meeting.poll.endDate" type="date" ng-disabled="meeting.poll.ended"></md-text-float>
 					</div>
 				</div>
 				<div layout="vertical" flex>
 					<div>
-						<tf-float label="Title" value="meeting.title" class="tf-float-full-with input-lg"></tf-float>
+						<md-text-float label="Title" value="meeting.title" class="md-text-float-full-with input-lg"></md-text-float>
 					</div>
 					<div>
-						<tf-float label="Description" value="meeting.description" type="textarea" class="tf-float-full-with"></tf-float>
+						<md-text-float label="Description" value="meeting.description" type="textarea" class="md-text-float-full-with"></md-text-float>
 					</div>
 				</div>
 			</div>
       
-      		<div layout="horizontal">
+      		<div layout="row">
 				<div class="material-content-actions" flex>
-					<material-button class="material-button-raised" ng-href="#/project/{{currentProject.id}}/meetings">OK</material-button>
+					<md-button class="md-raised" ng-href="#/project/{{currentProject.id}}/meetings">OK</md-button>
 				</div>
 			</div>
       
       </form>
 
-	</material-content>
-</material-whiteframe>
+	</md-content>
+</md-whiteframe>

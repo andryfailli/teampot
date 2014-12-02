@@ -1,17 +1,18 @@
 angular.module("teampot").
-	factory('AlertService',function($materialDialog) {
+	factory('AlertService',function($mdDialog) {
 		
 		var service = {
-			alert: function(message,title){
-				$materialDialog.show({
-					templateUrl: '/components/AlertService/alert-modal.html',
-					controller: function($scope,$materialDialog){
-						$scope.title = title;
-						$scope.message = message;
-						
-						$scope.close = function(){$materialDialog.hide();}
-					}
-				})
+			alert: function(message,title,evt){
+				
+				return $mdDialog.show(
+					$mdDialog.alert()
+					    .title(title)
+					    .content(message)
+					    .ariaLabel(title)
+					    .ok("OK")
+					    .targetEvent(evt)
+				);
+				
 			},
 		};
 		

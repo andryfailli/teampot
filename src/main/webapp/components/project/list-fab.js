@@ -1,8 +1,8 @@
 angular.module('teampot').
-	controller('projectListFabController', function($rootScope,$scope,$materialDialog,$location,ProjectService) {
+	controller('projectListFabController', function($rootScope,$scope,$mdDialog,$location,ProjectService) {
 				
 		$scope.fabAdd = function(evt){
-			$materialDialog.show({
+			$mdDialog.show({
 				templateUrl: '/components/project/edit-modal.html',
 				controller: 'projectEditModalController',
 				targetEvent: evt,

@@ -1,23 +1,23 @@
-<material-dialog aria-label="Create or edit a Project">	
-	<div class="dialog-content">
-		<h2 class="dialog-title" ng-if="!loading">{{project.id?'Edit Project':'Create new Project'}}</h2>
-		<material-content ng-if="!loading">
+<md-dialog aria-label="Create or edit a Project">	
+	<md-content>		
+		<h2 ng-hide="loading">Create new Project</h2>
+		<div ng-hide="loading">
 			<form>
-			  <tf-float label="Project Name" value="project.name"> </tf-float>
+			  <md-text-float label="Project Name" ng-model="project.name" flex></md-text-float>
 			</form>
 			<p class="text-error" ng-show="error.code==400">A project named {{project.name}} already exists.</p>
-		</material-content>
-		<material-content ng-if="loading" layout="vertical" layout-align="center center" layout-padding>
-			<div flex>
-				<material-circular-progress mode="indeterminate"></material-circular-progress>
+		</div>
+		<div ng-show="loading" layout="column" layout-align="center center" style="padding:15px 0;">
+			<div layout="row" layout-align="center center" style="padding-bottom:15px;" flex>
+				<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 			</div>
-			<div flex>
-				<span>{{project.id?'Saving project...':'Creating project...'}}</span>
+			<div layout="row"  layout-align="center center" flex>
+				<span>Creating project...</span>
 			</div>
-		</material-content>
+		</div>
 	
+	</md-content>
+	<div ng-hide="loading" class="md-actions" layout="row">
+		<md-button ng-click="save()" ng-disabled="!project.name || error" class="md-primary">OK</md-button>
 	</div>
-	<div class="dialog-actions" layout="horizontal" layout-align="end"  ng-if="!loading">
-		<material-button ng-click="save()" ng-disabled="!project.name || error" autofocus>OK</material-button>
-	</div>
-</material-dialog>
+</md-dialog>

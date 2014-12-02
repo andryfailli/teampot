@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('projectEditModalController', function($rootScope,$scope,$materialDialog,targetProject) {
+	controller('projectEditModalController', function($rootScope,$scope,$mdDialog,targetProject) {
 		
 		$scope.project = targetProject;
 
@@ -8,7 +8,7 @@ angular.module('teampot').
 			$scope.project.$save().$promise
 				.then(function(){
 					$rootScope.$apply(function(){
-						$materialDialog.hide($scope.project);
+						$mdDialog.hide($scope.project);
 					});
 				}).catch(function(error){
 					$rootScope.$apply(function(){

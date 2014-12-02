@@ -1,28 +1,28 @@
 <div ng-controller='fileListFabController' class="fab-container" layout="vertical">
 	<div class="fab-container-small-fabs">
 		<div>
-			<material-button class="material-button-fab material-theme-green material-button-fab-small" ng-click="fabCreate('application/vnd.google-apps.spreadsheet')">
-				<material-icon icon="/img/sheets-logo-white.svg"></material-icon>
-				<!-- <material-tooltip>new Sheet</material-tooltip> -->
-			</material-button>
+			<md-button class="md-fab material-button-fab-small" ng-click="fabCreate('application/vnd.google-apps.spreadsheet')">
+				<md-icon icon="/img/sheets-logo-white.svg"></md-icon>
+				<md-tooltip>new Sheet</md-tooltip>
+			</md-button>
 		</div>
 		<div>
-			<material-button class="material-button-fab material-theme-yellow material-button-fab-small" ng-click="fabCreate('application/vnd.google-apps.presentation')">
-				<material-icon icon="/img/presentation-logo-white.svg"></material-icon>
-				<!-- <material-tooltip>new Slide</material-tooltip> -->
-			</material-button>
+			<md-button class="md-fab material-button-fab-small" ng-click="fabCreate('application/vnd.google-apps.presentation')">
+				<md-icon icon="/img/presentation-logo-white.svg"></md-icon>
+				<md-tooltip>new Slide</md-tooltip>
+			</md-button>
 		</div>
 		<div>
-			<material-button class="material-button-fab material-theme-light-blue material-button-fab-small" ng-click="fabCreate('application/vnd.google-apps.document')">
-				<material-icon icon="/img/docs-logo-white.svg"></material-icon>
-				<!-- <material-tooltip>new Doc</material-tooltip> -->
-			</material-button>
+			<md-button class="md-fab material-button-fab-small" ng-click="fabCreate('application/vnd.google-apps.document')">
+				<md-icon icon="/img/docs-logo-white.svg"></md-icon>
+				<md-tooltip>new Doc</md-tooltip>
+			</md-button>
 		</div>
 	</div>
 	<div>
-		<material-button class="material-button-fab material-theme-red" ng-click="fabAdd()">
-			<material-icon icon="/img/icons/ic_add_24px.svg"></material-icon>
-			<!-- <material-tooltip>Add new File</material-tooltip> -->
-		</material-button>
+		<md-button class="md-fab md-primary" ng-click="fabAdd()">
+			<md-icon icon="/img/icons/ic_add_24px.svg"></md-icon>
+			<md-tooltip>Add new File</md-tooltip>
+		</md-button>
 	</div>
 </div>

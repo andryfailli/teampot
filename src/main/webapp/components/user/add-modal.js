@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('userAddModalController', function($rootScope,$scope,$materialDialog,$routeParams,GapiClient,NotifyService,$route) {
+	controller('userAddModalController', function($rootScope,$scope,$mdDialog,$routeParams,GapiClient,NotifyService,$route) {
 		
 		$scope.projectId = $routeParams.projectId;
 
@@ -11,7 +11,7 @@ angular.module('teampot').
 			});
 			
 			NotifyService.info("Adding user "+$scope.userEmail+" ...");
-			$materialDialog.hide(newUser);
+			$mdDialog.hide(newUser);
 			
 			newUser.$promise
 				.then(function(){

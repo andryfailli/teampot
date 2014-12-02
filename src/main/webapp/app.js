@@ -227,20 +227,20 @@ angular.module('teampot', [
     })
     
 })
-.controller('mainController',function($rootScope,$scope,$routeParams,$materialSidenav,routeBreadcrumbs){
+.controller('mainController',function($rootScope,$scope,$routeParams,$mdSidenav,routeBreadcrumbs){
 
 	$scope.routeParams = $routeParams;
 
 	$scope.breadcrumbs = routeBreadcrumbs.breadcrumbs;
 	
 	$rootScope.toggleSidebar = function(){
-		$materialSidenav('left').toggle();
+		$mdSidenav('left').toggle();
 	}
 	$rootScope.closeSidebar = function(){
-		$materialSidenav('left').close();
+		$mdSidenav('left').close();
 	}
 	$rootScope.openSidebar = function(){
-		$materialSidenav('left').open();
+		$mdSidenav('left').open();
 	}
 
 })
