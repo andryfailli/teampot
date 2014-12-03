@@ -123,3 +123,15 @@ md-checkbox.checkbox-bigger.md-checked .md-icon:after {
 .md-button.md-fab.md-fab-top-left {
 	position:fixed;
 }
+
+.md-whiteframe-with-subheader {
+	margin-top:0;
+}
+
+.md-tile-left, .md-tile-right, .md-tile-content {
+	padding: 0 16px;
+}
+
+a.md-button.md-button-padded {
+	padding: 15px 10px;
+}

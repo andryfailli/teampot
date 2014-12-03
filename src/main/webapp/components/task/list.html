@@ -22,7 +22,7 @@
 		<span ng-switch-when="false">To Do</span>
 		<span ng-switch-when="true">Completed</span>
 	</md-subheader>
-	<md-whiteframe class="task-group md-whiteframe-z1" ng-show="(taskGroupedList | filter:currentFilter).length>0" layout layout-align="center center">
+	<md-whiteframe class="md-whiteframe-z1 md-whiteframe-with-subheader" ng-show="(taskGroupedList | filter:currentFilter).length>0" layout layout-align="center center">
 		<md-content flex>
 				<md-list layout="column"> 
 					<md-item class="md-item-padded" ng-repeat="task in taskGroupedList | filter:currentFilter | orderBy:currentOrderBy:currentOrderByReverse"> 

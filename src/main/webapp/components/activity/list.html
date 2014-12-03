@@ -9,11 +9,11 @@
 <md-whiteframe class="md-whiteframe-z1" layout layout-align="center center" ng-repeat="activity in activityList.items" ng-if="activityList.$resolved && activityList.items.length>0">
 	<md-content flex>
 		<section>
-			<md-list layout="vertical"> 
-				<md-item> 
+			<md-list layout="column"> 
+				<md-item class="md-item-padded"> 
 					<md-item-content>
 						<div class="md-tile-left">
-							<div class="list-item-box list-item-box-left" layout="vertical" layout-align="center center" style="min-width:120px;">
+							<div class="list-item-box list-item-box-left" layout="column" layout-align="center center" style="min-width:120px;">
 								<span ng-switch on="activity.activityType">
 									<md-icon ng-switch-when="TaskActivityEvent" icon="/img/icons/ic_view_list_48px.svg"></md-icon>
 									<md-icon ng-switch-when="ProjectActivityEvent" icon="/img/icons/ic_info_outline_48px.svg"></md-icon>
@@ -31,7 +31,7 @@
 							<div class="list-item-box list-item-box-right" layout="row" layout-align="center center" style="text-align: center;">
 								<small>{{activity.timestamp|date:'shortDate'}}<br/><small>{{activity.timestamp|date:'shortTime'}}</small></small>
 							</div>
-							<div class="list-item-box list-item-box-right" layout="vertical" layout-align="center center">
+							<div class="list-item-box list-item-box-right" layout="column" layout-align="center center">
 								<img class="face" src="about:blank" ng-src="{{activity.actor.iconUrl ? activity.actor.iconUrl : '/img/face.png'}}"/>
 								<small>{{activity.actor.firstName}}</small>
 							</div>

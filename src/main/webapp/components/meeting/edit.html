@@ -9,7 +9,7 @@
 	
 			<div layout="row" layout-align="top center">
 				<div ng-show="!meeting.poll">
-					<md-text-float label="Meeting date" value="meeting.timestamp" type="date"></md-text-float>
+					<md-text-float label="Meeting date" ng-model="meeting.timestamp" type="date"></md-text-float>
 					<div style="text-align:center">
 						<md-button class="md-raised" ng-click="createPoll()">create Poll</md-button>
 					</div>
@@ -17,7 +17,7 @@
 				<div ng-show="meeting.poll">
 					<div layout="row" layout-align="center center" ng-repeat="proposedDate in meeting.poll.proposedDates track by $index">
 						<div flex>
-							<md-text-float label="Proposed date {{$index+1}}" value="meeting.poll.proposedDates[$index]" type="date" ng-disabled="meeting.poll.started"></md-text-float>
+							<md-text-float label="Proposed date {{$index+1}}" ng-model="meeting.poll.proposedDates[$index]" type="date" ng-disabled="meeting.poll.started"></md-text-float>
 						</div>
 						<md-button ng-click="removeProposedDate($index)" style="position:relative; left:-15px;" ng-show="!meeting.poll.started">&times;</md-button>
 					</div>
@@ -25,23 +25,23 @@
 						<md-button class="md-raised" ng-click="meeting.poll.proposedDates.push(null)">Add Date</md-button>
 					</div>
 					<div>
-						<md-text-float label="Poll start date" value="meeting.poll.startDate" type="date" ng-disabled="meeting.poll.started"></md-text-float>
-						<md-text-float label="Poll end date" value="meeting.poll.endDate" type="date" ng-disabled="meeting.poll.ended"></md-text-float>
+						<md-text-float label="Poll start date" ng-model="meeting.poll.startDate" type="date" ng-disabled="meeting.poll.started"></md-text-float>
+						<md-text-float label="Poll end date" ng-model="meeting.poll.endDate" type="date" ng-disabled="meeting.poll.ended"></md-text-float>
 					</div>
 				</div>
-				<div layout="vertical" flex>
+				<div layout="column" flex>
 					<div>
-						<md-text-float label="Title" value="meeting.title" class="md-text-float-full-with input-lg"></md-text-float>
+						<md-text-float label="Title" ng-model="meeting.title" class="md-text-float-full-with input-lg"></md-text-float>
 					</div>
 					<div>
-						<md-text-float label="Description" value="meeting.description" type="textarea" class="md-text-float-full-with"></md-text-float>
+						<md-text-float label="Description" ng-model="meeting.description" type="textarea" class="md-text-float-full-with"></md-text-float>
 					</div>
 				</div>
 			</div>
       
       		<div layout="row">
 				<div class="material-content-actions" flex>
-					<md-button class="md-raised" ng-href="#/project/{{currentProject.id}}/meetings">OK</md-button>
+					<md-button class="md-raised md-primary" ng-href="#/project/{{currentProject.id}}/meetings">OK</md-button>
 				</div>
 			</div>
       
