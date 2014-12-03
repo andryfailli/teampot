@@ -1,29 +1,29 @@
-<a ng-href="/#/project/{{routeParams.projectId}}/tasks" class="menu-item" route-active="['task-list','task-edit']" ink-ripple>
-	<material-icon icon="/img/icons/ic_view_list_24px.svg"></material-icon>
+<a ng-href="/#/project/{{routeParams.projectId}}/tasks" class="menu-item" route-active="['task-list','task-edit']" ng-click="closeSidebar()" md-ink-ripple>
+	<md-icon icon="/img/icons/ic_view_list_24px.svg"></md-icon>
 	<span>Tasks</span>
 </a>
 
-<a ng-href="/#/project/{{routeParams.projectId}}/files" class="menu-item" route-active="'file-list'" ink-ripple>
-	<material-icon icon="/img/icons/ic_folder_shared_24px.svg"></material-icon>
+<a ng-href="/#/project/{{routeParams.projectId}}/files" class="menu-item" route-active="'file-list'" ng-click="closeSidebar()" md-ink-ripple>
+	<md-icon icon="/img/icons/ic_folder_shared_24px.svg"></md-icon>
 	<span>Files</span>
 </a>
 
-<a ng-href="/#/project/{{routeParams.projectId}}/meetings" class="menu-item" route-active="['meeting-list','meeting-edit']" ink-ripple>
-	<material-icon icon="/img/icons/ic_event_24px.svg"></material-icon>
+<a ng-href="/#/project/{{routeParams.projectId}}/meetings" class="menu-item" route-active="['meeting-list','meeting-edit']" ng-click="closeSidebar()" md-ink-ripple>
+	<md-icon icon="/img/icons/ic_event_24px.svg"></md-icon>
 	<span>Meetings</span>
 </a>
 
-<a ng-href="/#/project/{{routeParams.projectId}}/discussions" class="menu-item" route-active="'discussions'" ink-ripple>
-	<material-icon icon="/img/icons/ic_forum_24px.svg"></material-icon>
+<a ng-href="/#/project/{{routeParams.projectId}}/discussions" class="menu-item" route-active="'discussions'" ng-click="closeSidebar()" md-ink-ripple>
+	<md-icon icon="/img/icons/ic_forum_24px.svg"></md-icon>
 	<span>Discussions</span>
 </a>
 
-<a ng-href="/#/project/{{routeParams.projectId}}/members" class="menu-item" route-active="'member-list'" ink-ripple>
-	<material-icon icon="/img/icons/ic_group_24px.svg"></material-icon>
+<a ng-href="/#/project/{{routeParams.projectId}}/members" class="menu-item" route-active="'member-list'" ng-click="closeSidebar()" md-ink-ripple>
+	<md-icon icon="/img/icons/ic_group_24px.svg"></md-icon>
 	<span>Members</span>
 </a>
 
-<a ng-href="/#/project/{{routeParams.projectId}}/activity" class="menu-item" route-active="'activity'" ink-ripple>
-	<material-icon icon="/img/icons/ic_flash_on_24px.svg"></material-icon>
+<a ng-href="/#/project/{{routeParams.projectId}}/activity" class="menu-item" route-active="'activity'" ng-click="closeSidebar()" md-ink-ripple>
+	<md-icon icon="/img/icons/ic_flash_on_24px.svg"></md-icon>
 	<span>Activity</span>
 </a>

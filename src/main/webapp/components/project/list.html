@@ -1,7 +1,7 @@
 <div style="text-align:center">
 
 	<div layout layout-align="center center" class="spinner-container" ng-if="!entityList.$resolved">
-		<material-circular-progress mode="indeterminate" ></material-circular-progress>
+		<md-progress-circular md-mode="indeterminate" ></md-progress-circular>
 	</div>
 	
 	<div ng-if="entityList.$resolved && (!entityList.items || entityList.items.length==0)">
@@ -9,9 +9,9 @@
 	</div>
 
 	<a class="unstyled" ng-repeat="entity in entityList.items" ng-href="#/project/{{entity.id}}" ng-if="entityList.$resolved  && (entityList.items.length>0)">
-		<material-whiteframe class="tile material-whiteframe-z1" >
+		<md-whiteframe class="tile md-whiteframe-z1" >
 			<h3>{{entity.name}}</h3>
-		</material-whiteframe>
+		</md-whiteframe>
 	</a>
 	
 </div>

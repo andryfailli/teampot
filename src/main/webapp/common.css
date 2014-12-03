@@ -1,10 +1,14 @@
-material-whiteframe {
+md-whiteframe {
 	background: #fff;
 	margin: 20px;
 }
 
-.material-content-padded {
+.md-content-padded {
 	padding:20px;
+}
+
+md-item.md-item-padded > md-item-content{
+	padding:12px;
 }
 
 .material-content-actions {
@@ -12,7 +16,7 @@ material-whiteframe {
 	text-align:right;
 }
 
-material-icon {
+md-icon {
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -39,8 +43,8 @@ a.unstyled {
 	color: inherit;
 }
 
-.tf-float-full-with > input,
-.tf-float-full-with > textarea{
+.md-text-float-full-with > input,
+.md-text-float-full-with > textarea{
 	width: 100%;
 	margin:0;
 }
@@ -49,18 +53,18 @@ a.unstyled {
 	font-size:26px;
 }
 
-material-input-group, 
-.material-input-group {
+md-input-group, 
+.md-input-group {
 	margin:10px;
 }
 
 
 /* Date placeholder with tf on Chrome fix */
-material-input-group > input[type=date] {
+md-input-group > input[type=date] {
 	-webkit-text-fill-color: transparent;
 }
-material-input-group.material-input-has-value > input[type=date],
-material-input-group.material-input-focused > input[type=date] {
+md-input-group.md-input-has-value > input[type=date],
+md-input-group.md-input-focused > input[type=date] {
 	-webkit-text-fill-color:initial;
 }
 
@@ -70,6 +74,12 @@ material-input-group.material-input-focused > input[type=date] {
 	margin: 2px 5px;
 }
 
+.face-big {
+	border-radius: 30px;
+	width: 58px;
+	margin: 5px 8px;
+}
+
 
 .image-responsive {
 	max-width: 100%;
@@ -77,37 +87,75 @@ material-input-group.material-input-focused > input[type=date] {
 	display: inline-block;
 }
 
-.text-warning {
-	color:#ffbb00;
+.text-warning,
+.text-warning > * {
+	color:#ffbb00 !important;
 }
-.text-error {
-	color:#db4437;
+.text-error,
+.text-error > * {
+	color:#db4437 !important;
 }
-.test-info {
-	color:#4285f4;
+.test-info,
+.test-info > * {
+	color:#4285f4 !important;
 }
-.text-muted {
-	color:#A8A8A8;
+.text-muted,
+.text-muted > * {
+	color:#A8A8A8 !important;
 }
 
 
-material-checkbox.checkbox-bigger .material-container {
+md-checkbox.checkbox-bigger .md-container {
 	top:0;
 	width:36px;
 	height:36px
 }
-material-checkbox.checkbox-bigger .material-container .material-icon {
+md-checkbox.checkbox-bigger .md-container .md-icon {
 	width:36px;
 	height:36px
 }
-material-checkbox.checkbox-bigger .material-container .material-ripple-container {
+md-checkbox.checkbox-bigger .md-container .md-ripple-container {
 	width: 108px;
 	height: 108px;
 	left: -36px;
 	top: -36px;
 }
-material-checkbox.checkbox-bigger.material-checked .material-icon:after {
-	left: 10px;
+md-checkbox.checkbox-bigger.md-checked .md-icon:after {
+	left: 12px;
 	width: 12px;
 	height: 24px;
+	border-color:white;
+}
+
+.md-button.md-fab.md-fab-bottom-right,
+.md-button.md-fab.md-fab-bottom-left,
+.md-button.md-fab.md-fab-top-right,
+.md-button.md-fab.md-fab-top-left {
+	position:fixed;
+}
+
+.md-whiteframe-with-subheader {
+	margin-top:0;
+}
+
+.md-tile-left, .md-tile-right, .md-tile-content {
+	padding: 0 16px;
+}
+.md-tile-left.first,
+.md-tile-right.first,
+.md-tile-content.first {
+	padding-left:0;
+}
+.md-tile-left.last,
+.md-tile-right.last,
+.md-tile-content.last {
+	padding-right:0;
+}
+
+a.md-button.md-button-padded {
+	padding: 15px 10px;
+}
+
+md-sidenav:not(.md-locked-open) {
+	width:250px;
 }

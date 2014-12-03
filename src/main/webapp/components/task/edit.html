@@ -1,52 +1,52 @@
 <div layout layout-align="center center" class="spinner-container" ng-if="!task.$resolved">
-	<material-circular-progress mode="indeterminate" ></material-circular-progress>
+	<md-progress-circular md-mode="indeterminate" ></md-progress-circular>
 </div>
 
-<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-if="task.$resolved">
-	<material-content class="material-content-padded" flex>
+<md-whiteframe class="md-whiteframe-z1" layout layout-align="center center" ng-if="task.$resolved">
+	<md-content class="md-content-padded" flex>
 	
 		<form>
 	
-			<div layout="horizontal" layout-align="center center">
+			<div layout="row" layout-align="center center">
 				<div>
-					<material-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed"></material-checkbox>
+					<md-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed"></md-checkbox>
 				</div>
 				<div flex>
-					<tf-float label="Title" value="task.title" class="tf-float-full-with input-lg"></tf-float>
+					<md-text-float label="Title" ng-model="task.title" class="md-text-float-full-with input-lg"></md-text-float>
 				</div>
 				<div style="overflow:hidden;">
-					<material-input-group class="material-input-has-value">
+					<md-input-group class="md-input-has-value">
 						<label for="">Priority</label>
-						<material-slider discrete ng-model="task.priority" step="1" min="0" max="4" aria-label="Priority" style="width: 200px;"></material-slider>
-					</material-input-group>
+						<md-slider md-discrete ng-model="task.priority" step="1" min="0" max="4" aria-label="Priority" style="width: 200px;"></md-slider>
+					</md-input-group>
 				</div>
 			</div>
 			
-			<div layout="horizontal" layout-align="center center">
+			<div layout="row" layout-align="center center">
 				<div flex>
-					<tf-float label="Labels" value="task.labels" class="tf-float-full-with"></tf-float>
+					<md-text-float label="Labels" ng-model="task.labels" class="md-text-float-full-with"></md-text-float>
 				</div>
 				<div>
-					<tf-float label="Due date" value="task.dueDate" type="date"></tf-float>
+					<md-text-float label="Due date" ng-model="task.dueDate" type="date"></md-text-float>
 				</div>
 				<div>
-					<tf-float label="Assignee" value="task.assignee"></tf-float>
+					<md-text-float label="Assignee" ng-model="task.assignee"></md-text-float>
 				</div>
 			</div>
 			
-			<div layout="horizontal" layout-align="center center">
+			<div layout="row" layout-align="center center">
 				<div flex>
-					<tf-float label="Description" value="task.description" type="textarea" class="tf-float-full-with"></tf-float>
+					<md-text-float label="Description" ng-model="task.description" type="textarea" class="md-text-float-full-with"></md-text-float>
 				</div>
 			</div>
 			
-			<div layout="horizontal">
+			<div layout="row">
 				<div class="material-content-actions" flex>
-					<material-button class="material-button-raised" ng-href="#/project/{{currentProject.id}}/tasks">OK</material-button>
+					<md-button class="md-raised md-primary" ng-href="#/project/{{currentProject.id}}/tasks">OK</md-button>
 				</div>
 			</div>
       
       </form>
 
-	</material-content>
-</material-whiteframe>
+	</md-content>
+</md-whiteframe>

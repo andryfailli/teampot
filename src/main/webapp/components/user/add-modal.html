@@ -1,13 +1,13 @@
-<material-dialog aria-label="Add a user">	
-	<div class="dialog-content">
-		<h2 class="dialog-title" ng-if="!loading">Add a user</h2>
-		<material-content ng-if="!loading">
+<md-dialog aria-label="Add a user">	
+	<md-content>
+		<h2>Add a user</h2>
+		<p>
 			<form>
-			  <tf-float label="User Email" value="$parent.userEmail" type="email"> </tf-float>
+			  <md-text-float label="User Email" ng-model="userEmail" type="email"> </md-text-float>
 			</form>
-		</material-content>	
+		</p>
+	</md-content>
+	<div class="md-actions" layout="row" layout-align="end"  ng-if="!loading">
+		<md-button ng-click="add()" class="md-primary">OK</md-button>
 	</div>
-	<div class="dialog-actions" layout="horizontal" layout-align="end"  ng-if="!loading">
-		<material-button ng-click="add()" autofocus>OK</material-button>
-	</div>
-</material-dialog>
+</md-dialog>

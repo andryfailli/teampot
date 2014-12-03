@@ -1,32 +1,32 @@
 <div layout layout-align="center center" class="spinner-container" ng-if="!entityList.$resolved">
-	<material-circular-progress mode="indeterminate"></material-circular-progress>
+	<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </div>
 
 
-<material-whiteframe class="material-whiteframe-z1" layout layout-align="center center" ng-if="entityList.$resolved">
+<md-whiteframe class="md-whiteframe-z1" layout layout-align="center center" ng-if="entityList.$resolved">
 	
-	<material-content flex>
-		<material-list>
-			<material-item ng-repeat="entity in entityList.items"> 
-				<material-item-content>
-					<div class="material-tile-left">
-						<div class="list-item-box list-item-box-left">
-							<img ng-src="{{entity.iconUrl ? entity.iconUrl : '/img/face.png'}}" class="face" alt="{{entity.firstName}} {{entity.lastName}}">
+	<md-content flex>
+		<md-list>
+			<md-item class="md-item-padded" ng-repeat="entity in entityList.items"> 
+				<md-item-content>
+					<div class="md-tile-left first">
+						<div class="list-item-box list-item-box-left" layout layout-align="center center">
+							<img ng-src="{{entity.iconUrl ? entity.iconUrl : '/img/face.png'}}" class="face face-big" alt="{{entity.firstName}} {{entity.lastName}}">
 						</div>
 					</div>
-					<div class="material-tile-content" flex>
+					<div class="md-tile-content" flex>
 						<h3>{{entity.firstName}} {{entity.lastName}}</h3>
 					</div>
-					<div class="material-tile-right">
-						<material-button ng-if="entity.id != currentUser.id" ng-click="removeMember(entity)">
-						 	<material-icon icon="/img/icons/ic_cancel_24px.svg"></material-icon>
-						 	<material-tooltip>Remove this user</material-tooltip>
-						 </material-button>
+					<div class="md-tile-right last">
+						<md-button ng-if="entity.id != currentUser.id" ng-click="removeMember(entity)">
+						 	<md-icon icon="/img/icons/ic_cancel_24px.svg"></md-icon>
+						 	<md-tooltip>Remove this user</md-tooltip>
+						 </md-button>
 					</div>
-				</material-item-content>
-				<material-divider ng-if="!$last"></material-divider>
-			</material-item>
-		</material-list>
-	</material-content>
+				</md-item-content>
+				<md-divider ng-if="!$last"></md-divider>
+			</md-item>
+		</md-list>
+	</md-content>
 	
-</material-whiteframe>
+</md-whiteframe>

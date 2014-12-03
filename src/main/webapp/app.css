@@ -1,6 +1,7 @@
 
 body, 
-html {
+html,
+#appview-container {
 	color: #444;
 	background: #ececec;
 }
@@ -64,7 +65,7 @@ html {
 	padding:25px;
 }
 
-material-whiteframe.fillview {
+md-whiteframe.fillview {
 	position: absolute;
     left: 16px;
     right: 16px;
@@ -94,21 +95,10 @@ material-whiteframe.fillview {
 	font-size:12px;
 }
 
-#appview material-circular-progress .inset,
-material-circular-progress.spinner-gray .inset {
+#appview md-progress-circular .md-inset,
+md-progress-circular.spinner-gray .md-inset {
 	background: #ececec;
 }
-
-.material-subheader {
-	background: #ececec;
-	padding-bottom:0;
-}
-.material-subheader.material-sticky-clone {
-	margin-left:0 !important;
-	padding-left:32px !important;
-	padding-bottom:10px;
-}
-
 
 
 .list-item-box {
@@ -124,25 +114,31 @@ material-circular-progress.spinner-gray .inset {
 
 
 .fab-container {
-	position:absolute; 
-	top:auto; 
-	right:28px; 
-	bottom:28px; 
-	z-index:50;
+	position: fixed;
+	top: auto;
+	right: 0;
+	bottom: 0;
+	z-index: 50;
 	text-align: center;
+	padding: 28px;
+	
 }
 
-material-button.material-button-fab-small {
+.md-fab.md-button-fab-small {
 	width: 40px;
 	height: 40px;
+	margin:2px;
 }
-material-button.material-button-fab-small material-icon {
-	margin-top:0px;
+.md-fab.md-button-fab-small md-icon {
+	position: relative;
+	top: -4px;
 }
 
 .fab-container .fab-container-small-fabs {
 	position:relative;
 	left:85px;
+	
+	margin-bottom: 5px;
 	
 	 -webkit-transition: left .5s; /* For Safari 3.1 to 6.0 */
     transition: left .5s;

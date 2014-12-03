@@ -1,0 +1,16 @@
+.md-transparent-theme .tabs-header {
+	background-color: transparent;
+}
+
+md-tabs.md-transparent-theme md-tabs-ink-bar {
+	background-color: #4285f4;
+	color: #4285f4;
+}
+
+.md-transparent-theme md-tab.active {
+	color: #3e50b4;
+}
+
+.md-transparent-theme.md-subheader {
+	background: #ececec;
+}

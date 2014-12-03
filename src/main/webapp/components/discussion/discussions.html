@@ -1,9 +1,9 @@
 <div layout layout-align="center center" class="spinner-container" ng-if="(!project.$resolved || !iframeready)">
-	<material-circular-progress mode="indeterminate" ></material-circular-progress>
+	<md-progress-circular md-mode="indeterminate" ></md-progress-circular>
 </div>
 
-<material-whiteframe class="fillview material-whiteframe-z1" layout layout-align="center center" ng-show="project.$resolved && iframeready">
-	<material-content class="material-content-padded" flex style="height:100%; overflow:hidden;">
+<md-whiteframe class="fillview md-whiteframe-z1" layout layout-align="center center" ng-show="project.$resolved && iframeready">
+	<md-content class="md-content-padded" flex style="height:100%; overflow:hidden;">
 		<iframe name="_discussion_frame" id="_discussion_frame" ng-src="{{iframeSrc}}" style="width: 100%; height: 100%" frameborder="0" iframe-onload="iframeLoaded()"></iframe>
-	</material-content>
-</material-whiteframe>
+	</md-content>
+</md-whiteframe>

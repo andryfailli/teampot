@@ -13,74 +13,78 @@
 		
 		<!-- build:css libs.min.css -->
 		<link type="text/css" rel="stylesheet" href="/libs/angular-material/angular-material.css" />
+		<link type="text/css" rel="stylesheet" href="/libs/angular-material/themes/indigo-theme.css" />
+		<link type="text/css" rel="stylesheet" href="/libs/angular-material/themes/red-theme.css" />
+		<link type="text/css" rel="stylesheet" href="/libs/angular-material/themes/blue-theme.css" />
+		<link type="text/css" rel="stylesheet" href="/libs/angular-material/themes/green-theme.css" />
+		<link type="text/css" rel="stylesheet" href="/libs/angular-material/themes/yellow-theme.css" />
 		<!-- endbuild -->
 		
 		<!-- build:css app.min.css -->
 		<link type="text/css" rel="stylesheet" href="/common.css" />
 		<link type="text/css" rel="stylesheet" href="/app.css" />
-		<link type="text/css" rel="stylesheet" href="/material-theme-mods.css" />
+		<link type="text/css" rel="stylesheet" href="/material-transparent-theme.css" />
 		
 		<link type="text/css" rel="stylesheet" href="/components/task/list.css" />
 		<link type="text/css" rel="stylesheet" href="/components/meeting/list.css" />
 		<!-- endbuild -->
 	
 	</head>
-	<body ng-controller="mainController" ng-cloak>
+	<body ng-controller="mainController" md-swipe-right="openSidebar()" ng-cloak>
+		
 	
+		<section layout="row" class="full-height" flex>
 	
-	
-		<section layout="horizontal" class="full-height" flex>
-	
-			<material-sidenav layout="vertical" class="material-sidenav-left material-whiteframe-z3" component-id="left" material-swipe-left="closeSidebar()" ng-if="sidebarTemplateUrl"> 
-				<material-toolbar class="material-theme-indigo">
-					<h1 class="material-toolbar-tools">
-						<material-button ng-href="#/projects">
-							<material-icon icon="/img/icons/ic_arrow_back_24px.svg"></material-icon>
-							<material-tooltip>Back to projects</material-tooltip>
-						</material-button>
+			<md-sidenav md-is-locked-open="$media('md')" layout="column" class="md-sidenav-left md-whiteframe-z3" md-component-id="left" md-swipe-left="closeSidebar()" ng-if="sidebarTemplateUrl"> 
+				<md-toolbar md-theme="indigo">
+					<h1 class="md-toolbar-tools">
+						<md-button ng-href="#/projects" ng-click="closeSidebar()" >
+							<md-icon icon="/img/icons/ic_arrow_back_24px.svg"></md-icon>
+							<md-tooltip>Back to projects</md-tooltip>
+						</md-button>
 						<b>{{currentProject.name}}</b>
 					</h1>
-				</material-toolbar> 
-				<material-content flex>
-					<div layout="vertical" layout-fill ng-include="sidebarTemplateUrl"></div>
-				</material-content> 
-			</material-sidenav>
+				</md-toolbar> 
+				<md-content flex>
+					<div layout="column" layout-fill ng-include="sidebarTemplateUrl"></div>
+				</md-content> 
+			</md-sidenav>
 	
-			<material-content class="full-height" style="overflow:hidden" flex>
+			<md-content class="full-height" flex>
 			
 				<span ng-include="fabTemplateUrl" ng-if="signedIn && fabTemplateUrl"></span>
 	
-				<div layout="vertical" layout-fill>
+				<div layout="column" layout-fill>
 		
 		
-					<material-toolbar scroll-shrink class="material-theme-light material-whiteframe-z2">
-						<h1 class="material-toolbar-tools">
-							<a hide-md ng-click="openSidebar()" aria-label="Toggle Menu" href ng-if="sidebarTemplateUrl"> 
-								<material-icon icon="/img/icons/ic_menu_24px.svg"></material-icon>
+					<md-toolbar md-scroll-shrink class="md-whiteframe-z2">
+						<h1 class="md-toolbar-tools" layout="row">
+							<a hide-gt-md ng-click="openSidebar()" aria-label="Toggle Menu" href ng-if="sidebarTemplateUrl"> 
+								<md-icon icon="/img/icons/ic_menu_24px.svg"></md-icon>
 							</a>
 							
-							<span ng-if="breadcrumbs.length<3"><b>TeamPot</b></span>
+							<span hide-gt-md><b>{{breadcrumbs[1] ? breadcrumbs[1].label : "TeamPot"}}</b></span>
 		
-							<ol class="route-breadcrumbs" flex>
-								<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs">
+							<ol class="route-breadcrumbs" ng-if="signedIn" flex>
+								<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs" hide-sm>
 									<span ng-if="!$last && $index>=2"> 
 										<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 
-										<material-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></material-icon>
+										<md-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></md-icon>
 									</span>
 									<span ng-if="$last && $index>=2">{{breadcrumb.label}}</span>
 								</li>
 							</ol>
 							
 							<a id="user-info" ng-if="signedIn">
-								<span>{{currentUser.firstName}}</span>
+								<span hide-sm>{{currentUser.firstName}}</span>
 								<img class="face" src="about:blank" ng-src="{{currentUser.iconUrl}}"/>
 							</a>
-							<material-button class="material-button-raised" ng-click="signIn()" ng-if="!signedIn && !signingIn">Sign in</material-button>
+							<md-button class="md-raised" ng-click="signIn()" ng-if="!signedIn && !signingIn">Sign in</md-button>
 		
 						</h1>
-					</material-toolbar>
+					</md-toolbar>
 		
-					<material-content class="material-content-padding" flex>
+					<md-content class="md-padding" id="appview-container" flex>
 		
 						<div ng-view ng-if="signedIn" id="appview"></div>
 						
@@ -90,14 +94,14 @@
 							<img src="/img/teampot-logo.png" class="image-responsive"/>
 						</div>
 						<div layout layout-align="center center" class="spinner-container" ng-if="signingIn">
-							<material-circular-progress mode="indeterminate" class="spinner-gray"></material-circular-progress>
+							<md-progress-circular md-mode="indeterminate" class="spinner-gray"></md-progress-circular>
 						</div>					
 		
-					</material-content>
+					</md-content>
 		
 				</div>
 	
-			</material-content>
+			</md-content>
 	
 	
 		</section>

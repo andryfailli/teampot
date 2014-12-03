@@ -1,12 +1,12 @@
-<material-tabs class="material-theme-transparent" selected="tabSelected" ng-init="tabSelected=0">
-	<material-tab label="All" ng-click="showTab_all()"></material-tab>
-	<material-tab label="Upcoming" ng-click="showTab_upcoming()"></material-tab>
-	<material-tab label="Assigned to me" ng-click="showTab_mine()"></material-tab>
-	<material-tab label="Unassigned" ng-click="showTab_unassigned()"></material-tab>
-</material-tabs>
+<md-tabs md-theme="transparent" md-selected="tabSelected" ng-init="tabSelected=0">
+	<md-tab label="All" ng-click="showTab_all()"></md-tab>
+	<md-tab label="Upcoming" ng-click="showTab_upcoming()"></md-tab>
+	<md-tab label="Assigned to me" ng-click="showTab_mine()"></md-tab>
+	<md-tab label="Unassigned" ng-click="showTab_unassigned()"></md-tab>
+</md-tabs>
 
 <div layout layout-align="center center" class="spinner-container" ng-if="!taskList.$resolved">
-	<material-circular-progress mode="indeterminate" ></material-circular-progress>
+	<md-progress-circular md-mode="indeterminate" ></md-progress-circular>
 </div>
 
 <div ng-if="taskList.$resolved && (!taskList.items || taskList.items.length==0)">
@@ -18,38 +18,38 @@
 </div>
 
 <section ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'" ng-if="taskList.$resolved && taskList.items.length>0">
-	<material-subheader ng-switch on="groupValue" ng-show="(taskGroupedList | filter:currentFilter).length>0">
+	<md-subheader md-theme="transparent" ng-switch on="groupValue" ng-show="(taskGroupedList | filter:currentFilter).length>0">
 		<span ng-switch-when="false">To Do</span>
 		<span ng-switch-when="true">Completed</span>
-	</material-subheader>
-	<material-whiteframe class="task-group material-whiteframe-z1" ng-show="(taskGroupedList | filter:currentFilter).length>0" layout layout-align="center center">
-		<material-content flex>
-				<material-list layout="vertical"> 
-					<material-item ng-repeat="task in taskGroupedList | filter:currentFilter | orderBy:currentOrderBy:currentOrderByReverse"> 
-						<material-item-content>
-							<div class="material-tile-left">
-								<material-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed" ng-click="task.$save()"></material-checkbox>
+	</md-subheader>
+	<md-whiteframe class="md-whiteframe-z1 md-whiteframe-with-subheader" ng-show="(taskGroupedList | filter:currentFilter).length>0" layout layout-align="center center">
+		<md-content flex>
+				<md-list layout="column"> 
+					<md-item class="md-item-padded" ng-repeat="task in taskGroupedList | filter:currentFilter | orderBy:currentOrderBy:currentOrderByReverse"> 
+						<md-item-content>
+							<div class="md-tile-left first">
+								<md-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed" ng-click="task.$save()"></md-checkbox>
 							</div>
-							<div class="material-tile-content" ng-click="goto(task)" style="cursor: pointer;" flex>
+							<div class="md-tile-content" ng-click="goto(task)" style="cursor: pointer;" flex>
 								<h3>{{task.title}}</h3>
 								<p>{{task.description}}</p>
 							</div>
-							<div class="material-tile-right" ng-click="goto(task)" style="cursor: pointer;" layout="horizontal" layout-align="center center">
-								<div layout="horizontal" style="text-align: center;">
-									<div layout="vertical" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:50px; ">
+							<div class="md-tile-right last" ng-click="goto(task)" style="cursor: pointer;" layout="row" layout-align="center center">
+								<div layout="row" style="text-align: center;">
+									<div layout="column" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:50px; ">
 										<div ng-show="task.priority">
 											<span>P{{task.priority}}</span>
 										</div>
 										<div ng-show="!task.priority" class="text-muted empty-field-message">P?</div>
 									</div>
-									<div layout="vertical" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:100px; ">
+									<div layout="column" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:100px; ">
 										<div ng-show="task.dueDate">
 											<span>{{task.dueDate|date:'shortDate'}}</span>
 										</div>
 										<div ng-show="!task.dueDate" class="text-muted empty-field-message">no due date</div>
 									</div>
-									<div layout="vertical" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:80px; padding-right:0;">
-										<div ng-show="task.assignee" layout="vertical" layout-align="center center">
+									<div layout="column" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:80px;">
+										<div ng-show="task.assignee" layout="column" layout-align="center center">
 											<img class="face" src="about:blank" ng-src="{{task.assignee.iconUrl ? task.assignee.iconUrl : '/img/face.png'}}"/>
 											<small>{{task.assignee.firstName}}</small>
 										</div>
@@ -57,10 +57,10 @@
 									</div>
 								</div>
 							</div>
-						</material-item-content>
-						<material-divider ng-if="!$last"></material-divider>
-					</material-item>
-				</material-list>
-		</material-content>
-	</material-whiteframe>
+						</md-item-content>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-item>
+				</md-list>
+		</md-content>
+	</md-whiteframe>
 </section>

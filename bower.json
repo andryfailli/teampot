@@ -5,18 +5,13 @@
   ],
   "private": true,
   "dependencies": {
-    "angular": "~1.3.0-rc.5",
-    "angular-route": "~1.3.0-rc.5",
-    "angular-animate": "~1.3.0-rc.5",
-    "angular-material": "v0.4",
-    "angular-aria": "~1.3.0-rc.5",
-    "angular-filter": "~0.4.7",
-    "angular-elastic": "~2.4.0",
-    "angular-sanitize": "~1.3.0"
-  },
-  "resolutions": {
-    "angular-aria": "~1.3.0-rc.5",
-    "angular-animate": "~1.3.0-rc.5",
-    "angular": "~1.3.0-rc.5"
+    "angular": "~1.3.5",
+    "angular-route": "~1.3.5",
+    "angular-animate": "~1.3.5",
+    "angular-material": "v0.6",
+    "angular-aria": "~1.3.5",
+    "angular-filter": "~0.5.1",
+    "angular-elastic": "~2.4.2",
+    "angular-sanitize": "~1.3.5"
   }
 }
