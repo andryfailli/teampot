@@ -1,4 +1,4 @@
-<md-tabs md-theme="indigo" md-selected="tabSelected" ng-init="tabSelected=0">
+<md-tabs md-theme="transparent" md-selected="tabSelected" ng-init="tabSelected=0">
 	<md-tab label="All" ng-click="showTab_all()"></md-tab>
 	<md-tab label="Upcoming" ng-click="showTab_upcoming()"></md-tab>
 	<md-tab label="Assigned to me" ng-click="showTab_mine()"></md-tab>
@@ -18,14 +18,14 @@
 </div>
 
 <section ng-repeat="(groupValue,taskGroupedList) in taskList.items | groupBy:'completed'" ng-if="taskList.$resolved && taskList.items.length>0">
-	<md-subheader ng-switch on="groupValue" ng-show="(taskGroupedList | filter:currentFilter).length>0">
+	<md-subheader md-theme="transparent" ng-switch on="groupValue" ng-show="(taskGroupedList | filter:currentFilter).length>0">
 		<span ng-switch-when="false">To Do</span>
 		<span ng-switch-when="true">Completed</span>
 	</md-subheader>
 	<md-whiteframe class="task-group md-whiteframe-z1" ng-show="(taskGroupedList | filter:currentFilter).length>0" layout layout-align="center center">
 		<md-content flex>
-				<md-list layout="vertical"> 
-					<md-item ng-repeat="task in taskGroupedList | filter:currentFilter | orderBy:currentOrderBy:currentOrderByReverse"> 
+				<md-list layout="column"> 
+					<md-item class="md-item-padded" ng-repeat="task in taskGroupedList | filter:currentFilter | orderBy:currentOrderBy:currentOrderByReverse"> 
 						<md-item-content>
 							<div class="md-tile-left">
 								<md-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed" ng-click="task.$save()"></md-checkbox>
@@ -36,20 +36,20 @@
 							</div>
 							<div class="md-tile-right" ng-click="goto(task)" style="cursor: pointer;" layout="row" layout-align="center center">
 								<div layout="row" style="text-align: center;">
-									<div layout="vertical" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:50px; ">
+									<div layout="column" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:50px; ">
 										<div ng-show="task.priority">
 											<span>P{{task.priority}}</span>
 										</div>
 										<div ng-show="!task.priority" class="text-muted empty-field-message">P?</div>
 									</div>
-									<div layout="vertical" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:100px; ">
+									<div layout="column" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:100px; ">
 										<div ng-show="task.dueDate">
 											<span>{{task.dueDate|date:'shortDate'}}</span>
 										</div>
 										<div ng-show="!task.dueDate" class="text-muted empty-field-message">no due date</div>
 									</div>
-									<div layout="vertical" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:80px; padding-right:0;">
-										<div ng-show="task.assignee" layout="vertical" layout-align="center center">
+									<div layout="column" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:80px;">
+										<div ng-show="task.assignee" layout="column" layout-align="center center">
 											<img class="face" src="about:blank" ng-src="{{task.assignee.iconUrl ? task.assignee.iconUrl : '/img/face.png'}}"/>
 											<small>{{task.assignee.firstName}}</small>
 										</div>

@@ -1,21 +1,16 @@
-.material-theme-transparent .tabs-header {
+.md-transparent-theme .tabs-header {
 	background-color: transparent;
 }
 
-.material-theme-transparent material-tabs-ink-bar {
+md-tabs.md-transparent-theme md-tabs-ink-bar {
 	background-color: #4285f4;
+	color: #4285f4;
 }
 
-.material-theme-transparent material-tab.active {
+.md-transparent-theme md-tab.active {
 	color: #3e50b4;
 }
 
-.material-theme-light material-button {
-	color: rgb(68, 68, 68) !important;
-}
-
-.material-tile-left,
-.material-tile-right,
-.material-tile-content {
-	padding:16px;
+.md-transparent-theme.md-subheader {
+	background: #ececec;
 }
