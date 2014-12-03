@@ -23,7 +23,7 @@
 		<!-- build:css app.min.css -->
 		<link type="text/css" rel="stylesheet" href="/common.css" />
 		<link type="text/css" rel="stylesheet" href="/app.css" />
-		<link type="text/css" rel="stylesheet" href="/material-theme-mods.css" />
+		<link type="text/css" rel="stylesheet" href="/material-transparent-theme.css" />
 		
 		<link type="text/css" rel="stylesheet" href="/components/task/list.css" />
 		<link type="text/css" rel="stylesheet" href="/components/meeting/list.css" />
@@ -63,16 +63,10 @@
 								<md-icon icon="/img/icons/ic_menu_24px.svg"></md-icon>
 							</a>
 							
-							<span ng-if="breadcrumbs.length<3"><b>TeamPot</b></span>
+							<span hide-gt-md><b>{{breadcrumbs[1] ? breadcrumbs[1].label : "TeamPot"}}</b></span>
 		
-							<ol class="route-breadcrumbs" flex>
-								<li class="route-breadcrumb" hide-gt-md>
-									<span show-sm> 
-										<a ng-href="#{{breadcrumbs[1].path}}"><b>{{breadcrumbs[1].label}}</b></a> 
-										<md-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></md-icon>
-									</span>
-								</li>
-								<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs">
+							<ol class="route-breadcrumbs" ng-if="signedIn" flex>
+								<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs" hide-sm>
 									<span ng-if="!$last && $index>=2"> 
 										<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 
 										<md-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></md-icon>
@@ -82,7 +76,7 @@
 							</ol>
 							
 							<a id="user-info" ng-if="signedIn">
-								<span>{{currentUser.firstName}}</span>
+								<span hide-sm>{{currentUser.firstName}}</span>
 								<img class="face" src="about:blank" ng-src="{{currentUser.iconUrl}}"/>
 							</a>
 							<md-button class="md-raised" ng-click="signIn()" ng-if="!signedIn && !signingIn">Sign in</md-button>

@@ -87,17 +87,21 @@ md-input-group.md-input-focused > input[type=date] {
 	display: inline-block;
 }
 
-.text-warning {
-	color:#ffbb00;
+.text-warning,
+.text-warning > * {
+	color:#ffbb00 !important;
 }
-.text-error {
-	color:#db4437;
+.text-error,
+.text-error > * {
+	color:#db4437 !important;
 }
-.test-info {
-	color:#4285f4;
+.test-info,
+.test-info > * {
+	color:#4285f4 !important;
 }
-.text-muted {
-	color:#A8A8A8;
+.text-muted,
+.text-muted > * {
+	color:#A8A8A8 !important;
 }
 
 
@@ -150,4 +154,8 @@ md-checkbox.checkbox-bigger.md-checked .md-icon:after {
 
 a.md-button.md-button-padded {
 	padding: 15px 10px;
+}
+
+md-sidenav:not(.md-locked-open) {
+	width:250px;
 }
