@@ -63,17 +63,26 @@
 								<md-icon icon="/img/icons/ic_menu_24px.svg"></md-icon>
 							</a>
 							
-							<span hide-gt-md><b>{{breadcrumbs[1] ? breadcrumbs[1].label : "TeamPot"}}</b></span>
-		
-							<ol class="route-breadcrumbs" ng-if="signedIn" flex>
-								<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs" hide-sm>
-									<span ng-if="!$last && $index>=2"> 
-										<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 
-										<md-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></md-icon>
-									</span>
-									<span ng-if="$last && $index>=2">{{breadcrumb.label}}</span>
-								</li>
-							</ol>
+							<span ng-if="signedIn" flex>
+							
+								<span ng-if="breadcrumbs[1]" hide-gt-md>
+									<b>{{breadcrumbs[1].label}}</b>
+									<md-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;" hide-sm></md-icon>
+								</span>
+								<span ng-if="!breadcrumbs[1]"><b>TeamPot</b></span>
+			
+								<ol class="route-breadcrumbs" ng-if="signedIn" hide-sm>
+									<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs" >
+										<span ng-if="!$last && $index>=2"> 
+											<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 
+											<md-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></md-icon>
+										</span>
+										<span ng-if="$last && $index>=2">{{breadcrumb.label}}</span>
+									</li>
+								</ol>
+							
+							</span>
+							<span ng-if="!signedIn" flex><b>TeamPot</b></span>
 							
 							<a id="user-info" ng-if="signedIn">
 								<span hide-sm>{{currentUser.firstName}}</span>
