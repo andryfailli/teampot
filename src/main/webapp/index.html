@@ -30,12 +30,12 @@
 		<!-- endbuild -->
 	
 	</head>
-	<body ng-controller="mainController" md-swipe-right="openSidebar()" ng-cloak>
+	<body ng-controller="mainController" md-swipe-right="openSidebar()" md-swipe-left="closeSidebar()" ng-cloak>
 		
 	
 		<section layout="row" class="full-height" flex>
 	
-			<md-sidenav md-is-locked-open="$media('md')" layout="column" class="md-sidenav-left md-whiteframe-z3" md-component-id="left" md-swipe-left="closeSidebar()" ng-if="sidebarTemplateUrl"> 
+			<md-sidenav md-is-locked-open="$media('md')" layout="column" class="md-sidenav-left md-whiteframe-z3" md-component-id="left" ng-if="sidebarTemplateUrl"> 
 				<md-toolbar md-theme="indigo">
 					<h1 class="md-toolbar-tools">
 						<md-button ng-href="#/projects" ng-click="closeSidebar()" >
@@ -65,11 +65,11 @@
 							
 							<span ng-if="signedIn" flex>
 							
-								<span ng-if="breadcrumbs[1]" hide-gt-md>
-									<b>{{breadcrumbs[1].label}}</b>
+								<span ng-if="currentProject" hide-gt-md>
+									<b>{{currentProject.name}}</b>
 									<md-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;" hide-sm></md-icon>
 								</span>
-								<span ng-if="!breadcrumbs[1]"><b>TeamPot</b></span>
+								<span ng-if="!currentProject"><b>TeamPot</b></span>
 			
 								<ol class="route-breadcrumbs" ng-if="signedIn" hide-sm>
 									<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs" >
