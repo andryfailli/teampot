@@ -9,15 +9,15 @@
 		<md-list>
 			<md-item class="md-item-padded" ng-repeat="entity in entityList.items"> 
 				<md-item-content>
-					<div class="md-tile-left">
-						<div class="list-item-box list-item-box-left">
-							<img ng-src="{{entity.iconUrl ? entity.iconUrl : '/img/face.png'}}" class="face" alt="{{entity.firstName}} {{entity.lastName}}">
+					<div class="md-tile-left first">
+						<div class="list-item-box list-item-box-left" layout layout-align="center center">
+							<img ng-src="{{entity.iconUrl ? entity.iconUrl : '/img/face.png'}}" class="face face-big" alt="{{entity.firstName}} {{entity.lastName}}">
 						</div>
 					</div>
 					<div class="md-tile-content" flex>
 						<h3>{{entity.firstName}} {{entity.lastName}}</h3>
 					</div>
-					<div class="md-tile-right">
+					<div class="md-tile-right last">
 						<md-button ng-if="entity.id != currentUser.id" ng-click="removeMember(entity)">
 						 	<md-icon icon="/img/icons/ic_cancel_24px.svg"></md-icon>
 						 	<md-tooltip>Remove this user</md-tooltip>

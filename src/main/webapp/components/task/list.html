@@ -27,14 +27,14 @@
 				<md-list layout="column"> 
 					<md-item class="md-item-padded" ng-repeat="task in taskGroupedList | filter:currentFilter | orderBy:currentOrderBy:currentOrderByReverse"> 
 						<md-item-content>
-							<div class="md-tile-left">
+							<div class="md-tile-left first">
 								<md-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed" ng-click="task.$save()"></md-checkbox>
 							</div>
 							<div class="md-tile-content" ng-click="goto(task)" style="cursor: pointer;" flex>
 								<h3>{{task.title}}</h3>
 								<p>{{task.description}}</p>
 							</div>
-							<div class="md-tile-right" ng-click="goto(task)" style="cursor: pointer;" layout="row" layout-align="center center">
+							<div class="md-tile-right last" ng-click="goto(task)" style="cursor: pointer;" layout="row" layout-align="center center">
 								<div layout="row" style="text-align: center;">
 									<div layout="column" layout-align="center center" class="list-item-box list-item-box-right task-detail-box" style="width:50px; ">
 										<div ng-show="task.priority">

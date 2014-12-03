@@ -30,7 +30,7 @@
 		<!-- endbuild -->
 	
 	</head>
-	<body ng-controller="mainController" ng-cloak>
+	<body ng-controller="mainController" md-swipe-right="openSidebar()" ng-cloak>
 		
 	
 		<section layout="row" class="full-height" flex>
@@ -66,6 +66,12 @@
 							<span ng-if="breadcrumbs.length<3"><b>TeamPot</b></span>
 		
 							<ol class="route-breadcrumbs" flex>
+								<li class="route-breadcrumb" hide-gt-md>
+									<span show-sm> 
+										<a ng-href="#{{breadcrumbs[1].path}}"><b>{{breadcrumbs[1].label}}</b></a> 
+										<md-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></md-icon>
+									</span>
+								</li>
 								<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs">
 									<span ng-if="!$last && $index>=2"> 
 										<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 

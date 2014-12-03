@@ -1,9 +1,9 @@
 <md-dialog aria-label="Add a user">	
 	<md-content>
-		<md-subheader ng-if="!loading" class="md-sticky-no-effect">Add a user</md-subheader>
-		<p ng-if="!loading">
+		<h2>Add a user</h2>
+		<p>
 			<form>
-			  <md-text-float label="User Email" value="$parent.userEmail" type="email"> </md-text-float>
+			  <md-text-float label="User Email" ng-model="userEmail" type="email"> </md-text-float>
 			</form>
 		</p>
 	</md-content>

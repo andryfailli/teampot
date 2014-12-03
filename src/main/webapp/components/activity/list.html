@@ -12,7 +12,7 @@
 			<md-list layout="column"> 
 				<md-item class="md-item-padded"> 
 					<md-item-content>
-						<div class="md-tile-left">
+						<div class="md-tile-left first">
 							<div class="list-item-box list-item-box-left" layout="column" layout-align="center center" style="min-width:120px;">
 								<span ng-switch on="activity.activityType">
 									<md-icon ng-switch-when="TaskActivityEvent" icon="/img/icons/ic_view_list_48px.svg"></md-icon>
@@ -27,7 +27,7 @@
 						<div class="md-tile-content" ng-include="'/components/activity/item-'+activity.activityType+'.html'" flex>
 							
 						</div>
-						<div class="md-tile-right" layout="row" layout-align="center center">
+						<div class="md-tile-right last" layout="row" layout-align="center center">
 							<div class="list-item-box list-item-box-right" layout="row" layout-align="center center" style="text-align: center;">
 								<small>{{activity.timestamp|date:'shortDate'}}<br/><small>{{activity.timestamp|date:'shortTime'}}</small></small>
 							</div>
