@@ -2,6 +2,7 @@ package com.google.teampot.service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.api.services.admin.directory.Directory;
@@ -30,6 +31,14 @@ public class UserService {
 	public static UserService getInstance() {
 		if (instance == null) instance = new UserService();
 		return instance;
+	}
+	
+	public List<User> list(){
+		return dao.list();
+	}
+	
+	public List<User> search(String q){
+		return dao.search(q);
 	}
 	
 	public User get(String key){
