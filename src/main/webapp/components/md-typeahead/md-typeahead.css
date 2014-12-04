@@ -1,0 +1,23 @@
+.typeahead-container {
+	position:absolute;
+	margin-top:3px;
+	width:100%;
+	z-index:5;
+}
+.typeahead-container > md-whiteframe {
+	margin:0;
+	max-height: 300px;
+	overflow: auto;
+}
+.typeahead-container > md-whiteframe > md-content {
+	background: white;
+	width:100%;
+}
+.typeahead-container md-item-content {
+	cursor:pointer;
+	padding:5px;
+}
+.typeahead-container md-item-content.active {
+	background-color: #03a9f4;
+	color: white;
+}
