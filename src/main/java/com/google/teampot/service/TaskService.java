@@ -78,7 +78,7 @@ public class TaskService{
 				if (entity.isAssigned() && !entity.getAssignee().equals(Ref.create(actor))) this.sendTaskUpdatedNotification(entity,actor);
 				break;
 			case ASSIGN:
-				if ((oldEntity.getAssignee() == null && entity.getAssignee() != null) || !oldEntity.getAssignee().equals(entity.getAssignee())) this.sendTaskAssignNotification(entity,actor);
+				if ((!oldEntity.isAssigned() && entity.isAssigned()) || ( oldEntity.isAssigned() && entity.isAssigned() && !oldEntity.getAssignee().equals(entity.getAssignee()))) this.sendTaskAssignNotification(entity,actor);
 				break;
 			case UNASSIGN:
 				this.sendTaskUnassignNotification(oldEntity,actor);
