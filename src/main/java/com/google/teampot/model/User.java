@@ -19,7 +19,13 @@ public class User extends BaseEntity {
 	
 	private String firstName;
 	
+	@Index
+	private String firstNameLowerCase;
+
 	private String lastName;
+	
+	@Index
+	private String lastNameLowerCase;
 	
 	private String iconUrl;
 	
@@ -55,7 +61,7 @@ public class User extends BaseEntity {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = email != null ? email.toLowerCase() : null;
 	}
 
 	public String getFirstName() {
@@ -63,6 +69,7 @@ public class User extends BaseEntity {
 	}
 
 	public void setFirstName(String firstName) {
+		this.firstNameLowerCase = firstName != null ? firstName.toLowerCase() : null;
 		this.firstName = firstName;
 	}
 
@@ -71,6 +78,7 @@ public class User extends BaseEntity {
 	}
 
 	public void setLastName(String lastName) {
+		this.lastNameLowerCase = lastName != null ? lastName.toLowerCase() : null;
 		this.lastName = lastName;
 	}
 

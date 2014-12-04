@@ -20,4 +20,9 @@ public class UserDAO extends BaseEntityDAO<User>{
 			return null;
 	}
 
+	public List<User> search(String q) {
+		q = q.toLowerCase();
+		return ofy().load().type(User.class).filter("firstNameLowerCase >=", q).filter("firstNameLowerCase <=", q+"\ufffd").list();
+	}
+
 }

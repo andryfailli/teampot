@@ -1,10 +1,8 @@
 package com.google.teampot.api;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.google.teampot.Config;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.dao.UserDAO;
 import com.google.teampot.api.BaseEndpoint;
@@ -18,10 +16,9 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
+import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.api.oauth.OAuthRequestException;
-import com.google.appengine.api.utils.SystemProperty;
-import com.googlecode.objectify.Ref;
 
 public class UserEndpoint extends BaseEndpoint {
 
@@ -33,12 +30,18 @@ public class UserEndpoint extends BaseEndpoint {
 		path = "user",
 		httpMethod = HttpMethod.GET
 	)
-	public List<User> list(@Named("project") String projectId, com.google.appengine.api.users.User gUser) throws OAuthRequestException, UnauthorizedException {
+	public List<User> list(@Named("project") @Nullable String projectId, @Named("q") @Nullable String q, com.google.appengine.api.users.User gUser) throws OAuthRequestException, UnauthorizedException {
 		userService.ensureEnabled(gUser);
 		
-		Project project = ProjectService.getInstance().get(projectId);
-		Ref2EntityTransformer<User> t = new Ref2EntityTransformer<User>();
-		return t.transformTo(project.getUsers());
+		if (projectId != null && q == null) {
+			Project project = ProjectService.getInstance().get(projectId);
+			Ref2EntityTransformer<User> t = new Ref2EntityTransformer<User>();
+			return t.transformTo(project.getUsers());
+		} else if (projectId == null && q != null) {
+			return UserService.getInstance().search(q);
+		} else {
+			return UserService.getInstance().list();
+		}
 	}
 	
 	@ApiMethod(
