@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.commons.collections.ListUtils;
-
 import com.google.teampot.model.User;
 
 import static com.google.teampot.OfyService.ofy;
