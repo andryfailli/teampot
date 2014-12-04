@@ -3,6 +3,10 @@ md-whiteframe {
 	margin: 20px;
 }
 
+md-content {
+	overflow: initial !important;
+}
+
 .md-content-padded {
 	padding:20px;
 }
@@ -43,8 +47,8 @@ a.unstyled {
 	color: inherit;
 }
 
-.md-text-float-full-with > input,
-.md-text-float-full-with > textarea{
+.md-text-float-full-with input,
+.md-text-float-full-with textarea{
 	width: 100%;
 	margin:0;
 }
@@ -78,6 +82,12 @@ md-input-group.md-input-focused > input[type=date] {
 	border-radius: 30px;
 	width: 58px;
 	margin: 5px 8px;
+}
+
+.face-small {
+	border-radius: 20px;
+	width: 24px;
+	margin: 1px 3px;
 }
 
 

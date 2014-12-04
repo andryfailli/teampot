@@ -10,7 +10,8 @@ angular.module('teampot', [
 	'ngGapi',
 	'angular.filter',
 	'monospaced.elastic',
-	'fnDebounce'
+	'fnDebounce',
+	'material.components.typeahead'
 ])
 .config(function($routeProvider,GapiProvider,GapiClientProvider,GapiPickerProvider) {
 

@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('taskEditController', function($rootScope,$scope,$routeParams,debounce,ProjectService,TaskService,$timeout,NotifyService) {
+	controller('taskEditController', function($rootScope,$scope,$routeParams,debounce,ProjectService,TaskService,UserService,$timeout,NotifyService) {
 		
 		var isNew = $routeParams.taskId ? false : true;
 		
@@ -29,5 +29,12 @@ angular.module('teampot').
 		}
 		
 		$scope.saveDebounced = debounce($scope.save, 2000, false);
+		
+		
+		$scope.lookupUsers = function(q){
+			return q ? UserService.$list({q:q}) : UserService.$list();
+		}
+		
+		
 		
 	});

@@ -22,6 +22,7 @@
 				</div>
 			</div>
 			
+			
 			<div layout="row" layout-align="center center">
 				<div flex>
 					<md-text-float label="Labels" ng-model="task.labels" class="md-text-float-full-with"></md-text-float>
@@ -29,8 +30,18 @@
 				<div>
 					<md-text-float label="Due date" ng-model="task.dueDate" type="date"></md-text-float>
 				</div>
-				<div>
-					<md-text-float label="Assignee" ng-model="task.assignee"></md-text-float>
+				<div style="width:30%">
+					<md-input-group class="md-text-float-full-with md-default-theme">
+						<label for="assignee">Assignee</label>
+						<md-typeahead
+							md-fid="assignee"
+							selected-item-template-url="/components/user/md-typeahead-selected-item.html"
+							item-template-url="/components/user/md-typeahead-item.html"
+							source="lookupUsers"
+							value="task.assignee"
+						>
+						</md-typeahead>
+					</md-input-group>
 				</div>
 			</div>
 			

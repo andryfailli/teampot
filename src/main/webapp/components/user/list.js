@@ -3,7 +3,7 @@ angular.module('teampot').
 		
 		$scope.project = ProjectService.$get($routeParams.projectId);
 		
-		$scope.entityList = UserService.$list($routeParams.projectId);
+		$scope.entityList = UserService.$list({project: $routeParams.projectId});
 		
 		$scope.removeMember = function(user){
 			
