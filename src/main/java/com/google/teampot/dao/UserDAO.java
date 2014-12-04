@@ -1,6 +1,10 @@
 package com.google.teampot.dao;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+
+import org.apache.commons.collections.ListUtils;
 
 import com.google.teampot.model.User;
 
@@ -22,7 +26,13 @@ public class UserDAO extends BaseEntityDAO<User>{
 
 	public List<User> search(String q) {
 		q = q.toLowerCase();
-		return ofy().load().type(User.class).filter("firstNameLowerCase >=", q).filter("firstNameLowerCase <=", q+"\ufffd").list();
+		
+		HashSet set = new HashSet();
+				
+		set.addAll(ofy().load().type(User.class).filter("firstNameLowerCase >=", q).filter("firstNameLowerCase <=", q+"\ufffd").list());
+		set.addAll(ofy().load().type(User.class).filter("lastNameLowerCase >=", q).filter("lastNameLowerCase <=", q+"\ufffd").list());
+		
+		return new ArrayList<User>(set);
 	}
 
 }
