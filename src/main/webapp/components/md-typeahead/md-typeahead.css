@@ -11,6 +11,7 @@
 }
 .typeahead-container > md-whiteframe > md-content {
 	background: white;
+	padding:0;
 	width:100%;
 }
 .typeahead-container md-item-content {
