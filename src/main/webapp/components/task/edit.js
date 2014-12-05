@@ -32,7 +32,7 @@ angular.module('teampot').
 		
 		
 		$scope.lookupUsers = function(q){
-			return q ? UserService.$list({q:q}) : UserService.$list();
+			return UserService.$list({q:q});
 		}
 		
 		

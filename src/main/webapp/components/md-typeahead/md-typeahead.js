@@ -78,12 +78,13 @@ function MdTypeaheadDirective($mdUtil) {
 			}
 			
 			scope.deactivate = function(){
-				scope.queryString=null;
+				scope.queryString="";
 				scope.showSuggest = false;
 				inputGroupCtrl.setFocused(false);
 			}
 			
 			scope.activate = function(){
+				scope.queryString="";
 				inputGroupCtrl.setFocused(true);
 				scope.showSuggest = true;
 				scope.getItems();

@@ -4,7 +4,7 @@ angular.module('teampot').
 		$scope.projectId = $routeParams.projectId;
 		
 		$scope.lookupUsers = function(q){
-			return q ? UserService.$list({q:q}) : UserService.$list();
+			return UserService.$list({q:q});
 		}
 
 		$scope.add = function(){
