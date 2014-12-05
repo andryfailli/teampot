@@ -6,6 +6,15 @@ html,
 	background: #ececec;
 }
 
+body, 
+html {
+	overflow: hidden;
+}
+
+#appview-container {
+	overflow: auto;
+}
+
 .menu-item {
 	background-color: #fff;
 	border-left: 4px solid transparent;

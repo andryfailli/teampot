@@ -3,10 +3,6 @@ md-whiteframe {
 	margin: 20px;
 }
 
-md-content {
-	overflow: initial !important;
-}
-
 .md-content-padded {
 	padding:20px;
 }
@@ -158,4 +154,9 @@ a.md-button.md-button-padded {
 
 md-sidenav:not(.md-locked-open) {
 	width:250px;
+}
+
+.md-subheader.md-sticky-clone {
+	left:-16px;
+	padding-left:32px;
 }
