@@ -261,7 +261,8 @@ public class MeetingService{
 			
 			String calendarId = meeting.getOrganizer().get().getEmail();
 			
-			calendarService.events().delete(calendarId, meeting.getCalendarEventId()).execute();
+			if (meeting.getCalendarEventId() != null)
+				calendarService.events().delete(calendarId, meeting.getCalendarEventId()).execute();
 			
 			
 		} catch (GeneralSecurityException e) {

@@ -11,6 +11,7 @@ import org.hsqldb.lib.HashMap;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.teampot.transformer.Date2TimestampTransformer;
 import com.google.teampot.util.ValueComparator;
 
 public class MeetingPoll {
@@ -28,28 +29,70 @@ public class MeetingPoll {
 		this.votes = new ArrayList<MeetingPollVote>();
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public List<Date> getProposedDates() {
 		return proposedDates;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setProposedDates(List<Date> proposedDates) {
 		this.proposedDates = proposedDates;
 	}
+	
+	@ApiResourceProperty(name = "proposedDates")
+	public List<Long> getProposedDateTimestamps() {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		return t.transformTo(proposedDates);
+	}
 
+	@ApiResourceProperty(name = "proposedDates")
+	public void setProposedDateTimestamps(List<Long> proposedDates) {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		this.proposedDates = t.transformFrom(proposedDates);
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Date getStartDate() {
 		return startDate;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+	
+	@ApiResourceProperty(name = "startDate")
+	public Long getStartDateTimestamp() {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		return t.transformTo(startDate);
+	}
 
+	@ApiResourceProperty(name = "startDate")
+	public void setStartDateTimestamp(Long startDate) {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		this.startDate = t.transformFrom(startDate);
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Date getEndDate() {
 		return endDate;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+	
+	@ApiResourceProperty(name = "endDate")
+	public Long getEndDateTimestamp() {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		return t.transformTo(endDate);
+	}
+
+	@ApiResourceProperty(name = "endDate")
+	public void setEndDateTimestamp(Long endDate) {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		this.endDate = t.transformFrom(endDate);
 	}
 
 	public List<MeetingPollVote> getVotes() {
@@ -78,6 +121,7 @@ public class MeetingPoll {
 		return this.isStarted() && !this.isEnded();
 	}
 	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Date getPreferredDate() {
 		Map<Date,Integer> unsortedDates = new LinkedHashMap<Date, Integer>();
 		
@@ -103,6 +147,12 @@ public class MeetingPoll {
 			return preferredDate;
 		else 
 			return null;
+	}
+	
+	@ApiResourceProperty(name = "preferredDate")
+	public Long getPreferredDateTimestamp() {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		return t.transformTo(this.getPreferredDate());
 	}
 	
 }

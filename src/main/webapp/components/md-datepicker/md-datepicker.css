@@ -1,0 +1,37 @@
+.datepicker-container {
+	position:absolute;
+	margin-top:3px;
+	z-index:5;
+	min-width: 200px;
+}
+.datepicker-container > md-whiteframe {
+	margin:0;
+	max-height: 300px;
+	overflow: auto;
+}
+.datepicker-container > md-whiteframe > md-content {
+	background: white;
+	padding:0;
+	width:100%;
+}
+.datepicker-container md-item-content {
+	cursor:pointer;
+	padding:5px;
+}
+
+.datepicker-value {
+	display:inline-block;
+	margin-top:8px;
+}
+
+/* Date placeholder with tf on Chrome fix */
+md-input-group input[type=date],
+md-input-group input[type=datetime-local] {
+	-webkit-text-fill-color: transparent;
+}
+md-input-group.md-input-has-value input[type=date],
+md-input-group.md-input-focused input[type=date],
+md-input-group.md-input-has-value input[type=datetime-local],
+md-input-group.md-input-focused input[type=datetime-local] {
+	-webkit-text-fill-color:initial;
+}
