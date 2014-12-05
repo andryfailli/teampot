@@ -16,7 +16,7 @@ angular.module('teampot').
 		
 		$scope.showTab_upcoming = function(){
 			$scope.currentFilter = function(item) {
-				return item.completed == false && item.dueDate;
+				return !item.completed == false && item.dueDate;
 			};
 			$scope.currentOrderBy = "dueDate";
 			$scope.currentOrderByReverse = false;
@@ -34,7 +34,7 @@ angular.module('teampot').
 		
 		$scope.showTab_unassigned = function(){
 			$scope.currentFilter = function(item){
-				return item.completed && !item.assignee;
+				return !item.completed && !item.assignee;
 			};
 			$scope.currentOrderBy = "priority";
 			$scope.currentOrderByReverse = false;
