@@ -32,7 +32,7 @@
 						<label for="dueDate">Due date</label>
 						<md-datepicker
 							md-fid="dueDate"
-							value="task.dueDate"
+							ng-model="task.dueDate"
 							min-view="date"
 							max-view="month"
 							format="shortDate"
@@ -48,7 +48,7 @@
 							selected-item-template-url="/components/user/md-typeahead-selected-item.html"
 							item-template-url="/components/user/md-typeahead-item.html"
 							source="lookupUsers"
-							value="task.assignee"
+							ng-model="task.assignee"
 						>
 						</md-typeahead>
 					</md-input-group>

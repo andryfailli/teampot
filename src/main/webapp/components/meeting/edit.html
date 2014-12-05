@@ -9,7 +9,17 @@
 	
 			<div layout="row" layout-align="top center">
 				<div ng-show="!meeting.poll">
-					<md-text-float label="Meeting date" ng-model="meeting.timestamp" type="date"></md-text-float>
+					<md-input-group class="md-text-float-full-with md-default-theme">
+						<label for="meetingDate">Meeting date</label>
+						<md-datepicker
+							md-fid="meetingDate"
+							ng-model="meeting.timestamp"
+							min-view="minutes"
+							max-view="month"
+							format="short"
+						>
+						</md-datepicker>
+					</md-input-group>
 					<div style="text-align:center">
 						<md-button class="md-raised" ng-click="createPoll()">create Poll</md-button>
 					</div>
@@ -17,12 +27,25 @@
 				<div ng-show="meeting.poll">
 					<div layout="row" layout-align="center center" ng-repeat="proposedDate in meeting.poll.proposedDates track by $index">
 						<div flex>
-							<md-text-float label="Proposed date {{$index+1}}" ng-model="meeting.poll.proposedDates[$index]" type="date" ng-disabled="meeting.poll.started"></md-text-float>
+						
+							<md-input-group class="md-text-float-full-with md-default-theme">
+								<label for="proposedDate{{$index}}">Proposed date {{$index+1}}</label>
+								<md-datepicker
+									md-fid="proposedDate{{$index}}"
+									ng-model="meeting.poll.proposedDates[$index]"
+									min-view="minutes"
+									max-view="month"
+									format="short"
+									ng-disabled="meeting.poll.started"
+								>
+								</md-datepicker>
+							</md-input-group>
+
 						</div>
 						<md-button ng-click="removeProposedDate($index)" style="position:relative; left:-15px;" ng-show="!meeting.poll.started">&times;</md-button>
 					</div>
 					<div style="text-align:center" ng-show="!meeting.poll.started">
-						<md-button class="md-raised" ng-click="meeting.poll.proposedDates.push(null)">Add Date</md-button>
+						<md-button class="md-raised" ng-click="addProposedDate()">Add Date</md-button>
 					</div>
 					<div>
 						<md-text-float label="Poll start date" ng-model="meeting.poll.startDate" type="date" ng-disabled="meeting.poll.started"></md-text-float>

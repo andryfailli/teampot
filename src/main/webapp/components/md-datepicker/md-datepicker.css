@@ -2,6 +2,7 @@
 	position:absolute;
 	margin-top:3px;
 	z-index:5;
+	min-width: 200px;
 }
 .datepicker-container > md-whiteframe {
 	margin:0;

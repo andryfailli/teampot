@@ -18,7 +18,7 @@ function MdTypeaheadDirective($mdUtil) {
 			selectedItemTemplateUrl: '@',
 			itemTemplateUrl: '@',
 			source: '=',
-			value: '='
+			value: '=ngModel'
 		},
 		template: 
 			'<div>'+
