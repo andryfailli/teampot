@@ -2,9 +2,17 @@
 	<md-content>
 		<h2>Add a user</h2>
 		<p>
-			<form>
-			  <md-text-float label="User Email" ng-model="userEmail" type="email"> </md-text-float>
-			</form>
+			<md-input-group class="md-text-float-full-with md-default-theme" style="width:300px;">
+				<label for="user">User</label>
+				<md-typeahead
+					md-fid="user"
+					selected-item-template-url="/components/user/md-typeahead-selected-item.html"
+					item-template-url="/components/user/md-typeahead-item.html"
+					source="lookupUsers"
+					value="user"
+				>
+				</md-typeahead>
+			</md-input-group>
 		</p>
 	</md-content>
 	<div class="md-actions" layout="row" layout-align="end"  ng-if="!loading">
