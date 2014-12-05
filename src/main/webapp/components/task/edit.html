@@ -27,8 +27,18 @@
 				<div flex>
 					<md-text-float label="Labels" ng-model="task.labels" class="md-text-float-full-with"></md-text-float>
 				</div>
-				<div>
-					<md-text-float label="Due date" ng-model="task.dueDate" type="date"></md-text-float>
+				<div style="width:30%">
+					<md-input-group class="md-text-float-full-with md-default-theme">
+						<label for="dueDate">Due date</label>
+						<md-datepicker
+							md-fid="dueDate"
+							value="task.dueDate"
+							min-view="date"
+							max-view="month"
+							format="shortDate"
+						>
+						</md-datepicker>
+					</md-input-group>
 				</div>
 				<div style="width:30%">
 					<md-input-group class="md-text-float-full-with md-default-theme">
