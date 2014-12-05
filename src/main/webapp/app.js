@@ -11,7 +11,8 @@ angular.module('teampot', [
 	'angular.filter',
 	'monospaced.elastic',
 	'fnDebounce',
-	'material.components.typeahead'
+	'material.components.typeahead',
+	'material.components.datepicker'
 ])
 .config(function($routeProvider,GapiProvider,GapiClientProvider,GapiPickerProvider) {
 
