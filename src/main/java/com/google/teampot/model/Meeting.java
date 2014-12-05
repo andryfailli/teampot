@@ -9,6 +9,7 @@ import java.util.Set;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.appengine.api.datastore.Text;
+import com.google.teampot.transformer.Date2TimestampTransformer;
 import com.google.teampot.transformer.Ref2StringTransformer;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
@@ -85,12 +86,26 @@ public class Meeting extends BaseEntity {
 		this.description = description != null ? new Text(description) : null;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Date getTimestamp() {
 		return timestamp;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
+	}
+	
+	@ApiResourceProperty(name = "timestamp")
+	public Long getTimestampTimestamp() {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		return t.transformTo(timestamp);
+	}
+
+	@ApiResourceProperty(name = "timestamp")
+	public void setTimestampTimestamp(Long timestamp) {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		this.timestamp = t.transformFrom(timestamp);
 	}
 	
 	public boolean isPast() {

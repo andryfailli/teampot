@@ -9,6 +9,7 @@ import java.util.Set;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.appengine.api.datastore.Text;
+import com.google.teampot.transformer.Date2TimestampTransformer;
 import com.google.teampot.transformer.Ref2StringTransformer;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
@@ -127,12 +128,26 @@ public class Task extends BaseEntity {
 		this.completed = completed;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Date getDueDate() {
 		return dueDate;
 	}
 
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
+	}
+	
+	@ApiResourceProperty(name = "dueDate")
+	public Long getDueDateTimestamp() {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		return t.transformTo(dueDate);
+	}
+
+	@ApiResourceProperty(name = "dueDate")
+	public void setDueDateTimestamp(Long dueDate) {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		this.dueDate = t.transformFrom(dueDate);
 	}
 
 	public Date getCreationDate() {
