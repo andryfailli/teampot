@@ -50,6 +50,10 @@ public class BaseEntityDAO<T> {
 		return ofy().load().type(this.entityClass).list();
 	}
 	
+	public List<T> list(int limit) {
+		return ofy().load().type(this.entityClass).limit(limit).list();
+	}
+	
 	public List<T> list(String parent) {
 		return ofy().load().type(this.entityClass).ancestor(Ref.create(Key.create(parent))).list();
 	}

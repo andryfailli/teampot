@@ -38,7 +38,7 @@ public class UserEndpoint extends BaseEndpoint {
 			Ref2EntityTransformer<User> t = new Ref2EntityTransformer<User>();
 			return t.transformTo(project.getUsers());
 		} else if (projectId == null && q != null) {
-			return UserService.getInstance().search(q);
+			return q.equals("") ? UserService.getInstance().list(3) : UserService.getInstance().search(q,3);
 		} else {
 			return UserService.getInstance().list();
 		}

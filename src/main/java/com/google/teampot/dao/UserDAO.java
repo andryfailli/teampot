@@ -22,15 +22,17 @@ public class UserDAO extends BaseEntityDAO<User>{
 			return null;
 	}
 
-	public List<User> search(String q) {
+	public List<User> search(String q, int limit) {
 		q = q.toLowerCase();
 		
 		HashSet set = new HashSet();
 				
-		set.addAll(ofy().load().type(User.class).filter("firstNameLowerCase >=", q).filter("firstNameLowerCase <=", q+"\ufffd").list());
-		set.addAll(ofy().load().type(User.class).filter("lastNameLowerCase >=", q).filter("lastNameLowerCase <=", q+"\ufffd").list());
+		set.addAll(ofy().load().type(User.class).filter("firstNameLowerCase >=", q).filter("firstNameLowerCase <=", q+"\ufffd").limit(limit).list());
+		set.addAll(ofy().load().type(User.class).filter("lastNameLowerCase >=", q).filter("lastNameLowerCase <=", q+"\ufffd").limit(limit).list());
 		
-		return new ArrayList<User>(set);
+		List<User> list = new ArrayList<User>(set);
+		
+		return list.size()>limit ? list.subList(0, limit) : list ;
 	}
 
 }

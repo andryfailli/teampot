@@ -37,8 +37,12 @@ public class UserService {
 		return dao.list();
 	}
 	
-	public List<User> search(String q){
-		return dao.search(q);
+	public List<User> list(int limit){
+		return dao.list(limit);
+	}
+	
+	public List<User> search(String q, int limit){
+		return dao.search(q,limit);
 	}
 	
 	public User get(String key){
