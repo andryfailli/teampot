@@ -25,10 +25,13 @@
 }
 
 /* Date placeholder with tf on Chrome fix */
-md-input-group input[type=date] {
+md-input-group input[type=date],
+md-input-group input[type=datetime-local] {
 	-webkit-text-fill-color: transparent;
 }
 md-input-group.md-input-has-value input[type=date],
-md-input-group.md-input-focused input[type=date] {
+md-input-group.md-input-focused input[type=date],
+md-input-group.md-input-has-value input[type=datetime-local],
+md-input-group.md-input-focused input[type=datetime-local] {
 	-webkit-text-fill-color:initial;
 }

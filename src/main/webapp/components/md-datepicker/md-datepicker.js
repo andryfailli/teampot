@@ -17,7 +17,8 @@ function MdDatepickerDirective($mdUtil) {
 			format: '@',
 			minView: '@',
 			maxView: '@',
-			value: '=ngModel'
+			model: '=ngModel',
+			type: '@'
 		},
 		template: 
 			'<div>'+
@@ -27,7 +28,7 @@ function MdDatepickerDirective($mdUtil) {
 			'	 	<md-icon icon="/img/icons/ic_cancel_24px.svg"></md-icon>'+
 			' 	</md-button>'+
 			'</div>'+
-			'<input id="{{fid}}" ng-hide="value" readonly type="text" ng-model="value" ng-focus="onTextboxFocus()" ng-blur="onTextboxBlur()">'+
+			'<input id="{{fid}}" ng-hide="value" type="{{type ? type : defaultType}}" ng-model="value" ng-focus="onTextboxFocus()" ng-blur="onTextboxBlur()">'+
 			'<div ng-show="focused" class="datepicker-container" ng-mouseenter="onMouseEnter()" ng-mouseleave="onMouseLeave()">'+
 			'	<md-whiteframe class="md-whiteframe-z1" layout>'+
 			'		<md-content>'+
@@ -39,6 +40,8 @@ function MdDatepickerDirective($mdUtil) {
 			
 		link: function(scope, element, attr, ctrls) {
 			if (!ctrls[0]) return;
+			
+			scope.defaultType = "date";
 
 			var inputGroupCtrl = ctrls[0];
 
@@ -49,7 +52,16 @@ function MdDatepickerDirective($mdUtil) {
 		    scope.$watch("value",function(){
 				inputGroupCtrl.setHasValue(hasValue());
 			});
-			inputGroupCtrl.setHasValue(hasValue());		    
+			inputGroupCtrl.setHasValue(hasValue());		
+			
+			// timestamp <---> Date translation
+			scope.$watch("model",function(){
+				scope.value = scope.model ? new Date(scope.model*1000) : null;
+			},true);
+			scope.$watch("value",function(){
+				scope.model = scope.value ? scope.value.getTime()/1000 : null;
+			},true);
+			
 		    
 			scope.focusTextbox = function(){
 				setTimeout(function(){document.getElementById(scope.fid).focus()},0);
