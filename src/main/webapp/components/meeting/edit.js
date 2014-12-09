@@ -24,19 +24,7 @@ angular.module('teampot').
 			$scope.meeting.poll.proposedDates.push(null);
 		}
 		
-		
-		function registerSaveWatch() {
-			$scope.$watch("meeting",function(newEntity,oldEntity){
-				if (!angular.equals(newEntity,oldEntity)) {
-					$scope.saveDebounced();
-				}
-			},true)
-		}
-		
-		if (isNew)
-			registerSaveWatch();
-		else
-			$scope.meeting.$promise.then(registerSaveWatch);
+
 		
 		$scope.save = function() {
 			$scope.meeting.$save().$promise
@@ -48,6 +36,7 @@ angular.module('teampot').
 				});
 		}
 		
-		$scope.saveDebounced = debounce($scope.save, 2000, false);
+		$scope.$on("$destroy",$scope.save);
+		
 		
 	});
