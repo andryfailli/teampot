@@ -49,6 +49,20 @@ function MdDatepickerDirective($mdUtil) {
 				return !angular.isUndefined(scope.value) && scope.value != null;
 			}
 			
+			function datesEqual(date1,date2) {
+				if (date1 === date2) return true;
+				if (!date1 && !date2) return true;
+				if ( (!date1 && date2) || (date1 && !date2) ) return false;
+				
+				if (typeof date1 === "string") date1 = parseInt(date1);
+				if (typeof date2 === "string") date2 = parseInt(date1);
+				
+				if (typeof date1 === "number") date1 = new Date(date1);
+				if (typeof date2 === "number") date2 = new Date(date2);
+				
+				return date1.getTime()===date2.getTime();
+			}
+			
 		    scope.$watch("value",function(){
 				inputGroupCtrl.setHasValue(hasValue());
 			});
@@ -56,10 +70,12 @@ function MdDatepickerDirective($mdUtil) {
 			
 			// timestamp <---> Date translation
 			scope.$watch("model",function(){
-				scope.value = scope.model ? new Date(scope.model*1000) : null;
+				if (!datesEqual(scope.value,scope.model))
+					scope.value = scope.model ? new Date(parseInt(scope.model)) : scope.model;
 			},true);
 			scope.$watch("value",function(){
-				scope.model = scope.value ? scope.value.getTime()/1000 : null;
+				if (!datesEqual(scope.value,scope.model))
+					scope.model = scope.value ? scope.value.getTime() : scope.value;
 			},true);
 			
 		    
