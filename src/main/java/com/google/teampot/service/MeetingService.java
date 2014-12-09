@@ -264,6 +264,8 @@ public class MeetingService{
 			if (meeting.getCalendarEventId() != null)
 				calendarService.events().delete(calendarId, meeting.getCalendarEventId()).execute();
 			
+			meeting.setCalendarEventId(null);
+			
 			
 		} catch (GeneralSecurityException e) {
 			// TODO Auto-generated catch block

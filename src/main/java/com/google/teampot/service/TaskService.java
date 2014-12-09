@@ -67,6 +67,9 @@ public class TaskService{
 		Task oldEntity = null;
 		if (verb != TaskActivityEventVerb.CREATE) oldEntity = dao.get(entity.getKey());	
 		
+		// first save
+		dao.save(entity);
+		
 		// send notifications
 		try {
 			switch (verb) {
