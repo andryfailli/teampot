@@ -226,12 +226,9 @@ public class ProjectService{
 		
 		
 		// subscribe to Drive folder changes
-		try {
-	    	this.watchFolderChanges(driveService,project);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// TODO: redesign drive watch feature...
+		//this.watchFolderChanges(driveService,project);
+		
 		
 		// finally, notify
 		try {
