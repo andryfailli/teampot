@@ -3,7 +3,6 @@ package com.google.teampot.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -21,25 +20,18 @@ import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
-import com.google.teampot.Config;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.api.API;
 import com.google.teampot.dao.MeetingDAO;
-import com.google.teampot.dao.TaskDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
 import com.google.teampot.model.EntityDiff;
 import com.google.teampot.model.Meeting;
 import com.google.teampot.model.MeetingActivityEvent;
 import com.google.teampot.model.MeetingActivityEventVerb;
+import com.google.teampot.model.MeetingPollProposedDate;
 import com.google.teampot.model.MeetingPollVote;
-import com.google.teampot.model.Project;
-import com.google.teampot.model.Task;
-import com.google.teampot.model.TaskActivityEvent;
-import com.google.teampot.model.TaskActivityEventVerb;
 import com.google.teampot.model.User;
 import com.google.teampot.util.AppHelper;
-import com.googlecode.objectify.Ref;
-
 import de.danielbechler.diff.ObjectDifferBuilder;
 import de.danielbechler.diff.node.DiffNode;
 
@@ -105,7 +97,6 @@ public class MeetingService{
 		}
 		
 		
-		
 		if (verb == MeetingActivityEventVerb.CREATE) {
 			entity.setOrganizer(actor);
 		} else {
@@ -113,8 +104,8 @@ public class MeetingService{
 			if (entity.isScheduled()) this.saveCalendarEvent(entity);
 			if (oldEntity.isScheduled()) this.removeCalendarEvent(oldEntity);
 			
-			if (entity.hasPoll()) this.spoonPollEndTask(entity);
 			if (oldEntity.hasPoll())this.removePollEndTask(oldEntity);
+			if (entity.hasPoll()) this.spoonPollEndTask(entity);
 			
 			
 			DiffNode diffs = ObjectDifferBuilder.buildDefault().compare(entity, oldEntity);
@@ -166,9 +157,10 @@ public class MeetingService{
 	}
 	
 	public void pollEnd(Meeting meeting) {
-		Date preferredDate = meeting.getPoll().getPreferredDate();
+		MeetingPollProposedDate preferredDate = meeting.getPoll().getPreferredDate();
 		if (preferredDate != null) {
-			meeting.setTimestamp(preferredDate);
+			meeting.setStart(preferredDate.getStart());
+			meeting.setEnd(preferredDate.getEnd());
 			meeting.getPoll().setEndDate(new Date());
 			this.saveCalendarEvent(meeting);
 			dao.save(meeting);
@@ -232,9 +224,8 @@ public class MeetingService{
 			event.setSummary("Meeting: "+meeting.getTitle());
 			event.setDescription(meeting.getDescription());
 			
-			// TODO: meeting start time & duration?
-			event.setStart(new EventDateTime().setDateTime(new DateTime(meeting.getTimestamp())));
-			event.setEnd(new EventDateTime().setDateTime(new DateTime(new Date(meeting.getTimestamp().getTime()+3600000))));
+			event.setStart(new EventDateTime().setDateTime(new DateTime(meeting.getStart())));
+			event.setEnd(new EventDateTime().setDateTime(new DateTime(new Date(meeting.getEnd().getTime()))));
 			
 			if (meeting.getCalendarEventId() == null) {
 				event = calendarService.events().insert(calendarId, event).execute();

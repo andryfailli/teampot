@@ -1,17 +1,14 @@
 package com.google.teampot.model;
 
-import java.util.Date;
-
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
-import com.google.teampot.transformer.Date2TimestampTransformer;
 import com.googlecode.objectify.Ref;
 
 public class MeetingPollVote {
 	
 	private Ref<User> user;
 	
-	private Date proposedDate;
+	private MeetingPollProposedDate proposedDate;
 	
 	private boolean result;
 	
@@ -44,26 +41,12 @@ public class MeetingPollVote {
 		this.user = Ref.create(user);
 	}
 
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public Date getProposedDate() {
+	public MeetingPollProposedDate getProposedDate() {
 		return proposedDate;
 	}
 
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setProposedDate(Date proposedDate) {
+	public void setProposedDate(MeetingPollProposedDate proposedDate) {
 		this.proposedDate = proposedDate;
-	}
-	
-	@ApiResourceProperty(name = "proposedDate")
-	public Long getProposedDateTimestamp() {
-		Date2TimestampTransformer t = new Date2TimestampTransformer();
-		return t.transformTo(proposedDate);
-	}
-
-	@ApiResourceProperty(name = "proposedDate")
-	public void setProposedDateTimestamp(Long proposedDate) {
-		Date2TimestampTransformer t = new Date2TimestampTransformer();
-		this.proposedDate = t.transformFrom(proposedDate);
 	}
 
 	public boolean isResult() {

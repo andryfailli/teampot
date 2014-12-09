@@ -16,12 +16,12 @@ public class MeetingDAO extends BaseEntityDAO<Meeting>{
 	
 	@Override
 	public List<Meeting> list() {
-		return ofy().load().type(Meeting.class).order("-timestamp").list();
+		return ofy().load().type(Meeting.class).order("-start").list();
 	}
 	
 	@Override
 	public List<Meeting> list(String parent) {
-		return ofy().load().type(Meeting.class).ancestor(Ref.create(Key.create(parent))).order("-timestamp").list();
+		return ofy().load().type(Meeting.class).ancestor(Ref.create(Key.create(parent))).order("-start").list();
 	}
 
 }

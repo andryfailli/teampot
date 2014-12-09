@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.teampot.api.exception.EntityNotFoundException;
 import com.google.teampot.api.exception.MeetingPollPastException;
 import com.google.teampot.model.Meeting;
+import com.google.teampot.model.MeetingPollProposedDate;
 import com.google.teampot.model.MeetingPollVote;
 import com.google.teampot.service.MeetingService;
 import com.google.teampot.service.UserService;
@@ -73,13 +74,17 @@ public class MeetingEndpoint extends BaseEndpoint {
 		path = "meeting/{id}/poll/vote",
 		httpMethod = HttpMethod.POST
 	)
-	public Meeting pollVote(@Named("id") String id, @Named("proposedDate") Date proposedDate, @Named("result") boolean result, com.google.appengine.api.users.User gUser) throws OAuthRequestException, MeetingPollPastException, EntityNotFoundException, UnauthorizedException {
+	public Meeting pollVote(@Named("id") String id, @Named("proposedStartDate") Long proposedStartDate, @Named("proposedEndDate") Long proposedEndDate, @Named("result") boolean result, com.google.appengine.api.users.User gUser) throws OAuthRequestException, MeetingPollPastException, EntityNotFoundException, UnauthorizedException {
 		userService.ensureEnabled(gUser);
 		
 		Meeting meeting = meetingService.get(id);
 		
 		if (meeting == null) throw new EntityNotFoundException(id);
 		if (meeting.isPast()) throw new MeetingPollPastException(id);
+		
+		MeetingPollProposedDate proposedDate = new MeetingPollProposedDate();
+		proposedDate.setStartTimestamp(proposedStartDate);
+		proposedDate.setEndTimestamp(proposedEndDate);
 		
 		MeetingPollVote vote = new MeetingPollVote();
 		vote.setUser(userService.getUser(gUser));

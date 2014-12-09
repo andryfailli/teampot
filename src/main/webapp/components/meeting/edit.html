@@ -9,39 +9,92 @@
 	
 			<div layout="row" layout-align="top center">
 				<div ng-show="!meeting.poll">
-					<md-input-group class="md-text-float-full-with md-default-theme">
-						<label for="meetingDate">Meeting date</label>
-						<md-datepicker
-							md-fid="meetingDate"
-							ng-model="meeting.timestamp"
-							min-view="minutes"
-							max-view="month"
-							format="short"
-							type="datetime-local"
-						>
-						</md-datepicker>
-					</md-input-group>
+					<div layout="row">
+						<md-input-group class="md-text-float-full-with md-default-theme">
+							<label for="meetingStartDate">Meeting date</label>
+							<md-datepicker
+								md-fid="meetingStartDate"
+								ng-model="meeting.start"
+								min-view="date"
+								max-view="month"
+								format="shortDate"
+								type="date"
+							>
+							</md-datepicker>
+						</md-input-group>
+						<md-input-group class="md-text-float-full-with md-default-theme">
+							<label for="meetingEndDate">Start time</label>
+							<md-datepicker
+								md-fid="meetingEndDate"
+								ng-model="meeting.start"
+								min-view="minutes"
+								max-view="hours"
+								format="shortTime"
+								type="time"
+							>
+							</md-datepicker>
+						</md-input-group>
+						<md-input-group class="md-text-float-full-with md-default-theme">
+							<label for="meetingEndDate">End time</label>
+							<md-datepicker
+								md-fid="meetingEndDate"
+								ng-model="meeting.end"
+								min-view="minutes"
+								max-view="hours"
+								format="shortTime"
+								type="time"
+							>
+							</md-datepicker>
+						</md-input-group>
+					</div>
 					<div style="text-align:center">
 						<md-button class="md-raised" ng-click="createPoll()">create Poll</md-button>
 					</div>
 				</div>
 				<div ng-show="meeting.poll">
 					<div layout="row" layout-align="center center" ng-repeat="proposedDate in meeting.poll.proposedDates track by $index">
-						<div flex>
+						<div layout="row" flex>
 						
+							
 							<md-input-group class="md-text-float-full-with md-default-theme">
 								<label for="proposedDate{{$index}}">Proposed date {{$index+1}}</label>
 								<md-datepicker
 									md-fid="proposedDate{{$index}}"
-									ng-model="meeting.poll.proposedDates[$index]"
-									min-view="minutes"
+									ng-model="meeting.poll.proposedDates[$index].start"
+									min-view="date"
 									max-view="month"
-									format="short"
+									format="shortDate"
 									ng-disabled="meeting.poll.started"
-									type="datetime-local"
+									type="date"
 								>
 								</md-datepicker>
 							</md-input-group>
+							<md-input-group class="md-text-float-full-with md-default-theme">
+								<label for="proposedStartTime{{$index}}">Start time {{$index+1}}</label>
+								<md-datepicker
+									md-fid="proposedStartTime{{$index}}"
+									ng-model="meeting.poll.proposedDates[$index].start"
+									min-view="minutes"
+									max-view="hours"
+									format="shortTime"
+									type="time"
+								>
+								</md-datepicker>
+							</md-input-group>
+							<md-input-group class="md-text-float-full-with md-default-theme">
+								<label for="proposedEndTime{{$index}}">End time {{$index+1}}</label>
+								<md-datepicker
+									md-fid="proposedEndTime{{$index}}"
+									ng-model="meeting.poll.proposedDates[$index].end"
+									min-view="minutes"
+									max-view="hours"
+									format="shortTime"
+									type="time"
+								>
+								</md-datepicker>
+							</md-input-group>
+							
+							
 
 						</div>
 						<md-button ng-click="removeProposedDate($index)" style="position:relative; left:-15px;" ng-show="!meeting.poll.started">&times;</md-button>
@@ -49,9 +102,36 @@
 					<div style="text-align:center" ng-show="!meeting.poll.started">
 						<md-button class="md-raised" ng-click="addProposedDate()">Add Date</md-button>
 					</div>
-					<div>
-						<md-text-float label="Poll start date" ng-model="meeting.poll.startDate" type="date" ng-disabled="meeting.poll.started"></md-text-float>
-						<md-text-float label="Poll end date" ng-model="meeting.poll.endDate" type="date" ng-disabled="meeting.poll.ended"></md-text-float>
+					<div layout="row">
+					
+						<md-input-group class="md-text-float-full-with md-default-theme">
+							<label for="pollStartDate">Poll start date</label>
+							<md-datepicker
+								md-fid="pollStartDate"
+								ng-model="meeting.poll.startDate"
+								min-view="date"
+								max-view="month"
+								format="shortDate"
+								type="date"
+								ng-disabled="meeting.poll.started"
+							>
+							</md-datepicker>
+						</md-input-group>
+						
+						<md-input-group class="md-text-float-full-with md-default-theme">
+							<label for="pollEndDate">Poll end date</label>
+							<md-datepicker
+								md-fid="pollEndDate"
+								ng-model="meeting.poll.endDate"
+								min-view="date"
+								max-view="month"
+								format="shortDate"
+								type="date"
+								ng-disabled="meeting.poll.started"
+							>
+							</md-datepicker>
+						</md-input-group>
+
 					</div>
 				</div>
 				<div layout="column" flex>

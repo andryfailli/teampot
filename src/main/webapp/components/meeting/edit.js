@@ -7,21 +7,27 @@ angular.module('teampot').
 		
 		$scope.createPoll = function(){
 			$scope.meeting.poll = {
-				proposedDates: [$scope.meeting.timestamp,null]
+				proposedDates: [{start: $scope.meeting.start, end:$scope.meeting.end}]
 			};
-			$scope.meeting.timestamp = null;
+			$scope.addProposedDate();
+			$scope.meeting.start = null;
+			$scope.meeting.end = null;
 		}
 		
 		$scope.removeProposedDate = function(index) {
 			$scope.meeting.poll.proposedDates.splice(index,1);
 			if ($scope.meeting.poll.proposedDates.length==1) {
-				$scope.meeting.timestamp = $scope.meeting.poll.proposedDates[0];
+				$scope.meeting.start = $scope.meeting.poll.proposedDates[0].start;
+				$scope.meeting.end = $scope.meeting.poll.proposedDates[0].end
 				$scope.meeting.poll = null;
 			}
 		}
 		
 		$scope.addProposedDate = function(){
-			$scope.meeting.poll.proposedDates.push(null);
+			$scope.meeting.poll.proposedDates.push({
+				start:null,
+				end:null
+			});
 		}
 		
 

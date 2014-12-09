@@ -32,7 +32,10 @@ public class Meeting extends BaseEntity {
 	private Text description;
 	
 	@Index
-	private Date timestamp;
+	private Date start;
+	
+	@Index
+	private Date end;
 	
 	private String calendarEventId;
 	
@@ -87,36 +90,58 @@ public class Meeting extends BaseEntity {
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public Date getTimestamp() {
-		return timestamp;
+	public Date getStart() {
+		return start;
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
+	public void setStart(Date start) {
+		this.start = start;
 	}
 	
-	@ApiResourceProperty(name = "timestamp")
-	public Long getTimestampTimestamp() {
+	@ApiResourceProperty(name = "start")
+	public Long getStartTimestamp() {
 		Date2TimestampTransformer t = new Date2TimestampTransformer();
-		return t.transformTo(timestamp);
+		return t.transformTo(start);
 	}
 
-	@ApiResourceProperty(name = "timestamp")
-	public void setTimestampTimestamp(Long timestamp) {
+	@ApiResourceProperty(name = "start")
+	public void setStartTimestamp(Long timestamp) {
 		Date2TimestampTransformer t = new Date2TimestampTransformer();
-		this.timestamp = t.transformFrom(timestamp);
+		this.start = t.transformFrom(timestamp);
+	}
+	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public Date getEnd() {
+		return end;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+	
+	@ApiResourceProperty(name = "end")
+	public Long getEndTimestamp() {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		return t.transformTo(end);
+	}
+
+	@ApiResourceProperty(name = "end")
+	public void setEndTimestamp(Long end) {
+		Date2TimestampTransformer t = new Date2TimestampTransformer();
+		this.end = t.transformFrom(end);
 	}
 	
 	public boolean isPast() {
-		if (timestamp != null)
-			return (new Date()).after(timestamp);
+		if (start != null)
+			return (new Date()).after(start);
 		else
 			return false;
 	}
 	
 	public boolean isScheduled() {
-		return timestamp != null;
+		return start != null;
 	}
 
 	public List<String> getAgenda() {

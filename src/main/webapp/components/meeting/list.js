@@ -4,13 +4,13 @@ angular.module('teampot').
 		$scope.meetingList = MeetingService.$list($routeParams.projectId);
 		
 		$scope.filter_isToBeScheduled = function(meeting) {
-			return !meeting.timestamp;
+			return !meeting.start;
 		}	
 		$scope.filter_isPast = function(meeting) {
-			return meeting.timestamp && meeting.past;
+			return meeting.start && meeting.past;
 		}
 		$scope.filter_isNotPast = function(meeting) {
-			return meeting.timestamp && !meeting.past;
+			return meeting.start && !meeting.past;
 		}
 		
 		$scope.poll_hasVoted = function(meeting,proposedDate,result) {
@@ -25,7 +25,7 @@ angular.module('teampot').
 		$scope.poll_getVoteIndex = function(meeting,proposedDate) {
 			if (!meeting.poll.votes) return -1;
 			for (var i=0; i<meeting.poll.votes.length; i++) {
-				if (meeting.poll.votes[i].user.id == $rootScope.currentUser.id && meeting.poll.votes[i].proposedDate == proposedDate)
+				if (meeting.poll.votes[i].user.id == $rootScope.currentUser.id && meeting.poll.votes[i].proposedDate.start == proposedDate.start && meeting.poll.votes[i].proposedDate.end == proposedDate.end)
 					return i;
 			}
 			return -1;
@@ -47,7 +47,8 @@ angular.module('teampot').
 			
 			GapiClient.client("teampot").exec("meeting.pollVote",{
 				id: meeting.id,
-				proposedDate: proposedDate,
+				proposedStartDate: proposedDate.start,
+				proposedEndDate: proposedDate.end,
 				result: result
 			}).$promise.then(function(){
 				NotifyService.info("Your vote has been recorded");

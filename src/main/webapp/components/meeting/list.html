@@ -26,18 +26,24 @@
 								<div class="list-item-box list-item-box-right">
 									<h3>{{meeting.title}}</h3>
 									<p>{{meeting.description}}</p>
-									<md-divider ng-show="meeting.poll" style="margin:10px 0"></md-divider>
-									<h3 ng-show="meeting.poll">Poll starts on <b>{{meeting.poll.startDate|date:'dd'}} {{meeting.poll.startDate|date:'MMMM'}}</b> and ends on <b>{{meeting.poll.endDate|date:'dd'}} {{meeting.poll.endDate|date:'MMMM'}}</b></h3>
+									<md-divider ng-show="meeting.poll && meeting.title" style="margin:10px 0"></md-divider>
+									<h3 ng-show="meeting.poll">
+										Poll 
+										<span ng-show="meeting.poll.startDate">starts on <b>{{meeting.poll.startDate|date:'dd'}} {{meeting.poll.startDate|date:'MMMM'}}</b></span>
+										<span ng-show="meeting.poll.startDate && meeting.poll.endDate"> and </span>
+										<span ng-show="meeting.poll.endDate">ends on <b>{{meeting.poll.endDate|date:'dd'}} {{meeting.poll.endDate|date:'MMMM'}}</b></span>
+									</h3>
 									<ul style="margin:0; padding:0;" ng-show="meeting.poll">
 										<li ng-repeat="proposedDate in meeting.poll.proposedDates track by $index" layout="row" layout-align="center center">
 											<md-icon style="margin:0;" icon="/img/icons/ic_chevron_right_18px.svg"></md-icon>
 											&nbsp;
-											<span style="column-align:middle">{{proposedDate|date:'dd'}} {{proposedDate|date:'MMMM'}}</span>
+											<span style="column-align:middle">{{proposedDate.start|date:'short'}}</span>
 											&nbsp;&nbsp;
-											<md-button ng-show="meeting.poll.open" style="column-align:middle" ng-class="{'material-button-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
+											<md-button ng-show="meeting.poll.open" style="column-align:middle" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
 												<md-icon icon="/img/icons/ic_check_18px.svg"></md-icon>
 											</md-button>
-											<md-button ng-show="meeting.poll.open" style="column-align:middle;" ng-class="{'material-button-raised':poll_hasVoted(meeting,proposedDate,false)}" ng-click="poll_vote(meeting,proposedDate,false,$event)">
+											&nbsp;
+											<md-button ng-show="meeting.poll.open" style="column-align:middle;" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,false)}" ng-click="poll_vote(meeting,proposedDate,false,$event)">
 												<md-icon icon="/img/icons/ic_close_18px.svg"></md-icon>
 											</md-button>
 											&nbsp;&nbsp;
@@ -58,7 +64,7 @@
 
 <section ng-if="meetingList.$resolved && (meetingList.items | filter:filter_isNotPast).length>0">
 	<md-subheader md-theme="transparent">Upcoming meetings</md-subheader>
-	<md-whiteframe class="md-whiteframe-z1 md-whiteframe-with-subheader" layout layout-align="center center" ng-repeat="meeting in meetingList.items | filter:filter_isNotPast | orderBy:'timestamp'" ng-if="meetingList.$resolved && meetingList.items.length>0">
+	<md-whiteframe class="md-whiteframe-z1 md-whiteframe-with-subheader" layout layout-align="center center" ng-repeat="meeting in meetingList.items | filter:filter_isNotPast | orderBy:'start'" ng-if="meetingList.$resolved && meetingList.items.length>0">
 		<md-content flex>
 			<section>
 				<md-list layout="column"> 
@@ -66,9 +72,9 @@
 						<md-item-content>
 							<div class="md-tile-left first" style="text-align:center; min-width:120px">
 								<div class="list-item-box list-item-box-left">
-									<span class="meeting-day">{{meeting.timestamp|date:'dd'}}</span>
+									<span class="meeting-day">{{meeting.start|date:'dd'}}</span>
 									<br/>
-									<span class="meeting-month">{{meeting.timestamp|date:'MMMM'}}</span>
+									<span class="meeting-month">{{meeting.start|date:'MMMM'}}</span>
 								</div>
 							</div>
 							<div class="md-tile-content" ng-click="goto(meeting)" style="cursor: pointer;" flex>
@@ -76,7 +82,7 @@
 								<p>{{meeting.description}}</p>
 							</div>
 							<div class="md-tile-right last" style="text-align:center; min-width:150px">
-								<md-button class="md-button-padded" ng-href="{{getHangoutLink(meeting)}}" target="_blank" data-ng-show="meeting.timestamp && !meeting.past" style="color:inherit">
+								<md-button class="md-button-padded" ng-href="{{getHangoutLink(meeting)}}" target="_blank" data-ng-show="meeting.start && !meeting.past" style="color:inherit">
 									<md-icon icon="/img/icons/ic_hangout_24px.svg"></md-icon> Hangout&nbsp;
 								</md-button>
 							</div>
@@ -90,7 +96,7 @@
 
 <section  ng-if="meetingList.$resolved && (meetingList.items | filter:filter_isPast).length>0">
 	<md-subheader md-theme="transparent">Past meetings</md-subheader>
-	<md-whiteframe class="md-whiteframe-z1 md-whiteframe-with-subheader" layout layout-align="center center" ng-repeat="meeting in meetingList.items | filter:filter_isPast | orderBy:'timestamp'" ng-if="meetingList.$resolved && meetingList.items.length>0">
+	<md-whiteframe class="md-whiteframe-z1 md-whiteframe-with-subheader" layout layout-align="center center" ng-repeat="meeting in meetingList.items | filter:filter_isPast | orderBy:'start'" ng-if="meetingList.$resolved && meetingList.items.length>0">
 		<md-content flex>
 			<section>
 				<md-list layout="column"> 
@@ -98,9 +104,9 @@
 						<md-item-content>
 							<div class="md-tile-left first" style="text-align:center; min-width:120px">
 								<div class="list-item-box list-item-box-left">
-									<span class="meeting-day">{{meeting.timestamp|date:'dd'}}</span>
+									<span class="meeting-day">{{meeting.start|date:'dd'}}</span>
 									<br/>
-									<span class="meeting-month">{{meeting.timestamp|date:'MMMM'}}</span>
+									<span class="meeting-month">{{meeting.start|date:'MMMM'}}</span>
 								</div>
 							</div>
 							<div class="md-tile-content last" ng-click="goto(meeting)" style="cursor: pointer;" flex>

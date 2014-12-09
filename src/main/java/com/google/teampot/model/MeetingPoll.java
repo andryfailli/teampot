@@ -16,7 +16,7 @@ import com.google.teampot.util.ValueComparator;
 
 public class MeetingPoll {
 	
-	private List<Date> proposedDates;
+	private List<MeetingPollProposedDate> proposedDates;
 	
 	private List<MeetingPollVote> votes;
 	
@@ -25,30 +25,16 @@ public class MeetingPoll {
 	private Date endDate;
 	
 	public MeetingPoll() {
-		this.proposedDates = new ArrayList<Date>();
+		this.proposedDates = new ArrayList<MeetingPollProposedDate>();
 		this.votes = new ArrayList<MeetingPollVote>();
 	}
 
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public List<Date> getProposedDates() {
+	public List<MeetingPollProposedDate> getProposedDates() {
 		return proposedDates;
 	}
 
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setProposedDates(List<Date> proposedDates) {
+	public void setProposedDates(List<MeetingPollProposedDate> proposedDates) {
 		this.proposedDates = proposedDates;
-	}
-	
-	@ApiResourceProperty(name = "proposedDates")
-	public List<Long> getProposedDateTimestamps() {
-		Date2TimestampTransformer t = new Date2TimestampTransformer();
-		return t.transformTo(proposedDates);
-	}
-
-	@ApiResourceProperty(name = "proposedDates")
-	public void setProposedDateTimestamps(List<Long> proposedDates) {
-		Date2TimestampTransformer t = new Date2TimestampTransformer();
-		this.proposedDates = t.transformFrom(proposedDates);
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
@@ -122,11 +108,14 @@ public class MeetingPoll {
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public Date getPreferredDate() {
-		Map<Date,Integer> unsortedDates = new LinkedHashMap<Date, Integer>();
+	public MeetingPollProposedDate getPreferredDate() {
+		
+		if (this.votes.size()==0) return null;
+		
+		Map<MeetingPollProposedDate,Integer> unsortedDates = new LinkedHashMap<MeetingPollProposedDate, Integer>();
 		
 		// init
-		for (Date date : this.proposedDates) {
+		for (MeetingPollProposedDate date : this.proposedDates) {
 			unsortedDates.put(date, 0);
 		}
 		
@@ -139,20 +128,26 @@ public class MeetingPoll {
 		}
 		
 		// sort
-		Map<Date,Integer> sortedDates = new TreeMap<Date,Integer>(new ValueComparator(unsortedDates));
+		Map<MeetingPollProposedDate,Integer> sortedDates = new TreeMap<MeetingPollProposedDate,Integer>(new ValueComparator(unsortedDates));
 		sortedDates.putAll(unsortedDates);
 		
-		Date preferredDate = sortedDates.keySet().iterator().next();
+		MeetingPollProposedDate preferredDate = sortedDates.keySet().iterator().next();
 		if (preferredDate != null && unsortedDates.get(preferredDate)>0)
 			return preferredDate;
 		else 
 			return null;
 	}
 	
-	@ApiResourceProperty(name = "preferredDate")
-	public Long getPreferredDateTimestamp() {
-		Date2TimestampTransformer t = new Date2TimestampTransformer();
-		return t.transformTo(this.getPreferredDate());
+	@ApiResourceProperty(name = "preferredDateStart")
+	public Long getPreferredDateStartTimestamp() {
+		MeetingPollProposedDate preferredDate = this.getPreferredDate();
+		return preferredDate != null ? preferredDate.getStartTimestamp() : null;
+	}
+	
+	@ApiResourceProperty(name = "preferredDateEnd")
+	public Long getPreferredDateEndTimestamp() {
+		MeetingPollProposedDate preferredDate = this.getPreferredDate();
+		return preferredDate != null ? preferredDate.getEndTimestamp() : null;
 	}
 	
 }
