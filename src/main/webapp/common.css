@@ -3,6 +3,10 @@ md-whiteframe {
 	margin: 20px;
 }
 
+md-content {
+	overflow: visible;
+}
+
 .md-content-padded {
 	padding:20px;
 }
