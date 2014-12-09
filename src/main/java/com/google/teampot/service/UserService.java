@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
+import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.api.services.admin.directory.Directory;
 import com.google.api.services.admin.directory.model.Member;
+import com.google.api.services.admin.directory.model.Members;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
@@ -124,6 +126,26 @@ public class UserService {
 		}
 	}
 	
+	public void ensureAdmin(User user) throws UnauthorizedException {
+		
+		if (user == null) throw new UnauthorizedException("User not authorized");
+		
+		com.google.api.services.admin.directory.model.User directoryUser = null;
+		try {
+			Directory directoryService = GoogleServices.getDirectoryServiceDomainWide(user);
+			directoryUser = directoryService.users().get(user.getEmail()).execute();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new UnauthorizedException("User not authorized");
+		}
+		
+		if (!directoryUser.getIsAdmin()) {
+			throw new UnauthorizedException("User not authorized");
+		}
+		
+	}
+	
 	public void provisionProfile(User actor, User userToBeProvisioned) {
 
 	com.google.api.services.admin.directory.model.User directoryUser = null;
@@ -159,6 +181,41 @@ public class UserService {
 	
 	public void provisionProfile(User userToBeProvisioned) {
 		this.provisionProfile(userToBeProvisioned,userToBeProvisioned);
+	}
+	
+	public void provisionGroup(String groupEmail, User actor) {
+		
+				
+		Members directoryUsers = null;
+		try {
+			Directory directoryService = GoogleServices.getDirectoryServiceDomainWide(actor);
+			
+			String pageToken = null;
+			
+			do {
+				
+				directoryUsers = directoryService.members().list(groupEmail).execute();
+				for (Member directoryUser : directoryUsers.getMembers()) {
+					
+					User user = this.getUser(directoryUser.getEmail());
+					this.provisionProfile(actor,user);
+					
+				}
+				
+				pageToken = directoryUsers.getNextPageToken();
+				
+			} while (pageToken != null);
+			
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
