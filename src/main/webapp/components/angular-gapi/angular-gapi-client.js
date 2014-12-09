@@ -76,8 +76,14 @@ angular.module("ngGapi").
 							 else
 								 execResultDeferred.resolve(response.result);
 						}
+						
+						var safePayload = angular.copy(payload);
+						for (var key in safePayload) {
+							if (key[0] == "$") delete safePayload[key];
+						}
+						
 						// finally, exec method
-						method(payload).execute(execCallback);
+						method(safePayload).execute(execCallback);
 					});
 					
 					var execResult = thisProvider._buildExecResultDraft(payload,execResultDeferred.promise);
