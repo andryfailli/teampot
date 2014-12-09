@@ -4,6 +4,6 @@
 		<property name="timestamp" direction="desc"/>
 	</datastore-index>
 	<datastore-index kind="Meeting" ancestor="true" source="manual">
-		<property name="timestamp" direction="desc"/>
+		<property name="start" direction="desc"/>
 	</datastore-index>
 </datastore-indexes>
