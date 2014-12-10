@@ -5,7 +5,13 @@ angular.module('teampot').
 		
 		$scope.task = !isNew ? TaskService.$get($routeParams.taskId) : TaskService.$new({project:$routeParams.projectId});
 		
+		$scope.task.$promise.then(function(){
+			$scope.task_bkp = angular.copy($scope.task);
+		})
+		
 		$scope.save = function() {
+			if (angular.equals($scope.task_bkp,$scope.task)) return;
+			
 			$scope.task.$save().$promise
 				.then(function(){
 					NotifyService.info("Task saved");

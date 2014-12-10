@@ -30,9 +30,13 @@ angular.module('teampot').
 			});
 		}
 		
-
+		$scope.meeting.$promise.then(function(){
+			$scope.meeting_bkp = angular.copy($scope.meeting);
+		})
 		
 		$scope.save = function() {
+			if (angular.equals($scope.meeting_bkp,$scope.meeting)) return;
+			
 			$scope.meeting.$save().$promise
 				.then(function(){
 					NotifyService.info("Meeting saved");
