@@ -1,5 +1,5 @@
 angular.module("teampot").
-	factory('UserService',function($rootScope,GapiClient) {
+	factory('UserService',function($rootScope,GapiClient,$q) {
 		
 		client = GapiClient.client("teampot");
 		
@@ -7,6 +7,11 @@ angular.module("teampot").
 			$new: function(entity){
 				entity = entity || {}
 				entity.$resolved = true;
+				
+				var deferred = $q.defer();
+				deferred.resolve(entity);
+				entity.$promise = deferred.promise;
+				
 				entity.$save = function(){
 					return client.exec("user.save",entity);
 				}
