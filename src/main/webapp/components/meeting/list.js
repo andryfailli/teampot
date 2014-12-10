@@ -1,7 +1,9 @@
 angular.module('teampot').
-	controller('meetingListController', function($rootScope,$scope,$routeParams,$location,ProjectService,MeetingService,GapiClient,NotifyService,CONSTANTS) {
+	controller('meetingListController', function($rootScope,$scope,$routeParams,$location,ProjectService,MeetingService,GapiClient,NotifyService,CONSTANTS,RealtimeService) {
 		
 		$scope.meetingList = MeetingService.$list($routeParams.projectId);
+		
+		RealtimeService.subscribe("Meeting",$scope.meetingList);
 		
 		$scope.filter_isToBeScheduled = function(meeting) {
 			return !meeting.start;

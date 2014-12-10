@@ -1,7 +1,9 @@
 angular.module('teampot').
-	controller('taskListController', function($rootScope,$scope,$routeParams,$location,ProjectService,TaskService) {
+	controller('taskListController', function($rootScope,$scope,$routeParams,$location,ProjectService,TaskService,RealtimeService) {
 		
 		$scope.taskList = TaskService.$list($routeParams.projectId);
+		
+		RealtimeService.subscribe("Task",$scope.taskList);
 		
 		$scope.currentFilter = null;
 		$scope.currentOrderBy = null;
