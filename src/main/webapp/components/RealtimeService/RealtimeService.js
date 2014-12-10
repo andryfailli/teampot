@@ -5,12 +5,13 @@ angular.module("teampot").
 			
 			function updateList(entity) {
 				var found = false;
-				for (var i=0; i<entityList.items.length; i++){
-					if (entityList.items[i].id == entity.id) {
-						angular.copy(entity,entityList.items[i]);
-						found = true;
+				if (entityList.items)
+					for (var i=0; i<entityList.items.length; i++){
+						if (entityList.items[i].id == entity.id) {
+							angular.copy(entity,entityList.items[i]);
+							found = true;
+						}
 					}
-				}
 				if (!found) entityList.items.push(entity);
 			}
 			
@@ -41,8 +42,9 @@ angular.module("teampot").
 			return $interval(function(){
 				var entityList = retrieveFn();
 				entityList.$promise.then(function(){
-					for (var i=0; i<entityList.items.length; i++)
-						notify(subject,entityList.items[i]);
+					if (entityList.items)
+						for (var i=0; i<entityList.items.length; i++)
+							notify(subject,entityList.items[i]);
 				});
 			},30000);
 		};
