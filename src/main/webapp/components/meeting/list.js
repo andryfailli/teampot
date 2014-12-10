@@ -64,7 +64,8 @@ angular.module('teampot').
 				var hasQueryParams = meeting.hangoutLink.indexOf("?")>-1;
 				return meeting.hangoutLink+(hasQueryParams?"&":"?")+"gid="+CONSTANTS.HANGOUT_APPID+"&gd="+meeting.id;
 			} else {
-				return "https://plus.google.com/hangouts/_/"+CONSTANTS.APPS_DOMAIN+"/teampot_"+meeting.id+"?gid="+CONSTANTS.HANGOUT_APPID+"&gd="+meeting.id;
+				var useHangoutApp = CONSTANTS.HANGOUT_APPID ? true : false;
+				return "https://plus.google.com/hangouts/_/"+CONSTANTS.APPS_DOMAIN+"/teampot_"+meeting.id + (useHangoutApp ? "?gid="+CONSTANTS.HANGOUT_APPID+"&gd="+meeting.id : "");
 			}
 		}
 		
