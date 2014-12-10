@@ -2,8 +2,10 @@ angular.module('teampot').
 	controller('taskListController', function($rootScope,$scope,$routeParams,$location,ProjectService,TaskService,RealtimeService) {
 		
 		$scope.taskList = TaskService.$list($routeParams.projectId);
-		
+		var watchHandle = RealtimeService.registerWatch("Task",function(){return TaskService.$list($routeParams.projectId);});
 		RealtimeService.subscribe("Task",$scope.taskList);
+		
+		$scope.$on("$destroy",function(){RealtimeService.unregisterWatch(watchHandle);});
 		
 		$scope.currentFilter = null;
 		$scope.currentOrderBy = null;
