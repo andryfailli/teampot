@@ -112,6 +112,16 @@ public class ActivityEvent extends BaseEntity {
 		Date2TimestampTransformer t = new Date2TimestampTransformer();
 		this.timestamp = t.transformFrom(timestamp);
 	}
+	
+	public String getTimestampGroup() {
+		long diff = (new Date()).getTime() - this.timestamp.getTime();
+		
+		if (diff < 86400000) return "today";
+		else if (diff < 172800000L) return "yesterday";
+		else if (diff < 604800000L) return "last week";
+		else if (diff < 31536000000L) return "last year";
+		else return "years ago";
+	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public List<Ref<Comment>> getComments() {
