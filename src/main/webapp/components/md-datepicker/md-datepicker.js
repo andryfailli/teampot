@@ -29,7 +29,7 @@ function MdDatepickerDirective($mdUtil) {
 			' 	</md-button>'+
 			'</div>'+
 			'<input id="{{fid}}" ng-hide="value && !focused" type="{{type ? type : defaultType}}" ng-model="value" ng-focus="onTextboxFocus()" ng-blur="onTextboxBlur()">'+
-			'<div ng-show="focused" class="datepicker-container" ng-mouseenter="onMouseEnter()" ng-mouseleave="onMouseLeave()">'+
+			'<div ng-show="needsPolyfillUI && focused" class="datepicker-container" ng-mouseenter="onMouseEnter()" ng-mouseleave="onMouseLeave()">'+
 			'	<md-whiteframe class="md-whiteframe-z1" layout>'+
 			'		<md-content>'+
 			'			<div date-picker="value" min-view="{{minView}}" max-view="{{maxView}}"></div>'+
@@ -40,10 +40,17 @@ function MdDatepickerDirective($mdUtil) {
 			
 		link: function(scope, element, attr, ctrls) {
 			if (!ctrls[0]) return;
+			var inputGroupCtrl = ctrls[0];
+			
+			function isHtml5InputTypeSupported(type) {
+				type = type.toString().toLowerCase();
+				var elem = document.createElement("input");
+				elem.setAttribute("type", type);
+				return elem.type == type;
+			}
 			
 			scope.defaultType = "date";
-
-			var inputGroupCtrl = ctrls[0];
+			scope.needsPolyfillUI = !isHtml5InputTypeSupported(attr.type ? attr.type : scope.defaultType);			
 
 			function hasValue(){
 				return !angular.isUndefined(scope.value) && scope.value != null;
