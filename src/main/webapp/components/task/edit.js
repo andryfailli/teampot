@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('taskEditController', function($rootScope,$scope,$routeParams,debounce,ProjectService,TaskService,UserService,$timeout,NotifyService) {
+	controller('taskEditController', function($rootScope,$scope,$routeParams,debounce,ProjectService,TaskService,UserService,$timeout,NotifyService,RealtimeService) {
 		
 		var isNew = $routeParams.taskId ? false : true;
 		
@@ -14,6 +14,7 @@ angular.module('teampot').
 			
 			$scope.task.$save().$promise
 				.then(function(){
+					RealtimeService.notify("Task",$scope.task);
 					NotifyService.info("Task saved");
 				})
 				.catch(function(){

@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('meetingEditController', function($rootScope,$scope,$routeParams,debounce,ProjectService,MeetingService,$timeout,NotifyService) {
+	controller('meetingEditController', function($rootScope,$scope,$routeParams,debounce,ProjectService,MeetingService,$timeout,NotifyService,RealtimeService) {
 		
 		var isNew = $routeParams.meetingId ? false : true;
 		
@@ -39,6 +39,7 @@ angular.module('teampot').
 			
 			$scope.meeting.$save().$promise
 				.then(function(){
+					RealtimeService.notify("Meeting",$scope.meeting);
 					NotifyService.info("Meeting saved");
 				})
 				.catch(function(){
