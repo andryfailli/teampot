@@ -1,9 +1,13 @@
 angular.module('teampot').
-	controller('userListController', function($rootScope,$scope,GapiClient,$routeParams,ProjectService,UserService,NotifyService) {
+	controller('userListController', function($rootScope,$scope,GapiClient,$routeParams,ProjectService,UserService,NotifyService,RealtimeService) {
 		
 		$scope.project = ProjectService.$get($routeParams.projectId);
 		
 		$scope.entityList = UserService.$list({project: $routeParams.projectId});
+		var watchHandle = RealtimeService.registerWatch("User",function(){return UserService.$list({project: $routeParams.projectId});});
+		RealtimeService.subscribe("User",$scope.entityList);
+		
+		$scope.$on("$destroy",function(){RealtimeService.unregisterWatch(watchHandle);});
 		
 		$scope.removeMember = function(user){
 			
