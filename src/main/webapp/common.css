@@ -37,6 +37,10 @@ md-icon {
 	height: 100%;
 }
 
+.full-with {
+	width: 100%;
+}
+
 .tile {
 	display: inline-block;
 	min-width: 250px;

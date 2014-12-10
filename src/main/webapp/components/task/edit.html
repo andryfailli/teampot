@@ -7,27 +7,18 @@
 	
 		<form>
 	
-			<div layout="row" layout-align="center center">
+			<div layout="row" layout-sm="column" layout-align="center center">
 				<div>
 					<md-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed"></md-checkbox>
 				</div>
-				<div flex>
+				<div class="full-with" flex>
 					<md-text-float label="Title" ng-model="task.title" class="md-text-float-full-with input-lg"></md-text-float>
-				</div>
-				<div style="overflow:hidden;">
-					<md-input-group class="md-input-has-value">
-						<label for="">Priority</label>
-						<md-slider md-discrete ng-model="task.priority" step="1" min="0" max="4" aria-label="Priority" style="width: 200px;"></md-slider>
-					</md-input-group>
 				</div>
 			</div>
 			
 			
-			<div layout="row" layout-align="center center">
-				<div flex>
-					<md-text-float label="Labels" ng-model="task.labels" class="md-text-float-full-with"></md-text-float>
-				</div>
-				<div style="width:20%">
+			<div layout="row" layout-sm="column" layout-align="center center">
+				<div class="full-with" flex>
 					<md-input-group class="md-text-float-full-with md-default-theme">
 						<label for="dueDate">Due date</label>
 						<md-datepicker
@@ -41,7 +32,7 @@
 						</md-datepicker>
 					</md-input-group>
 				</div>
-				<div style="width:30%">
+				<div class="full-with" flex>
 					<md-input-group class="md-text-float-full-with md-default-theme">
 						<label for="assignee">Assignee</label>
 						<md-typeahead
@@ -53,6 +44,14 @@
 						>
 						</md-typeahead>
 					</md-input-group>
+				</div>
+				<div class="full-with" flex>
+					<div style="overflow:hidden;">
+						<md-input-group class="md-input-has-value">
+							<label for="">Priority</label>
+							<md-slider md-discrete ng-model="task.priority" step="1" min="0" max="4" aria-label="Priority" style="width: 100% ;"></md-slider>
+						</md-input-group>
+					</div>
 				</div>
 			</div>
 			

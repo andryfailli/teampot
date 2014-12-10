@@ -14,11 +14,11 @@
 				<md-list layout="column"> 
 					<md-item class="md-item-padded">
 						<md-item-content>
-							<div class="md-tile-left first" style="text-align:center; min-width:120px">
+							<div class="md-tile-left first" style="text-align:center; min-width:120px" hide-sm>
 								<md-icon icon="/img/icons/ic_help_48px.svg"></md-icon>
 								<p class="text-muted" ng-show="meeting.poll.preferredDate">
-									{{meeting.poll.preferredDate|date:'dd'}}<br>
-									{{meeting.poll.preferredDate|date:'MMMM'}}<br>
+									{{meeting.poll.preferredDate.start|date:'dd'}}<br>
+									{{meeting.poll.preferredDate.start|date:'MMMM'}}<br>
 									<i style="display:inline-block; padding-top:8px;">(maybe)</i>
 								</p>
 							</div>
