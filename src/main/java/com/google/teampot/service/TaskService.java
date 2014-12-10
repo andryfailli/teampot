@@ -138,7 +138,7 @@ public class TaskService{
 			
 			if (entity.isCompleted() && !oldEntity.isCompleted())
 				return TaskActivityEventVerb.COMPLETE;
-			else if ((oldEntity.getAssignee() == null && entity.getAssignee() != null) || !oldEntity.getAssignee().equals(entity.getAssignee()))
+			else if ((oldEntity.getAssignee() == null && entity.getAssignee() != null) || (oldEntity.getAssignee() != null && !oldEntity.getAssignee().equals(entity.getAssignee())))
 				return TaskActivityEventVerb.ASSIGN;
 			else if (oldEntity.getAssignee() != null && entity.getAssignee() == null)
 				return TaskActivityEventVerb.UNASSIGN;
