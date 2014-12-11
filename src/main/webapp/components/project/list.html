@@ -9,12 +9,12 @@
 	</div>
 	
 	<div ng-if="entityList.$resolved  && (entityList.items.length>0)">
-		<md-whiteframe class="md-whiteframe-z1 tile" layout layout-align="center center" style="cursor: pointer;" ng-click="goto(task)" ng-repeat="entity in entityList.items">
+		<md-whiteframe class="md-whiteframe-z1 tile" layout layout-align="center center" style="cursor: pointer;" ng-click="goto(entity)" ng-repeat="entity in entityList.items">
 		<md-content class="md-content-padded" layout="row" flex>
 				<div class="md-tile-left first" layout="column" layout-align="center center" flex>
 					<h2>{{entity.name}}</h2>
 				</div>
-				<div class="md-tile-right last" ng-click="goto(entity)" style="cursor: pointer;" layout="row" layout-align="center center">
+				<div class="md-tile-right last" layout="row" layout-align="center center">
 					<div layout="row" style="text-align: center;">
 						<div layout="column" class="list-item-box list-item-box-right" style="min-width:50px; text-align: left;">
 							<div layout="row" layout-align="center center">

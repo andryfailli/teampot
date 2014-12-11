@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('projectListController', function($rootScope,$scope,GapiClient,ProjectService,RealtimeService) {
+	controller('projectListController', function($rootScope,$scope,$location,GapiClient,ProjectService,RealtimeService) {
 		
 		$scope.entityList = ProjectService.$list();
 		
@@ -8,5 +8,9 @@ angular.module('teampot').
 		RealtimeService.subscribe("Project",$scope.entityList);
 		
 		$scope.$on("$destroy",function(){RealtimeService.unregisterWatch(watchHandle);});
+		
+		$scope.goto = function(entity){
+			$location.path("/project/"+entity.id);
+		}
 		
 	});
