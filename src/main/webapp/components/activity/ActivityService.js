@@ -22,8 +22,8 @@ angular.module("teampot").
 				});
 				return entity;
 			},
-			$list: function(projectId){
-				var entityList = client.exec("activity.list",{project:projectId});
+			$list: function(projectId,page){
+				var entityList = client.exec("activity.list",{project:projectId,page:page});
 				entityList.$resolved = false;
 				entityList.$promise.then(function(){
 					entityList.$resolved = true;

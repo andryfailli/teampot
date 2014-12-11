@@ -11,6 +11,8 @@ public class BaseEntityDAO<T> {
 	 
 	private final Class<T> entityClass;
 	
+	protected int pageSize = 20;
+	
 	public BaseEntityDAO(Class<T> entityClass) {
 		this.entityClass = entityClass;
 	}

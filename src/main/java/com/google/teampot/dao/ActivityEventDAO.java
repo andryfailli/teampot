@@ -23,5 +23,9 @@ public class ActivityEventDAO extends BaseEntityDAO<ActivityEvent>{
 	public List<ActivityEvent> list(String parent) {
 		return ofy().load().type(ActivityEvent.class).ancestor(Ref.create(Key.create(parent))).order("-timestamp").list();
 	}
+	
+	public List<ActivityEvent> list(String parent, int page) {
+		return ofy().load().type(ActivityEvent.class).ancestor(Ref.create(Key.create(parent))).order("-timestamp").offset(page*this.pageSize).limit(this.pageSize).list();
+	}
 
 }

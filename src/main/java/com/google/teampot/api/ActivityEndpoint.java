@@ -21,10 +21,13 @@ public class ActivityEndpoint extends BaseEndpoint {
 		path = "activity",
 		httpMethod = HttpMethod.GET
 	)
-	public List<ActivityEvent> list(com.google.appengine.api.users.User gUser, @Named("project") String projectId) throws OAuthRequestException, UnauthorizedException {
+	public List<ActivityEvent> list(com.google.appengine.api.users.User gUser, @Named("project") String projectId, @Named("page") Integer page) throws OAuthRequestException, UnauthorizedException {
 		UserService.getInstance().ensureEnabled(gUser);
 		
-		return dao.list(projectId);
+		if (page != null)
+			return dao.list(projectId,page);
+		else
+			return dao.list(projectId);
 	}
 	
 	@ApiMethod(
