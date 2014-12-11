@@ -44,6 +44,7 @@ md-icon {
 .tile {
 	display: inline-block;
 	min-width: 250px;
+	max-width: 500px;
 }
 
 a.unstyled {
