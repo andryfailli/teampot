@@ -17,6 +17,12 @@ angular.module('teampot').
 			return meeting.start && !meeting.past;
 		}
 		
+		$scope.poll_getHasVotedTrueFilter = function(proposedDate){
+			return (function(vote){
+				return vote.proposedDate.start == proposedDate.start && vote.proposedDate.end == proposedDate.end && vote.result == true;
+			});
+		}
+		
 		$scope.poll_hasVoted = function(meeting,proposedDate,result) {
 			if (!meeting.poll.votes) return false;
 			var voteIndex = $scope.poll_getVoteIndex(meeting,proposedDate);
