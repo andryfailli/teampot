@@ -11,7 +11,6 @@ import com.google.teampot.model.Project;
 import com.google.teampot.model.ProjectActivityEvent;
 import com.google.teampot.model.Task;
 import com.google.teampot.model.TaskActivityEvent;
-import com.google.teampot.model.TaskComment;
 import com.google.teampot.model.User;
 import com.google.teampot.model.UserActivityEvent;
 import com.googlecode.objectify.Objectify;
@@ -29,7 +28,6 @@ public class OfyService {
     	factory().register(Project.class);
     	factory().register(Task.class);
     	factory().register(TaskActivityEvent.class);
-    	factory().register(TaskComment.class);
     	factory().register(User.class);
     	factory().register(UserActivityEvent.class);
     	factory().register(ProjectActivityEvent.class);

@@ -46,11 +46,11 @@ public class Task extends BaseEntity {
 	
 	private Set<String> files;
 	
-	private List<Ref<TaskComment>> comments;
+	private List<Ref<Comment>> comments;
 
 	public Task() {
 		this.files = new LinkedHashSet<String>();
-		this.comments = new ArrayList<Ref<TaskComment>>();
+		this.comments = new ArrayList<Ref<Comment>>();
 	}
 	
 	@Override
@@ -206,12 +206,12 @@ public class Task extends BaseEntity {
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public List<Ref<TaskComment>> getComments() {
+	public List<Ref<Comment>> getComments() {
 		return comments;
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setComments(List<Ref<TaskComment>> comments) {
+	public void setComments(List<Ref<Comment>> comments) {
 		this.comments = comments;
 	}
 	
