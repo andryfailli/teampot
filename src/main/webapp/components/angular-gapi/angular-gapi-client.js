@@ -77,10 +77,9 @@ angular.module("ngGapi").
 								 execResultDeferred.resolve(response.result);
 						}
 						
-						var safePayload = angular.copy(payload);
-						for (var key in safePayload) {
-							if (key[0] == "$") delete safePayload[key];
-						}
+						
+						// we need to strip $ fields
+						var safePayload = angular.fromJson(angular.toJson(payload));
 						
 						// finally, exec method
 						method(safePayload).execute(execCallback);
