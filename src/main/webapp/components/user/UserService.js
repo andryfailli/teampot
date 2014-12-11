@@ -36,12 +36,11 @@ angular.module("teampot").
 				entityList.$resolved = false;
 				entityList.$promise.then(function(){
 					entityList.$resolved = true;
-					if (entityList.items) {
-						for (var i=0; i<entityList.items.length; i++) {
-							var entity = entityList.items[i];
-							service.$new(entity);
-							entity.$resolved = true;
-						}
+					if (!entityList.items) entityList.items = [];
+					for (var i=0; i<entityList.items.length; i++) {
+						var entity = entityList.items[i];
+						service.$new(entity);
+						entity.$resolved = true;
 					}
 					$rootScope.$apply();
 				});
