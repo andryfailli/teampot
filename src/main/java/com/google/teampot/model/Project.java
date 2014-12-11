@@ -76,6 +76,12 @@ public class Project extends BaseEntity {
 	public String getKey() {
 		return Key.create(this.getClass(), this.getId()).getString();
 	}
+	
+	@ApiResourceProperty(name = "id")
+	public void setKey(String key) {
+		Key entityKey = Key.create(key);
+		this.setId(entityKey.getId());
+	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public List<Ref<ActivityEvent>> getActivityEvents() {

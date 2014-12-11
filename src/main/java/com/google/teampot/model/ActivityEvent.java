@@ -63,6 +63,15 @@ public class ActivityEvent extends BaseEntity {
 			return Key.create(parent.getKey(),this.getClass(), this.getId()).getString();
 		else return null;
 	}
+	
+	@ApiResourceProperty(name = "id")
+	public void setKey(String key) {
+		Key entityKey = Key.create(key);
+		Ref parentRef = Ref.create(entityKey.getParent());
+		this.setProject(parentRef);
+		this.setId(entityKey.getId());
+	}
+	
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Ref<User> getActor() {

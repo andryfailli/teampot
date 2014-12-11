@@ -6,6 +6,7 @@ import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.appengine.api.datastore.Text;
 import com.google.teampot.transformer.Ref2StringTransformer;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -30,6 +31,23 @@ public abstract class Comment extends BaseEntity {
 
 	public Comment() {
 		this.timestamp = new Date();
+	}
+	
+	@Override
+	@ApiResourceProperty(name = "id")
+	public String getKey() {
+		Ref<Project> parent = this.getProject();
+		if (parent != null)
+			return Key.create(parent.getKey(),this.getClass(), this.getId()).getString();
+		else return null;
+	}
+	
+	@ApiResourceProperty(name = "id")
+	public void setKey(String key) {
+		Key entityKey = Key.create(key);
+		Ref parentRef = Ref.create(entityKey.getParent());
+		this.setProject(parentRef);
+		this.setId(entityKey.getId());
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
