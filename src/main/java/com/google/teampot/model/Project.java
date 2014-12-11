@@ -116,6 +116,11 @@ public class Project extends BaseEntity {
 	public void setMeetings(List<Ref<Meeting>> meetings) {
 		this.meetings = meetings;
 	}
+	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void addMeeting(Meeting meeting) {
+		this.meetings.add(Ref.create(meeting));
+	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public List<Ref<Task>> getTasks() {
@@ -125,6 +130,11 @@ public class Project extends BaseEntity {
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setTasks(List<Ref<Task>> tasks) {
 		this.tasks = tasks;
+	}
+	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void addTask(Task task) {
+		this.tasks.add(Ref.create(task));
 	}
 	
 	public int getTasksCount() {

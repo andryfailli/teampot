@@ -12,9 +12,11 @@ import javax.mail.MessagingException;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.teampot.GoogleServices;
+import com.google.teampot.dao.ProjectDAO;
 import com.google.teampot.dao.TaskDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
 import com.google.teampot.model.EntityDiff;
+import com.google.teampot.model.Project;
 import com.google.teampot.model.Task;
 import com.google.teampot.model.TaskActivityEvent;
 import com.google.teampot.model.TaskActivityEventVerb;
@@ -30,11 +32,13 @@ public class TaskService{
 
 	private static TaskService instance;
 	
-	private TaskDAO dao; 
+	private TaskDAO dao;
+	private ProjectDAO projectDAO;
 	private static ActivityEventService activityEventService = ActivityEventService.getInstance();
 	
 	private TaskService() {
 		this.dao = new TaskDAO();
+		this.projectDAO = new ProjectDAO();
 	}
 	
 	public static TaskService getInstance() {
@@ -95,6 +99,13 @@ public class TaskService{
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		
+		if (verb == TaskActivityEventVerb.CREATE) {
+			Project project = entity.getProject().get();
+			project.addTask(entity);
+			projectDAO.save(project);
 		}
 		
 		

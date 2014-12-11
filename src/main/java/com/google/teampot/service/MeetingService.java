@@ -23,6 +23,7 @@ import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.api.API;
 import com.google.teampot.dao.MeetingDAO;
+import com.google.teampot.dao.ProjectDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
 import com.google.teampot.model.EntityDiff;
 import com.google.teampot.model.Meeting;
@@ -30,8 +31,11 @@ import com.google.teampot.model.MeetingActivityEvent;
 import com.google.teampot.model.MeetingActivityEventVerb;
 import com.google.teampot.model.MeetingPollProposedDate;
 import com.google.teampot.model.MeetingPollVote;
+import com.google.teampot.model.Project;
+import com.google.teampot.model.TaskActivityEventVerb;
 import com.google.teampot.model.User;
 import com.google.teampot.util.AppHelper;
+
 import de.danielbechler.diff.ObjectDifferBuilder;
 import de.danielbechler.diff.node.DiffNode;
 
@@ -39,11 +43,13 @@ public class MeetingService{
 
 	private static MeetingService instance;
 	
-	private MeetingDAO dao; 
+	private MeetingDAO dao;
+	private ProjectDAO projectDAO;
 	private static ActivityEventService activityEventService = ActivityEventService.getInstance();
 	
 	private MeetingService() {
 		this.dao = new MeetingDAO();
+		this.projectDAO = new ProjectDAO();
 	}
 	
 	public static MeetingService getInstance() {
@@ -76,6 +82,9 @@ public class MeetingService{
 		Meeting oldEntity = null;
 		if (verb != MeetingActivityEventVerb.CREATE) oldEntity = dao.get(entity.getKey());	
 		
+		// first save
+		dao.save(entity);
+		
 		// send notifications
 		try {
 			switch (verb) {
@@ -94,6 +103,13 @@ public class MeetingService{
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		
+		if (verb == MeetingActivityEventVerb.CREATE) {
+			Project project = entity.getProject().get();
+			project.addMeeting(entity);
+			projectDAO.save(project);
 		}
 		
 		
