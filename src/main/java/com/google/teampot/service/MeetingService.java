@@ -107,23 +107,24 @@ public class MeetingService{
 		
 		
 		if (verb == MeetingActivityEventVerb.CREATE) {
+			// set organizer
+			entity.setOrganizer(actor);
+			
+			// save meeting in project
 			Project project = entity.getProject().get();
 			project.addMeeting(entity);
 			projectDAO.save(project);
 		}
 		
+	
+		if (entity.isScheduled()) this.saveCalendarEvent(entity);
+		if (oldEntity!=null && oldEntity.isScheduled() && !entity.isScheduled()) this.removeCalendarEvent(oldEntity);
+		
+		if (oldEntity!=null && oldEntity.hasPoll())this.removePollEndTask(oldEntity);
+		if (entity.hasPoll()) this.spoonPollEndTask(entity);
 		
 		if (verb == MeetingActivityEventVerb.CREATE) {
-			entity.setOrganizer(actor);
-		} else {
-			
-			if (entity.isScheduled()) this.saveCalendarEvent(entity);
-			if (oldEntity.isScheduled()) this.removeCalendarEvent(oldEntity);
-			
-			if (oldEntity.hasPoll())this.removePollEndTask(oldEntity);
-			if (entity.hasPoll()) this.spoonPollEndTask(entity);
-			
-			
+				
 			DiffNode diffs = ObjectDifferBuilder.buildDefault().compare(entity, oldEntity);
 			if (diffs.hasChanges()) {
 				Map<String,EntityDiff> entityDiffs = new LinkedHashMap<String,EntityDiff>();

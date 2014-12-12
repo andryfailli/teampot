@@ -1,3 +1,22 @@
 .meeting-day {
 	font-size:25pt;
 }
+
+.meeting-time {
+	font-size:10pt;
+}
+
+.proposed-date {
+	border: 1px dashed transparent;
+	
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	
+	display: inline-block;
+	padding: 5px;
+}
+
+.proposed-date.preferred {
+	border: 1px dashed #4caf50;
+}

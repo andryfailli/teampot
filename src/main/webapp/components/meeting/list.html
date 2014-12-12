@@ -37,11 +37,13 @@
 										<li ng-repeat="proposedDate in meeting.poll.proposedDates track by $index" layout="row" layout-align="center center">
 											<md-icon style="margin:0;" icon="/img/icons/ic_chevron_right_18px.svg"></md-icon>
 											&nbsp;
-											<span style="column-align:middle">{{proposedDate.start|date:'shortDate'}},</span>
-											&nbsp;
-											<span style="column-align:middle">{{proposedDate.start|date:'shortTime'}}</span>
-											&nbsp;&#x2799;&nbsp;
-											<span style="column-align:middle">{{proposedDate.end|date:'shortTime'}}</span>
+											<span class="proposed-date" ng-class="{preferred:(meeting.poll.preferredDate.start==proposedDate.start && meeting.poll.preferredDate.end==proposedDate.end)}">
+												<span style="column-align:middle">{{proposedDate.start|date:'shortDate'}},</span>
+												&nbsp;
+												<span style="column-align:middle">{{proposedDate.start|date:'shortTime'}}</span>
+												&nbsp;&#x2799;&nbsp;
+												<span style="column-align:middle">{{proposedDate.end|date:'shortTime'}}</span>
+											</span>
 											&nbsp;&nbsp;
 											<md-button ng-show="meeting.poll.open" style="column-align:middle" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
 												<md-icon icon="/img/icons/ic_check_18px.svg"></md-icon>
@@ -79,6 +81,8 @@
 									<span class="meeting-day">{{meeting.start|date:'dd'}}</span>
 									<br/>
 									<span class="meeting-month">{{meeting.start|date:'MMMM'}}</span>
+									<br/>
+									<span class="meeting-time">{{meeting.start|date:'shortTime'}}</span>
 								</div>
 							</div>
 							<div class="md-tile-content" ng-click="goto(meeting)" style="cursor: pointer;" flex>
@@ -111,6 +115,8 @@
 									<span class="meeting-day">{{meeting.start|date:'dd'}}</span>
 									<br/>
 									<span class="meeting-month">{{meeting.start|date:'MMMM'}}</span>
+									<br/>
+									<span class="meeting-time">{{meeting.start|date:'shortTime'}}</span>
 								</div>
 							</div>
 							<div class="md-tile-content last" ng-click="goto(meeting)" style="cursor: pointer;" flex>
