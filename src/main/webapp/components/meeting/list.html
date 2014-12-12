@@ -16,7 +16,7 @@
 						<md-item-content>
 							<div class="md-tile-left first" style="text-align:center; min-width:120px" hide-sm>
 								<md-icon icon="/img/icons/ic_help_48px.svg"></md-icon>
-								<p class="text-muted" ng-show="meeting.poll.preferredDate">
+								<p class="text-muted" ng-show="meeting.poll.preferredDate" style="line-height: 15px;">
 									{{meeting.poll.preferredDate.start|date:'dd'}}<br>
 									{{meeting.poll.preferredDate.start|date:'MMMM'}}<br>
 									<i style="display:inline-block; padding-top:8px;">(maybe)</i>
@@ -37,7 +37,11 @@
 										<li ng-repeat="proposedDate in meeting.poll.proposedDates track by $index" layout="row" layout-align="center center">
 											<md-icon style="margin:0;" icon="/img/icons/ic_chevron_right_18px.svg"></md-icon>
 											&nbsp;
-											<span style="column-align:middle">{{proposedDate.start|date:'short'}}</span>
+											<span style="column-align:middle">{{proposedDate.start|date:'shortDate'}},</span>
+											&nbsp;
+											<span style="column-align:middle">{{proposedDate.start|date:'shortTime'}}</span>
+											&nbsp;&#x2799;&nbsp;
+											<span style="column-align:middle">{{proposedDate.end|date:'shortTime'}}</span>
 											&nbsp;&nbsp;
 											<md-button ng-show="meeting.poll.open" style="column-align:middle" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
 												<md-icon icon="/img/icons/ic_check_18px.svg"></md-icon>

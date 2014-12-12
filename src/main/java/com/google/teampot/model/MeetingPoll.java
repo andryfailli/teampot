@@ -107,7 +107,6 @@ public class MeetingPoll {
 		return this.isStarted() && !this.isEnded();
 	}
 	
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public MeetingPollProposedDate getPreferredDate() {
 		
 		if (this.votes.size()==0) return null;
@@ -138,16 +137,5 @@ public class MeetingPoll {
 			return null;
 	}
 	
-	@ApiResourceProperty(name = "preferredDateStart")
-	public Long getPreferredDateStartTimestamp() {
-		MeetingPollProposedDate preferredDate = this.getPreferredDate();
-		return preferredDate != null ? preferredDate.getStartTimestamp() : null;
-	}
-	
-	@ApiResourceProperty(name = "preferredDateEnd")
-	public Long getPreferredDateEndTimestamp() {
-		MeetingPollProposedDate preferredDate = this.getPreferredDate();
-		return preferredDate != null ? preferredDate.getEndTimestamp() : null;
-	}
 	
 }
