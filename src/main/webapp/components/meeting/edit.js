@@ -101,6 +101,8 @@ angular.module('teampot').
 		$scope.save = function() {
 			if (angular.equals($scope.meeting_bkp,$scope.meeting)) return;
 			
+			NotifyService.info("Saving meeting...");
+			
 			$scope.meeting.$save().$promise
 				.then(function(){
 					RealtimeService.notify("Meeting",$scope.meeting);

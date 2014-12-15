@@ -12,6 +12,8 @@ angular.module('teampot').
 		$scope.save = function() {
 			if (angular.equals($scope.task_bkp,$scope.task)) return;
 			
+			NotifyService.info("Saving task...");
+			
 			$scope.task.$save().$promise
 				.then(function(){
 					RealtimeService.notify("Task",$scope.task);
