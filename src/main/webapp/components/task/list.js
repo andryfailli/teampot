@@ -45,6 +45,18 @@ angular.module('teampot').
 			$scope.tabSelected = 3;
 		}
 		
+		
+		$scope.selectNextTab = function(){
+			if ($scope.tabSelected+1<4)
+				$scope.tabSelected++;
+		}
+		$scope.selectPrevTab = function(){
+			if ($scope.tabSelected-1>=0)
+				$scope.tabSelected--;
+		}
+		$rootScope.$on("swipe-left",$scope.selectNextTab);
+		$rootScope.$on("swipe-right",$scope.selectPrevTab);
+		
 		$scope.goto = function(task){
 			$location.path("/project/"+$routeParams.projectId+"/task/"+task.id);
 		}

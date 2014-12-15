@@ -1,8 +1,8 @@
 <md-tabs md-theme="transparent" md-selected="tabSelected" ng-init="tabSelected=0">
-	<md-tab label="All" ng-click="showTab_all()"></md-tab>
-	<md-tab label="Upcoming" ng-click="showTab_upcoming()"></md-tab>
-	<md-tab label="Assigned to me" ng-click="showTab_mine()"></md-tab>
-	<md-tab label="Unassigned" ng-click="showTab_unassigned()"></md-tab>
+	<md-tab label="All" md-on-select="showTab_all()"></md-tab>
+	<md-tab label="Upcoming" md-on-select="showTab_upcoming()"></md-tab>
+	<md-tab label="Assigned to me" md-on-select="showTab_mine()"></md-tab>
+	<md-tab label="Unassigned" md-on-select="showTab_unassigned()"></md-tab>
 </md-tabs>
 
 <div layout layout-align="center center" class="spinner-container" ng-if="!taskList.$resolved">

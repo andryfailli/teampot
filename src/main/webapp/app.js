@@ -184,6 +184,9 @@ angular.module('teampot', [
     	$rootScope.viewError = true;
     });
     
+    $rootScope.onSwipeLeft = function(){$rootScope.$emit("swipe-left");}
+    $rootScope.onSwipeRight = function(){$rootScope.$emit("swipe-right");}
+    
     $rootScope.signIn = function(silent){
     	$rootScope.signingIn = true;
     	Gapi.authorize(silent).then(function(data){
