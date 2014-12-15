@@ -42,26 +42,25 @@ angular.module('teampot').
 		}
 		
 		$scope.poll_vote = function(meeting,proposedDate,result,$event) {
-			if (!meeting.poll.votes) meeting.poll.votes = [];
 			
-			var voteIndex = $scope.poll_getVoteIndex(meeting,proposedDate);
-			if (voteIndex>-1) {
-				meeting.poll.votes.splice(voteIndex,1);
-			}
+			if ($scope.voting) return;
 			
-			meeting.poll.votes.push({
-				user:$rootScope.currentUser,
-				proposedDate:proposedDate,
-				result:result
-			});
+			$scope.voting = true;
 			
-			GapiClient.client("teampot").exec("meeting.pollVote",{
+			var updatedMeeting = GapiClient.client("teampot").exec("meeting.pollVote",{
 				id: meeting.id,
 				proposedStartDate: proposedDate.start,
 				proposedEndDate: proposedDate.end,
 				result: result
-			}).$promise.then(function(){
+			})
+			
+			updatedMeeting.$promise.then(function(){
+				$scope.voting = false;
 				NotifyService.info("Your vote has been recorded");
+				
+				var meetingIndex = $scope.meetingList.items.indexOf(meeting);
+				$scope.meetingList.items[meetingIndex] = updatedMeeting;
+				
 			},function(){
 				NotifyService.error("An error occurred while recording your vote",function(){$scope.poll_vote(meeting,proposedDate,result,$event);});
 			});

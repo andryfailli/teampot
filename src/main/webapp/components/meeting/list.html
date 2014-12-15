@@ -12,7 +12,7 @@
 		<md-content flex>
 			<section>
 				<md-list layout="column"> 
-					<md-item class="md-item-padded">
+					<md-item class="md-item-padded meeting-item">
 						<md-item-content>
 							<div class="md-tile-left first" style="text-align:center; min-width:120px" hide-sm>
 								<md-icon icon="/img/icons/ic_help_48px.svg"></md-icon>
@@ -38,22 +38,25 @@
 											<md-icon style="margin:0;" icon="/img/icons/ic_chevron_right_18px.svg"></md-icon>
 											&nbsp;
 											<span class="proposed-date" ng-class="{preferred:(meeting.poll.preferredDate.start==proposedDate.start && meeting.poll.preferredDate.end==proposedDate.end)}">
-												<span style="column-align:middle">{{proposedDate.start|date:'shortDate'}},</span>
-												&nbsp;
-												<span style="column-align:middle">{{proposedDate.start|date:'shortTime'}}</span>
-												&nbsp;&#x2799;&nbsp;
-												<span style="column-align:middle">{{proposedDate.end|date:'shortTime'}}</span>
+												<span class="proposed-date-date">{{proposedDate.start|date:'shortDate'}},&nbsp;</span>
+												<span class="proposed-date-time">
+													<span>{{proposedDate.start|date:'shortTime'}}</span>
+													&nbsp;&#x2799;&nbsp;
+													<span>{{proposedDate.end|date:'shortTime'}}</span>
+												</span>
 											</span>
 											&nbsp;&nbsp;
-											<md-button ng-show="meeting.poll.open" style="column-align:middle" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
-												<md-icon icon="/img/icons/ic_check_18px.svg"></md-icon>
-											</md-button>
-											&nbsp;
-											<md-button ng-show="meeting.poll.open" style="column-align:middle;" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,false)}" ng-click="poll_vote(meeting,proposedDate,false,$event)">
-												<md-icon icon="/img/icons/ic_close_18px.svg"></md-icon>
-											</md-button>
+											<span class="proposed-date-vote-buttons" layout="row">
+												<md-button ng-show="meeting.poll.open" style="column-align:middle" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
+													<md-icon icon="/img/icons/ic_check_18px.svg"></md-icon>
+												</md-button>
+												&nbsp;
+												<md-button ng-show="meeting.poll.open" style="column-align:middle;" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,false)}" ng-click="poll_vote(meeting,proposedDate,false,$event)">
+													<md-icon icon="/img/icons/ic_close_18px.svg"></md-icon>
+												</md-button>
+											</span>
 											&nbsp;&nbsp;
-											<div flex>
+											<div flex hide-sm>
 												<img ng-repeat="vote in meeting.poll.votes | filter:poll_getHasVotedTrueFilter(proposedDate)" ng-src="{{vote.user.iconUrl ? vote.user.iconUrl : '/img/face.png'}}" class="face" style="width:24px; height:24px" alt="{{vote.user.firstName}} {{vote.user.lastName}}" title="{{vote.user.firstName}} {{vote.user.lastName}}">
 											</div>
 										</li>

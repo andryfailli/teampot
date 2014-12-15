@@ -1,0 +1,12 @@
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+	
+	.meeting-item .md-tile-content {
+		padding: 0;
+	}
+	
+	.meeting-item .list-item-box-right {
+		border:0;
+	}
+}
