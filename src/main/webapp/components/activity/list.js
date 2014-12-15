@@ -1,7 +1,16 @@
 angular.module('teampot').
-	controller('activityListController', function($scope,$routeParams,ProjectService,ActivityService) {
+	controller('activityListController', function($scope,$routeParams,ProjectService,ActivityService,CONSTANTS) {
 		
 		$scope.activityList = ActivityService.$list($routeParams.projectId,0);
+		
+		$scope.activityList.$promise.then(function(){
+			$scope.$apply(function(){
+				if (!$scope.activityList.items || $scope.activityList.items.length < CONSTANTS.LIST_PAGE_SIZE) {
+						$scope.loadMoreEndReached = true;
+						return;
+					}
+			})
+		})
 		
 		$scope.loadMore = function(){
 			$scope.loadingMore = true;
@@ -11,11 +20,16 @@ angular.module('teampot').
 			var newPage = ActivityService.$list($routeParams.projectId,$scope.activityListPage+1);
 			newPage.$promise.then(function(){
 				$scope.$apply(function(){
+					$scope.loadingMore = false;
+					if (!newPage.items || newPage.items.length < CONSTANTS.LIST_PAGE_SIZE) {
+						$scope.loadMoreEndReached = true;
+						return;
+					}
+					
 					for (var i=0; i<newPage.items.length; i++) {
 						$scope.activityList.items.push(newPage.items[i]);
 					}
-					$scope.loadingMore = false;
-					if (newPage.items.length == 0) $scope.loadMoreEndReached = true;
+					
 					$scope.activityListPage++;
 				})
 			})
