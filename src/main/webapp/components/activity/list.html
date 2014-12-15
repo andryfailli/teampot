@@ -10,7 +10,7 @@
 		<md-content flex>
 			<section>
 				<md-list layout="column"> 
-					<md-item class="md-item-padded"> 
+					<md-item class="md-item-padded activity-item"> 
 						<md-item-content>
 							<div class="md-tile-left first">
 								<div class="list-item-box list-item-box-left" layout="column" layout-align="center center" style="min-width:120px;">
@@ -24,10 +24,9 @@
 									{{activity.verb}}
 								</div>
 							</div>
-							<div class="md-tile-content" ng-include="'/components/activity/item-'+activity.activityType+'.html'" flex>
-								
+							<div class="md-tile-content" ng-include="'/components/activity/item-'+activity.activityType+'.html'" flex hide-sm>
 							</div>
-							<div class="md-tile-right last" layout="row" layout-align="center center">
+							<div class="md-tile-right last" layout="row" layout-sm="column" layout-align="left center">
 								<div class="list-item-box list-item-box-right" layout="row" layout-align="center center" style="text-align: center;">
 									<small>{{activity.timestamp|date:'shortDate'}}<br/><small>{{activity.timestamp|date:'shortTime'}}</small></small>
 								</div>

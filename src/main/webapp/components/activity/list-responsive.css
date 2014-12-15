@@ -1,0 +1,9 @@
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+	
+	.activity-item .list-item-box-left {
+		border: 0;
+	}
+
+}
