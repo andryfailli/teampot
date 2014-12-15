@@ -173,3 +173,8 @@ md-sidenav:not(.md-locked-open) {
 .md-subheader {
 	text-transform: capitalize;
 }
+
+/* FIXME: whithout this, we have problems with typeahead in modals */
+md-dialog.modal-with-typeahead md-content {
+	overflow: visible;
+}
