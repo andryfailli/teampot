@@ -8,7 +8,7 @@
 		<form>
 	
 			<div layout="row" layout-sm="column" layout-align="center center">
-				<div>
+				<div ng-show="task.id || task.completed">
 					<md-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed"></md-checkbox>
 				</div>
 				<div class="full-with" flex>
