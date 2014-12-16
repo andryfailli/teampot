@@ -90,14 +90,17 @@ public class GoogleServices {
 		return credential;
 	}
 	
-	private static GoogleCredential getCredentialDomainWide(User user, List<String> scopes) throws GeneralSecurityException, IOException {
-		
+	private static GoogleCredential getCredentialDomainWide(List<String> scopes) throws GeneralSecurityException, IOException {
+		return getCredentialDomainWide(Config.get(Config.TEAMPOT_ACCOUNT),scopes);
+	}
+	
+	private static GoogleCredential getCredentialDomainWide(String userEmail, List<String> scopes) throws GeneralSecurityException, IOException {
 		return new GoogleCredential.Builder()
 	      .setTransport(GoogleServices.getInstance().httpTransport)
 	      .setJsonFactory(GoogleServices.getInstance().jsonFactory)
 	      .setServiceAccountId(Config.get(Config.SERVICE_ACCOUNT_EMAIL))
 	      .setServiceAccountScopes(scopes)
-	      .setServiceAccountUser(user.getEmail())
+	      .setServiceAccountUser(userEmail)
 	      .setServiceAccountPrivateKeyFromP12File(new java.io.File(Config.get(Config.SERVICE_ACCOUNT_PKCS12_FILE_PATH)))
 	      .build();
 	}
@@ -121,9 +124,9 @@ public class GoogleServices {
 			.build();
 	}
 		
-	public static Directory getDirectoryServiceDomainWide(User user)	throws GeneralSecurityException, IOException {
+	public static Directory getDirectoryServiceDomainWide()	throws GeneralSecurityException, IOException {
 		return new Directory.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
-			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(user, Arrays.asList(DirectoryScopes.ADMIN_DIRECTORY_GROUP,DirectoryScopes.ADMIN_DIRECTORY_USER_READONLY)))
+			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(Arrays.asList(DirectoryScopes.ADMIN_DIRECTORY_GROUP,DirectoryScopes.ADMIN_DIRECTORY_USER_READONLY)))
 			.setApplicationName(Config.get(Config.APPLICATION_NAME))
 			.build();
 	}
@@ -136,9 +139,9 @@ public class GoogleServices {
 			.build();
 	}
 	
-	public static Groupssettings getGroupssettingsDomainWide(User user)	throws GeneralSecurityException, IOException {
+	public static Groupssettings getGroupssettingsDomainWide()	throws GeneralSecurityException, IOException {
 		return new Groupssettings.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
-			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(user, Arrays.asList(GroupssettingsScopes.APPS_GROUPS_SETTINGS)))
+			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(Arrays.asList(GroupssettingsScopes.APPS_GROUPS_SETTINGS)))
 			.setApplicationName(Config.get(Config.APPLICATION_NAME))
 			.build();
 	}
@@ -151,9 +154,15 @@ public class GoogleServices {
 			.build();
 	}
 	
+	public static Calendar getCalendarServiceDomainWide() throws GeneralSecurityException, IOException {
+		return new Calendar.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
+			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(Arrays.asList(CalendarScopes.CALENDAR)))
+			.setApplicationName(Config.get(Config.APPLICATION_NAME))
+			.build();
+	}
 	public static Calendar getCalendarServiceDomainWide(User user) throws GeneralSecurityException, IOException {
 		return new Calendar.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
-			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(user, Arrays.asList(CalendarScopes.CALENDAR)))
+			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(user.getEmail(),Arrays.asList(CalendarScopes.CALENDAR)))
 			.setApplicationName(Config.get(Config.APPLICATION_NAME))
 			.build();
 	}

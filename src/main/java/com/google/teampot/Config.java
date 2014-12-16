@@ -17,6 +17,7 @@ public class Config {
 	public static final String APPS_GROUP = "APPS_GROUP";
 	public static final String PROJECT_PREFIX = "PROJECT_PREFIX";
 	public static final String DEV_LOCALHOST_USER = "DEV_LOCALHOST_USER";
+	public static final String TEAMPOT_ACCOUNT = "TEAMPOT_ACCOUNT";
 	public static final String SERVICE_ACCOUNT_EMAIL = "SERVICE_ACCOUNT_EMAIL";
 	public static final String SERVICE_ACCOUNT_PKCS12_FILE_PATH = "SERVICE_ACCOUNT_PKCS12_FILE_PATH";
 	

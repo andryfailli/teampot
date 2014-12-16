@@ -122,9 +122,9 @@ public class ProjectService{
 		Groupssettings groupssettingsService = null;
 		try {
 			
-			directoryService = GoogleServices.getDirectoryServiceDomainWide(user);
+			directoryService = GoogleServices.getDirectoryServiceDomainWide();
 			driveService = GoogleServices.getDriveService(user);
-			groupssettingsService = GoogleServices.getGroupssettingsDomainWide(user);
+			groupssettingsService = GoogleServices.getGroupssettingsDomainWide();
 			
 		} catch (GeneralSecurityException e) {
 			// TODO Auto-generated catch block

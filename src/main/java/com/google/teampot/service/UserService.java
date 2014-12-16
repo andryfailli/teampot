@@ -104,7 +104,7 @@ public class UserService {
 		if (APPS_GROUP != null && !APPS_GROUP.equals("")) {
 			
 			try {
-				Directory directoryService = GoogleServices.getDirectoryServiceDomainWide(user);
+				Directory directoryService = GoogleServices.getDirectoryServiceDomainWide();
 				Member member = directoryService.members().get(APPS_GROUP, user.getEmail()).execute();
 				if (member != null) {
 					return true;
@@ -132,7 +132,7 @@ public class UserService {
 		
 		com.google.api.services.admin.directory.model.User directoryUser = null;
 		try {
-			Directory directoryService = GoogleServices.getDirectoryServiceDomainWide(user);
+			Directory directoryService = GoogleServices.getDirectoryServiceDomainWide();
 			directoryUser = directoryService.users().get(user.getEmail()).execute();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -188,7 +188,7 @@ public class UserService {
 				
 		Members directoryUsers = null;
 		try {
-			Directory directoryService = GoogleServices.getDirectoryServiceDomainWide(actor);
+			Directory directoryService = GoogleServices.getDirectoryServiceDomainWide();
 			
 			String pageToken = null;
 			
