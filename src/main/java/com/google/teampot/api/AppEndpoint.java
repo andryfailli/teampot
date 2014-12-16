@@ -27,7 +27,7 @@ public class AppEndpoint extends BaseEndpoint {
 		// app group provisioning
 		String appGroup = Config.get(Config.APPS_GROUP);
 		if (appGroup == null || appGroup.equals("")) return;
-		userService.provisionGroup(appGroup, actor);
+		userService.provisionGroup(appGroup);
 		
 	}
 	

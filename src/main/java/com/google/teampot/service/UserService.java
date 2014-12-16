@@ -150,7 +150,7 @@ public class UserService {
 
 	com.google.api.services.admin.directory.model.User directoryUser = null;
 		try {
-			Directory directoryService = GoogleServices.getDirectoryService(actor);
+			Directory directoryService = actor.hasLoggedIn() ? GoogleServices.getDirectoryService(actor) : GoogleServices.getDirectoryServiceDomainWide();
 			directoryUser = directoryService.users().get(userToBeProvisioned.getEmail()).set("viewType","domain_public").execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -183,7 +183,7 @@ public class UserService {
 		this.provisionProfile(userToBeProvisioned,userToBeProvisioned);
 	}
 	
-	public void provisionGroup(String groupEmail, User actor) {
+	public void provisionGroup(String groupEmail) {
 		
 				
 		Members directoryUsers = null;
@@ -198,7 +198,7 @@ public class UserService {
 				for (Member directoryUser : directoryUsers.getMembers()) {
 					
 					User user = this.getUser(directoryUser.getEmail());
-					this.provisionProfile(actor,user);
+					this.provisionProfile(user);
 					
 				}
 				

@@ -10,6 +10,7 @@ import com.google.teampot.api.exception.EntityNotFoundException;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.User;
 import com.google.teampot.service.ProjectService;
+import com.google.teampot.service.TaskService;
 import com.google.teampot.service.UserService;
 import com.google.teampot.transformer.Ref2EntityTransformer;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -78,6 +79,8 @@ public class UserEndpoint extends BaseEndpoint {
 		user.setTokens(credential);
 				
 		UserService.getInstance().provisionProfile(user);
+		
+		TaskService.getInstance().createCalendarEventsForUser(user);
 		
 		userService.ensureEnabled(user);
 		

@@ -109,6 +109,10 @@ public class User extends BaseEntity {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	
+	public boolean hasLoggedIn() {
+		return this.accessToken != null & this.refreshToken != null;
+	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public String getAccessToken() {

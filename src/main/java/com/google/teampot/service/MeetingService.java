@@ -223,7 +223,7 @@ public class MeetingService{
 	private void saveCalendarEvent(Meeting meeting) {
 		try {
 			
-			Calendar calendarService = GoogleServices.getCalendarServiceDomainWide(meeting.getOrganizer().get());
+			Calendar calendarService = GoogleServices.getCalendarService(meeting.getOrganizer().get());
 			
 			String calendarId = meeting.getOrganizer().get().getEmail();
 			
@@ -265,7 +265,7 @@ public class MeetingService{
 	private void removeCalendarEvent(Meeting meeting) {
 		try {
 			
-			Calendar calendarService = GoogleServices.getCalendarServiceDomainWide(meeting.getOrganizer().get());
+			Calendar calendarService = GoogleServices.getCalendarService(meeting.getOrganizer().get());
 			
 			String calendarId = meeting.getOrganizer().get().getEmail();
 			

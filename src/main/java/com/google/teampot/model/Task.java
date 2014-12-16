@@ -16,6 +16,7 @@ import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
 @Entity
@@ -34,10 +35,13 @@ public class Task extends BaseEntity {
 	
 	private int priority;
 	
+	@Index
 	private Ref<User> assignee;
 	
+	@Index
 	private boolean completed;
 	
+	@Index
 	private Date dueDate;
 	
 	private String dueDateCalendarEventId;

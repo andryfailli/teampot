@@ -3,6 +3,7 @@ package com.google.teampot.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import javax.mail.MessagingException;
 
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.dao.ProjectDAO;
 import com.google.teampot.dao.TaskDAO;
@@ -52,6 +54,10 @@ public class TaskService{
 	
 	public List<Task> list() {
 		return dao.list();
+	}
+	
+	public List<Task> listForUser(User assignee) {
+		return dao.listForUser(assignee);
 	}
 	
 	public Task get(String key){
@@ -110,9 +116,6 @@ public class TaskService{
 		
 		
 		if (verb != TaskActivityEventVerb.CREATE)  {
-			// TODO: recreate event only if necessary
-			this.removeCalendarEvent(oldEntity);
-			
 			DiffNode diffs = ObjectDifferBuilder.buildDefault().compare(entity, oldEntity);
 			if (diffs.hasChanges()) {
 				Map<String,EntityDiff> entityDiffs = new LinkedHashMap<String,EntityDiff>();
@@ -121,8 +124,11 @@ public class TaskService{
 			}
 		}
 		
-		// TODO: recreate event only if necessary
-		this.addCalendarEvent(entity);
+		if (verb == TaskActivityEventVerb.ASSIGN || verb == TaskActivityEventVerb.UNASSIGN)  {
+			this.removeCalendarEvent(oldEntity);
+		
+		}
+		this.saveCalendarEvent(entity);
 		
 		dao.save(entity);
 		activtyEvent.setTask(entity);
@@ -158,19 +164,31 @@ public class TaskService{
 		}
 	}
 	
-	private void addCalendarEvent(Task task) {
-		if (task.getAssignee() != null && task.getDueDate() != null) {
+	private void saveCalendarEvent(Task task) {
+		if (task.getAssignee() != null && task.getDueDate() != null && task.getAssignee().get().hasLoggedIn()) {
 			try {
-				Calendar calendarService = GoogleServices.getCalendarServiceDomainWide(task.getAssignee().get());
+				Calendar calendarService = GoogleServices.getCalendarService(task.getAssignee().get());
 				
-				Event event = new Event();
+				String calendarId = task.getAssignee().get().getEmail();
+				
+				Event event;				
+				if (task.getDueDateCalendarEventId() == null) {
+					event = new Event();					
+				} else {
+					event = calendarService.events().get(calendarId, task.getDueDateCalendarEventId()).execute();
+				}
+				
 				event.setSummary((task.isCompleted() ? "✔" : "▢") + " Task: "+task.getTitle());
 				event.setDescription(task.getDescription());
-				
 				GoogleCalendarHelper.setAllDayEvent(task.getDueDate(), event);
 				
-				event = calendarService.events().insert(task.getAssignee().get().getEmail(), event).execute();
-				task.setDueDateCalendarEventId(event.getId());
+				
+				if (task.getDueDateCalendarEventId() == null) {
+					event = calendarService.events().insert(calendarId, event).execute();
+					task.setDueDateCalendarEventId(event.getId());
+				} else {
+					event = calendarService.events().update(calendarId, event.getId(), event).execute();
+				}
 				
 			} catch (GeneralSecurityException e) {
 				// TODO Auto-generated catch block
@@ -183,9 +201,9 @@ public class TaskService{
 	}
 	
 	private void removeCalendarEvent(Task task) {
-		if (task.getAssignee() != null && task.getDueDateCalendarEventId() != null) {
+		if (task.getAssignee() != null && task.getDueDateCalendarEventId() != null  && task.getAssignee().get().hasLoggedIn()) {
 			try {
-				Calendar calendarService = GoogleServices.getCalendarServiceDomainWide(task.getAssignee().get());
+				Calendar calendarService = GoogleServices.getCalendarService(task.getAssignee().get());
 				calendarService.events().delete(task.getAssignee().get().getEmail(), task.getDueDateCalendarEventId()).execute();
 				
 				task.setDueDateCalendarEventId(null);
@@ -197,6 +215,12 @@ public class TaskService{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void createCalendarEventsForUser(User user) {
+		for (Task task : this.listForUser(user)) {
+			this.saveCalendarEvent(task);
 		}
 	}
 	
