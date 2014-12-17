@@ -87,7 +87,7 @@
 					
 					<a id="user-info" ng-if="signedIn">
 						<span hide-sm>{{currentUser.firstName}}</span>
-						<img class="face" src="about:blank" ng-src="{{currentUser.iconUrl}}"/>
+						<img class="face" src="about:blank" ng-src="{{currentUser.iconUrl ? currentUser.iconUrl : '/img/face.png'}}"/>
 					</a>
 					<md-button class="md-raised md-primary" ng-click="signIn()" ng-if="!signedIn && !signingIn" md-theme="indigo">Sign in</md-button>
 
