@@ -55,6 +55,11 @@
 			<version>1.18.0-rc</version>
 		</dependency>
 		<dependency>
+  			<groupId>com.google.api-client</groupId>
+  			<artifactId>google-api-client-appengine</artifactId>
+  			<version>1.18.0-rc</version>
+		</dependency>
+		<dependency>
 			<groupId>com.google.apis</groupId>
 			<artifactId>google-api-services-oauth2</artifactId>
 			<version>v1-rev82-1.19.0</version>
@@ -105,10 +110,15 @@
       		<version>0.90</version>
     	</dependency>
     	<dependency>
-	      		<groupId>org.apache.velocity</groupId>
-	      		<artifactId>velocity</artifactId>
-	      		<version>1.7</version>
-    	</dependency>	
+      		<groupId>org.apache.velocity</groupId>
+      		<artifactId>velocity</artifactId>
+      		<version>1.7</version>
+    	</dependency>
+    	<dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-bigquery</artifactId>
+            <version>v2-rev158-1.19.0</version>
+        </dependency>	
 	</dependencies>
 
 	<build>

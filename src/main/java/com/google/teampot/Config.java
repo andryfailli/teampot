@@ -20,6 +20,7 @@ public class Config {
 	public static final String TEAMPOT_ACCOUNT = "TEAMPOT_ACCOUNT";
 	public static final String SERVICE_ACCOUNT_EMAIL = "SERVICE_ACCOUNT_EMAIL";
 	public static final String SERVICE_ACCOUNT_PKCS12_FILE_PATH = "SERVICE_ACCOUNT_PKCS12_FILE_PATH";
+	public static final String FEATURE_BIGQUERY = "FEATURE_BIGQUERY";
 	
 	private Properties props;
 	

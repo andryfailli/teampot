@@ -14,6 +14,8 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson.JacksonFactory;
 import com.google.api.services.admin.directory.Directory;
 import com.google.api.services.admin.directory.DirectoryScopes;
+import com.google.api.services.bigquery.Bigquery;
+import com.google.api.services.bigquery.BigqueryScopes;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.drive.Drive;
@@ -163,6 +165,13 @@ public class GoogleServices {
 	public static Calendar getCalendarServiceDomainWide(User user) throws GeneralSecurityException, IOException {
 		return new Calendar.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
 			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(user.getEmail(),Arrays.asList(CalendarScopes.CALENDAR)))
+			.setApplicationName(Config.get(Config.APPLICATION_NAME))
+			.build();
+	}
+	
+	public static Bigquery getBigqueryServiceDomainWide() throws GeneralSecurityException, IOException {
+		return new Bigquery.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
+			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(Arrays.asList(BigqueryScopes.BIGQUERY_INSERTDATA)))
 			.setApplicationName(Config.get(Config.APPLICATION_NAME))
 			.build();
 	}
