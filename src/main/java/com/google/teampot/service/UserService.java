@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.api.services.admin.directory.Directory;
@@ -111,11 +112,15 @@ public class UserService {
 				} else {
 					return false;
 				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return false;
-			} catch (GeneralSecurityException e) {
+			} catch (GoogleJsonResponseException e) {
+				if (e.getStatusCode() == 404) {
+					return false;
+				} else {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				}
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
