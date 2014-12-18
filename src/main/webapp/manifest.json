@@ -1,0 +1,13 @@
+{
+  "name": "TeamPot",
+  "icons": [
+    {
+      "src": "/img/teampot-logo-192px.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "density": "4.0"
+    }
+  ],
+  "start_url": "index.html",
+  "display": "standalone"
+}
