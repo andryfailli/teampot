@@ -53,7 +53,7 @@ public class UserService {
 	}
 	
 	public User getUser(com.google.appengine.api.users.User gUser) {
-		return this.getUser(gUser.getEmail());
+		return gUser != null ? this.getUser(gUser.getEmail()) : null;
 	}
 	public User getUser(String userEmail) {
 		User user;
