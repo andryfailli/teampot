@@ -31,5 +31,9 @@ public class AppHelper {
 		
 		return tildeIndex>-1 ? appFullId.substring(tildeIndex+1) : appFullId;		
 	}
+	
+	public static String getAppEmail(String emailId) {
+		return emailId+"@"+AppHelper.getAppId()+".appspotmail.com";
+	}
 
 }

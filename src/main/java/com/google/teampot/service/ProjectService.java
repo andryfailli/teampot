@@ -185,12 +185,16 @@ public class ProjectService{
 		}
 		
 		
-		// add project owner in group
+		// add project owner in group & add app email in group
 		Member member = new Member();
 		member.setEmail(user.getEmail());
 		member.setRole("OWNER");
+		Member appMember = new Member();
+		appMember.setEmail(user.getEmail());
+		appMember.setRole("OWNER");
 		try {
 			member = directoryService.members().insert(group.getId(), member).execute();
+			member = directoryService.members().insert(group.getId(), appMember).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
