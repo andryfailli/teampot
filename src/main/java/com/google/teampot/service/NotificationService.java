@@ -38,9 +38,9 @@ public class NotificationService {
 		Message msg = new MimeMessage(session);
 		if (sender != null) {
         	msg.setReplyTo(new Address[]{new InternetAddress(sender.getEmail(), sender.getFirstName()+" "+sender.getLastName())});
-        	msg.setFrom(new InternetAddress(Config.get(Config.SERVICE_ACCOUNT_EMAIL), sender.getFirstName()+" "+sender.getLastName()+" (TeamPot)"));
+        	msg.setFrom(new InternetAddress(Config.get(Config.TEAMPOT_ACCOUNT), sender.getFirstName()+" "+sender.getLastName()+" (TeamPot)"));
         } else {
-        	msg.setFrom(new InternetAddress(Config.get(Config.SERVICE_ACCOUNT_EMAIL), "TeamPot"));
+        	msg.setFrom(new InternetAddress(Config.get(Config.TEAMPOT_ACCOUNT), "TeamPot"));
         }
         msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient.getEmail(), recipient.getFirstName()+" "+recipient.getLastName()));
         msg.setSubject(subject);
@@ -49,7 +49,7 @@ public class NotificationService {
 	
 	private Message prepareMessage(String subject, Project recipient, User sender) throws UnsupportedEncodingException, MessagingException {
 		Message msg = new MimeMessage(session);
-		msg.setFrom(new InternetAddress(Config.get(Config.SERVICE_ACCOUNT_EMAIL), "TeamPot"));
+		msg.setFrom(new InternetAddress(Config.get(Config.TEAMPOT_ACCOUNT), "TeamPot"));
         if (sender != null) {
         	msg.setReplyTo(new Address[]{new InternetAddress(sender.getEmail(), sender.getFirstName()+" "+sender.getLastName())});
         }
