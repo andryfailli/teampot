@@ -35,5 +35,9 @@ public class AppHelper {
 	public static String getAppEmail(String emailId) {
 		return emailId+"@"+AppHelper.getAppId()+".appspotmail.com";
 	}
+	
+	public static boolean isAppEmail(String emailAddress) {
+		return emailAddress.endsWith("@"+AppHelper.getAppId()+".appspotmail.com");
+	}
 
 }

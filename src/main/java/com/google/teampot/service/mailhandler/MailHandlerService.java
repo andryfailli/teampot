@@ -1,9 +1,12 @@
 package com.google.teampot.service.mailhandler;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import javax.mail.Address;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -15,6 +18,7 @@ import com.google.teampot.model.User;
 import com.google.teampot.service.ProjectService;
 import com.google.teampot.service.UserService;
 import com.google.teampot.servlet.MailHandlerServlet;
+import com.google.teampot.util.AppHelper;
 import com.googlecode.objectify.Ref;
 
 public class MailHandlerService {
@@ -41,7 +45,19 @@ public class MailHandlerService {
 		MimeMessageParser message = new MimeMessageParser(mimeMessage);
 		message.parse();
 		
-		String projectId = message.getTo().get(0).toString().split("@")[0];
+		// find project id
+		String projectId = null;
+		List<Address> addresses = new ArrayList<Address>();
+		addresses.addAll(message.getTo());
+		addresses.addAll(message.getCc());
+		addresses.addAll(message.getBcc());
+		for (Address address : addresses) {
+			if (AppHelper.isAppEmail(address.toString())) {
+				projectId = address.toString().split("@")[0];
+				break;
+			}
+		}
+		
 		Project project = ProjectService.getInstance().getByName(projectId);
 		
 		if (project == null) {
@@ -55,7 +71,7 @@ public class MailHandlerService {
 			logger.info("User "+from+" does not exists. Ignoring email.");
 			return;
 		}
-		if (!project.getUsers().contains(Ref.create(actor))) {
+		if (!project.hasUser(actor)) {
 			logger.info("User "+actor.getEmail()+" is not in "+projectId+"'s team. Ignoring email.");
 			return;
 		}

@@ -164,6 +164,11 @@ public class Project extends BaseEntity {
 		this.users.remove(Ref.create(user));
 	}
 	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public boolean hasUser(User user) {
+		return this.users.contains(user != null ? Ref.create(user) : user);
+	}
+	
 	public int getUsersCount() {
 		if (this.users != null)
 			return this.users.size();
