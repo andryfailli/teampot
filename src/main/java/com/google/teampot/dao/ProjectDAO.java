@@ -20,5 +20,10 @@ public class ProjectDAO extends BaseEntityDAO<Project>{
 	public boolean existsWithName(String machineName){
 		return ofy().load().type(Project.class).filter("machineName",machineName).keys().list().size()>0;
 	}
+	
+	public Project getByName(String machineName){
+		List<Project> projects = ofy().load().type(Project.class).filter("machineName",machineName).limit(1).list();
+		return projects.size()>0 ? projects.get(0) : null;
+	}
 
 }

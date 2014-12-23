@@ -1,5 +1,7 @@
 package com.google.teampot.service;
 
+import static com.google.teampot.OfyService.ofy;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -7,6 +9,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.mail.MessagingException;
 
@@ -37,12 +41,15 @@ import com.google.teampot.model.Project;
 import com.google.teampot.model.ProjectActivityEvent;
 import com.google.teampot.model.EntityActivityEventVerb;
 import com.google.teampot.model.User;
+import com.google.teampot.servlet.MailHandlerServlet;
 import com.google.teampot.util.AppHelper;
 
 import de.danielbechler.diff.ObjectDifferBuilder;
 import de.danielbechler.diff.node.DiffNode;
 
 public class ProjectService{
+	
+	private static final Logger logger = Logger.getLogger(MailHandlerServlet.class.getSimpleName());
 
 	private static ProjectService instance;
 	
@@ -68,6 +75,10 @@ public class ProjectService{
 	
 	public Project get(String key){
 		return dao.get(key);
+	}
+	
+	public Project getByName(String machineName){
+		return dao.getByName(machineName);
 	}
 	
 	public void save(Project entity) throws ProjectExistsException{
@@ -117,6 +128,8 @@ public class ProjectService{
 	
 	private void initProject(Project project, User user) {
 		
+		logger.info("Creating project "+project.getName());
+		
 		Directory directoryService = null;
 		Drive driveService = null;
 		Groupssettings groupssettingsService = null;
@@ -126,12 +139,9 @@ public class ProjectService{
 			driveService = GoogleServices.getDriveService(user);
 			groupssettingsService = GoogleServices.getGroupssettingsDomainWide();
 			
-		} catch (GeneralSecurityException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Could not instantiate Google Services",e);
 		}
 		
 		// set project owner
@@ -171,7 +181,7 @@ public class ProjectService{
 				group = directoryService.groups().update(groupEmail,group).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Could not create/update project's Google group",e);
 		}
 		
 		// set Google Group settings
@@ -181,7 +191,7 @@ public class ProjectService{
 			groupssettingsService.groups().update(groupEmail, groupssettings).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Could not setup project's Google group settings",e);
 		}
 		
 		
@@ -197,7 +207,7 @@ public class ProjectService{
 			member = directoryService.members().insert(group.getId(), appMember).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Could not manage members of project's Google group",e);
 		}
 		
 		
@@ -209,7 +219,7 @@ public class ProjectService{
 			folder = driveService.files().insert(folder).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Could not create project's Google Drive folder",e);
 		}
 		project.setFolder(folder.getId());
 		
@@ -225,6 +235,7 @@ public class ProjectService{
 			permission = driveService.permissions().insert(folder.getId(), permission).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			logger.log(Level.SEVERE,"Could not setup project's Google Drive folder permissions",e);
 			e.printStackTrace();
 		}
 		
@@ -237,12 +248,8 @@ public class ProjectService{
 		// finally, notify
 		try {
 			this.sendProjectInitNotification(project,user);
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log(Level.WARNING,"Could not send notifications",e);
 		}
 				
 		

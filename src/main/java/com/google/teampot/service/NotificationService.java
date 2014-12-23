@@ -2,6 +2,7 @@ package com.google.teampot.service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.mail.Address;
 import javax.mail.Message;
@@ -21,6 +22,8 @@ import com.google.teampot.model.User;
 public class NotificationService {
 
 	private static NotificationService instance;
+	
+	private static Logger logger = Logger.getLogger(NotificationService.class.getSimpleName());
 	
 	private Session session;
 	
@@ -61,13 +64,13 @@ public class NotificationService {
 	public void sendMessage(String subject, String plainBody, User recipient, User sender) throws UnsupportedEncodingException, MessagingException {
 		Message msg = this.prepareMessage(subject, recipient, sender);
 		msg.setText(plainBody);
-        Transport.send(msg);
+		this.sendMessage(msg);
 	}
 	
 	public void sendMessage(String subject, String plainBody, Project recipient, User sender) throws UnsupportedEncodingException, MessagingException {
 		Message msg = this.prepareMessage(subject, recipient, sender);
 		msg.setText(plainBody);
-        Transport.send(msg);
+		this.sendMessage(msg);
 	}
 	
 	public void sendMessage(String subject, String plainBody, String htmlBody, User recipient, User sender) throws UnsupportedEncodingException, MessagingException {
@@ -83,7 +86,7 @@ public class NotificationService {
 		
 		msg.setContent(mp);
 		
-        Transport.send(msg);
+		this.sendMessage(msg);
 	}
 	
 	public void sendMessage(String subject, String plainBody, String htmlBody, Project recipient, User sender) throws UnsupportedEncodingException, MessagingException {
@@ -99,7 +102,11 @@ public class NotificationService {
 		
 		msg.setContent(mp);
 		
-        Transport.send(msg);
+        this.sendMessage(msg);
+	}
+	
+	private void sendMessage(Message msg) throws MessagingException, UnsupportedEncodingException {
+		Transport.send(msg);
 	}
 	
 }
