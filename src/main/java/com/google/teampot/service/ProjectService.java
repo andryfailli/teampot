@@ -200,7 +200,7 @@ public class ProjectService{
 		member.setEmail(user.getEmail());
 		member.setRole("OWNER");
 		Member appMember = new Member();
-		appMember.setEmail(user.getEmail());
+		appMember.setEmail(AppHelper.getAppEmail(project.getMachineName()));
 		appMember.setRole("OWNER");
 		try {
 			member = directoryService.members().insert(group.getId(), member).execute();
