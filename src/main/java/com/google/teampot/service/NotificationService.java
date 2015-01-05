@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.mail.Address;
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
@@ -106,6 +107,9 @@ public class NotificationService {
 	}
 	
 	private void sendMessage(Message msg) throws MessagingException, UnsupportedEncodingException {
+		// GMail markup email sample for whitelisting
+		// uncomment following line to send sample
+		//msg.setRecipient(RecipientType.TO,new InternetAddress("schema.whitelisting+sample@gmail.com", "TeamPot"));
 		Transport.send(msg);
 	}
 	
