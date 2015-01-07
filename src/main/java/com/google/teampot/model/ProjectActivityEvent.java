@@ -5,19 +5,18 @@ import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.teampot.transformer.Enum2StringTransformer;
 import com.google.teampot.transformer.Ref2EntityTransformer;
 import com.googlecode.objectify.Ref;
-import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass(index=true)
 public class ProjectActivityEvent extends ActivityEvent {
 	
-	private EntityActivityEventVerb verb;
+	private ProjectActivityEventVerb verb;
 
 	public ProjectActivityEvent() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ProjectActivityEvent(Project project, User actor, EntityActivityEventVerb verb) {
+	public ProjectActivityEvent(Project project, User actor, ProjectActivityEventVerb verb) {
 		super();
 		this.setProject(project);
 		this.setActor(actor);
@@ -56,24 +55,24 @@ public class ProjectActivityEvent extends ActivityEvent {
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public EntityActivityEventVerb getVerb() {
+	public ProjectActivityEventVerb getVerb() {
 		return verb;
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setVerb(EntityActivityEventVerb verb) {
+	public void setVerb(ProjectActivityEventVerb verb) {
 		this.verb = verb;
 	}
 	
 	@ApiResourceProperty(name = "verb")
 	public String getVerbString() {
-		Enum2StringTransformer<EntityActivityEventVerb> t = new Enum2StringTransformer<EntityActivityEventVerb>(EntityActivityEventVerb.class);
+		Enum2StringTransformer<ProjectActivityEventVerb> t = new Enum2StringTransformer<ProjectActivityEventVerb>(ProjectActivityEventVerb.class);
 		return t.transformTo(this.verb);
 	}	
 
 	@ApiResourceProperty(name = "verb")
 	public void setVerbString(String verb) {
-		Enum2StringTransformer<EntityActivityEventVerb> t = new Enum2StringTransformer<EntityActivityEventVerb>(EntityActivityEventVerb.class);
+		Enum2StringTransformer<ProjectActivityEventVerb> t = new Enum2StringTransformer<ProjectActivityEventVerb>(ProjectActivityEventVerb.class);
 		this.verb = t.transformFrom(verb);
 	}
 

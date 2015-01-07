@@ -48,8 +48,9 @@ public class ActivityEventService {
 			
 			TableRow row = new TableRow();
 			row.set("timestamp", activtyEvent.getTimestampTimestamp());
-			row.set("actor", activtyEvent.getActor().getKey().getString());
+			row.set("actor", activtyEvent.getActor().get().getEmail());
 			row.set("type",activtyEvent.getActivityType());
+			row.set("project",activtyEvent.getProject().get().getMachineName());
 			//TODO: set other info
 						
 			TableDataInsertAllRequest.Rows rows = new TableDataInsertAllRequest.Rows();

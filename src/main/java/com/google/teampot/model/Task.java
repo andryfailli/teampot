@@ -50,11 +50,8 @@ public class Task extends BaseEntity {
 	
 	private Set<String> files;
 	
-	private List<Ref<Comment>> comments;
-
 	public Task() {
 		this.files = new LinkedHashSet<String>();
-		this.comments = new ArrayList<Ref<Comment>>();
 	}
 	
 	@Override
@@ -207,23 +204,6 @@ public class Task extends BaseEntity {
 	public void setProjectKey(String project) {
 		Ref2StringTransformer<Project> t = new Ref2StringTransformer<Project>();
 		this.project = t.transformFrom(project);
-	}
-
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public List<Ref<Comment>> getComments() {
-		return comments;
-	}
-
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setComments(List<Ref<Comment>> comments) {
-		this.comments = comments;
-	}
-	
-	public int getCommentsCount() {
-		if (this.comments != null)
-			return this.comments.size();
-		else
-			return 0;
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)

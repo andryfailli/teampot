@@ -2,8 +2,6 @@ package com.google.teampot;
 
 import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 import com.google.teampot.model.ActivityEvent;
-import com.google.teampot.model.Comment;
-import com.google.teampot.model.DriveActivityEvent;
 import com.google.teampot.model.Meeting;
 import com.google.teampot.model.MeetingActivityEvent;
 import com.google.teampot.model.MemberActivityEvent;
@@ -21,8 +19,6 @@ public class OfyService {
 	
     static {
     	factory().register(ActivityEvent.class);
-    	factory().register(Comment.class);
-    	factory().register(DriveActivityEvent.class);
     	factory().register(Meeting.class);
     	factory().register(MeetingActivityEvent.class);
     	factory().register(Project.class);

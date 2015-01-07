@@ -1,7 +1,5 @@
 package com.google.teampot.service;
 
-import static com.google.teampot.OfyService.ofy;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -39,7 +37,7 @@ import com.google.teampot.model.MemberActivityEvent;
 import com.google.teampot.model.MemberActivityEventVerb;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.ProjectActivityEvent;
-import com.google.teampot.model.EntityActivityEventVerb;
+import com.google.teampot.model.ProjectActivityEventVerb;
 import com.google.teampot.model.User;
 import com.google.teampot.servlet.MailHandlerServlet;
 import com.google.teampot.util.AppHelper;
@@ -92,7 +90,7 @@ public class ProjectService{
 			if (dao.existsWithName(entity.getMachineName())) {
 				throw new ProjectExistsException(entity.getMachineName());
 			} else {
-				activtyEvent.setVerb(EntityActivityEventVerb.CREATE);	
+				activtyEvent.setVerb(ProjectActivityEventVerb.CREATE);	
 				this.initProject(entity, actor);
 			}
 			
@@ -100,7 +98,7 @@ public class ProjectService{
 			
 			Project oldEntity = dao.get(entity.getKey());
 			
-			activtyEvent.setVerb(EntityActivityEventVerb.EDIT);			
+			activtyEvent.setVerb(ProjectActivityEventVerb.EDIT);			
 			
 			DiffNode diffs = ObjectDifferBuilder.buildDefault().compare(entity, oldEntity);
 			if (diffs.hasChanges()) {
@@ -122,7 +120,7 @@ public class ProjectService{
 	
 	public void remove(String key, User actor){
 		Project entity = dao.get(key);
-		activityEventService.registerActivityEvent(new ProjectActivityEvent(entity, actor, EntityActivityEventVerb.DELETE));
+		activityEventService.registerActivityEvent(new ProjectActivityEvent(entity, actor, ProjectActivityEventVerb.DELETE));
 		dao.remove(key);
 	}
 	

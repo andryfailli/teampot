@@ -1,5 +1,5 @@
 package com.google.teampot.model;
 
-public enum EntityActivityEventVerb {
+public enum ProjectActivityEventVerb {
 	CREATE,EDIT,DELETE
 }

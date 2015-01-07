@@ -5,15 +5,11 @@ import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.teampot.transformer.Enum2StringTransformer;
 import com.google.teampot.transformer.Ref2EntityTransformer;
 import com.googlecode.objectify.Ref;
-import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass(index=true)
 public class TaskActivityEvent extends ActivityEvent {
 
-	@Load
-	private Ref<Task> task;
-	
 	private TaskActivityEventVerb verb;
 
 	public TaskActivityEvent() {
@@ -33,31 +29,31 @@ public class TaskActivityEvent extends ActivityEvent {
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Ref<Task> getTask() {
-		return task;
+		return (Ref<Task>) data;
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setTask(Ref<Task> task) {
-		this.task = task;
+		this.data = task;
 		this.setProject(task.get().getProject());
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setTask(Task task) {
-		this.task = Ref.create(task);
+		this.data = Ref.create(task);
 		this.setProject(task.getProject());
 	}
 	
 	@ApiResourceProperty(name = "task")
 	public Task getTaskEntity() {
 		Ref2EntityTransformer<Task> t = new Ref2EntityTransformer<Task>();
-		return t.transformTo(this.task);
+		return t.transformTo((Ref<Task>) this.data);
 	}	
 
 	@ApiResourceProperty(name = "task")
 	public void setTaskEntity(Task task) {
 		Ref2EntityTransformer<Task> t = new Ref2EntityTransformer<Task>();
-		this.task = t.transformFrom(task);
+		this.data = t.transformFrom(task);
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
