@@ -9,29 +9,50 @@
 	</div>
 	
 	<div ng-if="entityList.$resolved  && (entityList.items.length>0)">
-		<md-whiteframe class="md-whiteframe-z1 tile" layout layout-align="center center" style="cursor: pointer;" ng-click="goto(entity)" ng-repeat="entity in entityList.items">
-		<md-content class="md-content-padded" layout="row" flex>
-				<div class="md-tile-left first" layout="column" layout-align="center center" flex>
-					<h2>{{entity.name}}</h2>
-				</div>
-				<div class="md-tile-right last" layout="row" layout-align="center center">
-					<div layout="row" style="text-align: center;">
-						<div layout="column" class="list-item-box list-item-box-right" style="min-width:50px; text-align: left;">
-							<div layout="row" layout-align="center center">
-								<span><md-icon icon="/img/icons/ic_view_list_24px.svg"></md-icon>&nbsp;</span>
-								<span flex>{{entity.tasksCount}}</span>
-							</div>
-							<div layout="row" layout-align="center center">
-								<span><md-icon icon="/img/icons/ic_event_24px.svg"></md-icon>&nbsp;</span>
-								<span flex>{{entity.meetingsCount}}</span>
-							</div>
-							<div layout="row" layout-align="center center">
-								<span><md-icon icon="/img/icons/ic_group_24px.svg"></md-icon>&nbsp;</span>
-								<span flex>{{entity.usersCount}}</span>
+		<md-whiteframe flex="33" class="md-whiteframe-z1 tile" layout="column" layout-align="center center" ng-repeat="entity in entityList.items">
+			<md-content class="md-content-padded">
+				<section layout="row" flex style="cursor: pointer; margin-bottom:12px;" ng-click="goto(entity)">
+					<div class="md-tile-left first" layout="column" layout-align="center center" flex>
+						<h2>{{entity.name}}</h2>
+					</div>
+					<div class="md-tile-right last" layout="row" layout-align="center center" hide-sm>
+						<div layout="row" style="text-align: center;">
+							<div layout="column" class="list-item-box list-item-box-right" style="min-width:50px; text-align: left;">
+								<div layout="row" layout-align="center center">
+									<span><md-icon icon="/img/icons/ic_view_list_24px.svg"></md-icon>&nbsp;</span>
+									<span flex>{{entity.tasksCount}}</span>
+								</div>
+								<div layout="row" layout-align="center center">
+									<span><md-icon icon="/img/icons/ic_event_24px.svg"></md-icon>&nbsp;</span>
+									<span flex>{{entity.meetingsCount}}</span>
+								</div>
+								<div layout="row" layout-align="center center">
+									<span><md-icon icon="/img/icons/ic_group_24px.svg"></md-icon>&nbsp;</span>
+									<span flex>{{entity.usersCount}}</span>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</section>
+				<section layout="column" flex>
+					<md-list layout="column" flex style="padding:0"> 
+						<md-item class="md-item-padded-small" style="cursor: pointer;" ng-repeat="task in taskList.items | filter:{project:entity.id,completed:false} | orderBy:'priority':true | orderBy:'dueDate' | limitTo:3" ng-click="gotoTask(entity,task)"> 
+							<md-item-content>
+								<div class="md-tile-content first" style="text-align:left;" layout="row" layout-align="center center" flex>
+									<md-checkbox ng-model="task.completed" aria-label="Completed" ng-change="task.$save();$event.stopPropagation()" style="margin:4px;"></md-checkbox>
+									<span flex>{{task.title}}</<span>
+								</div>
+								<div class="md-tile-right last" style="cursor: pointer;" layout="row" layout-align="center center">
+									<span class="text-muted text-small">
+										<span ng-show="task.dueDate">{{task.dueDate|date:'shortDate'}}</span>
+										<span ng-show="!task.dueDate && task.priority>=0">P{{task.priority}}</span>
+									</span>
+								</div>
+							</md-item-content>
+							<md-divider ng-if="!$last"></md-divider>
+						</md-item>
+					</md-list>
+				</section>
 			</md-content>
 		</md-whiteframe>
 	</div>
