@@ -41,6 +41,21 @@ angular.module("teampot").
 					$rootScope.$apply();
 				});
 				return entityList;
+			},
+			$listForUser: function(userId){
+				var entityList = client.exec("task.list",{user:userId});
+				entityList.$resolved = false;
+				entityList.$promise.then(function(){
+					entityList.$resolved = true;
+					if (!entityList.items) entityList.items = [];
+					for (var i=0; i<entityList.items.length; i++) {
+						var entity = entityList.items[i];
+						service.$new(entity);
+						entity.$resolved = true;
+					}
+					$rootScope.$apply();
+				});
+				return entityList;
 			}
 		};
 		

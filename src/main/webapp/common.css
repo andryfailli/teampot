@@ -15,6 +15,10 @@ md-item.md-item-padded > md-item-content{
 	padding:12px;
 }
 
+md-item.md-item-padded-small > md-item-content{
+	padding:4px;
+}
+
 .material-content-actions {
 	padding-top:10px;
 	text-align:right;
@@ -107,6 +111,11 @@ md-input-group,
 .text-muted,
 .text-muted > * {
 	color:#A8A8A8 !important;
+}
+
+.text-small,
+.text-small > * {
+	font-size:12px;
 }
 
 
