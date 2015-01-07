@@ -179,5 +179,20 @@ public abstract class ActivityEvent extends BaseEntity {
 	public void setDiffs(Map<String,EntityDiff> diffs) {
 		this.diffs = diffs;
 	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public Ref<? extends BaseEntity> getData() {
+		return data;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setData(Ref<? extends BaseEntity> data) {
+		this.data = data;
+	}
+	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public Map<String,String> getAdditionalData() {
+		return null;
+	}
 	
 }

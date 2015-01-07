@@ -1,5 +1,9 @@
 package com.google.teampot.model;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Date;
+
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.teampot.transformer.Enum2StringTransformer;
@@ -10,6 +14,8 @@ import com.googlecode.objectify.annotation.Subclass;
 @Subclass(index=true)
 public class TaskActivityEvent extends ActivityEvent {
 
+	private static final String ADDITIONAL_DATA_DUEDATE_RESPECTED = "task_dueDate_respected";
+	
 	private TaskActivityEventVerb verb;
 
 	public TaskActivityEvent() {
@@ -76,6 +82,20 @@ public class TaskActivityEvent extends ActivityEvent {
 	public void setVerbString(String verb) {
 		Enum2StringTransformer<TaskActivityEventVerb> t = new Enum2StringTransformer<TaskActivityEventVerb>(TaskActivityEventVerb.class);
 		this.verb = t.transformFrom(verb);
+	}
+	
+	@Override
+	public Map<String,String> getAdditionalData() {
+		Map<String,String> map = new LinkedHashMap<String, String>();
+		
+		Task task = this.getTask().get();
+		
+		// TASK_DUEDATE_RESPECTED
+		if (task.getDueDate() != null && task.isCompleted()) {
+			Date now = new Date();
+			map.put(ADDITIONAL_DATA_DUEDATE_RESPECTED,String.valueOf(task.getDueDate().before(now)).toLowerCase());
+		}
+		return map;
 	}
 
 }

@@ -2,7 +2,6 @@ package com.google.teampot.service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -45,19 +44,24 @@ public class ActivityEventService {
 		try {
 			Bigquery bigqueryService = GoogleServices.getBigqueryServiceDomainWide();
 			
-			
 			TableRow row = new TableRow();
 			row.set("timestamp", activtyEvent.getTimestampTimestamp());
 			row.set("actor", activtyEvent.getActor().get().getEmail());
+			row.set("actorId", activtyEvent.getActor().get().getKey());
 			row.set("type",activtyEvent.getActivityType());
 			row.set("project",activtyEvent.getProject().get().getMachineName());
-			//TODO: set other info
+			row.set("projectId",activtyEvent.getProject().get().getKey());
+			row.set("dataId", activtyEvent.getData().getKey().getString());
+	
+			for (Map.Entry<String,String> entry : activtyEvent.getAdditionalData().entrySet()) {
+			    row.set("additionalData_"+entry.getKey(), entry.getValue());
+			}
 						
 			TableDataInsertAllRequest.Rows rows = new TableDataInsertAllRequest.Rows();
 			rows.setJson(row);
 			
 			TableDataInsertAllRequest content = new TableDataInsertAllRequest().setRows((List)Arrays.asList(rows));
-			TableDataInsertAllResponse response = bigqueryService.tabledata().insertAll(AppHelper.getAppId(), "teampot", "activity", content).execute();
+			TableDataInsertAllResponse response = bigqueryService.tabledata().insertAll("teampot", AppHelper.getAppId(), "activity", content).execute();
 			
 			
 		} catch (GeneralSecurityException e) {
