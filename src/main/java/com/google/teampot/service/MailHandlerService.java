@@ -1,4 +1,4 @@
-package com.google.teampot.service.mailhandler;
+package com.google.teampot.service;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -15,8 +15,8 @@ import org.apache.commons.mail.util.MimeMessageParser;
 
 import com.google.teampot.model.Project;
 import com.google.teampot.model.User;
-import com.google.teampot.service.ProjectService;
-import com.google.teampot.service.UserService;
+import com.google.teampot.service.mailhandler.MailHandlerSubscriber;
+import com.google.teampot.service.mailhandler.MailHandlerTaskMailSubscriber;
 import com.google.teampot.servlet.MailHandlerServlet;
 import com.google.teampot.util.AppHelper;
 import com.googlecode.objectify.Ref;

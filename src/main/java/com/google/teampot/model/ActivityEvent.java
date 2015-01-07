@@ -11,6 +11,7 @@ import com.google.teampot.transformer.Ref2EntityTransformer;
 import com.google.teampot.transformer.Ref2StringTransformer;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -18,6 +19,7 @@ import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.Parent;
 
 @Entity
+@Cache
 public abstract class ActivityEvent extends BaseEntity {
 
 	@Id

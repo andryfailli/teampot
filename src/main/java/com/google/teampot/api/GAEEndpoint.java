@@ -10,6 +10,7 @@ import com.google.teampot.GoogleServices;
 import com.google.teampot.model.Meeting;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.User;
+import com.google.teampot.service.AnalyticsService;
 import com.google.teampot.service.MeetingService;
 import com.google.teampot.service.ProjectService;
 import com.google.teampot.service.UserService;
@@ -62,6 +63,15 @@ public class GAEEndpoint extends BaseEndpoint {
 	public void task_pollEnd(@Named("meeting") String meetingKey) throws IOException, GeneralSecurityException {
 		Meeting meeting = MeetingService.getInstance().get(meetingKey);
 		MeetingService.getInstance().pollEnd(meeting);
+	}
+	
+	@ApiMethod(
+		name = "gae.cron_updateAnalytics", 
+		path = "gae/cron/updateAnalytics",
+		httpMethod = HttpMethod.GET
+	)
+	public void cron_updateAnalytics() {
+		AnalyticsService.getInstance().updateAnalytics();
 	}
 
 }

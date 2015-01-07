@@ -39,6 +39,15 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
+	<security-constraint>
+	    <web-resource-collection>
+	        <web-resource-name>cron</web-resource-name>
+	        <url-pattern>/_ah/api/teampot/v1/gae/cron/*</url-pattern>
+	    </web-resource-collection>
+	    <auth-constraint>
+	        <role-name>admin</role-name>
+	    </auth-constraint>
+	</security-constraint>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
