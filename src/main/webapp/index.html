@@ -41,7 +41,7 @@
 		<!-- endbuild -->
 	
 	</head>
-	<body ng-controller="mainController" md-swipe-right="openSidebar()" md-swipe-left="closeSidebar()" layout="row" ng-cloak>
+	<body ng-controller="mainController" ng-swipe-right="onSwipeRight($event)" ng-swipe-left="onSwipeLeft($event)" layout="row" ng-cloak>
 		
 		<md-sidenav md-is-locked-open="$media('md')" layout="column" class="md-sidenav-left md-whiteframe-z3" md-component-id="left" ng-if="sidebarTemplateUrl"> 
 			<md-toolbar md-theme="indigo">
@@ -98,7 +98,7 @@
 				</h1>
 			</md-toolbar>
 
-			<md-content class="md-padding full-height" id="appview-container" md-swipe-left="onSwipeLeft()" md-swipe-right="onSwipeRight()" flex>
+			<md-content class="md-padding full-height" id="appview-container" flex>
 
 				<p class="text-error" style="text-align:center; padding:15px;" ng-show="viewError">Sorry, an error occurred. Please try again.</p>
 					
@@ -122,6 +122,7 @@
 		<script type="text/javascript" src="/libs/angular-route/angular-route.js"></script>
 		<script type="text/javascript" src="/libs/angular-aria/angular-aria.js"></script>
 		<script type="text/javascript" src="/libs/angular-sanitize/angular-sanitize.js"></script>
+		<script type="text/javascript" src="/libs/angular-touch/angular-touch.js"></script>
 		<script type="text/javascript" src="/libs/hammerjs/hammer.js"></script>
 		<script type="text/javascript" src="/libs/angular-material/angular-material.js"></script>
 		<script type="text/javascript" src="/libs/angular-filter/dist/angular-filter.js"></script>
