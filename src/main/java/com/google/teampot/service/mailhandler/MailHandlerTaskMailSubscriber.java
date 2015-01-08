@@ -2,8 +2,10 @@ package com.google.teampot.service.mailhandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.mail.Address;
+import javax.mail.internet.InternetAddress;
 
 import org.apache.commons.mail.util.MimeMessageParser;
 
@@ -42,12 +44,15 @@ public class MailHandlerTaskMailSubscriber extends MailHandlerSubscriber {
 		addresses.addAll(message.getTo());
 		addresses.addAll(message.getCc());
 		addresses.addAll(message.getBcc());
-		for (Address address : addresses) {
-			if (!AppHelper.isAppEmail(address.toString())) {
-				User user = UserService.getInstance().getUser(address.toString());
-				if (user != null && project.hasUser(user)) {
-					task.setAssigneeEntity(user);
-					break;
+		for (Address rawAddress : addresses) {
+			InternetAddress address = (InternetAddress) rawAddress;
+			if (!AppHelper.isAppEmail(address.getAddress())) {
+				if (UserService.getInstance().isUserProvisioned(address.getAddress())) {
+					User user = UserService.getInstance().getUser(address.getAddress());
+					if (project.hasUser(user)) {
+						task.setAssigneeEntity(user);
+						break;
+					}
 				}
 			}
 		}

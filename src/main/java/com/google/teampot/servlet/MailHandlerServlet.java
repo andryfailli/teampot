@@ -27,12 +27,10 @@ public class MailHandlerServlet extends HttpServlet {
 		logger.info("Received mail message");
         Session session = Session.getDefaultInstance(new Properties(), null); 
         try {
-        	logger.info("Trying to parse mail message");
 			MimeMessage message = new MimeMessage(session, req.getInputStream());
 			
 			MailHandlerService.getInstance().processMessage(message);
-			
-			logger.info("Mail message parsed");
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.log(Level.SEVERE,"Exception thrown while parsing mail message",e);
