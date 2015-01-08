@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
   <cron>
-    <url>/_ah/api/teampot/v1/gae/cron/updateAnalytics</url>
+    <url>/gae/task/updateAnalytics</url>
     <description>Take a snapshot of current metrics</description>
     <schedule>every 12 hours</schedule>
   </cron>

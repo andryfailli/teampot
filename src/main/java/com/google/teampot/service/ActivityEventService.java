@@ -36,7 +36,7 @@ public class ActivityEventService {
 		activtyEvent.setTimestamp(new Date());
 		dao.save(activtyEvent);
 		
-		if (Config.get(Config.FEATURE_BIGQUERY) == "true") streamActivityEvent(activtyEvent);
+		if (Config.get(Config.FEATURE_ANALYTICS).equals(Config.VALUE_TRUE)) streamActivityEvent(activtyEvent);
 		
 	}
 	

@@ -259,14 +259,14 @@ public class ProjectService{
 	    channel.setId(java.util.UUID.randomUUID().toString());
 	    channel.setToken(project.getKey());
 	    channel.setType("web_hook");
-	    channel.setAddress(API.getBaseUrl()+"/gae/webhook/receiveFolderChanges");
+	    channel.setAddress(API.getBaseUrl()+"/webhook/receiveFolderChanges");
 	    long expirationMillis = 86400000; // 1day
 	    channel.setExpiration( (new Date()).getTime() + expirationMillis);
 	    
 	    // task for renewing watch channel
 	    Queue queue = QueueFactory.getDefaultQueue();
 	    TaskOptions task = TaskOptions.Builder
-	    	.withUrl(API.getBaseUrlWithoutHostAndSchema()+"/gae/task/watchFolderChanges")
+	    	.withUrl(AppHelper.getTaskBaseUrl()+"/watchFolderChanges")
 	    	.countdownMillis(expirationMillis)
 	    	.param("project", project.getKey())
 	    	.param("user", project.getOwner().getKey().getString())

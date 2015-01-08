@@ -20,6 +20,7 @@ import com.google.teampot.GoogleServices;
 import com.google.teampot.api.API;
 import com.google.teampot.dao.UserDAO;
 import com.google.teampot.model.User;
+import com.google.teampot.util.AppHelper;
 
 public class UserService {
 
@@ -176,7 +177,7 @@ public class UserService {
 		// spoon task to provision user profile
 		Queue queue = QueueFactory.getDefaultQueue();
 	    TaskOptions task = TaskOptions.Builder
-	    	.withUrl(API.getBaseUrlWithoutHostAndSchema()+"/gae/task/provisionUserProfile")
+	    	.withUrl(AppHelper.getTaskBaseUrl()+"/provisionUserProfile")
 	    	.countdownMillis(86400000) // 1day
 	    	.param("user", userToBeProvisioned.getKey())
 	    	.method(Method.POST)

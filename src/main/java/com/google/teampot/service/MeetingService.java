@@ -294,7 +294,7 @@ public class MeetingService{
 					
 			Queue queue = QueueFactory.getDefaultQueue();
 		    TaskOptions task = TaskOptions.Builder
-		    	.withUrl(API.getBaseUrlWithoutHostAndSchema()+"/gae/task/pollEnd")
+		    	.withUrl(AppHelper.getTaskBaseUrl()+"/pollEnd")
 		    	.etaMillis(meeting.getPoll().getEndDate().getTime())
 		    	.param("meeting", meeting.getKey())
 		    	.method(Method.POST)
