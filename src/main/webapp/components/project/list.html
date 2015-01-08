@@ -39,7 +39,7 @@
 						<md-item class="md-item-padded-small" style="cursor: pointer;" ng-repeat="task in taskList.items | filter:{project:entity.id} | orderBy:'priority':true | orderBy:'dueDate' | limitTo:3" ng-click="gotoTask(entity,task)"> 
 							<md-item-content>
 								<div class="md-tile-content first" style="text-align:left;" layout="row" layout-align="center center" flex>
-									<md-checkbox ng-model="task.completed" aria-label="Completed" ng-change="saveTaskAsync(task)" ng-click="$event.stopPropagation()" style="margin:4px;"></md-checkbox>
+									<md-checkbox ng-model="task.completed" aria-label="Completed" ng-change="saveTaskAsync(task)" ng-click="$event.stopPropagation()" style="margin:0 4px 4px 4px;" ></md-checkbox>
 									<span flex>{{task.title}}</span>
 								</div>
 								<div class="md-tile-right last" style="cursor: pointer;" layout="row" layout-align="center center">
