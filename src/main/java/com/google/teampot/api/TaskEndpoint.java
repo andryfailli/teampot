@@ -32,7 +32,7 @@ public class TaskEndpoint extends BaseEndpoint {
 		else if (projectId == null && userId != null) {
 			User assignee = userService.get(userId);
 			if (assignee == null) throw new EntityNotFoundException("User "+userId+" not found");
-			return taskService.listForUser(assignee);
+			return taskService.listToDoForUser(assignee);
 		} else if (projectId == null && userId == null) {
 			return taskService.list();
 		} else {

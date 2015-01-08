@@ -58,6 +58,10 @@ public class TaskService{
 		return dao.listForUser(assignee);
 	}
 	
+	public List<Task> listToDoForUser(User assignee) {
+		return dao.listToDoForUser(assignee);
+	}
+	
 	public Task get(String key){
 		return dao.get(key);
 	}

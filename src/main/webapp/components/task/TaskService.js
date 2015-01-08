@@ -42,7 +42,7 @@ angular.module("teampot").
 				});
 				return entityList;
 			},
-			$listForUser: function(userId){
+			$listToDoForUser: function(userId){
 				var entityList = client.exec("task.list",{user:userId});
 				entityList.$resolved = false;
 				entityList.$promise.then(function(){
