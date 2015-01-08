@@ -3,7 +3,6 @@ package com.google.teampot.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import javax.mail.MessagingException;
 
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventAttendee;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.dao.ProjectDAO;
 import com.google.teampot.dao.TaskDAO;
@@ -75,7 +73,12 @@ public class TaskService{
 		activtyEvent.setVerb(verb);
 		
 		Task oldEntity = null;
-		if (verb != TaskActivityEventVerb.CREATE) oldEntity = dao.get(entity.getKey());	
+		if (verb != TaskActivityEventVerb.CREATE) {
+			oldEntity = dao.get(entity.getKey());
+			
+			// persist DueDateCalendarEventId
+			entity.setDueDateCalendarEventId(oldEntity.getDueDateCalendarEventId());
+		}
 		
 		// first save
 		dao.save(entity);
