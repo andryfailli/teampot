@@ -28,7 +28,7 @@
 					<md-item class="md-item-padded" style="cursor: pointer;" ng-repeat="task in taskGroupedList | filter:currentFilter | orderBy:currentOrderBy:currentOrderByReverse" ng-click="goto(task)"> 
 						<md-item-content>
 							<div class="md-tile-left first">
-								<md-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed" ng-change="task.$save();$event.stopPropagation()"></md-checkbox>
+								<md-checkbox class="checkbox-bigger" ng-model="task.completed" aria-label="Completed" ng-change="saveTaskAsync(task);$event.stopPropagation()"></md-checkbox>
 							</div>
 							<div class="md-tile-content" flex>
 								<h3>{{task.title}}</h3>
