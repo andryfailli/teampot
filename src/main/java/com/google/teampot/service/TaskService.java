@@ -99,6 +99,11 @@ public class TaskService{
 				break;
 			case ASSIGN:
 				if ((!oldEntity.isAssigned() && entity.isAssigned()) || ( oldEntity.isAssigned() && entity.isAssigned() && !oldEntity.getAssignee().equals(entity.getAssignee()))) this.sendTaskAssignNotification(entity,actor);
+				
+				Project project = entity.getProject().get();
+				if (!project.hasUser(entity.getAssignee())) //if assignee is not in the project's team, add him as member. 
+					ProjectService.getInstance().addMember(project, entity.getAssignee().get(), actor);
+				
 				break;
 			case UNASSIGN:
 				this.sendTaskUnassignNotification(oldEntity,actor);
