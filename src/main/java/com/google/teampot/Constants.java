@@ -1,7 +1,7 @@
 package com.google.teampot;
 
 public class Constants {
-	public static final String WEB_CLIENT_ID = "60968053297-0eo4eum22rhp7iskadtj7aa0cfavovns.apps.googleusercontent.com";
+	public static final String WEB_CLIENT_ID = "138057900615-7ei54320nap7588tr5g5t3tsf43d7otb.apps.googleusercontent.com";
 	public static final String API_EXPLORER_CLIENT_ID = com.google.api.server.spi.Constant.API_EXPLORER_CLIENT_ID;
 	
 	public static final String CURRENT_API_VERSION = "v1";
