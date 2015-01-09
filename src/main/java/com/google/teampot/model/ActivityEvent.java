@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.api.services.bigquery.model.TableRow;
 import com.google.teampot.transformer.Date2TimestampTransformer;
 import com.google.teampot.transformer.Ref2EntityTransformer;
 import com.google.teampot.transformer.Ref2StringTransformer;
@@ -194,13 +195,6 @@ public abstract class ActivityEvent extends BaseEntity {
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public String getAdditionalData() {
-		return null;
-	}
-	
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public String getVerbString() {
-		return null;
-	}
+	public abstract TableRow getTableRow();
 	
 }

@@ -6,6 +6,8 @@ import java.util.Date;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.api.services.bigquery.model.TableRow;
+import com.google.teampot.tablerow.TaskActivityEventTableRowWriter;
 import com.google.teampot.transformer.Enum2StringTransformer;
 import com.google.teampot.transformer.Ref2EntityTransformer;
 import com.googlecode.objectify.Ref;
@@ -71,7 +73,6 @@ public class TaskActivityEvent extends ActivityEvent {
 	}
 	
 	@ApiResourceProperty(name = "verb")
-	@Override
 	public String getVerbString() {
 		Enum2StringTransformer<TaskActivityEventVerb> t = new Enum2StringTransformer<TaskActivityEventVerb>(TaskActivityEventVerb.class);
 		return t.transformTo(this.verb);
@@ -82,17 +83,11 @@ public class TaskActivityEvent extends ActivityEvent {
 		Enum2StringTransformer<TaskActivityEventVerb> t = new Enum2StringTransformer<TaskActivityEventVerb>(TaskActivityEventVerb.class);
 		this.verb = t.transformFrom(verb);
 	}
-	
+
 	@Override
-	public String getAdditionalData() {
-		Task task = this.getTask().get();
-		
-		// TASK_DUEDATE_RESPECTED
-		if (task.getDueDate() != null && task.isCompleted()) {
-			Date now = new Date();
-			return String.valueOf(task.getDueDate().before(now)).toLowerCase();
-		}
-		return null;
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public TableRow getTableRow() {
+		return new TaskActivityEventTableRowWriter(this).getRow();
 	}
 
 }
