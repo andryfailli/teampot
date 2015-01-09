@@ -15,7 +15,9 @@ import com.google.teampot.Config;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.dao.ActivityEventDAO;
 import com.google.teampot.model.ActivityEvent;
+import com.google.teampot.model.BaseEntity;
 import com.google.teampot.util.AppHelper;
+import com.googlecode.objectify.Ref;
 
 public class ActivityEventService {
 
@@ -51,10 +53,17 @@ public class ActivityEventService {
 			row.set("type",activtyEvent.getActivityType());
 			row.set("project",activtyEvent.getProject().get().getMachineName());
 			row.set("projectId",activtyEvent.getProject().get().getKey());
-			row.set("dataId", activtyEvent.getData().getKey().getString());
-	
-			for (Map.Entry<String,String> entry : activtyEvent.getAdditionalData().entrySet()) {
-			    row.set("additionalData_"+entry.getKey(), entry.getValue());
+			
+			Ref<? extends BaseEntity> data = activtyEvent.getData();
+			if (data != null) {
+				row.set("dataId", data.getKey().getString());
+			}
+
+			Map<String,String> additionalData = activtyEvent.getAdditionalData();
+			if (additionalData != null) {
+				for (Map.Entry<String,String> entry : activtyEvent.getAdditionalData().entrySet()) {
+				    row.set("additionalData_"+entry.getKey(), entry.getValue());
+				}
 			}
 						
 			TableDataInsertAllRequest.Rows rows = new TableDataInsertAllRequest.Rows();
