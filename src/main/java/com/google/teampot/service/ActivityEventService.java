@@ -60,11 +60,9 @@ public class ActivityEventService {
 				row.set("dataId", data.getKey().getString());
 			}
 
-			Map<String,String> additionalData = activtyEvent.getAdditionalData();
+			String additionalData = activtyEvent.getAdditionalData();
 			if (additionalData != null) {
-				for (Map.Entry<String,String> entry : activtyEvent.getAdditionalData().entrySet()) {
-				    row.set("additionalData_"+entry.getKey(), entry.getValue());
-				}
+				row.set("additionalData", additionalData);
 			}
 						
 			TableDataInsertAllRequest.Rows rows = new TableDataInsertAllRequest.Rows();
