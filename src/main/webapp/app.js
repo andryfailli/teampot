@@ -157,7 +157,7 @@ angular.module('teampot', [
 	GapiClientProvider.load("drive","v2");
 
 })
-.run(function($rootScope,$routeParams,$location,$mdSidenav,Gapi,GapiClient,ProjectService,CONSTANTS,AlertService,$q){
+.run(function($rootScope,$routeParams,$location,$mdSidenav,Gapi,GapiClient,ProjectService,CONSTANTS,AlertService,$q,$interval){
 	
 	var currentUserDeferred = $q.defer();
 	$rootScope.currentUser$promise = currentUserDeferred.promise;
@@ -225,6 +225,9 @@ angular.module('teampot', [
     				
     				$rootScope.signingIn = false;
     	    		$rootScope.signedIn = true;
+    	    		
+    	    		// Token expires in 3600s. Let's refresh it every 15m
+    	    		$interval(function(){Gapi.authorize(true);},15*60);
     				
     			})
     			.catch(function(data){
