@@ -69,7 +69,7 @@ public class ActivityEventService {
 			rows.setJson(row);
 			
 			TableDataInsertAllRequest content = new TableDataInsertAllRequest().setRows((List)Arrays.asList(rows));
-			TableDataInsertAllResponse response = bigqueryService.tabledata().insertAll("teampot", AppHelper.getAppId(), "activity", content).execute();
+			TableDataInsertAllResponse response = bigqueryService.tabledata().insertAll(AppHelper.getAppId(), "teampot", "activity", content).execute();
 			
 			
 		} catch (GeneralSecurityException e) {
