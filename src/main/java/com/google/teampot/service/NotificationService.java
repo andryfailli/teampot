@@ -106,11 +106,16 @@ public class NotificationService {
         this.sendMessage(msg);
 	}
 	
-	private void sendMessage(Message msg) throws MessagingException, UnsupportedEncodingException {
+	private void sendMessage(Message msg) {
 		// GMail markup email sample for whitelisting
 		// uncomment following line to send sample
 		//msg.setRecipient(RecipientType.TO,new InternetAddress("schema.whitelisting+sample@gmail.com", "TeamPot"));
-		Transport.send(msg);
+		try {
+			Transport.send(msg);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

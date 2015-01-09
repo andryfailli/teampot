@@ -1,6 +1,7 @@
 package com.google.teampot.model;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -194,7 +195,7 @@ public abstract class ActivityEvent extends BaseEntity {
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Map<String,String> getAdditionalData() {
-		return null;
+		return new HashMap<String, String>();
 	}
 	
 }
