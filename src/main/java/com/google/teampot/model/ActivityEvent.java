@@ -198,4 +198,9 @@ public abstract class ActivityEvent extends BaseEntity {
 		return null;
 	}
 	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public String getVerbString() {
+		return null;
+	}
+	
 }

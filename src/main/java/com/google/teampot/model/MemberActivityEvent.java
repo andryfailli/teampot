@@ -65,6 +65,7 @@ public class MemberActivityEvent extends ActivityEvent {
 	}
 	
 	@ApiResourceProperty(name = "verb")
+	@Override
 	public String getVerbString() {
 		Enum2StringTransformer<MemberActivityEventVerb> t = new Enum2StringTransformer<MemberActivityEventVerb>(MemberActivityEventVerb.class);
 		return t.transformTo(this.verb);

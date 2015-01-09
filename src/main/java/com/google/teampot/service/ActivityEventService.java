@@ -51,6 +51,7 @@ public class ActivityEventService {
 			row.set("actor", activtyEvent.getActor().get().getEmail());
 			row.set("actorId", activtyEvent.getActor().get().getKey());
 			row.set("type",activtyEvent.getActivityType());
+			row.set("verb",activtyEvent.getVerbString());
 			row.set("project",activtyEvent.getProject().get().getMachineName());
 			row.set("projectId",activtyEvent.getProject().get().getKey());
 			
