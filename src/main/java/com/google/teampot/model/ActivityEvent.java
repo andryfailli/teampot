@@ -194,7 +194,7 @@ public abstract class ActivityEvent extends BaseEntity {
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public Map<String,String> getAdditionalData() {
+	public String getAdditionalData() {
 		return null;
 	}
 	
