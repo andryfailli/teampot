@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.bigquery.Bigquery;
 import com.google.api.services.bigquery.model.Dataset;
 import com.google.api.services.bigquery.model.DatasetReference;
@@ -92,7 +93,11 @@ public class AnalyticsService {
 	    datasetRef.setDatasetId(datasetName);
 	    dataset.setDatasetReference(datasetRef);
 	    
-	    bigquery.datasets().insert(AppHelper.getAppId(), dataset).execute();
+	    try {
+	    	bigquery.datasets().insert(AppHelper.getAppId(), dataset).execute();
+	    } catch (GoogleJsonResponseException ex) {
+			if (ex.getStatusCode() != 409) throw ex;
+		}
 	}
 	
 	public void createTable(String datasetName, String tableName, List<TableFieldSchema> schemaFields) throws GeneralSecurityException, IOException {
@@ -109,7 +114,11 @@ public class AnalyticsService {
 		tableRef.setTableId(tableName);
 		table.setTableReference(tableRef);
 		
-		bigquery.tables().insert(AppHelper.getAppId(), datasetName, table).execute();
+		try {
+			bigquery.tables().insert(AppHelper.getAppId(), datasetName, table).execute();
+		} catch (GoogleJsonResponseException ex) {
+			if (ex.getStatusCode() != 409) throw ex;
+		}
 	}
 
 

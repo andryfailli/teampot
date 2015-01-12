@@ -5,4 +5,9 @@
     <description>Take a snapshot of current metrics</description>
     <schedule>every 12 hours</schedule>
   </cron>
+  <cron>
+    <url>/gae/task/provisionGroup</url>
+    <description>[Re]provision app users group</description>
+    <schedule>every 24 hours</schedule>
+  </cron>
 </cronentries>
