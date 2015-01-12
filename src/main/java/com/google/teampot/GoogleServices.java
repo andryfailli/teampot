@@ -171,7 +171,7 @@ public class GoogleServices {
 	
 	public static Bigquery getBigqueryServiceDomainWide() throws GeneralSecurityException, IOException {
 		return new Bigquery.Builder(GoogleServices.getInstance().httpTransport, GoogleServices.getInstance().jsonFactory, null)
-			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(Arrays.asList(BigqueryScopes.BIGQUERY_INSERTDATA)))
+			.setHttpRequestInitializer(GoogleServices.getCredentialDomainWide(Arrays.asList(BigqueryScopes.BIGQUERY)))
 			.setApplicationName(Config.get(Config.APPLICATION_NAME))
 			.build();
 	}
