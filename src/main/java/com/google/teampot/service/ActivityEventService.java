@@ -5,8 +5,6 @@ import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 import com.google.api.services.bigquery.Bigquery;
 import com.google.api.services.bigquery.model.TableDataInsertAllRequest;
 import com.google.api.services.bigquery.model.TableDataInsertAllResponse;
@@ -46,30 +44,13 @@ public class ActivityEventService {
 		try {
 			Bigquery bigqueryService = GoogleServices.getBigqueryServiceDomainWide();
 			
-			TableRow row = new TableRow();
-			row.set("timestamp", activtyEvent.getTimestampTimestamp());
-			row.set("actor", activtyEvent.getActor().get().getEmail());
-			row.set("actorId", activtyEvent.getActor().get().getKey());
-			row.set("type",activtyEvent.getActivityType());
-			row.set("verb",activtyEvent.getVerbString());
-			row.set("project",activtyEvent.getProject().get().getMachineName());
-			row.set("projectId",activtyEvent.getProject().get().getKey());
-			
-			Ref<? extends BaseEntity> data = activtyEvent.getData();
-			if (data != null) {
-				row.set("dataId", data.getKey().getString());
-			}
+			TableRow row = activtyEvent.getTableRow();
 
-			String additionalData = activtyEvent.getAdditionalData();
-			if (additionalData != null) {
-				row.set("additionalData", additionalData);
-			}
-						
 			TableDataInsertAllRequest.Rows rows = new TableDataInsertAllRequest.Rows();
 			rows.setJson(row);
 			
 			TableDataInsertAllRequest content = new TableDataInsertAllRequest().setRows((List)Arrays.asList(rows));
-			TableDataInsertAllResponse response = bigqueryService.tabledata().insertAll("teampot", AppHelper.getAppId(), "activity", content).execute();
+			TableDataInsertAllResponse response = bigqueryService.tabledata().insertAll(AppHelper.getAppId(), "teampot", activtyEvent.getActivityType(), content).execute();
 			
 			
 		} catch (GeneralSecurityException e) {

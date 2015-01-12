@@ -7,10 +7,16 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.api.services.bigquery.Bigquery;
+import com.google.api.services.bigquery.model.Dataset;
+import com.google.api.services.bigquery.model.DatasetReference;
 import com.google.api.services.bigquery.model.GetQueryResultsResponse;
 import com.google.api.services.bigquery.model.QueryRequest;
 import com.google.api.services.bigquery.model.QueryResponse;
+import com.google.api.services.bigquery.model.Table;
+import com.google.api.services.bigquery.model.TableFieldSchema;
+import com.google.api.services.bigquery.model.TableReference;
 import com.google.api.services.bigquery.model.TableRow;
+import com.google.api.services.bigquery.model.TableSchema;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.dao.MetricsSnapshotDAO;
 import com.google.teampot.model.MetricsSnapshot;
@@ -74,6 +80,36 @@ public class AnalyticsService {
 				}
 			}
 		}
+	}
+	
+	
+	public void createDataset(String datasetName) throws GeneralSecurityException, IOException {
+		Bigquery bigquery = GoogleServices.getBigqueryServiceDomainWide();
+		
+		Dataset dataset = new Dataset();
+	    DatasetReference datasetRef = new DatasetReference();
+	    datasetRef.setProjectId(AppHelper.getAppId());
+	    datasetRef.setDatasetId(datasetName);
+	    dataset.setDatasetReference(datasetRef);
+	    
+	    bigquery.datasets().insert(AppHelper.getAppId(), dataset).execute();
+	}
+	
+	public void createTable(String datasetName, String tableName, List<TableFieldSchema> schemaFields) throws GeneralSecurityException, IOException {
+		Bigquery bigquery = GoogleServices.getBigqueryServiceDomainWide();
+		
+		TableSchema schema = new TableSchema();
+		schema.setFields(schemaFields);
+		
+		Table table = new Table();
+		table.setSchema(schema);
+		TableReference tableRef = new TableReference();
+		tableRef.setDatasetId(datasetName);
+		tableRef.setProjectId(AppHelper.getAppId());
+		tableRef.setTableId(tableName);
+		table.setTableReference(tableRef);
+		
+		bigquery.tables().insert(AppHelper.getAppId(), datasetName, table).execute();
 	}
 
 
