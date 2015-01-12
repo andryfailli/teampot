@@ -175,6 +175,7 @@ public class UserService {
 		dao.save(userToBeProvisioned);
 		
 		// spoon task to provision user profile
+		/* --- REMOVEME: user profile provisioning is now done from cron
 		Queue queue = QueueFactory.getDefaultQueue();
 	    TaskOptions task = TaskOptions.Builder
 	    	.withUrl(AppHelper.getTaskBaseUrl()+"/provisionUserProfile")
@@ -183,6 +184,7 @@ public class UserService {
 	    	.method(Method.POST)
 	    ; 
         queue.add(task);
+        */
 	}
 	
 	public void provisionProfile(User userToBeProvisioned) {

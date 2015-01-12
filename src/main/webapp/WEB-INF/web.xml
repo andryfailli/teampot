@@ -57,6 +57,14 @@
 		<servlet-name>UpdateAnalyticsServlet</servlet-name>
 		<url-pattern>/gae/task/updateAnalytics</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>ProvisionGroupServlet</servlet-name>
+		<servlet-class>com.google.teampot.servlet.task.ProvisionGroupServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProvisionGroupServlet</servlet-name>
+		<url-pattern>/gae/task/provisionGroup</url-pattern>
+	</servlet-mapping>
 	
 	<filter>
 		<filter-name>ObjectifyFilter</filter-name>
