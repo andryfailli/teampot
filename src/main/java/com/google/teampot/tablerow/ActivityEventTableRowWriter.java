@@ -1,5 +1,9 @@
 package com.google.teampot.tablerow;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.api.services.bigquery.model.TableFieldSchema;
 import com.google.api.services.bigquery.model.TableRow;
 import com.google.teampot.model.ActivityEvent;
 import com.google.teampot.model.BaseEntity;
@@ -28,6 +32,20 @@ public abstract class ActivityEventTableRowWriter {
 	
 	public TableRow getRow() {
 		return this.row;
+	}
+	
+	public static List<TableFieldSchema> getTableSchema() {
+		List<TableFieldSchema> schema = new ArrayList<TableFieldSchema>();
+		
+		schema.add(new TableFieldSchema().setName("timestamp").setType("TIMESTAMP"));
+		schema.add(new TableFieldSchema().setName("actor").setType("STRING"));
+		schema.add(new TableFieldSchema().setName("actorId").setType("STRING"));
+		schema.add(new TableFieldSchema().setName("type").setType("STRING"));
+		schema.add(new TableFieldSchema().setName("project").setType("STRING"));
+		schema.add(new TableFieldSchema().setName("projectId").setType("STRING"));
+		schema.add(new TableFieldSchema().setName("dataId").setType("STRING"));
+		
+		return schema;
 	}
 
 }
