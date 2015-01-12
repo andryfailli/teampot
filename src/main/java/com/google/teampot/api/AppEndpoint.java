@@ -5,7 +5,10 @@ import java.security.GeneralSecurityException;
 
 import com.google.teampot.Config;
 import com.google.teampot.api.BaseEndpoint;
+import com.google.teampot.model.MeetingActivityEvent;
+import com.google.teampot.model.MemberActivityEvent;
 import com.google.teampot.model.ProjectActivityEvent;
+import com.google.teampot.model.TaskActivityEvent;
 import com.google.teampot.model.User;
 import com.google.teampot.service.AnalyticsService;
 import com.google.teampot.service.UserService;
@@ -53,9 +56,9 @@ public class AppEndpoint extends BaseEndpoint {
 		analyticsService.createDataset(dataSetName);
 		
 		analyticsService.createTable(dataSetName, ProjectActivityEvent.class.getSimpleName(), ProjectActivityEventTableRowWriter.getTableSchema());
-		analyticsService.createTable(dataSetName, TaskActivityEventTableRowWriter.class.getSimpleName(), TaskActivityEventTableRowWriter.getTableSchema());
-		analyticsService.createTable(dataSetName, MeetingActivityEventTableRowWriter.class.getSimpleName(), MeetingActivityEventTableRowWriter.getTableSchema());
-		analyticsService.createTable(dataSetName, MemberActivityEventTableRowWriter.class.getSimpleName(), MemberActivityEventTableRowWriter.getTableSchema());
+		analyticsService.createTable(dataSetName, TaskActivityEvent.class.getSimpleName(), TaskActivityEventTableRowWriter.getTableSchema());
+		analyticsService.createTable(dataSetName, MeetingActivityEvent.class.getSimpleName(), MeetingActivityEventTableRowWriter.getTableSchema());
+		analyticsService.createTable(dataSetName, MemberActivityEvent.class.getSimpleName(), MemberActivityEventTableRowWriter.getTableSchema());
 		
 	}
 	
