@@ -1,6 +1,6 @@
 <div class="md-contact-chip" layout="row" layout-align="center center" flex>
 	<div>
-		<img ng-src="{{item.iconUrl}}" class="face" alt="{{item.firstName}} {{item.lastName}}">
+		<img ng-src="{{item.iconUrl ? item.iconUrl : '/img/face.png'}}" class="face" alt="{{item.firstName}} {{item.lastName}}">
 	</div>
 	<div flex>
 		<span>{{item.firstName}} {{item.lastName}}</span>
