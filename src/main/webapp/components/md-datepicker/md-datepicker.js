@@ -22,9 +22,9 @@ function MdDatepickerDirective($mdUtil) {
 		},
 		template: 
 			'<div>'+
-			'<div ng-show="value && !focused" layout="row" style="border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding-top:2px;">'+
+			'<div ng-show="value && !focused" layout="row" style="border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding-top:8px; padding-bottom:4px;">'+
 			'	<div class="datepicker-value" flex ng-click="focused=true;focusTextbox()"><span>{{value|date:format}}</span></div>'+
-			'	<md-button ng-show="value" ng-click="value=null;focusTextbox()" style="padding:0;">'+
+			'	<md-button ng-show="value" ng-click="value=null;focusTextbox()" style="padding:0; margin-left:4px">'+
 			'	 	<i class="mdi-cancel"></i>'+
 			' 	</md-button>'+
 			'</div>'+

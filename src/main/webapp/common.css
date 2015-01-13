@@ -24,11 +24,6 @@ md-item.md-item-padded-small > md-item-content{
 	text-align:right;
 }
 
-md-icon {
-	display: inline-block;
-	vertical-align: middle;
-}
-
 .material-button-fab a.material-button-inner > material-icon {
 	margin-top:11px;
 }
@@ -186,4 +181,14 @@ md-sidenav:not(.md-locked-open) {
 /* FIXME: whithout this, we have problems with typeahead in modals */
 md-dialog.modal-with-typeahead md-content {
 	overflow: visible;
+}
+
+[class*=" mdi-"] {
+	vertical-align: middle;
+}
+
+/* FIXME: whithout this if a fab button has ng-href attr, the icon is misplaced */
+a.md-fab i[class*=" mdi-"] {
+	position: relative;
+	top:13px;
 }
