@@ -16,7 +16,9 @@ public abstract class ActivityEventTableRowWriter {
 	public ActivityEventTableRowWriter(ActivityEvent activityEvent) {
 		this.row = new TableRow();
 		
-		row.set("timestamp", activityEvent.getTimestampTimestamp());
+		if (activityEvent.getTimestamp() != null) {
+			row.set("timestamp", activityEvent.getTimestampTimestamp()/1000);
+		}
 		row.set("actor", activityEvent.getActor().get().getEmail());
 		row.set("actorId", activityEvent.getActor().get().getKey());
 		row.set("type",activityEvent.getActivityType());
