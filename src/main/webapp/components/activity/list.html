@@ -15,11 +15,11 @@
 							<div class="md-tile-left first">
 								<div class="list-item-box list-item-box-left" layout="column" layout-align="center center" style="min-width:120px;">
 									<span ng-switch on="activity.activityType">
-										<md-icon ng-switch-when="TaskActivityEvent" icon="/img/icons/ic_view_list_48px.svg"></md-icon>
-										<md-icon ng-switch-when="ProjectActivityEvent" icon="/img/icons/ic_info_outline_48px.svg"></md-icon>
-										<md-icon ng-switch-when="MeetingActivityEvent" icon="/img/icons/ic_event_48px.svg"></md-icon>
-										<md-icon ng-switch-when="MemberActivityEvent" icon="/img/icons/ic_group_48px.svg"></md-icon>
-										<md-icon ng-switch-default icon="/img/icons/ic_info_outline_48px.svg"></md-icon>
+										<i ng-switch-when="TaskActivityEvent" class="md-view-list"></i>
+										<i ng-switch-when="ProjectActivityEvent" class="md-content-paste"></i>
+										<i ng-switch-when="MeetingActivityEvent" class="md-event"></i>
+										<i ng-switch-when="MemberActivityEvent" class="md-group"></i>
+										<i ng-switch-default class="md-info-outline"></i>
 									</span>
 									{{activity.verb}}
 								</div>

@@ -25,7 +25,7 @@ function MdTypeaheadDirective($mdUtil) {
 			'<div ng-show="value" layout="row" style="border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding-top:2px;">'+
 			'	<div ng-include src="selectedItemTemplateUrl" flex></div>'+
 			'	<md-button ng-click="value=null;queryString=null;focusTextbox()" style="padding:0;">'+
-			'	 	<md-icon icon="/img/icons/ic_cancel_24px.svg"></md-icon>'+
+			'	 	<i class="md-cancel"></i>'+
 			' 	</md-button>'+
 			'</div>'+
 			'<input id="{{fid}}" ng-hide="value" type="text" ng-model="queryString" ng-model-options="{debounce:300}" ng-change="getItems()" ng-focus="onTextboxFocus()" ng-blur="onTextboxBlur()">'+

@@ -25,7 +25,7 @@ function MdDatepickerDirective($mdUtil) {
 			'<div ng-show="value && !focused" layout="row" style="border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding-top:2px;">'+
 			'	<div class="datepicker-value" flex ng-click="focused=true;focusTextbox()"><span>{{value|date:format}}</span></div>'+
 			'	<md-button ng-show="value" ng-click="value=null;focusTextbox()" style="padding:0;">'+
-			'	 	<md-icon icon="/img/icons/ic_cancel_24px.svg"></md-icon>'+
+			'	 	<i class="md-cancel"></i>'+
 			' 	</md-button>'+
 			'</div>'+
 			'<input id="{{fid}}" ng-hide="value && !focused" type="{{type ? type : defaultType}}" ng-model="value" ng-focus="onTextboxFocus()" ng-blur="onTextboxBlur()">'+
