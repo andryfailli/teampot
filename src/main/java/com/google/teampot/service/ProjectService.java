@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.mail.MessagingException;
 
@@ -35,14 +37,17 @@ import com.google.teampot.model.MemberActivityEvent;
 import com.google.teampot.model.MemberActivityEventVerb;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.ProjectActivityEvent;
-import com.google.teampot.model.EntityActivityEventVerb;
+import com.google.teampot.model.ProjectActivityEventVerb;
 import com.google.teampot.model.User;
+import com.google.teampot.servlet.MailHandlerServlet;
 import com.google.teampot.util.AppHelper;
 
 import de.danielbechler.diff.ObjectDifferBuilder;
 import de.danielbechler.diff.node.DiffNode;
 
 public class ProjectService{
+	
+	private static final Logger logger = Logger.getLogger(MailHandlerServlet.class.getSimpleName());
 
 	private static ProjectService instance;
 	
@@ -70,6 +75,10 @@ public class ProjectService{
 		return dao.get(key);
 	}
 	
+	public Project getByName(String machineName){
+		return dao.getByName(machineName);
+	}
+	
 	public void save(Project entity) throws ProjectExistsException{
 		this.save(entity,null);
 	}
@@ -81,7 +90,7 @@ public class ProjectService{
 			if (dao.existsWithName(entity.getMachineName())) {
 				throw new ProjectExistsException(entity.getMachineName());
 			} else {
-				activtyEvent.setVerb(EntityActivityEventVerb.CREATE);	
+				activtyEvent.setVerb(ProjectActivityEventVerb.CREATE);	
 				this.initProject(entity, actor);
 			}
 			
@@ -89,7 +98,7 @@ public class ProjectService{
 			
 			Project oldEntity = dao.get(entity.getKey());
 			
-			activtyEvent.setVerb(EntityActivityEventVerb.EDIT);			
+			activtyEvent.setVerb(ProjectActivityEventVerb.EDIT);			
 			
 			DiffNode diffs = ObjectDifferBuilder.buildDefault().compare(entity, oldEntity);
 			if (diffs.hasChanges()) {
@@ -111,11 +120,13 @@ public class ProjectService{
 	
 	public void remove(String key, User actor){
 		Project entity = dao.get(key);
-		activityEventService.registerActivityEvent(new ProjectActivityEvent(entity, actor, EntityActivityEventVerb.DELETE));
+		activityEventService.registerActivityEvent(new ProjectActivityEvent(entity, actor, ProjectActivityEventVerb.DELETE));
 		dao.remove(key);
 	}
 	
 	private void initProject(Project project, User user) {
+		
+		logger.info("Creating project "+project.getName());
 		
 		Directory directoryService = null;
 		Drive driveService = null;
@@ -126,12 +137,9 @@ public class ProjectService{
 			driveService = GoogleServices.getDriveService(user);
 			groupssettingsService = GoogleServices.getGroupssettingsDomainWide();
 			
-		} catch (GeneralSecurityException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Could not instantiate Google Services",e);
 		}
 		
 		// set project owner
@@ -171,7 +179,7 @@ public class ProjectService{
 				group = directoryService.groups().update(groupEmail,group).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Could not create/update project's Google group",e);
 		}
 		
 		// set Google Group settings
@@ -181,19 +189,23 @@ public class ProjectService{
 			groupssettingsService.groups().update(groupEmail, groupssettings).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Could not setup project's Google group settings",e);
 		}
 		
 		
-		// add project owner in group
+		// add project owner in group & add app email in group
 		Member member = new Member();
 		member.setEmail(user.getEmail());
 		member.setRole("OWNER");
+		Member appMember = new Member();
+		appMember.setEmail(AppHelper.getAppEmail(project.getMachineName()));
+		appMember.setRole("OWNER");
 		try {
 			member = directoryService.members().insert(group.getId(), member).execute();
+			member = directoryService.members().insert(group.getId(), appMember).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Could not manage members of project's Google group",e);
 		}
 		
 		
@@ -205,7 +217,7 @@ public class ProjectService{
 			folder = driveService.files().insert(folder).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Could not create project's Google Drive folder",e);
 		}
 		project.setFolder(folder.getId());
 		
@@ -221,6 +233,7 @@ public class ProjectService{
 			permission = driveService.permissions().insert(folder.getId(), permission).execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			logger.log(Level.SEVERE,"Could not setup project's Google Drive folder permissions",e);
 			e.printStackTrace();
 		}
 		
@@ -233,12 +246,8 @@ public class ProjectService{
 		// finally, notify
 		try {
 			this.sendProjectInitNotification(project,user);
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log(Level.WARNING,"Could not send notifications",e);
 		}
 				
 		
@@ -250,14 +259,14 @@ public class ProjectService{
 	    channel.setId(java.util.UUID.randomUUID().toString());
 	    channel.setToken(project.getKey());
 	    channel.setType("web_hook");
-	    channel.setAddress(API.getBaseUrl()+"/gae/webhook/receiveFolderChanges");
+	    channel.setAddress(API.getBaseUrl()+"/webhook/receiveFolderChanges");
 	    long expirationMillis = 86400000; // 1day
 	    channel.setExpiration( (new Date()).getTime() + expirationMillis);
 	    
 	    // task for renewing watch channel
 	    Queue queue = QueueFactory.getDefaultQueue();
 	    TaskOptions task = TaskOptions.Builder
-	    	.withUrl(API.getBaseUrlWithoutHostAndSchema()+"/gae/task/watchFolderChanges")
+	    	.withUrl(AppHelper.getTaskBaseUrl()+"/watchFolderChanges")
 	    	.countdownMillis(expirationMillis)
 	    	.param("project", project.getKey())
 	    	.param("user", project.getOwner().getKey().getString())

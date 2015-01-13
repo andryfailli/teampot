@@ -2,12 +2,9 @@ package com.google.teampot.service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 import com.google.api.services.bigquery.Bigquery;
 import com.google.api.services.bigquery.model.TableDataInsertAllRequest;
 import com.google.api.services.bigquery.model.TableDataInsertAllResponse;
@@ -16,7 +13,9 @@ import com.google.teampot.Config;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.dao.ActivityEventDAO;
 import com.google.teampot.model.ActivityEvent;
+import com.google.teampot.model.BaseEntity;
 import com.google.teampot.util.AppHelper;
+import com.googlecode.objectify.Ref;
 
 public class ActivityEventService {
 
@@ -37,7 +36,7 @@ public class ActivityEventService {
 		activtyEvent.setTimestamp(new Date());
 		dao.save(activtyEvent);
 		
-		if (Config.get(Config.FEATURE_BIGQUERY) == "true") streamActivityEvent(activtyEvent);
+		if (Config.get(Config.FEATURE_ANALYTICS).equals(Config.VALUE_TRUE)) streamActivityEvent(activtyEvent);
 		
 	}
 	
@@ -45,18 +44,13 @@ public class ActivityEventService {
 		try {
 			Bigquery bigqueryService = GoogleServices.getBigqueryServiceDomainWide();
 			
-			
-			TableRow row = new TableRow();
-			row.set("timestamp", activtyEvent.getTimestampTimestamp());
-			row.set("actor", activtyEvent.getActor().getKey().getString());
-			row.set("type",activtyEvent.getActivityType());
-			//TODO: set other info
-						
+			TableRow row = activtyEvent.getTableRow();
+
 			TableDataInsertAllRequest.Rows rows = new TableDataInsertAllRequest.Rows();
 			rows.setJson(row);
 			
 			TableDataInsertAllRequest content = new TableDataInsertAllRequest().setRows((List)Arrays.asList(rows));
-			TableDataInsertAllResponse response = bigqueryService.tabledata().insertAll(AppHelper.getAppId(), "teampot", "activity", content).execute();
+			TableDataInsertAllResponse response = bigqueryService.tabledata().insertAll(AppHelper.getAppId(), "teampot", activtyEvent.getActivityType(), content).execute();
 			
 			
 		} catch (GeneralSecurityException e) {

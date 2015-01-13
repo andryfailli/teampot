@@ -20,6 +20,7 @@ import com.google.teampot.GoogleServices;
 import com.google.teampot.api.API;
 import com.google.teampot.dao.UserDAO;
 import com.google.teampot.model.User;
+import com.google.teampot.util.AppHelper;
 
 public class UserService {
 
@@ -53,7 +54,7 @@ public class UserService {
 	}
 	
 	public User getUser(com.google.appengine.api.users.User gUser) {
-		return this.getUser(gUser.getEmail());
+		return gUser != null ? this.getUser(gUser.getEmail()) : null;
 	}
 	public User getUser(String userEmail) {
 		User user;
@@ -174,14 +175,16 @@ public class UserService {
 		dao.save(userToBeProvisioned);
 		
 		// spoon task to provision user profile
+		/* --- REMOVEME: user profile provisioning is now done from cron
 		Queue queue = QueueFactory.getDefaultQueue();
 	    TaskOptions task = TaskOptions.Builder
-	    	.withUrl(API.getBaseUrlWithoutHostAndSchema()+"/gae/task/provisionUserProfile")
+	    	.withUrl(AppHelper.getTaskBaseUrl()+"/provisionUserProfile")
 	    	.countdownMillis(86400000) // 1day
 	    	.param("user", userToBeProvisioned.getKey())
 	    	.method(Method.POST)
 	    ; 
         queue.add(task);
+        */
 	}
 	
 	public void provisionProfile(User userToBeProvisioned) {

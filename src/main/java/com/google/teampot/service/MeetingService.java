@@ -21,7 +21,6 @@ import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.teampot.GoogleServices;
-import com.google.teampot.api.API;
 import com.google.teampot.dao.MeetingDAO;
 import com.google.teampot.dao.ProjectDAO;
 import com.google.teampot.diff.visitor.EntityDiffVisitor;
@@ -32,7 +31,6 @@ import com.google.teampot.model.MeetingActivityEventVerb;
 import com.google.teampot.model.MeetingPollProposedDate;
 import com.google.teampot.model.MeetingPollVote;
 import com.google.teampot.model.Project;
-import com.google.teampot.model.TaskActivityEventVerb;
 import com.google.teampot.model.User;
 import com.google.teampot.util.AppHelper;
 
@@ -80,7 +78,12 @@ public class MeetingService{
 		activtyEvent.setVerb(verb);
 		
 		Meeting oldEntity = null;
-		if (verb != MeetingActivityEventVerb.CREATE) oldEntity = dao.get(entity.getKey());	
+		if (verb != MeetingActivityEventVerb.CREATE) {
+			oldEntity = dao.get(entity.getKey());
+			
+			// persist CalendarEventId
+			entity.setCalendarEventId(oldEntity.getCalendarEventId());
+		}
 		
 		// first save
 		dao.save(entity);
@@ -294,7 +297,7 @@ public class MeetingService{
 					
 			Queue queue = QueueFactory.getDefaultQueue();
 		    TaskOptions task = TaskOptions.Builder
-		    	.withUrl(API.getBaseUrlWithoutHostAndSchema()+"/gae/task/pollEnd")
+		    	.withUrl(AppHelper.getTaskBaseUrl()+"/pollEnd")
 		    	.etaMillis(meeting.getPoll().getEndDate().getTime())
 		    	.param("meeting", meeting.getKey())
 		    	.method(Method.POST)

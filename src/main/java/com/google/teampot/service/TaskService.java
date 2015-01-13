@@ -3,7 +3,6 @@ package com.google.teampot.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import javax.mail.MessagingException;
 
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventAttendee;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.dao.ProjectDAO;
 import com.google.teampot.dao.TaskDAO;
@@ -60,6 +58,10 @@ public class TaskService{
 		return dao.listForUser(assignee);
 	}
 	
+	public List<Task> listToDoForUser(User assignee) {
+		return dao.listToDoForUser(assignee);
+	}
+	
 	public Task get(String key){
 		return dao.get(key);
 	}
@@ -75,7 +77,12 @@ public class TaskService{
 		activtyEvent.setVerb(verb);
 		
 		Task oldEntity = null;
-		if (verb != TaskActivityEventVerb.CREATE) oldEntity = dao.get(entity.getKey());	
+		if (verb != TaskActivityEventVerb.CREATE) {
+			oldEntity = dao.get(entity.getKey());
+			
+			// persist DueDateCalendarEventId
+			entity.setDueDateCalendarEventId(oldEntity.getDueDateCalendarEventId());
+		}
 		
 		// first save
 		dao.save(entity);
@@ -92,6 +99,11 @@ public class TaskService{
 				break;
 			case ASSIGN:
 				if ((!oldEntity.isAssigned() && entity.isAssigned()) || ( oldEntity.isAssigned() && entity.isAssigned() && !oldEntity.getAssignee().equals(entity.getAssignee()))) this.sendTaskAssignNotification(entity,actor);
+				
+				Project project = entity.getProject().get();
+				if (!project.hasUser(entity.getAssignee())) //if assignee is not in the project's team, add him as member. 
+					ProjectService.getInstance().addMember(project, entity.getAssignee().get(), actor);
+				
 				break;
 			case UNASSIGN:
 				this.sendTaskUnassignNotification(oldEntity,actor);

@@ -2,8 +2,12 @@
 <html data-ng-app="teampot">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
 		<title>TeamPot</title>
+		
+		<meta name="mobile-web-app-capable" content="yes">
+     	<link rel="icon" sizes="192x192" href="/img/launcher-icon-4x.png">
+		<link rel="manifest" href="manifest.json">
 		
 		<style>
 			[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -18,6 +22,7 @@
 		<link type="text/css" rel="stylesheet" href="/libs/angular-material/themes/blue-theme.css" />
 		<link type="text/css" rel="stylesheet" href="/libs/angular-material/themes/green-theme.css" />
 		<link type="text/css" rel="stylesheet" href="/libs/angular-material/themes/yellow-theme.css" />
+		<link type="text/css" rel="stylesheet" href="/libs//material-design-iconic-font/css/material-design-iconic-font.min.css">
 		<link type="text/css" rel="stylesheet" href="/libs/angular-datepicker/dist/index.css" />
 		<!-- endbuild -->
 		
@@ -37,13 +42,13 @@
 		<!-- endbuild -->
 	
 	</head>
-	<body ng-controller="mainController" md-swipe-right="openSidebar()" md-swipe-left="closeSidebar()" layout="row" ng-cloak>
+	<body ng-controller="mainController" ng-swipe-right="onSwipeRight($event)" ng-swipe-left="onSwipeLeft($event)" layout="row" ng-cloak>
 		
 		<md-sidenav md-is-locked-open="$media('md')" layout="column" class="md-sidenav-left md-whiteframe-z3" md-component-id="left" ng-if="sidebarTemplateUrl"> 
 			<md-toolbar md-theme="indigo">
 				<h1 class="md-toolbar-tools">
 					<md-button ng-href="#/projects" ng-click="closeSidebar()" >
-						<md-icon icon="/img/icons/ic_arrow_back_24px.svg"></md-icon>
+						<i class="mdi-arrow-back mdi-2x"></i>
 						<md-tooltip>Back to projects</md-tooltip>
 					</md-button>
 					<b>{{currentProject.name}}</b>
@@ -61,14 +66,14 @@
 			<md-toolbar md-scroll-shrink class="md-whiteframe-z2">
 				<h1 class="md-toolbar-tools" layout="row">
 					<a hide-gt-md ng-click="openSidebar()" aria-label="Toggle Menu" href ng-if="sidebarTemplateUrl"> 
-						<md-icon icon="/img/icons/ic_menu_24px.svg"></md-icon>
+						<i class="mdi-menu mdi-lg"></i>
 					</a>
 					
 					<span ng-if="signedIn" flex>
 					
 						<span ng-if="currentProject" hide-gt-md>
 							<b>{{currentProject.name}}</b>
-							<md-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;" hide-sm></md-icon>
+							<i class="mdi-chevron-right" hide-sm></i>
 						</span>
 						<span ng-if="!currentProject"><b>TeamPot</b></span>
 	
@@ -76,7 +81,7 @@
 							<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs" >
 								<span ng-if="!$last && $index>=2"> 
 									<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 
-									<md-icon icon="/img/icons/ic_chevron_right_24px.svg" style="width:24px;"></md-icon>
+									<i class="mdi-chevron-right"></i>
 								</span>
 								<span ng-if="$last && $index>=2">{{breadcrumb.label}}</span>
 							</li>
@@ -94,7 +99,7 @@
 				</h1>
 			</md-toolbar>
 
-			<md-content class="md-padding full-height" id="appview-container" md-swipe-left="onSwipeLeft()" md-swipe-right="onSwipeRight()" flex>
+			<md-content class="md-padding full-height" id="appview-container" flex>
 
 				<p class="text-error" style="text-align:center; padding:15px;" ng-show="viewError">Sorry, an error occurred. Please try again.</p>
 					
@@ -118,6 +123,7 @@
 		<script type="text/javascript" src="/libs/angular-route/angular-route.js"></script>
 		<script type="text/javascript" src="/libs/angular-aria/angular-aria.js"></script>
 		<script type="text/javascript" src="/libs/angular-sanitize/angular-sanitize.js"></script>
+		<script type="text/javascript" src="/libs/angular-touch/angular-touch.js"></script>
 		<script type="text/javascript" src="/libs/hammerjs/hammer.js"></script>
 		<script type="text/javascript" src="/libs/angular-material/angular-material.js"></script>
 		<script type="text/javascript" src="/libs/angular-filter/dist/angular-filter.js"></script>
@@ -140,11 +146,10 @@
 		<script type="text/javascript" src="/components/NotifyService/NotifyService.js"></script>
 		<script type="text/javascript" src="/components/AlertService/AlertService.js"></script>
 		<script type="text/javascript" src="/components/RealtimeService/RealtimeService.js"></script>
+		<script type="text/javascript" src="/components/PreloadService.js"></script>
 		<script type="text/javascript" src="/components/md-typeahead/md-typeahead.js"></script>
 		<script type="text/javascript" src="/components/md-datepicker/md-datepicker.js"></script>
-		
-		<script type="text/javascript" src="/components/dashboard/dashboard.js"></script>
-		
+			
 		<script type="text/javascript" src="/components/project/ProjectService.js"></script>
 		<script type="text/javascript" src="/components/project/list.js"></script>
 		<script type="text/javascript" src="/components/project/list-fab.js"></script>

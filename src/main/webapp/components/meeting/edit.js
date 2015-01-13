@@ -81,7 +81,8 @@ angular.module('teampot').
 			}
 			
 			if (!$scope.meeting.poll.startDate || $scope.meeting.poll.startDate > minStart) {
-				$scope.meeting.poll.startDate = minStart - 604800000; //-1w
+				var now = (new Date).getTime();
+				$scope.meeting.poll.startDate = now<minStart ? now : minStart - 604800000; // now or -1w
 			}
 			if (!$scope.meeting.poll.endDate || $scope.meeting.poll.endDate > minStart) {
 				$scope.meeting.poll.endDate = minStart - 86400000; //-1d

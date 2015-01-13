@@ -2,9 +2,11 @@ package com.google.teampot.service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.mail.Address;
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
@@ -22,6 +24,8 @@ public class NotificationService {
 
 	private static NotificationService instance;
 	
+	private static Logger logger = Logger.getLogger(NotificationService.class.getSimpleName());
+	
 	private Session session;
 	
 	private NotificationService() {
@@ -38,9 +42,9 @@ public class NotificationService {
 		Message msg = new MimeMessage(session);
 		if (sender != null) {
         	msg.setReplyTo(new Address[]{new InternetAddress(sender.getEmail(), sender.getFirstName()+" "+sender.getLastName())});
-        	msg.setFrom(new InternetAddress(Config.get(Config.SERVICE_ACCOUNT_EMAIL), sender.getFirstName()+" "+sender.getLastName()+" (TeamPot)"));
+        	msg.setFrom(new InternetAddress(Config.get(Config.TEAMPOT_ACCOUNT), sender.getFirstName()+" "+sender.getLastName()+" (TeamPot)"));
         } else {
-        	msg.setFrom(new InternetAddress(Config.get(Config.SERVICE_ACCOUNT_EMAIL), "TeamPot"));
+        	msg.setFrom(new InternetAddress(Config.get(Config.TEAMPOT_ACCOUNT), "TeamPot"));
         }
         msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient.getEmail(), recipient.getFirstName()+" "+recipient.getLastName()));
         msg.setSubject(subject);
@@ -49,7 +53,7 @@ public class NotificationService {
 	
 	private Message prepareMessage(String subject, Project recipient, User sender) throws UnsupportedEncodingException, MessagingException {
 		Message msg = new MimeMessage(session);
-		msg.setFrom(new InternetAddress(Config.get(Config.SERVICE_ACCOUNT_EMAIL), "TeamPot"));
+		msg.setFrom(new InternetAddress(Config.get(Config.TEAMPOT_ACCOUNT), "TeamPot"));
         if (sender != null) {
         	msg.setReplyTo(new Address[]{new InternetAddress(sender.getEmail(), sender.getFirstName()+" "+sender.getLastName())});
         }
@@ -61,13 +65,13 @@ public class NotificationService {
 	public void sendMessage(String subject, String plainBody, User recipient, User sender) throws UnsupportedEncodingException, MessagingException {
 		Message msg = this.prepareMessage(subject, recipient, sender);
 		msg.setText(plainBody);
-        Transport.send(msg);
+		this.sendMessage(msg);
 	}
 	
 	public void sendMessage(String subject, String plainBody, Project recipient, User sender) throws UnsupportedEncodingException, MessagingException {
 		Message msg = this.prepareMessage(subject, recipient, sender);
 		msg.setText(plainBody);
-        Transport.send(msg);
+		this.sendMessage(msg);
 	}
 	
 	public void sendMessage(String subject, String plainBody, String htmlBody, User recipient, User sender) throws UnsupportedEncodingException, MessagingException {
@@ -83,7 +87,7 @@ public class NotificationService {
 		
 		msg.setContent(mp);
 		
-        Transport.send(msg);
+		this.sendMessage(msg);
 	}
 	
 	public void sendMessage(String subject, String plainBody, String htmlBody, Project recipient, User sender) throws UnsupportedEncodingException, MessagingException {
@@ -99,7 +103,19 @@ public class NotificationService {
 		
 		msg.setContent(mp);
 		
-        Transport.send(msg);
+        this.sendMessage(msg);
+	}
+	
+	private void sendMessage(Message msg) {
+		// GMail markup email sample for whitelisting
+		// uncomment following line to send sample
+		//msg.setRecipient(RecipientType.TO,new InternetAddress("schema.whitelisting+sample@gmail.com", "TeamPot"));
+		try {
+			Transport.send(msg);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

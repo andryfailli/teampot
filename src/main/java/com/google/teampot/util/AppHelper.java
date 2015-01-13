@@ -31,5 +31,17 @@ public class AppHelper {
 		
 		return tildeIndex>-1 ? appFullId.substring(tildeIndex+1) : appFullId;		
 	}
+	
+	public static String getAppEmail(String emailId) {
+		return emailId+"@"+AppHelper.getAppId()+".appspotmail.com";
+	}
+	
+	public static boolean isAppEmail(String emailAddress) {
+		return emailAddress.endsWith("@"+AppHelper.getAppId()+".appspotmail.com");
+	}
+	
+	public static String getTaskBaseUrl() {
+		return "/gae/task";
+	}
 
 }

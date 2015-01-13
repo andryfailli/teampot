@@ -16,5 +16,9 @@ public class TaskDAO extends BaseEntityDAO<Task>{
 	public List<Task> listForUser(User assignee) {
 		return ofy().load().type(Task.class).filter("assignee",assignee).list();
 	}
+	
+	public List<Task> listToDoForUser(User assignee) {
+		return ofy().load().type(Task.class).filter("assignee",assignee).filter("completed",false).list();
+	}
 
 }

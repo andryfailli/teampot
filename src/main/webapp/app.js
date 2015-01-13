@@ -3,6 +3,7 @@ angular.module('teampot', [
 	'ngAnimate',
 	'ngAria',
 	'ngSanitize',
+	'ngTouch',
 	'ngMaterial',
 	'routeBreadcrumbs',
 	'routeActive',
@@ -19,11 +20,6 @@ angular.module('teampot', [
 	var checkCurrentUserAuth = function($rootScope){return $rootScope.currentUser$promise};
 	
 	$routeProvider
-		.when('/dashboard', {
-			id: 'dashboard',
-			templateUrl: '/components/dashboard/dashboard.html',
-			controller: 'dashboardController',
-		})
 		.when('/projects', {
 			id: 'project-list',
 			label: 'Projects',
@@ -156,7 +152,7 @@ angular.module('teampot', [
 	GapiClientProvider.load("drive","v2");
 
 })
-.run(function($rootScope,$routeParams,$location,Gapi,GapiClient,ProjectService,CONSTANTS,AlertService,$q){
+.run(function($rootScope,$routeParams,$location,$mdSidenav,Gapi,GapiClient,ProjectService,CONSTANTS,AlertService,$q,$interval){
 	
 	var currentUserDeferred = $q.defer();
 	$rootScope.currentUser$promise = currentUserDeferred.promise;
@@ -186,8 +182,26 @@ angular.module('teampot', [
     	$rootScope.viewError = true;
     });
     
-    $rootScope.onSwipeLeft = function(){$rootScope.$emit("swipe-left");}
-    $rootScope.onSwipeRight = function(){$rootScope.$emit("swipe-right");}
+    
+    $rootScope.onSwipeLeft = function($event){
+    	$mdSidenav('left').isOpen() ? $rootScope.closeSidebar() : $rootScope.$emit("swipe-left");;
+    }
+    $rootScope.onSwipeRight = function($event){
+    	//TODO: maybe a percentage value is better...
+    	$event.changedTouches[0].screenX < 150 ? $rootScope.openSidebar() : $rootScope.$emit("swipe-right");
+    }
+    
+    
+    $rootScope.toggleSidebar = function(){
+		$mdSidenav('left').toggle();
+	}
+	$rootScope.closeSidebar = function(){
+		$mdSidenav('left').close();
+	}
+	$rootScope.openSidebar = function(){
+		$mdSidenav('left').open();
+	}
+	
     
     $rootScope.signIn = function(silent){
     	$rootScope.signingIn = true;
@@ -206,6 +220,9 @@ angular.module('teampot', [
     				
     				$rootScope.signingIn = false;
     	    		$rootScope.signedIn = true;
+    	    		
+    	    		// Token expires in 3600s. Let's refresh it every 15m
+    	    		$interval(function(){Gapi.authorize(true);},15*60);
     				
     			})
     			.catch(function(data){
@@ -234,20 +251,10 @@ angular.module('teampot', [
     })
     
 })
-.controller('mainController',function($rootScope,$scope,$routeParams,$mdSidenav,routeBreadcrumbs){
+.controller('mainController',function($rootScope,$scope,$routeParams,routeBreadcrumbs){
 
 	$scope.routeParams = $routeParams;
 
 	$scope.breadcrumbs = routeBreadcrumbs.breadcrumbs;
-	
-	$rootScope.toggleSidebar = function(){
-		$mdSidenav('left').toggle();
-	}
-	$rootScope.closeSidebar = function(){
-		$mdSidenav('left').close();
-	}
-	$rootScope.openSidebar = function(){
-		$mdSidenav('left').open();
-	}
 
 })

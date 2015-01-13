@@ -41,9 +41,6 @@ html {
 	vertical-align: middle;
 	display:inline-block;
 }
-.menu-item material-icon {
-	padding:0 5px;
-}
 .menu-item.active {
 	background-color: #eee;
 	font-weight: bold;
@@ -139,10 +136,6 @@ md-progress-circular.spinner-gray .md-inset {
 	height: 40px;
 	margin:2px;
 }
-.md-fab.md-button-fab-small md-icon {
-	position: relative;
-	top: -4px;
-}
 
 .fab-container .fab-container-small-fabs {
 	position:relative;
@@ -157,4 +150,8 @@ md-progress-circular.spinner-gray .md-inset {
 .fab-container:hover .fab-container-small-fabs {
 	position:relative;
 	left:0;
+}
+
+.fab-container-small-fabs .md-fab md-icon {
+	line-height: 50px;
 }

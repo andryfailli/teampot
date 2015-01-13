@@ -15,7 +15,7 @@
 					<md-item class="md-item-padded meeting-item">
 						<md-item-content>
 							<div class="md-tile-left first" style="text-align:center; min-width:120px" hide-sm>
-								<md-icon icon="/img/icons/ic_help_48px.svg"></md-icon>
+								<i class="mdi-help mdi-2x"></i>
 								<p class="text-muted" ng-show="meeting.poll.preferredDate" style="line-height: 15px;">
 									{{meeting.poll.preferredDate.start|date:'dd'}}<br>
 									{{meeting.poll.preferredDate.start|date:'MMMM'}}<br>
@@ -35,7 +35,7 @@
 									</h3>
 									<ul style="margin:0; padding:0;" ng-show="meeting.poll">
 										<li ng-repeat="proposedDate in meeting.poll.proposedDates track by $index" layout="row" layout-align="center center">
-											<md-icon style="margin:0;" icon="/img/icons/ic_chevron_right_18px.svg"></md-icon>
+											<i style="margin:0;" class="md-chevron-right"></i>
 											&nbsp;
 											<span class="proposed-date" ng-class="{preferred:(meeting.poll.preferredDate.start==proposedDate.start && meeting.poll.preferredDate.end==proposedDate.end)}">
 												<span class="proposed-date-date">{{proposedDate.start|date:'shortDate'}},&nbsp;</span>
@@ -48,11 +48,11 @@
 											&nbsp;&nbsp;
 											<span class="proposed-date-vote-buttons" layout="row">
 												<md-button ng-show="meeting.poll.open" style="column-align:middle" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
-													<md-icon icon="/img/icons/ic_check_18px.svg"></md-icon>
+													<i class="mdi-check"></i>
 												</md-button>
 												&nbsp;
 												<md-button ng-show="meeting.poll.open" style="column-align:middle;" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,false)}" ng-click="poll_vote(meeting,proposedDate,false,$event)">
-													<md-icon icon="/img/icons/ic_close_18px.svg"></md-icon>
+													<i class="mdi-close"></i>
 												</md-button>
 											</span>
 											&nbsp;&nbsp;
@@ -94,7 +94,7 @@
 							</div>
 							<div class="md-tile-right last" style="text-align:center; min-width:150px">
 								<md-button class="md-button-padded" ng-href="{{getHangoutLink(meeting)}}" target="_blank" data-ng-show="meeting.start && !meeting.past" style="color:inherit">
-									<md-icon icon="/img/icons/ic_hangout_24px.svg"></md-icon> <span hide-sm>Hangout&nbsp;</span>
+									<span hide-sm>Hangout</span> <i class="mdi-call-made mdi-lg"></i>
 								</md-button>
 							</div>
 						</md-item-content>

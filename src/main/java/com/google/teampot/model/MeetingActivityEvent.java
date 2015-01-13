@@ -2,17 +2,16 @@ package com.google.teampot.model;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.api.services.bigquery.model.TableRow;
+import com.google.teampot.tablerow.MeetingActivityEventTableRowWriter;
+import com.google.teampot.tablerow.TaskActivityEventTableRowWriter;
 import com.google.teampot.transformer.Enum2StringTransformer;
 import com.google.teampot.transformer.Ref2EntityTransformer;
 import com.googlecode.objectify.Ref;
-import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass(index=true)
 public class MeetingActivityEvent extends ActivityEvent {
-
-	@Load
-	private Ref<Meeting> meeting;
 	
 	private MeetingActivityEventVerb verb;
 
@@ -29,31 +28,31 @@ public class MeetingActivityEvent extends ActivityEvent {
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Ref<Meeting> getMeeting() {
-		return this.meeting;
+		return (Ref<Meeting>) this.data;
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setMeeting(Ref<Meeting> meeting) {
-		this.meeting = meeting;
+		this.data = meeting;
 		this.setProject(meeting.get().getProject());
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public void setMeeting(Meeting meeting) {
-		this.meeting = Ref.create(meeting);
+		this.data = Ref.create(meeting);
 		this.setProject(meeting.getProject());
 	}
 	
 	@ApiResourceProperty(name = "meeting")
 	public Meeting getMeetingEntity() {
 		Ref2EntityTransformer<Meeting> t = new Ref2EntityTransformer<Meeting>();
-		return t.transformTo(this.meeting);
+		return t.transformTo((Ref<Meeting>) this.data);
 	}	
 
 	@ApiResourceProperty(name = "meeting")
 	public void setMeetingEntity(Meeting meeting) {
 		Ref2EntityTransformer<Meeting> t = new Ref2EntityTransformer<Meeting>();
-		this.meeting = t.transformFrom(meeting);
+		this.data = t.transformFrom(meeting);
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
@@ -76,6 +75,12 @@ public class MeetingActivityEvent extends ActivityEvent {
 	public void setVerbString(String verb) {
 		Enum2StringTransformer<MeetingActivityEventVerb> t = new Enum2StringTransformer<MeetingActivityEventVerb>(MeetingActivityEventVerb.class);
 		this.verb = t.transformFrom(verb);
+	}
+	
+	@Override
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public TableRow getTableRow() {
+		return new MeetingActivityEventTableRowWriter(this).getRow();
 	}
 
 }

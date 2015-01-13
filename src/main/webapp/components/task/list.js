@@ -1,5 +1,5 @@
 angular.module('teampot').
-	controller('taskListController', function($rootScope,$scope,$routeParams,$location,ProjectService,TaskService,RealtimeService) {
+	controller('taskListController', function($rootScope,$scope,$routeParams,$location,$timeout,ProjectService,TaskService,RealtimeService) {
 		
 		$scope.taskList = TaskService.$list($routeParams.projectId);
 		var watchHandle = RealtimeService.registerWatch("Task",function(){return TaskService.$list($routeParams.projectId);});
@@ -59,6 +59,12 @@ angular.module('teampot').
 		
 		$scope.goto = function(task){
 			$location.path("/project/"+$routeParams.projectId+"/task/"+task.id);
+		}
+		
+		$scope.saveTaskAsync = function(task){
+			$timeout(function(){
+				task.$save();
+			},250);
 		}
 		
 	});

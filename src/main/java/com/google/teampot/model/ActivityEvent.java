@@ -1,27 +1,28 @@
 package com.google.teampot.model;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
+import com.google.api.services.bigquery.model.TableRow;
 import com.google.teampot.transformer.Date2TimestampTransformer;
 import com.google.teampot.transformer.Ref2EntityTransformer;
 import com.google.teampot.transformer.Ref2StringTransformer;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Load;
 import com.googlecode.objectify.annotation.Parent;
 
-import de.danielbechler.diff.node.DiffNode;
-
 @Entity
-public class ActivityEvent extends BaseEntity {
+@Cache
+public abstract class ActivityEvent extends BaseEntity {
 
 	@Id
 	private Long id;
@@ -29,18 +30,17 @@ public class ActivityEvent extends BaseEntity {
 	@Parent
 	protected Ref<Project> project;
 	
+	@Load
+	protected Ref<? extends BaseEntity> data;
+	
 	private Ref<User> actor;
 	
 	@Index
 	private Date timestamp;
 	
-	//TODO: valutare se rimuovere bidi-ref
-	private List<Ref<Comment>> comments;
-	
 	private Map<String,EntityDiff> diffs; 
 
 	public ActivityEvent() {
-		this.comments = new ArrayList<Ref<Comment>>();
 		this.timestamp = new Date();
 		this.diffs = new LinkedHashMap<String, EntityDiff>();
 	}
@@ -133,23 +133,6 @@ public class ActivityEvent extends BaseEntity {
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public List<Ref<Comment>> getComments() {
-		return comments;
-	}
-
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setComments(List<Ref<Comment>> comments) {
-		this.comments = comments;
-	}
-	
-	@ApiResourceProperty(name = "comments")
-	public int getCommentsCount() {
-		if (this.comments != null)
-			return this.comments.size();
-		else return 0;
-	}	
-
-	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public Ref<Project> getProject() {
 		return project;
 	}
@@ -200,5 +183,18 @@ public class ActivityEvent extends BaseEntity {
 	public void setDiffs(Map<String,EntityDiff> diffs) {
 		this.diffs = diffs;
 	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public Ref<? extends BaseEntity> getData() {
+		return data;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setData(Ref<? extends BaseEntity> data) {
+		this.data = data;
+	}
+	
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public abstract TableRow getTableRow();
 	
 }
