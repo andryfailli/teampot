@@ -18,7 +18,9 @@ public class TaskActivityEventTableRowWriter extends ActivityEventTableRowWriter
 		Ref<Task> taskRef = (Ref<Task>) activityEvent.getData();
 		if (taskRef != null) {
 			Task task = taskRef.get();
-			row.set("dueDate", task.getDueDateTimestamp());
+			if (task.getDueDate() != null) {
+				row.set("dueDate", task.getDueDateTimestamp()/1000);
+			}
 			row.set("completed", task.isCompleted());
 			if (task.getAssignee() != null) {
 				row.set("assignee", task.getAssigneeEntity().getEmail());
