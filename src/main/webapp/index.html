@@ -22,7 +22,7 @@
 		<link type="text/css" rel="stylesheet" href="/libs/angular-material/themes/blue-theme.css" />
 		<link type="text/css" rel="stylesheet" href="/libs/angular-material/themes/green-theme.css" />
 		<link type="text/css" rel="stylesheet" href="/libs/angular-material/themes/yellow-theme.css" />
-		<!-- <link type="text/css" rel="stylesheet" href="/libs//material-design-iconic-font/css/material-design-iconic-font.min.css"> -->
+		<link type="text/css" rel="stylesheet" href="/libs//material-design-iconic-font/css/material-design-iconic-font.min.css">
 		<link type="text/css" rel="stylesheet" href="/libs/angular-datepicker/dist/index.css" />
 		<!-- endbuild -->
 		
@@ -48,7 +48,7 @@
 			<md-toolbar md-theme="indigo">
 				<h1 class="md-toolbar-tools">
 					<md-button ng-href="#/projects" ng-click="closeSidebar()" >
-						<i class="md-arrow-back"></i>
+						<i class="mdi-arrow-back"></i>
 						<md-tooltip>Back to projects</md-tooltip>
 					</md-button>
 					<b>{{currentProject.name}}</b>
@@ -66,14 +66,14 @@
 			<md-toolbar md-scroll-shrink class="md-whiteframe-z2">
 				<h1 class="md-toolbar-tools" layout="row">
 					<a hide-gt-md ng-click="openSidebar()" aria-label="Toggle Menu" href ng-if="sidebarTemplateUrl"> 
-						<i class="md-menu"></i>
+						<i class="mdi-menu"></i>
 					</a>
 					
 					<span ng-if="signedIn" flex>
 					
 						<span ng-if="currentProject" hide-gt-md>
 							<b>{{currentProject.name}}</b>
-							<i class="md-chevron-right" style="width:24px;" hide-sm></i>
+							<i class="mdi-chevron-right" style="width:24px;" hide-sm></i>
 						</span>
 						<span ng-if="!currentProject"><b>TeamPot</b></span>
 	
@@ -81,7 +81,7 @@
 							<li class="route-breadcrumb" ng-repeat="breadcrumb in breadcrumbs" >
 								<span ng-if="!$last && $index>=2"> 
 									<a ng-href="#{{breadcrumb.path}}">{{breadcrumb.label}}</a> 
-									<i class="md-chevron-right" style="width:24px;"></i>
+									<i class="mdi-chevron-right" style="width:24px;"></i>
 								</span>
 								<span ng-if="$last && $index>=2">{{breadcrumb.label}}</span>
 							</li>

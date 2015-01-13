@@ -15,7 +15,7 @@
 					<md-item class="md-item-padded meeting-item">
 						<md-item-content>
 							<div class="md-tile-left first" style="text-align:center; min-width:120px" hide-sm>
-								<i class="md-help"></i>
+								<i class="mdi-help"></i>
 								<p class="text-muted" ng-show="meeting.poll.preferredDate" style="line-height: 15px;">
 									{{meeting.poll.preferredDate.start|date:'dd'}}<br>
 									{{meeting.poll.preferredDate.start|date:'MMMM'}}<br>
@@ -48,11 +48,11 @@
 											&nbsp;&nbsp;
 											<span class="proposed-date-vote-buttons" layout="row">
 												<md-button ng-show="meeting.poll.open" style="column-align:middle" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,true)}" ng-click="poll_vote(meeting,proposedDate,true,$event)">
-													<i class="md-check"></i>
+													<i class="mdi-check"></i>
 												</md-button>
 												&nbsp;
 												<md-button ng-show="meeting.poll.open" style="column-align:middle;" ng-class="{'md-raised':poll_hasVoted(meeting,proposedDate,false)}" ng-click="poll_vote(meeting,proposedDate,false,$event)">
-													<i class="md-close"></i>
+													<i class="mdi-close"></i>
 												</md-button>
 											</span>
 											&nbsp;&nbsp;
@@ -94,7 +94,7 @@
 							</div>
 							<div class="md-tile-right last" style="text-align:center; min-width:150px">
 								<md-button class="md-button-padded" ng-href="{{getHangoutLink(meeting)}}" target="_blank" data-ng-show="meeting.start && !meeting.past" style="color:inherit">
-									<i class="md-call-made"></i> <span hide-sm>Hangout&nbsp;</span>
+									<i class="mdi-call-made"></i> <span hide-sm>Hangout&nbsp;</span>
 								</md-button>
 							</div>
 						</md-item-content>
