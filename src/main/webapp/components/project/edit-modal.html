@@ -2,17 +2,25 @@
 	<md-content>		
 		<h2 ng-hide="loading">Create new Project</h2>
 		<div ng-hide="loading">
-			<form>
-			  <md-text-float label="Project Name" ng-model="project.name" flex></md-text-float>
+			<form layout="column">
+				<div flex>
+				  <md-text-float label="Project Name" ng-model="project.name" flex></md-text-float>
+				</div>
+			  	<div flex>
+					<md-text-float label="Description" ng-model="project.description" type="textarea" class="md-text-float-full-with"></md-text-float>
+				</div>
 			</form>
-			<p class="text-error" ng-show="error.code==400">A project named {{project.name}} already exists.</p>
+			<p class="text-error" ng-show="error">
+				<span ng-show="error.code!=400">An error occurred. Please, try again.</span>
+				<span ng-show="error.code==400">A project named {{project.name}} already exists.</span>
+			</p>
 		</div>
 		<div ng-show="loading" layout="column" layout-align="center center" style="padding:15px 0;">
 			<div layout="row" layout-align="center center" style="padding-bottom:15px;" flex>
 				<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 			</div>
 			<div layout="row"  layout-align="center center" flex>
-				<span>Creating project...</span>
+				<span>Creating project<br><b>{{project.name}}</b><br>...</span>
 			</div>
 		</div>
 	
