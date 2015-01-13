@@ -63,6 +63,10 @@ html {
 	display:inline-block;
 }
 
+.route-breadcrumb * {
+	vertical-align: middle;
+}
+
 
 #appview .tabs-header-items-container {
 	margin:0 20px;
