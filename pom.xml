@@ -11,7 +11,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<appengine.target.version>1.9.15</appengine.target.version>
-		<appengine.app.version>teampot0-1-5</appengine.app.version>
+		<appengine.app.version>teampotv0-1-6</appengine.app.version>
 	</properties>
 
 	<dependencies>

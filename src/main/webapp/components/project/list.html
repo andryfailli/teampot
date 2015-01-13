@@ -13,21 +13,22 @@
 			<md-content class="md-content-padded">
 				<section layout="row" flex style="cursor: pointer; margin-bottom:12px;" ng-click="goto(entity)">
 					<div class="md-tile-left first" layout="column" layout-align="center center" flex>
-						<h2>{{entity.name}}</h2>
+						<h2 style="margin-bottom: 5px;">{{entity.name}}</h2>
+						<small>{{entity.description}}</small>
 					</div>
 					<div class="md-tile-right last" layout="row" layout-align="center center" hide-sm>
 						<div layout="row" style="text-align: center;">
-							<div layout="column" class="list-item-box list-item-box-right" style="min-width:50px; text-align: left;">
+							<div layout="column" class="list-item-box list-item-box-right" style="min-width:50px; text-align: left; line-height: 30px">
 								<div layout="row" layout-align="center center">
-									<span><md-icon icon="/img/icons/ic_view_list_24px.svg"></md-icon>&nbsp;</span>
+									<span><i class="mdi-view-list mdi-lg"></i>&nbsp;</span>
 									<span flex>{{entity.tasksCount}}</span>
 								</div>
 								<div layout="row" layout-align="center center">
-									<span><md-icon icon="/img/icons/ic_event_24px.svg"></md-icon>&nbsp;</span>
+									<span><i class="mdi-event mdi-lg"></i>&nbsp;</span>
 									<span flex>{{entity.meetingsCount}}</span>
 								</div>
 								<div layout="row" layout-align="center center">
-									<span><md-icon icon="/img/icons/ic_group_24px.svg"></md-icon>&nbsp;</span>
+									<span><i class="mdi-group mdi-lg"></i>&nbsp;</span>
 									<span flex>{{entity.usersCount}}</span>
 								</div>
 							</div>

@@ -20,11 +20,6 @@ angular.module('teampot', [
 	var checkCurrentUserAuth = function($rootScope){return $rootScope.currentUser$promise};
 	
 	$routeProvider
-		.when('/dashboard', {
-			id: 'dashboard',
-			templateUrl: '/components/dashboard/dashboard.html',
-			controller: 'dashboardController',
-		})
 		.when('/projects', {
 			id: 'project-list',
 			label: 'Projects',

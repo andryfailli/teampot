@@ -1,9 +1,11 @@
 angular.module('teampot').
-	controller('projectListFabController', function($rootScope,$scope,$mdDialog,$location,ProjectService) {
+	controller('projectListFabController', function($rootScope,$scope,$mdDialog,$location,ProjectService,PreloadService) {
 				
+		var modalTemplateUrl = '/components/project/edit-modal.html'
+		
 		$scope.fabAdd = function(evt){
 			$mdDialog.show({
-				templateUrl: '/components/project/edit-modal.html',
+				templateUrl: modalTemplateUrl,
 				controller: 'projectEditModalController',
 				targetEvent: evt,
 				locals: {
@@ -13,5 +15,8 @@ angular.module('teampot').
 				$location.path("/project/"+result.id);
 			});
 		}
+		
+		// preload modal template
+		PreloadService.preload(modalTemplateUrl);
 
 	});
