@@ -1,12 +1,17 @@
 angular.module('teampot').
-	controller('userListFabController', function($rootScope,$scope,$mdDialog,$route,ProjectService) {
-				
+	controller('userListFabController', function($rootScope,$scope,$mdDialog,$route,ProjectService,PreloadService) {
+		
+		var modalTemplateUrl = '/components/user/add-modal.html';
+		
 		$scope.fabAdd = function(evt){
 			$mdDialog.show({
-				templateUrl: '/components/user/add-modal.html',
+				templateUrl: modalTemplateUrl,
 				controller: 'userAddModalController',
 				targetEvent: evt,
 			});
 		}
+		
+		// preload modal template
+		PreloadService.preload(modalTemplateUrl);
 
 	});
