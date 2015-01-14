@@ -6,6 +6,7 @@ import java.security.GeneralSecurityException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.mail.MessagingException;
 
@@ -28,8 +29,10 @@ import com.googlecode.objectify.Ref;
 import de.danielbechler.diff.ObjectDifferBuilder;
 import de.danielbechler.diff.node.DiffNode;
 
-public class TaskService{
+public class TaskService {
 
+	private static final Logger logger = Logger.getLogger(TaskService.class.getSimpleName());
+	
 	private static TaskService instance;
 	
 	private TaskDAO dao;
@@ -167,7 +170,7 @@ public class TaskService{
 			
 			if (entity.isCompleted() && !oldEntity.isCompleted())
 				return TaskActivityEventVerb.COMPLETE;
-			else if ((oldEntity.getAssignee() == null && entity.getAssignee() != null) || (oldEntity.getAssignee() != null && !oldEntity.getAssignee().equals(entity.getAssignee())))
+			else if ((oldEntity.getAssignee() == null && entity.getAssignee() != null) || (entity.getAssignee() != null && oldEntity.getAssignee() != null && !oldEntity.getAssignee().equals(entity.getAssignee())))
 				return TaskActivityEventVerb.ASSIGN;
 			else if (oldEntity.getAssignee() != null && entity.getAssignee() == null)
 				return TaskActivityEventVerb.UNASSIGN;
@@ -198,8 +201,10 @@ public class TaskService{
 				if (task.getDueDateCalendarEventId() == null) {
 					event = calendarService.events().insert(calendarId, event).execute();
 					task.setDueDateCalendarEventId(event.getId());
+					logger.info("Calendar event created "+event.getId());
 				} else {
 					event = calendarService.events().update(calendarId, event.getId(), event).execute();
+					logger.info("Calendar event updated "+event.getId());
 				}
 				
 			} catch (GeneralSecurityException e) {

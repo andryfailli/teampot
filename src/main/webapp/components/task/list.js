@@ -64,7 +64,7 @@ angular.module('teampot').
 		$scope.saveTaskAsync = function(task){
 			$timeout(function(){
 				task.$save();
-			},250);
+			},1000);
 		}
 		
 	});

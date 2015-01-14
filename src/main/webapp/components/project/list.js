@@ -29,7 +29,7 @@ angular.module('teampot').
 						if (index>=0) $scope.taskList.items.splice(index,1);
 					});
 				});
-			},250);
+			},1000);
 		}
 		
 	});
