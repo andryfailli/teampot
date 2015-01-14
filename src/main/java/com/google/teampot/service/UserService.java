@@ -18,6 +18,7 @@ import com.google.appengine.api.utils.SystemProperty;
 import com.google.teampot.Config;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.api.API;
+import com.google.teampot.api.exception.GUserNullUnauthorizedException;
 import com.google.teampot.dao.UserDAO;
 import com.google.teampot.model.User;
 import com.google.teampot.util.AppHelper;
@@ -92,12 +93,12 @@ public class UserService {
 		this.ensureEnabled(this.getUser(gUser));
 	}
 	public void ensureEnabled(String userEmail) throws UnauthorizedException {
-		if (userEmail == null || userEmail.equals("")) throw new UnauthorizedException("User not logged in");
+		if (userEmail == null) throw new GUserNullUnauthorizedException("User not logged in");
 		User user = this.getUser(userEmail);
 		this.ensureEnabled(user);
 	}
 	public void ensureEnabled(User user) throws UnauthorizedException {
-		if (user == null) throw new UnauthorizedException("User not logged in");
+		if (user == null) throw new GUserNullUnauthorizedException("User not logged in");
 		if (!user.isEnabled())  throw new UnauthorizedException("User not authorized");
 	}
 	
