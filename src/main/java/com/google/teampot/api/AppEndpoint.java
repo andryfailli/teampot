@@ -39,7 +39,7 @@ public class AppEndpoint extends BaseEndpoint {
 		this.provisionAppGroup();
 		
 		// BQ init
-		this.createBigQueryTables();
+		if (Config.get(Config.FEATURE_ANALYTICS).equals(Config.VALUE_TRUE)) this.createBigQueryTables();
 		
 	}
 	

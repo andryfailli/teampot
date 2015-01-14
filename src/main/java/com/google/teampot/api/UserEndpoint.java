@@ -7,6 +7,7 @@ import com.google.teampot.GoogleServices;
 import com.google.teampot.dao.UserDAO;
 import com.google.teampot.api.BaseEndpoint;
 import com.google.teampot.api.exception.EntityNotFoundException;
+import com.google.teampot.api.exception.GUserNullUnauthorizedException;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.User;
 import com.google.teampot.service.ProjectService;
@@ -71,12 +72,12 @@ public class UserEndpoint extends BaseEndpoint {
 		httpMethod = HttpMethod.POST
 	)
 	public User auth(@Named("code") String code, com.google.appengine.api.users.User gUser) throws OAuthRequestException, IOException, UnauthorizedException {
-		if (gUser == null) throw new UnauthorizedException("User not logged in");
+		if (gUser == null) throw new GUserNullUnauthorizedException("User not logged in");
 		
 		GoogleCredential credential = GoogleServices.getCredentialFromOneTimeCode(gUser.getEmail(), code);
 		
 		User user = UserService.getInstance().getUser(gUser.getEmail());
-		user.setTokens(credential);
+		user.setCredential(credential);
 				
 		UserService.getInstance().provisionProfile(user);
 		

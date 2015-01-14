@@ -20,12 +20,12 @@
 				<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 			</div>
 			<div layout="row"  layout-align="center center" flex>
-				<span>Creating project<br><b>{{project.name}}</b></span>
+				<span style="text-align:center">Creating project<br><b>{{project.name}}</b></span>
 			</div>
 		</div>
 	
 	</md-content>
 	<div ng-hide="loading" class="md-actions" layout="row">
-		<md-button ng-click="save()" ng-disabled="!project.name || error" class="md-primary">OK</md-button>
+		<md-button ng-click="save()" ng-disabled="!project.name" class="md-primary">OK</md-button>
 	</div>
 </md-dialog>
