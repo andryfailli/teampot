@@ -35,8 +35,10 @@ public class User extends BaseEntity {
 
 	private String accessToken;
 	
-	private String refreshToken;
+	private Long credentialExpirationTimestamp;
 	
+	private String refreshToken;
+		
 	public User() {
 		this.enabled = false;
 	}
@@ -125,6 +127,16 @@ public class User extends BaseEntity {
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public Long getCredentialExpirationTimestamp() {
+		return credentialExpirationTimestamp;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+	public void setCredentialExpirationTimestamp(Long credentialExpirationTimestamp) {
+		this.credentialExpirationTimestamp = credentialExpirationTimestamp;
+	}
+
+	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
 	public String getRefreshToken() {
 		return refreshToken;
 	}
@@ -135,9 +147,10 @@ public class User extends BaseEntity {
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-	public void setTokens(GoogleCredential credential) {
+	public void setCredential(GoogleCredential credential) {
 		this.accessToken = credential.getAccessToken();
 		this.refreshToken = credential.getRefreshToken();
+		this.credentialExpirationTimestamp = credential.getExpirationTimeMilliseconds();
 	}
 
 }

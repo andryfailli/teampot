@@ -3,7 +3,9 @@ package com.google.teampot;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -26,11 +28,15 @@ import com.google.api.services.oauth2.model.Tokeninfo;
 import com.google.api.services.plus.Plus;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.utils.SystemProperty;
+import com.google.teampot.dao.UserDAO;
 import com.google.teampot.model.User;
+import com.google.teampot.service.UserService;
 
 public class GoogleServices {
 
 	private static GoogleServices instance;
+	
+	private static final Logger logger = Logger.getLogger(GoogleServices.class.getSimpleName());
 
 	private HttpTransport httpTransport;
 	private JacksonFactory jsonFactory;
@@ -83,12 +89,25 @@ public class GoogleServices {
 	    return credential;
 	}
 	
-	private static GoogleCredential getCredential(User user) {
+	private static GoogleCredential getCredential(User user) throws IOException {
 		
 		GoogleCredential credential = GoogleServices.getCredentialBuilder().build();
 		
 		credential.setAccessToken(user.getAccessToken());
 		credential.setRefreshToken(user.getRefreshToken());
+		credential.setExpirationTimeMilliseconds(user.getCredentialExpirationTimestamp());
+		
+		if (credential.getExpiresInSeconds() == null || credential.getExpiresInSeconds()<=0) {
+			logger.info("Refreshing access token...");
+			credential.refreshToken();
+			logger.info("Access token refreshed!");
+			
+			user.setCredential(credential);
+			new UserDAO().save(user);
+		} else {
+			logger.info("Access token expires on "+credential.getExpirationTimeMilliseconds()+" (in "+credential.getExpiresInSeconds()+"s)");
+		}
+		
 		return credential;
 	}
 	
@@ -106,8 +125,7 @@ public class GoogleServices {
 	      .setServiceAccountPrivateKeyFromP12File(new java.io.File(Config.get(Config.SERVICE_ACCOUNT_PKCS12_FILE_PATH)))
 	      .build();
 	}
-	
-	
+
 	
 	
 	

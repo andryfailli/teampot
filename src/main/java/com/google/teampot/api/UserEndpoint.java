@@ -76,7 +76,7 @@ public class UserEndpoint extends BaseEndpoint {
 		GoogleCredential credential = GoogleServices.getCredentialFromOneTimeCode(gUser.getEmail(), code);
 		
 		User user = UserService.getInstance().getUser(gUser.getEmail());
-		user.setTokens(credential);
+		user.setCredential(credential);
 				
 		UserService.getInstance().provisionProfile(user);
 		
