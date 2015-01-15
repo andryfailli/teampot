@@ -1,7 +1,9 @@
 angular.module('teampot').
-	controller('activityListController', function($scope,$routeParams,ProjectService,ActivityService,CONSTANTS) {
+	controller('activityListController', function($scope,$routeParams,ProjectService,ActivityService,CONSTANTS,UserService) {
 		
 		$scope.activityList = ActivityService.$list($routeParams.projectId,0);
+		
+		$scope.users = UserService.$list({project: $routeParams.projectId});
 		
 		$scope.activityList.$promise.then(function(){
 			$scope.$apply(function(){

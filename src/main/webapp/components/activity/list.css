@@ -1,0 +1,11 @@
+.stats-sheet-title {
+	margin-top:0;
+	margin-bottom: 10px;
+}
+
+.stats-metric-value {
+	text-align:right;
+	padding-right: 3px;
+	font-size: 24px;
+	vertical-align: top;
+}
