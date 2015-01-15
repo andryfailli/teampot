@@ -65,6 +65,10 @@ public class TaskService {
 		return dao.listToDoForUser(assignee);
 	}
 	
+	public int countToDoForProject(Ref<Project> project) {
+		return dao.countToDoForProject(project);
+	}
+	
 	public Task get(String key){
 		return dao.get(key);
 	}

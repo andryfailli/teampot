@@ -23,23 +23,25 @@ public class MetricsSnapshot extends BaseEntity {
 	@Index
 	private Date timestamp;
 	
-	private Map<String,Float> metrics; 
+	private Map<String,Object> metrics; 
 
 	public MetricsSnapshot() {
 		this.timestamp = new Date();
-		this.metrics = new LinkedHashMap<String, Float>();
+		this.metrics = new LinkedHashMap<String, Object>();
 	}
 	
 	@Override
 	@ApiResourceProperty(name = "id")
 	public String getKey() {
-		return Key.create(this.getClass(), this.getId()).getString();
+		return id != null ? Key.create(this.getClass(), this.getId()).getString() : null;
 	}
 	
 	@ApiResourceProperty(name = "id")
 	public void setKey(String key) {
-		Key entityKey = Key.create(key);
-		this.setId(entityKey.getId());
+		if (key != null) {
+			Key entityKey = Key.create(key);
+			this.setId(entityKey.getId());
+		}
 	}
 	
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
@@ -74,15 +76,17 @@ public class MetricsSnapshot extends BaseEntity {
 		this.id = id;
 	}
 	
-	public Map<String,Float> getMetrics() {
+	
+	
+	public Map<String,Object> getMetrics() {
 		return metrics;
 	}
 	
-	public void addMetric(String name, Float value) {
-		metrics.put(name, value);
+	public void addMetric(String name, Object object) {
+		metrics.put(name, object);
 	}
 
-	public void setMetrics(Map<String,Float> metrics) {
+	public void setMetrics(Map<String,Object> metrics) {
 		this.metrics = metrics;
 	}
 	
