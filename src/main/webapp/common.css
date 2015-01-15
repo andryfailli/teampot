@@ -11,6 +11,10 @@ md-content {
 	padding:20px;
 }
 
+.md-content-padded-small {
+	padding:8px;
+}
+
 md-item.md-item-padded > md-item-content{
 	padding:12px;
 }

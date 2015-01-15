@@ -1,3 +1,112 @@
+<div layout="column" layout-gt-md="row" layout-align="top center" flex>
+	<md-whiteframe class="md-whiteframe-z2 md-content-padded" layout="row" layout-align="top center" flex>
+		<md-content flex>
+			<h3 class="stats-sheet-title" flex>
+				<i class="mdi-content-paste mdi-2x"></i> {{currentProject.name}}
+			</h3>
+			<md-divider></md-divider>
+			<div layout="row" layout-align="center center" class="md-content-padded-small" style="text-align: center;">
+				<div class="md-content-padded-small">
+					<h2 style="margin:0">342</h2>
+					<small>days</small>
+				</div>
+				<div class="md-content-padded-small" layout="row" layout-gt-md="column" layout-align="center center" flex style="font-size:13px;">
+					<div>10 January 2014</div>
+					<div>
+						<i class="mdi-expand-more mdi-lg"></i>
+					</div>
+					<div>18 December 2014</div>
+				</div>
+			</div>
+			<md-divider></md-divider>
+			<div class="md-content-padded-small" flex>
+				<table flex>
+					<tr><td class="stats-metric-value"><b>{{currentProject.tasksCount}}</b></td><td><b>tasks</b> total</td></tr>
+					<tr><td class="stats-metric-value"><b>{{currentProject.meetingsCount}}</b></td><td><b>meetings</b> total</td></tr>
+					<tr><td class="stats-metric-value"><b>{{currentProject.usersCount}}</b></td><td><b>users</b> participating</td></tr>
+				</table>
+			</div>
+		</md-content>
+	</md-whiteframe>
+	<md-whiteframe class="md-whiteframe-z2 md-content-padded" layout="row" layout-align="top center" flex>
+		<md-content flex>
+			<h3 class="stats-sheet-title" flex>
+				<i class="mdi-view-list mdi-2x"></i> Tasks stats
+			</h3>
+			<md-divider></md-divider>
+			<div class="md-content-padded-small" flex>
+				<table flex>
+					<tr><td class="stats-metric-value"><b>74</b></td><td><b>tasks</b> to be done</td></tr>
+					<tr><td class="stats-metric-value"><b>32</b></td><td><b>%</b> of total</td></tr>
+				</table>
+			</div>
+			<md-divider></md-divider>
+			<div class="md-content-padded-small" flex>
+				<table flex>
+					<tr><td class="stats-metric-value"><b>88</b></td><td><b>%</b> tasks done in time</td></tr>
+					<tr><td class="stats-metric-value"><b>12</b></td><td><b>tasks</b> done after due date</td></tr>
+				</table>
+			</div>
+			<md-divider></md-divider>
+			<div class="md-content-padded-small" flex>
+				<table flex>
+					<tr><td class="stats-metric-value"><b>13</b></td><td><b>days</b> avg time to complete a task</td></tr>
+				</table>
+			</div>
+		</md-content>
+	</md-whiteframe>
+	<md-whiteframe class="md-whiteframe-z2 md-content-padded" layout="row" layout-align="top center" flex>
+		<md-content flex>
+			<h3 class="stats-sheet-title">
+				<i class="mdi-event mdi-2x"></i> Meetings stats
+			</h3>
+			<md-divider></md-divider>
+			<div class="md-content-padded-small" flex>
+				<table flex>
+					<tr><td class="stats-metric-value"><b>42</b></td><td><b>meetings</b> scheduled</td></tr>
+					<tr><td class="stats-metric-value"><b>2</b></td><td><b>days</b> avg time between two meetings</td></tr>
+				</table>
+			</div>
+			<md-divider></md-divider>
+			<div class="md-content-padded-small" flex>
+				<table flex>
+					<tr><td class="stats-metric-value"><b>64</b></td><td><b>%</b> scheduled with poll</td></tr>
+					<tr><td class="stats-metric-value"><b>43</b></td><td><b>polls</b> opened</td></tr>
+				</table>
+			</div>
+		</md-content>
+	</md-whiteframe>
+	<md-whiteframe class="md-whiteframe-z2 md-content-padded" layout="row" layout-align="top center" flex>
+		<md-content flex>
+			<h3 class="stats-sheet-title">
+				<i class="mdi-group mdi-2x"></i> Most active users
+			</h3>
+			<md-divider></md-divider>
+			<div class="md-content-padded-small" flex>
+				<md-list>
+			      <md-item ng-repeat="item in [users.items[0],users.items[0],users.items[0],users.items[0]] track by $index">
+			        <md-item-content layout="row" layout-align="center left">
+			        	<div class="md-contact-chip md-content-padded-small" layout="row" layout-align="center center" flex>
+							<div class="stats-metric-value">
+								<b>{{$index+1}}.</b>&nbsp;
+							</div>
+							<div flex>
+								<span>{{item.firstName}} {{item.lastName}}</span>
+							</div>
+							<div>
+								<img ng-src="{{item.iconUrl ? item.iconUrl : '/img/face.png'}}" class="face face-small" alt="{{item.firstName}} {{item.lastName}}">
+							</div>
+						</div>
+			        </md-item-content>
+			        <md-divider ng-if="!$last"></md-divider>
+			      </md-item>
+			    </md-list>
+			</div>
+		</md-content>
+	</md-whiteframe>
+</div>
+
+
 <div ng-if="activityList.$resolved && (!activityList.items || activityList.items.length==0)">
 	<p class="empty-list-message text-muted">No activity yet for this project</p>
 </div>
