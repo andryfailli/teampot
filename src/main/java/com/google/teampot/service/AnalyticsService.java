@@ -18,12 +18,18 @@ import com.google.api.services.bigquery.model.TableFieldSchema;
 import com.google.api.services.bigquery.model.TableReference;
 import com.google.api.services.bigquery.model.TableRow;
 import com.google.api.services.bigquery.model.TableSchema;
+import com.google.teampot.Config;
 import com.google.teampot.GoogleServices;
-import com.google.teampot.dao.MetricsSnapshotDAO;
 import com.google.teampot.model.MetricsSnapshot;
-import com.google.teampot.service.metric.AvgNumberOfMeetingsCalculator;
+import com.google.teampot.model.Project;
+import com.google.teampot.service.metric.ProjectTimespanCalculator;
 import com.google.teampot.service.metric.MetricCalculator;
+import com.google.teampot.service.metric.TaskAvgCompleteTimeCalculator;
+import com.google.teampot.service.metric.TaskBeforeAfterDueDateCalculator;
+import com.google.teampot.service.metric.TaskToDoCalculator;
+import com.google.teampot.service.metric.UserMostActiveCalculator;
 import com.google.teampot.util.AppHelper;
+import com.googlecode.objectify.Ref;
 
 public class AnalyticsService {
 
@@ -33,7 +39,11 @@ public class AnalyticsService {
 
 	private AnalyticsService() {
 		this.metricCalculators = new LinkedHashSet<MetricCalculator>();
-		metricCalculators.add(new AvgNumberOfMeetingsCalculator());
+		metricCalculators.add(new ProjectTimespanCalculator());
+		metricCalculators.add(new TaskToDoCalculator());
+		metricCalculators.add(new TaskBeforeAfterDueDateCalculator());
+		metricCalculators.add(new TaskAvgCompleteTimeCalculator());
+		metricCalculators.add(new UserMostActiveCalculator());
 	}
 
 	public static AnalyticsService getInstance() {
@@ -43,12 +53,21 @@ public class AnalyticsService {
 	}
 	
 	public void updateAnalytics() {
-		MetricsSnapshot snapshot = new MetricsSnapshot();
-		for (MetricCalculator metricCalculator : metricCalculators) {
-			snapshot.addMetric(metricCalculator.getName(),metricCalculator.computeValue());
-		}
+		//NOOP
+		/*
+		MetricsSnapshot snapshot = this.getMetrics();
 		MetricsSnapshotDAO dao = new MetricsSnapshotDAO();
 		dao.save(snapshot);
+		*/
+	}
+	
+	public MetricsSnapshot getMetrics(Ref<Project> project) {
+		MetricsSnapshot snapshot = new MetricsSnapshot();
+		for (MetricCalculator metricCalculator : metricCalculators) {
+			if (Config.get(Config.FEATURE_ANALYTICS).equals(Config.VALUE_TRUE) || !metricCalculator.needsBigQuery())
+				snapshot.getMetrics().putAll(metricCalculator.computeValues(project));
+		}
+		return snapshot;
 	}
 
 	public List<TableRow> query(String query)	throws IOException, GeneralSecurityException {

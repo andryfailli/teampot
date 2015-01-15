@@ -61,6 +61,7 @@ html {
 }
 .route-breadcrumb {
 	display:inline-block;
+	vertical-align: middle;
 }
 
 .route-breadcrumb * {
@@ -158,4 +159,12 @@ md-progress-circular.spinner-gray .md-inset {
 
 .fab-container-small-fabs .md-fab md-icon {
 	line-height: 50px;
+}
+
+#main-toolbar i {
+	color:#444;
+}
+
+.md-toolbar-tools > * {
+	vertical-align: middle;
 }
