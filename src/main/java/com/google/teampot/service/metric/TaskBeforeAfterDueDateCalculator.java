@@ -21,6 +21,11 @@ public class TaskBeforeAfterDueDateCalculator extends MetricCalculator {
 	public TaskBeforeAfterDueDateCalculator() {
 		
 	}
+	
+	@Override
+	public boolean needsBigQuery() {
+		return true;
+	}
 
 	@Override
 	public Map<String,Object> computeValues(Ref<Project> project) {

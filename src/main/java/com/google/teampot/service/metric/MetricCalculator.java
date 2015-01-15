@@ -8,5 +8,7 @@ import com.googlecode.objectify.Ref;
 public abstract class MetricCalculator {
 	
 	public abstract Map<String,Object> computeValues(Ref<Project> project);
+	
+	public abstract boolean needsBigQuery();
 
 }

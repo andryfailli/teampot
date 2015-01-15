@@ -7,15 +7,15 @@
 			<md-divider></md-divider>
 			<div layout="row" layout-align="center center" class="md-content-padded-small" style="text-align: center;">
 				<div class="md-content-padded-small">
-					<h2 style="margin:0">342</h2>
+					<h2 style="margin:0">{{hasAnalytics('PROJECT_TIMESPAN_END') && hasAnalytics('PROJECT_TIMESPAN_END') ? ((analytics.metrics.PROJECT_TIMESPAN_END - analytics.metrics.PROJECT_TIMESPAN_START)/86400000) : '&mdash;'}}</h2>
 					<small>days</small>
 				</div>
 				<div class="md-content-padded-small" layout="row" layout-gt-md="column" layout-align="center center" flex style="font-size:13px;">
-					<div>10 January 2014</div>
+					<div>{{hasAnalytics('PROJECT_TIMESPAN_START') ? (analytics.metrics.PROJECT_TIMESPAN_START|date:'longDate') : '&mdash;'}}</div>
 					<div>
 						<i class="mdi-expand-more mdi-lg"></i>
 					</div>
-					<div>18 December 2014</div>
+					<div>{{hasAnalytics('PROJECT_TIMESPAN_END') ? (analytics.metrics.PROJECT_TIMESPAN_END|date:'longDate') : '&mdash;'}}</div>
 				</div>
 			</div>
 			<md-divider></md-divider>
@@ -36,21 +36,21 @@
 			<md-divider></md-divider>
 			<div class="md-content-padded-small" flex>
 				<table flex>
-					<tr><td class="stats-metric-value"><b>74</b></td><td><b>tasks</b> to be done</td></tr>
-					<tr><td class="stats-metric-value"><b>32</b></td><td><b>%</b> of total</td></tr>
+					<tr><td class="stats-metric-value"><b>{{hasAnalytics('TASK_TODO_COUNT') ? analytics.metrics.TASK_TODO_COUNT : '&mdash;'}}</b></td><td><b>tasks</b> to be done</td></tr>
+					<tr><td class="stats-metric-value"><b>{{hasAnalytics('TASK_TODO_PERCENT') ? (analytics.metrics.TASK_TODO_PERCENT*100|number:0) : '&mdash;'}}</b></td><td><b>%</b> of total</td></tr>
 				</table>
 			</div>
 			<md-divider></md-divider>
 			<div class="md-content-padded-small" flex>
 				<table flex>
-					<tr><td class="stats-metric-value"><b>88</b></td><td><b>%</b> tasks done in time</td></tr>
-					<tr><td class="stats-metric-value"><b>12</b></td><td><b>tasks</b> done after due date</td></tr>
+					<tr><td class="stats-metric-value"><b>{{hasAnalytics('TASK_BEFORE_DUEDATE_PERCENT') ? (analytics.metrics.TASK_BEFORE_DUEDATE_PERCENT*100|number:0) : '&mdash;'}}</b></td><td><b>%</b> tasks done in time</td></tr>
+					<tr><td class="stats-metric-value"><b>{{hasAnalytics('TASK_AFTER_DUEDATE_COUNT') ? analytics.metrics.TASK_AFTER_DUEDATE_COUNT : '&mdash;'}}</b></td><td><b>tasks</b> done after due date</td></tr>
 				</table>
 			</div>
 			<md-divider></md-divider>
 			<div class="md-content-padded-small" flex>
 				<table flex>
-					<tr><td class="stats-metric-value"><b>13</b></td><td><b>days</b> avg time to complete a task</td></tr>
+					<tr><td class="stats-metric-value"><b>{{hasAnalytics('TASK_AVG_COMPLETE_TIME') ? analytics.metrics.TASK_AVG_COMPLETE_TIME : '&mdash;'}}</b></td><td><b>days</b> avg time to complete a task</td></tr>
 				</table>
 			</div>
 		</md-content>
@@ -63,15 +63,15 @@
 			<md-divider></md-divider>
 			<div class="md-content-padded-small" flex>
 				<table flex>
-					<tr><td class="stats-metric-value"><b>42</b></td><td><b>meetings</b> scheduled</td></tr>
-					<tr><td class="stats-metric-value"><b>2</b></td><td><b>days</b> avg time between two meetings</td></tr>
+					<tr><td class="stats-metric-value"><b>&mdash;</b></td><td><b>meetings</b> scheduled</td></tr>
+					<tr><td class="stats-metric-value"><b>&mdash;</b></td><td><b>days</b> avg time between two meetings</td></tr>
 				</table>
 			</div>
 			<md-divider></md-divider>
 			<div class="md-content-padded-small" flex>
 				<table flex>
-					<tr><td class="stats-metric-value"><b>64</b></td><td><b>%</b> scheduled with poll</td></tr>
-					<tr><td class="stats-metric-value"><b>43</b></td><td><b>polls</b> opened</td></tr>
+					<tr><td class="stats-metric-value"><b>&mdash;</b></td><td><b>%</b> scheduled with poll</td></tr>
+					<tr><td class="stats-metric-value"><b>&mdash;</b></td><td><b>polls</b> opened</td></tr>
 				</table>
 			</div>
 		</md-content>
@@ -84,7 +84,7 @@
 			<md-divider></md-divider>
 			<div class="md-content-padded-small" flex>
 				<md-list>
-			      <md-item ng-repeat="item in [users.items[0],users.items[0],users.items[0],users.items[0]] track by $index">
+			      <md-item ng-repeat="item in analytics.metrics.USER_MOST_ACTIVE_LIST track by $index">
 			        <md-item-content layout="row" layout-align="center left">
 			        	<div class="md-contact-chip md-content-padded-small" layout="row" layout-align="center center" flex>
 							<div class="stats-metric-value">

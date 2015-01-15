@@ -37,7 +37,17 @@ angular.module("teampot").
 					$rootScope.$apply();
 				});
 				return entityList;
-			}
+			},
+			$analytics: function(projectId){
+				var entity = client.exec("activity.analytics",{project:projectId});
+				entity.$resolved = false;
+				entity.$promise.then(function(){
+					service.$new(entity);
+					entity.$resolved = true;
+					$rootScope.$apply();
+				});
+				return entity;
+			},
 		};
 		
 		return service;

@@ -18,6 +18,11 @@ public class TaskAvgCompleteTimeCalculator extends MetricCalculator {
 	public TaskAvgCompleteTimeCalculator() {
 		
 	}
+	
+	@Override
+	public boolean needsBigQuery() {
+		return true;
+	}
 
 	@Override
 	public Map<String,Object> computeValues(Ref<Project> project) {
