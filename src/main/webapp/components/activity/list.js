@@ -5,7 +5,7 @@ angular.module('teampot').
 		
 		$scope.analytics = ActivityService.$analytics($routeParams.projectId);
 		$scope.hasAnalytics = function(key) {
-			return angular.isDefined($scope.analytics.metrics) && angular.isDefined($scope.analytics.metrics[key]);
+			return angular.isDefined($scope.analytics.metrics) && angular.isDefined($scope.analytics.metrics[key]) && $scope.analytics.metrics[key]!==null;
 		}
 		
 		$scope.activityList.$promise.then(function(){

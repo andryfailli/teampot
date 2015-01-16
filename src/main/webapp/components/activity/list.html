@@ -83,7 +83,7 @@
 			</h3>
 			<md-divider></md-divider>
 			<div class="md-content-padded-small" flex>
-				<md-list>
+				<md-list ng-show="hasAnalytics('USER_MOST_ACTIVE_LIST')">
 			      <md-item ng-repeat="item in analytics.metrics.USER_MOST_ACTIVE_LIST track by $index">
 			        <md-item-content layout="row" layout-align="center left">
 			        	<div class="md-contact-chip md-content-padded-small" layout="row" layout-align="center center" flex>
@@ -101,6 +101,7 @@
 			        <md-divider ng-if="!$last"></md-divider>
 			      </md-item>
 			    </md-list>
+			    <div ng-hide="hasAnalytics('USER_MOST_ACTIVE_LIST')"><small class="text-muted">list not available at the moment</small></div>
 			</div>
 		</md-content>
 	</md-whiteframe>
