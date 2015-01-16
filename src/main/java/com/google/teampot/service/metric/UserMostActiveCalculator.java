@@ -31,7 +31,7 @@ public class UserMostActiveCalculator extends MetricCalculator {
 	public Map<String,Object> computeValues(Ref<Project> project) {
 		Map<String,Object> metrics = new LinkedHashMap<String, Object>();
 		
-		List<User> users = new ArrayList<User>();
+		List<User> users = null;
 		
 		String query = "SELECT  actorId,count(actorId) as n FROM   [teampot.MeetingActivityEvent], [teampot.MemberActivityEvent], [teampot.ProjectActivityEvent], [teampot.TaskActivityEvent] GROUP BY actorId ORDER BY n DESC; AND projectId = '"+project.getKey().getString()+"' LIMIT 5";
 		
@@ -39,6 +39,7 @@ public class UserMostActiveCalculator extends MetricCalculator {
 			List<TableRow> rows = AnalyticsService.getInstance().query(query);
 						
 			for (TableRow row : rows) {
+				if (users==null) users = new ArrayList<User>();
 				users.add(UserService.getInstance().get((String) row.get("actorId")));
 			}
 				
