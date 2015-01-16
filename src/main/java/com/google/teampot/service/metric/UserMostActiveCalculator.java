@@ -33,7 +33,7 @@ public class UserMostActiveCalculator extends MetricCalculator {
 		
 		List<User> users = null;
 		
-		String query = "SELECT  actorId,count(actorId) as n FROM   [teampot.MeetingActivityEvent], [teampot.MemberActivityEvent], [teampot.ProjectActivityEvent], [teampot.TaskActivityEvent] GROUP BY actorId ORDER BY n DESC; AND projectId = '"+project.getKey().getString()+"' LIMIT 5";
+		String query = "SELECT  actorId,count(actorId) as n FROM   [teampot.MeetingActivityEvent], [teampot.MemberActivityEvent], [teampot.ProjectActivityEvent], [teampot.TaskActivityEvent] WHERE projectId = '"+project.getKey().getString()+"' GROUP BY actorId ORDER BY n DESC LIMIT 5";
 		
 		try {
 			List<TableRow> rows = AnalyticsService.getInstance().query(query);

@@ -32,6 +32,17 @@ public class ProjectEndpoint extends BaseEndpoint{
 	}
 	
 	@ApiMethod(
+		name = "project.listAll",
+		path = "project/all",
+		httpMethod = HttpMethod.GET
+	)
+	public List<Project> listAll(com.google.appengine.api.users.User gUser) throws OAuthRequestException, UnauthorizedException {
+		userService.ensureEnabled(gUser);
+		
+		return projectService.list();
+	}
+	
+	@ApiMethod(
 		name = "project.get", 
 		path = "project/{id}",
 		httpMethod = HttpMethod.GET

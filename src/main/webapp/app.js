@@ -222,7 +222,8 @@ angular.module('teampot', [
     	    		$rootScope.signedIn = true;
     	    		
     	    		// Token expires in 3600s. Let's refresh it every 15m
-    	    		$interval(function(){Gapi.authorize(true);},15*60);
+    	    		// FIXME: It doesn't work.
+    	    		//$interval(function(){Gapi.authorize(true);},15*60*1000);
     				
     			})
     			.catch(function(data){
