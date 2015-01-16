@@ -166,9 +166,12 @@ public class UserService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		userToBeProvisioned.setFirstName(directoryUser.getName().getGivenName());
-		userToBeProvisioned.setLastName(directoryUser.getName().getFamilyName());
-		userToBeProvisioned.setIconUrl(directoryUser.getThumbnailPhotoUrl());
+		
+		if (directoryUser != null ) {
+			userToBeProvisioned.setFirstName(directoryUser.getName().getGivenName());
+			userToBeProvisioned.setLastName(directoryUser.getName().getFamilyName());
+			userToBeProvisioned.setIconUrl(directoryUser.getThumbnailPhotoUrl());
+		}
 		
 		// enabled?
 		userToBeProvisioned.setEnabled(this.isUserEnabled(userToBeProvisioned));
