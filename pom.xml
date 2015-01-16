@@ -33,6 +33,11 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.10</version>
+		</dependency>
+		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-testing</artifactId>
 			<version>${appengine.target.version}</version>
