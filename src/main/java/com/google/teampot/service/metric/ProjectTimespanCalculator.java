@@ -18,6 +18,11 @@ public class ProjectTimespanCalculator extends MetricCalculator {
 	public ProjectTimespanCalculator() {
 		
 	}
+	
+	@Override
+	public boolean needsBigQuery() {
+		return true;
+	}
 
 	@Override
 	public Map<String,Object> computeValues(Ref<Project> project) {

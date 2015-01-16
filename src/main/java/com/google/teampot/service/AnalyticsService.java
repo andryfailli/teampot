@@ -18,6 +18,7 @@ import com.google.api.services.bigquery.model.TableFieldSchema;
 import com.google.api.services.bigquery.model.TableReference;
 import com.google.api.services.bigquery.model.TableRow;
 import com.google.api.services.bigquery.model.TableSchema;
+import com.google.teampot.Config;
 import com.google.teampot.GoogleServices;
 import com.google.teampot.model.MetricsSnapshot;
 import com.google.teampot.model.Project;
@@ -63,7 +64,8 @@ public class AnalyticsService {
 	public MetricsSnapshot getMetrics(Ref<Project> project) {
 		MetricsSnapshot snapshot = new MetricsSnapshot();
 		for (MetricCalculator metricCalculator : metricCalculators) {
-			snapshot.getMetrics().putAll(metricCalculator.computeValues(project));
+			if (Config.get(Config.FEATURE_ANALYTICS).equals(Config.VALUE_TRUE) || !metricCalculator.needsBigQuery())
+				snapshot.getMetrics().putAll(metricCalculator.computeValues(project));
 		}
 		return snapshot;
 	}

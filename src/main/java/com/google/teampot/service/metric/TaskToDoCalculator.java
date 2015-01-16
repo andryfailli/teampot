@@ -15,6 +15,11 @@ public class TaskToDoCalculator extends MetricCalculator {
 	public TaskToDoCalculator() {
 		
 	}
+	
+	@Override
+	public boolean needsBigQuery() {
+		return false;
+	}
 
 	@Override
 	public Map<String,Object> computeValues(Ref<Project> project) {
@@ -22,7 +27,7 @@ public class TaskToDoCalculator extends MetricCalculator {
 		
 		int todocount = TaskService.getInstance().countToDoForProject(project);
 		int tot = project.get().getTasksCount();
-		float perc = tot>0 ? todocount / tot : 0;
+		float perc = tot>0 ? (float)todocount / tot : 0;
 			
 		metrics.put(TASK_TODO_COUNT,todocount);
 		metrics.put(TASK_TODO_PERCENT,perc);

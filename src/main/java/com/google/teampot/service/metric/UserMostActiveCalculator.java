@@ -21,6 +21,11 @@ public class UserMostActiveCalculator extends MetricCalculator {
 	public UserMostActiveCalculator() {
 		
 	}
+	
+	@Override
+	public boolean needsBigQuery() {
+		return true;
+	}
 
 	@Override
 	public Map<String,Object> computeValues(Ref<Project> project) {
