@@ -18,7 +18,7 @@ public class ProvisionGroupServlet extends HttpServlet {
 	private static final Logger logger = Logger.getLogger(ProvisionGroupServlet.class.getSimpleName());
 
 	@Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException { 
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException { 
 		String appGroup = Config.get(Config.APPS_GROUP);
 		if (appGroup == null || appGroup.equals("")) return;
 		UserService.getInstance().provisionGroup(appGroup);		
