@@ -5,13 +5,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.logging.Logger;
+
+import com.google.teampot.util.AppHelper;
 
 public class Config {
 
 	private static Config instance;
+	
+	private static final Logger logger = Logger.getLogger(Config.class.getSimpleName());
 		
-	public static final String BACKEND_CLIENT_ID = "BACKEND_CLIENT_ID";
-	public static final String BACKEND_CLIENT_SECRET = "BACKEND_CLIENT_SECRET";
+	public static final String WEB_CLIENT_ID = "WEB_CLIENT_ID";
+	public static final String WEB_CLIENT_SECRET = "WEB_CLIENT_SECRET";
 	public static final String APPLICATION_NAME = "APPLICATION_NAME";
 	public static final String APPS_DOMAIN = "APPS_DOMAIN";
 	public static final String APPS_GROUP = "APPS_GROUP";
@@ -28,12 +33,13 @@ public class Config {
 	
 	private Config() {
 		this.props = new Properties();
+		String propsFilePath = "WEB-INF/"+AppHelper.getAppId()+".properties";
 		
 		try {
-			File propsFile = new File("WEB-INF/app.properties");
+			File propsFile = new File(propsFilePath);
 			this.props.load(new FileInputStream(propsFile));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			logger.severe("Config file "+propsFilePath+" not found.");
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
