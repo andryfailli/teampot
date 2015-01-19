@@ -13,6 +13,6 @@ out
 .project
 src/main/webapp/libs
 node_modules
-app.properties
+*.properties
 *.p12
 
