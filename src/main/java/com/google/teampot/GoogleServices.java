@@ -55,7 +55,7 @@ public class GoogleServices {
 		return new GoogleCredential.Builder()
 			.setTransport(GoogleServices.getInstance().httpTransport)
 			.setJsonFactory(GoogleServices.getInstance().jsonFactory)
-			.setClientSecrets(Config.get(Config.BACKEND_CLIENT_ID), Config.get(Config.BACKEND_CLIENT_SECRET));
+			.setClientSecrets(Config.get(Config.WEB_CLIENT_ID), Config.get(Config.WEB_CLIENT_SECRET));
 	}
 
 	public static GoogleCredential getCredentialFromOneTimeCode(String userEmail,String code) throws IOException, OAuthRequestException {
@@ -64,8 +64,8 @@ public class GoogleServices {
 
 		HttpTransport httpTransport = GoogleServices.getInstance().httpTransport;
 		JsonFactory jsonFactory = GoogleServices.getInstance().jsonFactory;
-		String clientId = Config.get(Config.BACKEND_CLIENT_ID);
-		String clientSecret = Config.get(Config.BACKEND_CLIENT_SECRET);
+		String clientId = Config.get(Config.WEB_CLIENT_ID);
+		String clientSecret = Config.get(Config.WEB_CLIENT_SECRET);
 		
 	    // Upgrade the authorization code into an access and refresh token.
 	    GoogleTokenResponse tokenResponse = new GoogleAuthorizationCodeTokenRequest(httpTransport, jsonFactory, clientId, clientSecret, code, "postmessage").execute();
