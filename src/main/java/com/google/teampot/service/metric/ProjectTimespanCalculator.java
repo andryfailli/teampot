@@ -5,6 +5,9 @@ import java.security.GeneralSecurityException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
+
+import com.google.api.services.bigquery.model.TableCell;
 import com.google.api.services.bigquery.model.TableRow;
 import com.google.teampot.model.Project;
 import com.google.teampot.service.AnalyticsService;
@@ -37,9 +40,10 @@ public class ProjectTimespanCalculator extends MetricCalculator {
 			List<TableRow> rows = AnalyticsService.getInstance().query(query);
 			
 			if (rows.size()==1) {
-				TableRow row = rows.get(0);
-				start = Long.parseLong((String) row.get("start"));
-				end = Long.parseLong((String) row.get("end"));
+				List<TableCell> values =  (List<TableCell>) rows.get(0).get("f");
+				
+				start = Long.parseLong((String) values.get(0).getV())*1000;
+				end = Long.parseLong((String) values.get(1).getV())*1000;
 			}
 				
 		} catch (IOException e) {
