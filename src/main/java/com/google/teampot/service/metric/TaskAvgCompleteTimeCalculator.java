@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.api.services.bigquery.model.TableCell;
 import com.google.api.services.bigquery.model.TableRow;
 import com.google.teampot.model.Project;
 import com.google.teampot.service.AnalyticsService;
@@ -36,8 +37,8 @@ public class TaskAvgCompleteTimeCalculator extends MetricCalculator {
 			List<TableRow> rows = AnalyticsService.getInstance().query(query);
 			
 			if (rows.size()==1) {
-				TableRow row = rows.get(0);
-				value = Double.parseDouble((String) row.get("value"));
+				List<TableCell> values =  (List<TableCell>) rows.get(0).get("f");
+				value = Double.parseDouble((String) values.get(0).getV())*1000;
 			}
 				
 		} catch (IOException e) {

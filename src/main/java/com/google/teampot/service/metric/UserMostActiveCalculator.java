@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.api.services.bigquery.model.TableCell;
 import com.google.api.services.bigquery.model.TableRow;
 import com.google.teampot.model.Project;
 import com.google.teampot.model.User;
@@ -31,7 +32,7 @@ public class UserMostActiveCalculator extends MetricCalculator {
 	public Map<String,Object> computeValues(Ref<Project> project) {
 		Map<String,Object> metrics = new LinkedHashMap<String, Object>();
 		
-		List<User> users = null;
+		List<User> users = new ArrayList<User>();
 		
 		String query = "SELECT  actorId,count(actorId) as n FROM   [teampot.MeetingActivityEvent], [teampot.MemberActivityEvent], [teampot.ProjectActivityEvent], [teampot.TaskActivityEvent] WHERE projectId = '"+project.getKey().getString()+"' GROUP BY actorId ORDER BY n DESC LIMIT 5";
 		
@@ -39,8 +40,8 @@ public class UserMostActiveCalculator extends MetricCalculator {
 			List<TableRow> rows = AnalyticsService.getInstance().query(query);
 						
 			for (TableRow row : rows) {
-				if (users==null) users = new ArrayList<User>();
-				users.add(UserService.getInstance().get((String) row.get("actorId")));
+				List<TableCell> values =  (List<TableCell>) rows.get(0).get("f");
+				users.add(UserService.getInstance().get((String) values.get(0).getV()));
 			}
 				
 		} catch (IOException e) {
@@ -51,7 +52,7 @@ public class UserMostActiveCalculator extends MetricCalculator {
 			e.printStackTrace();
 		}
 
-		metrics.put(USER_MOST_ACTIVE_LIST,users);
+		metrics.put(USER_MOST_ACTIVE_LIST,users.size()>0 ? users : null);
 		return metrics;
 	}
 
