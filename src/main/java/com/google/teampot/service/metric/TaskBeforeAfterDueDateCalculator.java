@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.api.services.bigquery.model.TableCell;
 import com.google.api.services.bigquery.model.TableRow;
 import com.google.teampot.model.Project;
 import com.google.teampot.service.AnalyticsService;
@@ -41,14 +42,14 @@ public class TaskBeforeAfterDueDateCalculator extends MetricCalculator {
 		try {
 			List<TableRow> rowsAfter = AnalyticsService.getInstance().query(queryAfter);
 			if (rowsAfter.size()==1) {
-				TableRow row = rowsAfter.get(0);
-				afterDueDateCount = Long.parseLong((String) row.get("value"));				
+				List<TableCell> valuesAfter =  (List<TableCell>) rowsAfter.get(0).get("f");
+				afterDueDateCount = Long.parseLong((String)valuesAfter.get(0).getV());				
 			}
 			
 			List<TableRow> rowsBefore = AnalyticsService.getInstance().query(queryBefore);
 			if (rowsBefore.size()==1) {
-				TableRow row = rowsBefore.get(0);
-				beforeDueDateCount = Long.parseLong((String) row.get("value"));				
+				List<TableCell> valuesBefore =  (List<TableCell>) rowsBefore.get(0).get("f");
+				beforeDueDateCount = Long.parseLong((String)valuesBefore.get(0).getV());				
 			}
 			
 			int donecount = project.get().getTasksCount() - TaskService.getInstance().countToDoForProject(project);
