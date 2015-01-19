@@ -45,7 +45,7 @@
 	</head>
 	<body ng-controller="mainController" ng-swipe-right="onSwipeRight($event)" ng-swipe-left="onSwipeLeft($event)" layout="row" ng-cloak>
 		
-		<md-sidenav md-is-locked-open="$media('md')" layout="column" class="md-sidenav-left md-whiteframe-z3" md-component-id="left" ng-if="sidebarTemplateUrl"> 
+		<md-sidenav md-is-locked-open="$media('md')" layout="column" class="md-sidenav-left md-whiteframe-z3" md-component-id="left" ng-show="sidebarTemplateUrl"> 
 			<md-toolbar md-theme="indigo">
 				<h1 class="md-toolbar-tools">
 					<md-button ng-href="#/projects">
