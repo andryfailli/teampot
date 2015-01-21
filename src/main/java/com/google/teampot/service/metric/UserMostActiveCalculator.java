@@ -42,8 +42,9 @@ public class UserMostActiveCalculator extends MetricCalculator {
 			List<TableRow> rows = AnalyticsService.getInstance().query(query);
 						
 			for (TableRow row : rows) {
-				List<TableCell> values =  (List<TableCell>) rows.get(0).get("f");
-				users.add(UserService.getInstance().get((String) values.get(0).getV()));
+				List<TableCell> values =  (List<TableCell>) row.get("f");
+				User user = UserService.getInstance().get((String) values.get(0).getV());
+				if (user != null) users.add(user);
 			}
 				
 		} catch (IOException e) {
