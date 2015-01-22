@@ -8,8 +8,8 @@ import com.google.teampot.Constants;
 	name = "teampot",
 	version = Constants.CURRENT_API_VERSION,
 	defaultVersion = AnnotationBoolean.TRUE,
-	scopes = {Constants.EMAIL_SCOPE},
-	clientIds = {Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID}
+	scopes = {com.google.api.server.spi.Constant.API_EMAIL_SCOPE},
+	clientIds = {Constants.WEB_CLIENT_ID, com.google.api.server.spi.Constant.API_EXPLORER_CLIENT_ID}
 )
 public class BaseEndpoint {
 
