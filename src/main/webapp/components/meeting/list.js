@@ -69,12 +69,12 @@ angular.module('teampot').
 		}
 
 		$scope.getHangoutLink = function(meeting){
+			var useHangoutApp = CONSTANTS.HANGOUT_APPID ? true : false;
 			if (meeting.hangoutLink) {
 				var hasQueryParams = meeting.hangoutLink.indexOf("?")>-1;
-				return meeting.hangoutLink+(hasQueryParams?"&":"?")+"gid="+CONSTANTS.HANGOUT_APPID+"&gd="+meeting.id;
+				return meeting.hangoutLink+(hasQueryParams?"&":"?")+(useHangoutApp ? "gid="+CONSTANTS.HANGOUT_APPID+"&gd="+$routeParams.projectId : "");
 			} else {
-				var useHangoutApp = CONSTANTS.HANGOUT_APPID ? true : false;
-				return "https://plus.google.com/hangouts/_/"+CONSTANTS.APPS_DOMAIN+"/teampot_"+meeting.id + (useHangoutApp ? "?gid="+CONSTANTS.HANGOUT_APPID+"&gd="+meeting.id : "");
+				return "https://plus.google.com/hangouts/_/"+CONSTANTS.APPS_DOMAIN+"/teampot_"+meeting.id + (useHangoutApp ? "?gid="+CONSTANTS.HANGOUT_APPID+"&gd="+$routeParams.projectId : "");
 			}
 		}
 		
