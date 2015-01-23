@@ -122,14 +122,15 @@ public abstract class ActivityEvent extends BaseEntity {
 		this.timestamp = t.transformFrom(timestamp);
 	}
 	
-	public String getTimestampGroup() {
+	public int getTimestampGroup() {
 		long diff = (new Date()).getTime() - this.timestamp.getTime();
 		
-		if (diff < 86400000) return "today";
-		else if (diff < 172800000L) return "yesterday";
-		else if (diff < 604800000L) return "last week";
-		else if (diff < 31536000000L) return "last year";
-		else return "years ago";
+		if (diff < 86400000) return ActivityEventTimestampGroup.TODAY.ordinal();
+		else if (diff < 172800000L) return ActivityEventTimestampGroup.YESTERDAY.ordinal();
+		else if (diff < 604800000L) return ActivityEventTimestampGroup.LAST_WEEK.ordinal();
+		else if (diff < 2628000000L) return ActivityEventTimestampGroup.LAST_MONTH.ordinal();
+		else if (diff < 31536000000L) return ActivityEventTimestampGroup.LAST_YEAR.ordinal();
+		else return ActivityEventTimestampGroup.PAST.ordinal(); //past
 	}
 
 	@ApiResourceProperty(ignored = AnnotationBoolean.TRUE)

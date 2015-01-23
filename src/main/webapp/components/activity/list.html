@@ -114,7 +114,7 @@
 
 <section ng-repeat="(groupValue,activityGroupedList) in activityList.items | groupBy:'timestampGroup'" ng-if="activityList.$resolved && activityList.items.length>0">
 	<md-subheader md-theme="transparent" ng-show="activityGroupedList.length>0">
-		{{groupValue}}
+		{{TIMESTAMP_GROUP_LABELS[groupValue]}}
 	</md-subheader>
 	<md-whiteframe class="md-whiteframe-z1" layout layout-align="center center" ng-repeat="activity in activityGroupedList">
 		<md-content flex>
