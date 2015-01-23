@@ -17,6 +17,8 @@ angular.module('teampot').
 			})
 		})
 		
+		$scope.TIMESTAMP_GROUP_LABELS = CONSTANTS.TIMESTAMP_GROUP_LABELS;
+		
 		$scope.loadMore = function(){
 			$scope.loadingMore = true;
 			
