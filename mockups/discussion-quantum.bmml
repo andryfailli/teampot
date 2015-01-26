@@ -1,0 +1,143 @@
+<mockup version="1.0" skin="wireframe" fontFace="Balsamiq Sans" measuredW="1064" measuredH="882" mockupW="806" mockupH="828">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="258" y="54" w="806" h="828" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderColor>15658734</borderColor>
+        <color>15658734</color>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Canvas" x="490" y="94" w="475" h="745" measuredW="100" measuredH="70" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Canvas" x="258" y="54" w="806" h="98" measuredW="100" measuredH="70" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>2848996</color>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Title" x="277" y="112" w="-1" h="-1" measuredW="198" measuredH="35" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>16777215</color>
+        <size>32</size>
+        <text>Demo%20Project</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Title" x="537" y="118" w="-1" h="-1" measuredW="109" measuredH="23" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>0</color>
+        <size>20</size>
+        <text>Discussions</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Icon" x="508" y="117" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>CommentsIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Label" x="309" y="180" w="-1" h="-1" measuredW="55" measuredH="24" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>activity-quantum%26bm%3Bactivity-quantum.bmml%26bm%3Bactivity-quantum.bmml%26bm%3Bactivity-quantum.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2251%2C126%2C106%2C150%22%20href%3D%22activity-quantum.bmml%22%20alt%3D%22activity-quantum%22%20id%3D%229%22/%3E</map>
+        <size>16</size>
+        <text>Activity</text>
+      </controlProperties>
+    </control>
+    <control controlID="63" controlTypeID="com.balsamiq.mockups::Icon" x="277" y="178" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>activity-quantum%26bm%3Bactivity-quantum.bmml%26bm%3Bactivity-quantum.bmml%26bm%3Bactivity-quantum.bmml</href>
+        <icon>LightningIcon%7Csmall</icon>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2219%2C124%2C43%2C148%22%20href%3D%22activity-quantum.bmml%22%20alt%3D%22activity-quantum%22%20id%3D%2263%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="64" controlTypeID="com.balsamiq.mockups::Label" x="309" y="220" w="-1" h="-1" measuredW="44" measuredH="24" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>tasks-quantum%26bm%3Btasks-quantum.bmml%26bm%3Btasks-quantum.bmml%26bm%3Btasks-quantum.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2251%2C166%2C95%2C190%22%20href%3D%22tasks-quantum.bmml%22%20alt%3D%22tasks-quantum%22%20id%3D%2264%22/%3E</map>
+        <size>16</size>
+        <text>Tasks</text>
+      </controlProperties>
+    </control>
+    <control controlID="65" controlTypeID="com.balsamiq.mockups::Icon" x="277" y="218" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>tasks-quantum%26bm%3Btasks-quantum.bmml%26bm%3Btasks-quantum.bmml%26bm%3Btasks-quantum.bmml</href>
+        <icon>BulletsIcon%7Csmall</icon>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2219%2C164%2C43%2C188%22%20href%3D%22tasks-quantum.bmml%22%20alt%3D%22tasks-quantum%22%20id%3D%2265%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="66" controlTypeID="com.balsamiq.mockups::Label" x="309" y="300" w="-1" h="-1" measuredW="68" measuredH="24" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>meetings-quantum%26bm%3Bmeetings-quantum.bmml%26bm%3Bmeetings-quantum.bmml%26bm%3Bmeetings-quantum.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2251%2C246%2C119%2C270%22%20href%3D%22meetings-quantum.bmml%22%20alt%3D%22meetings-quantum%22%20id%3D%2266%22/%3E</map>
+        <size>16</size>
+        <text>Meetings</text>
+      </controlProperties>
+    </control>
+    <control controlID="67" controlTypeID="com.balsamiq.mockups::Icon" x="277" y="298" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>meetings-quantum%26bm%3Bmeetings-quantum.bmml%26bm%3Bmeetings-quantum.bmml%26bm%3Bmeetings-quantum.bmml</href>
+        <icon>CalendarIcon%7Csmall</icon>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2219%2C244%2C43%2C268%22%20href%3D%22meetings-quantum.bmml%22%20alt%3D%22meetings-quantum%22%20id%3D%2267%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="68" controlTypeID="com.balsamiq.mockups::Label" x="309" y="340" w="-1" h="-1" measuredW="87" measuredH="24" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>discussion-quantum%26bm%3Bdiscussion-quantum.bmml%26bm%3Bdiscussion-quantum.bmml%26bm%3Bdiscussion-quantum.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2251%2C286%2C138%2C310%22%20href%3D%22discussion-quantum.bmml%22%20alt%3D%22discussion-quantum%22%20id%3D%2268%22/%3E</map>
+        <size>16</size>
+        <text>Discussions</text>
+      </controlProperties>
+    </control>
+    <control controlID="69" controlTypeID="com.balsamiq.mockups::Icon" x="277" y="338" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>discussion-quantum%26bm%3Bdiscussion-quantum.bmml%26bm%3Bdiscussion-quantum.bmml%26bm%3Bdiscussion-quantum.bmml</href>
+        <icon>CommentsIcon%7Csmall</icon>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2219%2C284%2C43%2C308%22%20href%3D%22discussion-quantum.bmml%22%20alt%3D%22discussion-quantum%22%20id%3D%2269%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::Label" x="309" y="380" w="-1" h="-1" measuredW="67" measuredH="24" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>members-quantum%26bm%3Bmembers-quantum.bmml%26bm%3Bmembers-quantum.bmml%26bm%3Bmembers-quantum.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2251%2C326%2C118%2C350%22%20href%3D%22members-quantum.bmml%22%20alt%3D%22members-quantum%22%20id%3D%2270%22/%3E</map>
+        <size>16</size>
+        <text>Members</text>
+      </controlProperties>
+    </control>
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::Icon" x="277" y="378" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>members-quantum%26bm%3Bmembers-quantum.bmml%26bm%3Bmembers-quantum.bmml%26bm%3Bmembers-quantum.bmml</href>
+        <icon>ContactsIcon%7Csmall</icon>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2219%2C324%2C43%2C348%22%20href%3D%22members-quantum.bmml%22%20alt%3D%22members-quantum%22%20id%3D%2271%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="72" controlTypeID="com.balsamiq.mockups::Canvas" x="258" y="328" w="232" h="45" measuredW="100" measuredH="70" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderColor>15658734</borderColor>
+        <color>13421772</color>
+      </controlProperties>
+    </control>
+    <control controlID="73" controlTypeID="com.balsamiq.mockups::Label" x="309" y="260" w="-1" h="-1" measuredW="34" measuredH="24" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>files-quantum%26bm%3Bfiles-quantum.bmml%26bm%3Bfiles-quantum.bmml%26bm%3Bfiles-quantum.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2251%2C206%2C85%2C230%22%20href%3D%22files-quantum.bmml%22%20alt%3D%22files-quantum%22%20id%3D%2273%22/%3E</map>
+        <size>16</size>
+        <text>Files</text>
+      </controlProperties>
+    </control>
+    <control controlID="74" controlTypeID="com.balsamiq.mockups::Icon" x="277" y="258" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>files-quantum%26bm%3Bfiles-quantum.bmml%26bm%3Bfiles-quantum.bmml%26bm%3Bfiles-quantum.bmml</href>
+        <icon>FolderIcon%7Csmall</icon>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2219%2C204%2C43%2C228%22%20href%3D%22files-quantum.bmml%22%20alt%3D%22files-quantum%22%20id%3D%2274%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="111" controlTypeID="com.balsamiq.mockups::Image" x="505" y="165" w="444" h="454" measuredW="805" measuredH="800" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>none</borderStyle>
+        <src>./assets/groups.png</src>
+      </controlProperties>
+    </control>
+    <control controlID="112" controlTypeID="com.balsamiq.mockups::RoundButton" x="984" y="126" w="-1" h="-1" measuredW="52" measuredH="52" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>CircledPlusIcon%7Clarge</icon>
+        <text/>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
